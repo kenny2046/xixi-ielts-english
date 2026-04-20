@@ -16,7 +16,7 @@
 
 扫描下方二维码添加我：
 
-![微信二维码](docs/wechat-qr.png)
+<img src="docs/wechat-qr.png" width="260" alt="微信二维码">
 
 **欢迎私信聊天，一起加油！**  
 让我们共同学习，提升自我，向着更好的自己出发！
