@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS Reading – PLAY IS A SERIOUS BUSINESS</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root {
+    --m1:#fbbf24;--m1-bg:#fef3c7;--m1-border:#f59e0b;
+    --m2:#34d399;--m2-bg:#d1fae5;--m2-border:#10b981;
+    --m3:#60a5fa;--m3-bg:#dbeafe;--m3-border:#3b82f6;
+    --m4:#a78bfa;--m4-bg:#ede9fe;--m4-border:#7c3aed;
+    --accent:#1e40af;--surface:#f8fafc;--card:#ffffff;
+    --text:#1e293b;--muted:#64748b;--border:#e2e8f0;
+    --sky:#0ea5e9;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--text);height:100vh;overflow:hidden;display:flex;flex-direction:column;}
+
+  /* ── Topbar ── */
+  #topbar{background:#0f172a;color:white;padding:0 16px;height:50px;display:flex;align-items:center;gap:8px;flex-shrink:0;border-bottom:2px solid #1e40af;flex-wrap:nowrap;overflow-x:auto;}
+  #topbar h1{font-size:12px;font-weight:600;letter-spacing:.05em;color:#94a3b8;text-transform:uppercase;flex-shrink:0;}
+  .tb-badge{background:#1e3a8a;color:#93c5fd;font-size:10px;padding:2px 8px;border-radius:99px;font-weight:600;white-space:nowrap;flex-shrink:0;}
+  #timer-display{font-size:13px;font-weight:700;color:#fbbf24;font-variant-numeric:tabular-nums;min-width:48px;text-align:right;flex-shrink:0;}
+  .tb-btn{background:#1e293b;border:1px solid #334155;color:#cbd5e1;padding:4px 10px;border-radius:6px;font-size:11px;cursor:pointer;font-family:inherit;transition:all .15s;white-space:nowrap;flex-shrink:0;}
+  .tb-btn:hover{background:#334155;color:white;}
+  .tb-btn.active{background:#1e40af;border-color:#3b82f6;color:white;}
+  /* attempt buttons */
+  .attempt-grp{display:flex;gap:2px;flex-shrink:0;}
+  .attempt-btn{width:24px;height:24px;border-radius:6px;font-size:0.65rem;font-weight:700;border:1px solid #334155;background:#1e293b;color:#94a3b8;cursor:pointer;transition:.15s;}
+  .attempt-btn.active{background:#0ea5e9;color:white;border-color:#0ea5e9;}
+  .tb-sep{width:1px;height:20px;background:#334155;flex-shrink:0;}
+
+  /* ── Progress bar ── */
+  #progress-bar-wrap{height:3px;background:#1e293b;flex-shrink:0;}
+  #progress-bar{height:100%;background:linear-gradient(90deg,#0ea5e9,#a78bfa);width:0%;transition:width .3s;}
+
+  /* ── Legend bar ── */
+  #legendbar{background:#1e293b;color:white;padding:5px 16px;display:flex;align-items:center;gap:14px;flex-shrink:0;font-size:11px;flex-wrap:nowrap;overflow-x:auto;}
+  .legend-item{display:flex;align-items:center;gap:5px;cursor:pointer;white-space:nowrap;}
+  .legend-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0;}
+  .legend-label{color:#94a3b8;}
+
+  /* ── Main split ── */
+  #main{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:0;overflow:hidden;min-height:0;}
+  .panel{overflow-y:auto;padding:22px 24px;scrollbar-width:thin;scrollbar-color:#cbd5e1 transparent;}
+  .panel::-webkit-scrollbar{width:5px;}
+  .panel::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:99px;}
+  #passage-panel{border-right:1px solid var(--border);}
+
+  /* ── Cards ── */
+  .card{background:var(--card);border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.06);padding:18px 20px;margin-bottom:16px;}
+  .card-header{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);border-bottom:2px solid #dbeafe;padding-bottom:7px;margin-bottom:12px;}
+
+  /* ── Passage ── */
+  .passage-hero{background:linear-gradient(135deg,#0f172a 0%,#1e3a8a 100%);color:white;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-family:'Crimson Pro',serif;font-size:17px;font-weight:600;text-align:center;line-height:1.4;}
+  .passage-hero small{display:block;font-size:11px;font-weight:400;color:#93c5fd;margin-top:3px;}
+  .passage-title{font-family:'Crimson Pro',Georgia,serif;font-size:20px;font-weight:600;color:#0f172a;margin-bottom:3px;}
+  .passage-subtitle{font-size:11px;color:var(--muted);margin-bottom:16px;font-style:italic;}
+  .para{margin-bottom:13px;font-size:13.5px;line-height:1.78;color:#334155;position:relative;}
+  .para-label{display:inline-block;width:19px;height:19px;background:#1e3a8a;color:white;border-radius:4px;font-size:9px;font-weight:700;text-align:center;line-height:19px;margin-right:5px;vertical-align:middle;flex-shrink:0;}
+
+  /* ── Highlights ── */
+  .hl-m1{background:var(--m1-bg);border-bottom:2px solid var(--m1);padding:0 2px;border-radius:2px;}
+  .hl-m2{background:var(--m2-bg);border-bottom:2px solid var(--m2);padding:0 2px;border-radius:2px;}
+  .hl-m3{background:var(--m3-bg);border-bottom:2px solid var(--m3);padding:0 2px;border-radius:2px;}
+  .hl-m4{background:var(--m4-bg);border-bottom:2px solid var(--m4);padding:0 2px;border-radius:2px;}
+  body:not(.study-active) .q-anchor{display:none;}
+  body:not(.study-active) .hl-m1,body:not(.study-active) .hl-m2,
+  body:not(.study-active) .hl-m3,body:not(.study-active) .hl-m4{background:none;border-bottom:none;padding:0;}
+  .q-anchor{display:inline-block;background:#ef4444;color:white;font-size:9px;font-weight:700;padding:0 4px;border-radius:4px;vertical-align:super;margin-left:2px;line-height:15px;}
+
+  /* ── Translation ── */
+  .trans{display:none;font-size:11px;color:#64748b;margin-top:5px;border-left:3px solid var(--border);padding-left:7px;line-height:1.6;}
+  body.trans-active .trans{display:block;}
+  .q-stem-text-cn,.q-opt-text-cn{display:none;}
+  body.trans-active:not(.study-active) .q-stem-text-en,
+  body.trans-active:not(.study-active) .q-opt-text-en{display:none;}
+  body.trans-active:not(.study-active) .q-stem-text-cn,
+  body.trans-active:not(.study-active) .q-opt-text-cn{display:inline;}
+
+  /* ── Questions ── */
+  .q-instruction{font-size:12px;color:#475569;margin-bottom:11px;line-height:1.6;background:#f1f5f9;border-radius:6px;padding:9px 11px;border-left:3px solid var(--sky);}
+  .q-instruction .trans{border-left-color:#93c5fd;}
+  .q-item{margin-bottom:13px;}
+  .q-num{display:inline-flex;align-items:center;justify-content:center;width:23px;height:23px;background:#1e3a8a;color:white;border-radius:5px;font-size:10px;font-weight:700;margin-right:7px;flex-shrink:0;}
+  .q-stem{font-size:13px;color:#1e293b;line-height:1.65;display:flex;align-items:flex-start;}
+  .q-stem-text{flex:1;}
+  .q-tf-row{display:flex;gap:6px;margin-top:7px;flex-wrap:wrap;align-items:center;}
+  .tf-btn{padding:4px 12px;border-radius:6px;border:1.5px solid var(--border);font-size:11.5px;font-weight:600;cursor:pointer;background:white;transition:all .15s;font-family:inherit;}
+  .tf-btn:hover{border-color:var(--sky);background:#e0f2fe;color:#0369a1;}
+  .tf-btn.sel-yes{background:#16a34a;border-color:#16a34a;color:white;}
+  .tf-btn.sel-no{background:#dc2626;border-color:#dc2626;color:white;}
+  .tf-btn.sel-ng{background:#9333ea;border-color:#9333ea;color:white;}
+  .tf-btn.sel-match{background:#1e40af;border-color:#1e40af;color:white;}
+  /* ── Submitted state overrides ── */
+  body.submitted .tf-btn{pointer-events:none;}
+  body.submitted .mc-option{pointer-events:none;}
+  body.submitted .q-input{pointer-events:none;background:#f8fafc;}
+  .q-answer-area{display:flex;align-items:center;gap:8px;margin-top:6px;}
+  .q-input{border:1.5px solid var(--border);border-radius:6px;padding:5px 9px;font-size:13px;font-family:inherit;color:var(--text);width:100%;max-width:320px;transition:border-color .15s;}
+  .q-input:focus{outline:none;border-color:var(--sky);box-shadow:0 0 0 3px #e0f2fe;}
+  .q-input.compact{max-width:110px;}
+  .mc-options-wrap{margin-top:4px;}
+  .mc-option{display:flex;align-items:flex-start;gap:7px;padding:6px 9px;border-radius:6px;margin-top:4px;cursor:pointer;border:1.5px solid var(--border);transition:all .15s;font-size:12.5px;background:white;}
+  .mc-option:hover{border-color:var(--sky);background:#f0f9ff;}
+  .mc-option.selected{background:#dbeafe;border-color:#3b82f6;font-weight:600;}
+  .mc-letter{font-weight:700;color:#1e40af;min-width:16px;}
+
+  /* ── Headings ── */
+  .headings-ref{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:11px 13px;margin-bottom:12px;}
+  .headings-ref-title{font-size:9px;font-weight:800;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;}
+  .heading-option{display:flex;gap:7px;align-items:baseline;padding:3px 0;font-size:12px;color:#334155;border-bottom:1px solid #f1f5f9;}
+  .heading-option:last-child{border-bottom:none;}
+  .heading-num{font-weight:800;color:#1e40af;min-width:18px;font-size:11px;}
+  .example-row{display:flex;align-items:center;gap:7px;padding:5px 9px;background:#f1f5f9;border-radius:6px;margin-bottom:9px;font-size:12px;color:#475569;}
+  .example-badge{font-size:9px;font-weight:700;background:#475569;color:white;padding:2px 6px;border-radius:4px;}
+  .example-answer{font-weight:700;color:#1e40af;background:#dbeafe;border-radius:4px;padding:1px 7px;}
+
+  /* ── Result badges ── */
+  .q-result-badge{display:none;font-size:11px;font-weight:700;border-radius:99px;padding:2px 8px;white-space:nowrap;flex-shrink:0;}
+  body.submitted .q-result-badge{display:inline-flex;align-items:center;gap:3px;}
+  .q-result-badge.correct{background:#d1fae5;color:#065f46;border:1px solid #6ee7b7;}
+  .q-result-badge.wrong{background:#fef2f2;color:#dc2626;border:1px solid #fca5a5;}
+  .q-result-badge.no-key{background:#f1f5f9;color:#94a3b8;border:1px solid #e2e8f0;}
+  /* item level correct/wrong flash */
+  body.submitted .q-item.item-correct{border-left:3px solid #10b981;padding-left:8px;}
+  body.submitted .q-item.item-wrong{border-left:3px solid #ef4444;padding-left:8px;}
+
+  /* ── Score card ── */
+  #score-card{display:none;}
+  .score-ring-wrap{display:flex;align-items:center;gap:20px;margin-bottom:14px;}
+  .score-ring{width:72px;height:72px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;border:4px solid;}
+  .score-ring.good{border-color:#10b981;background:#ecfdf5;color:#059669;}
+  .score-ring.mid{border-color:#f59e0b;background:#fffbeb;color:#b45309;}
+  .score-ring.low{border-color:#ef4444;background:#fef2f2;color:#dc2626;}
+  .band-est{font-size:11px;color:#64748b;margin-top:3px;}
+  .band-est strong{color:#6366f1;}
+  .score-wrong-list{margin-top:10px;}
+  .score-wrong-item{background:#fef2f2;border-left:3px solid #ef4444;border-radius:0 8px 8px 0;padding:6px 10px;margin-bottom:6px;font-size:11.5px;color:#1e293b;}
+  .score-wrong-label{font-weight:700;color:#dc2626;margin-right:6px;}
+  .score-correct-list{margin-top:8px;display:flex;flex-wrap:wrap;gap:4px;}
+  .score-correct-chip{background:#d1fae5;border:1px solid #6ee7b7;border-radius:99px;padding:2px 8px;font-size:11px;font-weight:700;color:#065f46;}
+  .score-action-row{display:flex;gap:8px;margin-top:12px;}
+  .score-btn{flex:1;padding:10px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;border:none;font-family:inherit;transition:all .2s;}
+  .score-btn-reset{background:white;border:1.5px solid #e2e8f0;color:#64748b;}
+  .score-btn-reset:hover{border-color:#94a3b8;}
+  .score-btn-export{background:linear-gradient(135deg,#0ea5e9,#0369a1);color:white;box-shadow:0 3px 10px rgba(14,165,233,0.3);}
+  .score-btn-export:hover{box-shadow:0 5px 14px rgba(14,165,233,0.45);}
+
+  /* ── User highlight & annotation (unchanged) ── */
+  .user-hl{background:#fef08a;border-bottom:2px solid #eab308;padding:0 2px;border-radius:2px;cursor:pointer;}
+  .user-hl[data-note]:not([data-note=""]):after{content:"💬";font-size:9px;vertical-align:super;margin-left:1px;}
+  .user-hl-tooltip{position:fixed;background:#0f172a;color:#f8fafc;font-size:11px;padding:6px 10px;border-radius:6px;max-width:240px;line-height:1.5;z-index:9998;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,.4);display:none;}
+  #hl-toolbar{position:fixed;background:#0f172a;border:1px solid #334155;border-radius:8px;padding:5px 8px;display:flex;gap:6px;align-items:center;z-index:9997;box-shadow:0 4px 16px rgba(0,0,0,.5);}
+  #hl-toolbar button{background:#1e293b;border:1px solid #475569;color:#e2e8f0;padding:3px 9px;border-radius:5px;font-size:11px;cursor:pointer;font-family:inherit;white-space:nowrap;}
+  #hl-toolbar button:hover{background:#334155;}
+  #hl-toolbar .hl-do{background:#ca8a04;border-color:#ca8a04;color:white;}
+  #hl-toolbar .hl-do:hover{background:#d97706;}
+
+  /* ── Toast ── */
+  #toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(20px);background:#0f172a;color:white;padding:9px 18px;border-radius:99px;font-size:12.5px;opacity:0;transition:all .35s cubic-bezier(0.34,1.56,0.64,1);pointer-events:none;z-index:9999;white-space:nowrap;}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  #toast.ok{background:#10b981;}
+  #toast.err{background:#ef4444;}
+</style>
+</head>
+<body>
+
+<!-- User highlight toolbar -->
+<div id="hl-toolbar" style="display:none;">
+  <button class="hl-do" id="hl-do-btn">✏️ 高亮</button>
+  <button id="hl-note-btn">💬 注释</button>
+  <button id="hl-cancel-btn">✕</button>
+</div>
+<div class="user-hl-tooltip" id="hl-tooltip"></div>
+
+<!-- Topbar -->
+<div id="topbar">
+  <h1>IAGS · READING PASSAGE 3</h1>
+  <span class="tb-badge">Questions 27–40</span>
+  <div class="tb-sep"></div>
+  <span style="font-size:10px;color:#64748b;white-space:nowrap;">ATTEMPT</span>
+  <div class="attempt-grp" id="attempt-grp">
+    <button class="attempt-btn active" onclick="setAttempt(1,this)">1</button>
+    <button class="attempt-btn" onclick="setAttempt(2,this)">2</button>
+    <button class="attempt-btn" onclick="setAttempt(3,this)">3</button>
+    <button class="attempt-btn" onclick="setAttempt(4,this)">4+</button>
+  </div>
+  <div class="tb-sep"></div>
+  <button class="tb-btn" id="btn-trans" onclick="toggleTrans()">🌐 译文</button>
+  <button class="tb-btn" id="btn-study" onclick="toggleStudy()">🎯 学习模式</button>
+  <button class="tb-btn" id="btn-clear-hl" onclick="clearAllHighlights()" title="清除所有手动标注">🗑 清除标注</button>
+  <div class="tb-sep"></div>
+  <button class="tb-btn" onclick="checkAnswers()">✓ 提交批改</button>
+  <button class="tb-btn" onclick="exportAnswers()">📋 导出 JSON</button>
+  <div id="timer-display">20:00</div>
+  <button class="tb-btn" id="btn-timer" onclick="toggleTimer()">▶ 计时</button>
+</div>
+
+<div id="progress-bar-wrap"><div id="progress-bar"></div></div>
+
+<div id="legendbar">
+  <span style="color:#64748b;font-size:11px;font-weight:600;">考点色彩：</span>
+  <span class="legend-item" onclick="toggleHL('m1')"><span class="legend-dot" style="background:var(--m1)"></span><span class="legend-label">自然现象/数据</span></span>
+  <span class="legend-item" onclick="toggleHL('m2')"><span class="legend-dot" style="background:var(--m2)"></span><span class="legend-label">行为/人物</span></span>
+  <span class="legend-item" onclick="toggleHL('m3')"><span class="legend-dot" style="background:var(--m3)"></span><span class="legend-label">方法论/专业人员</span></span>
+  <span class="legend-item" onclick="toggleHL('m4')"><span class="legend-dot" style="background:var(--m4)"></span><span class="legend-label">术语/地名</span></span>
+  <span style="margin-left:auto;color:#64748b;font-size:10px;white-space:nowrap;">💡 选中文字可高亮标注</span>
+</div>
+
+<div id="main">
+  <!-- PASSAGE -->
+  <div class="panel" id="passage-panel">
+    <div class="card">
+      <div class="passage-hero">
+        PLAY IS A SERIOUS BUSINESS
+        <small>Does play help develop bigger, better brains? Bryony Furton investigates</small>
+      </div>
+      <div class="passage-title">READING PASSAGE 3</div>
+      <div class="passage-subtitle">You should spend about 20 minutes on Questions 27–40 which are based on Reading Passage 3 below.</div>
+      <div class="trans">你应该用大约20分钟的时间完成基于阅读文章3的第27-40题。</div>
+      <div class="para" id="para-A">
+        <span class="para-label">A</span>
+        Playing is a serious business. Children engrossed in a make-believe world, kittens chasing a ball of string aren't just having fun. Play may look like a carefree and exuberant way to pass the time before the hard work of adulthood comes along, but there's much more to it than that. For a start, play can cost animal their lives. <span class="hl-m1">Eighty per cent of deaths</span> among young fur seals for instance occur because playing pups fail to spot predators approach- ing. It is also extremely expensive in terms of energy. Playful young animals use around <span class="hl-m1">two or three per cent</span> of their energy diverting, and in children that figure can be closer to <span class="hl-m1">fifteen per cent</span>. 'There must be a reason for it,' says <span class="hl-m3">John Byers of Idaho University</span>. 'You just don't find animals wasting energy like that,' he adds. There must be a reason.<span class="q-anchor">Q29</span><span class="q-anchor">Q32</span><span class="q-anchor">Q38</span>
+        <div class="trans">游玩是一项严肃的事业。沉浸在幻想世界中的孩子，或者追逐线球的小猫，并不仅仅是在玩乐。游玩看起来可能是在成年期的艰苦工作到来之前，一种无忧无虑且充满活力的消磨时间的方式，但其实远不止于此。首先，游玩可能会让动物付出生命的代价。例如，年轻毛皮海豹的死亡中有80%是因为玩耍的幼崽未能发现捕食者的接近。此外，在能量方面，它的消耗也极其巨大。玩耍的幼年动物会消耗大约2%到3%的能量，而在儿童中，这一比例可能接近15%。爱达荷大学的约翰·拜尔斯说：“这其中一定有原因。”他补充道，“你不会发现动物会这样浪费能量。这其中必然有原因。”</div>
+      </div><div class="para" id="para-B">
+        <span class="para-label">B</span>
+        But if play is not simply a developmental hiccup, a harmless excess of religious energy, why did it evolve? The latest idea suggests that play has evolved to <span class="hl-m1">build big brains</span>. In other words, playing makes you intelligent. Play, it seems, is common only among <span class="hl-m4">mammals</span>, although a few of the <span class="hl-m4">larger-brained birds</span> also indulge. Animals at play often use unique signs – tail- wagging in dogs, for example - to indicate that activity superficially resembling adult behaviour is not really in earnest. A popular explanation of play has been that it helps juveniles develop the skills they will need to hunt, mate and survive as adults. Another was that it allows young animals to get in shape for adult life by improving their respiratory endurance. Both these ideas have been questioned in recent years.<span class="q-anchor">Q32</span><span class="q-anchor">Q33</span><span class="q-anchor">Q40</span>
+        <div class="trans">但如果游玩不仅仅是一个发育过程中的小插曲，或者某种无害的宗教能量过剩，那它为什么要进化呢？最新的观点认为，游玩是为了构建大脑而进化的。换句话说，游玩让你变得聪明。游玩似乎只在哺乳动物中常见，尽管一些大脑较大的鸟类也会参与其中。玩耍中的动物经常会使用独特的信号——例如狗摇尾巴——来表明这种表面上模仿成年行为的活动并非真的在认真进行。一种关于游玩的流行解释是，它帮助青少年发展成年后狩猎、交配和生存所需的技能。另一种观点是，它通过提高呼吸耐力，让幼年动物为成年生活做好体能准备。这两个观点近年来都受到了质疑。</div>
+      </div><div class="para" id="para-C">
+        <span class="para-label">C</span>
+        Take the <span class="hl-m4">exercise theory</span>. If play evolved to build muscle or as a kind of endurance training, then you would expect to see permanent benefits. But Byers points out that the benefits of increased exercise disappear rapidly after training stops, so any improvement in endurance resulting from juvenile play would be lost by adulthood. 'If the function of play was to get into shape,' says Byers, 'the optimum time for playing would depend on when it was most advantageous for the young of a particular species to do so. But it doesn't work like that.' Across species, play tends to peak about halfway through the <span class="hl-m1">suckling stage</span> and then decline.<span class="q-anchor">Q33</span><span class="q-anchor">Q38</span>
+        <div class="trans">以锻炼理论为例。如果游玩的进化是为了增强肌肉或作为一种耐力训练，那么你应该能看到永久性的益处。但拜尔斯指出，运动量增加带来的益处在训练停止后会迅速消失，因此青少年时期玩耍所带来的耐力提升到成年时就会丧失。拜尔斯说：“如果游玩的功能是为了健身，那么最佳游玩时间应该取决于对特定物种的幼崽最有利的时候。但事实并非如此。”在各物种中，游玩往往在哺乳期的中间阶段达到巅峰，然后开始下降。</div>
+      </div><div class="para" id="para-D">
+        <span class="para-label">D</span>
+        Then there's the <span class="hl-m4">skills-training hypothesis</span>. At first glance, playing animals do appear to be practising the complex manoeuvres they will need in adulthood. But a closer inspection reveals this interpretation as too simplistic. In one study, behavioural scientist <span class="hl-m3">Tim Caro</span>, from the <span class="hl-m4">University of California</span>, looked at the predatory play of kittens and their predatory behaviour when they reached adulthood. He found that the way the cats played had no significant effect on their hunting prowess in later life.<span class="q-anchor">Q33</span>
+        <div class="trans">然后是技能训练假说。乍一看，玩耍中的动物确实表现出在练习成年后所需的复杂动作。但进一步观察会发现这种解释过于简单。在一项研究中，来自加州大学的行为科学家蒂姆·卡罗观察了幼猫的捕食性游戏以及它们成年后的捕食行为。他发现，猫玩耍的方式对其后期生活中的狩猎能力没有显著影响。</div>
+      </div><div class="para" id="para-E">
+        <span class="para-label">E</span>
+        Earlier this year, <span class="hl-m3">Sergio Pellis</span> of <span class="hl-m4">Lethbridge University</span>, Canada, reported that there is a strong positive link between brain size and playfulness among mammals in general. Comparing measurements for fifteen orders of mammal, he and his team found that larger brains (for a given body size) are linked to greater playfulness. The converse was also found to be true. <span class="hl-m3">Robert Barton</span> of <span class="hl-m4">Durham University</span> believes that, because large brains are more sensitive to developmental stimuli than smaller brains, they require more play to help mould them for adulthood. 'I concluded it's to do with learning, and with the importance of environmental cues to the brain during development,' he says.<span class="q-anchor">Q37</span><span class="q-anchor">Q39</span>
+        <div class="trans">今年早些时候，加拿大莱斯布里奇大学的塞尔吉奥·佩利斯报告称，在哺乳动物中，大脑大小与玩耍程度之间存在极强的正相关。通过比较15个哺乳动物目的测量数据，他和他的团队发现，（在特定身体尺寸下）较大的大脑与更高的玩耍程度相关。反之亦然。杜伦大学的罗伯特·巴顿认为，由于大脑越大对发育刺激越敏感，因此它们需要更多的游玩来帮助塑造其成年状态。他说：“我的结论是，这与学习有关，也与发育过程中环境线索对大脑的重要性有关。”</div>
+      </div><div class="para" id="para-F">
+        <span class="para-label">F</span>
+        According to Byers, the timing of the playful stage in young animals provides an important clue to what's going on. If you plot the amount of time a juvenile devotes to play each day over the course of its development, you discover a pattern typically associated with a '<span class="hl-m4">sensitive period</span>' - a brief development window during which the brain can actually be modified in ways that are not possible earlier or later in life. Think of the relative ease with which young children – but not infants or adults – master language. Other researchers have found that play in cats, rats and mice is at its most intense just as this '<span class="hl-m4">window of opportunity</span>' reaches its peak.<span class="q-anchor">Q28</span><span class="q-anchor">Q38</span>
+        <div class="trans">根据拜尔斯的说法，幼年动物玩耍阶段的时间点为正在发生的事情提供了重要线索。如果你描绘出青少年在发育过程中每天投入游玩的时间量，你会发现一种通常与“敏感期”相关的模式——这是一个短暂的发育窗口，在此期间，大脑实际上可以以生命早期或后期都不可能实现的方式被修改。想想幼儿——而非婴儿或成年人——掌握语言的相对容易程度。其他研究人员发现，猫、大鼠和小鼠的游玩在这一“机会窗口”达到巅峰时也最为激烈。</div>
+      </div><div class="para" id="para-G">
+        <span class="para-label">G</span>
+        'People have not paid enough attention to the amount of the brain activated by play,' says <span class="hl-m3">Marc Bekoff</span> from <span class="hl-m4">Colorado University</span>. Bekoff studied coyote pups at play and found that the kind of behaviour involved was markedly more complex and subdivided than that of adults. Such behaviour activates many different parts of the brain, he reasons. Bekoff likens it to a <span class="hl-m4">behavioural kaleidoscope</span>, with animals at play jumping rapidly between activities. 'They use behaviour from a lot of different contexts – predation, aggression, reproduction,' he says. 'Their developing brain is getting all sorts of stimulation.'<span class="q-anchor">Q30</span><span class="q-anchor">Q38</span>
+        <div class="trans">科罗拉多大学的马克·贝考夫说：“人们还没有足够关注游玩所激活的大脑区域数量。”贝考夫研究了玩耍中的小土狼，发现其中涉及的行为比成年的行为明显更复杂且细分。他推论，这种行为激活了大脑的许多不同部分。贝考夫将其比作行为万花筒，玩耍中的动物在各项活动之间快速跳跃。他说：“它们使用了来自许多不同背景的行为——捕食、攻击、繁殖。它们发育中的大脑正在接受各种刺激。”</div>
+      </div><div class="para" id="para-H">
+        <span class="para-label">H</span>
+        Not only is more of the brain involved in play than was suspected, but it also seems to activate <span class="hl-m1">higher cognitive processes</span>. 'There's enormous cognitive involvement in play,' says Bekoff. He points out that play often involves complex assessments of playmates, ideas of reciprocity and the use of specialised signals and rules. He believes that play creates a brain that has greater behavioural flexibility and improved potential for learning later in life. The idea is backed up by the work of <span class="hl-m3">Stephen Siviy</span> of <span class="hl-m4">Gettysburg College</span>. Siviy studied how hours of play affected the brain's levels of a particular chemical associated with the stimulation and growth of <span class="hl-m4">nerve cells</span>. He was surprised by the extent of the activation. 'Play lights everything up,' he says. By allowing link-ups between brain areas that might not normally communicate with each other, play may enhance creativity.<span class="q-anchor">Q27</span><span class="q-anchor">Q30</span><span class="q-anchor">Q40</span>
+        <div class="trans">参与游玩的大脑区域不仅比预想的要多，而且似乎还激活了更高级的认知过程。贝考夫说：“游玩中存在巨大的认知参与。”他指出，游玩通常涉及对玩伴的复杂评估、互惠理念以及特殊信号和规则的使用。他认为，游玩创造了一个具有更大行为灵活性和提高后期学习潜能的大脑。这一观点得到了盖茨堡学院史蒂芬·西维的研究支持。西维研究了游玩时长如何影响大脑中一种与神经细胞刺激和生长相关的特定化学物质水平。他对激活的程度感到惊讶。他说：“游玩点亮了一切。”通过允许通常互不沟通的大脑区域之间建立联系，游玩可能会增强创造力。</div>
+      </div><div class="para" id="para-I">
+        <span class="para-label">I</span>
+        What might further experimentation suggest about the way children are raised in many societies today? We already know that rat pups denied the chance to play grow smaller brain components and fail to develop the ability to apply social rules when they interact with their peers. With schooling beginning earlier and becoming increasingly <span class="hl-m2">exam-oriented</span>, play is likely to get even less of a look-in. Who knows what the result of that will be!<span class="q-anchor">Q31</span>
+        <div class="trans">进一步的实验可能会对当今许多社会的儿童养育方式产生什么启示？我们已经知道，被剥夺游玩机会的小鼠幼崽大脑组件会长得较小，并且在与同伴互动时无法发展出应用社会规则的能力。随着学校教育开始得更早且日益趋向考试导向，游玩的机会可能会变得更少。谁知道那会导致什么结果呢！</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUESTIONS -->
+  <div class="panel" id="questions-panel">
+    <div class="card">
+        <div class="card-header">Questions 27–32 · Matching Information</div>
+        <div class="q-instruction">
+          Reading Passage 3 has nine paragraphs labelled A–I. Which paragraph contains the following information? Write the correct letter A–I in boxes 27–32 on your answer sheet. NB You may use any letter more than once.
+          <div class="trans">阅读文章3有九个标记为A-I的段落。哪一段包含以下信息？在答题卡27-32题中写下正确的字母A-I。注意：你可以多次使用任何字母。</div>
+        </div><div id="q27" class="q-item" data-num="27" data-para="para-H">
+          <div class="q-stem">
+            <span class="q-num">27</span>
+            <span class="q-stem-text">
+              <span class="q-stem-text-en">the way play causes unusual connections in the brain which are beneficial</span>
+              <span class="q-stem-text-cn">游玩在大脑中产生有益的异常连接的方式</span>
+            </span>
+          </div>
+          <div class="trans" style="margin-left:32px;">游玩在大脑中产生有益的异常连接的方式</div><div class="q-answer-area">
+              <input class="q-input compact" id="ans27" placeholder="填写字母…" oninput="saveAnswer('27',this.value)" />
+              <span class="q-result-badge" id="res27"></span>
+            </div></div><div id="q28" class="q-item" data-num="28" data-para="para-F">
+          <div class="q-stem">
+            <span class="q-num">28</span>
+            <span class="q-stem-text">
+              <span class="q-stem-text-en">insights from recording how much time young animals spend playing</span>
+              <span class="q-stem-text-cn">记录幼年动物花费多少时间游玩所获得的见解</span>
+            </span>
+          </div>
+          <div class="trans" style="margin-left:32px;">记录幼年动物花费多少时间游玩所获得的见解</div><div class="q-answer-area">
+              <input class="q-input compact" id="ans28" placeholder="填写字母…" oninput="saveAnswer('28',this.value)" />
+              <span class="q-result-badge" id="res28"></span>
+            </div></div><div id="q29" class="q-item" data-num="29" data-para="para-A">
+          <div class="q-stem">
+            <span class="q-num">29</span>
+            <span class="q-stem-text">
+              <span class="q-stem-text-en">a description of the physical hazards that can accompany play</span>
+              <span class="q-stem-text-cn">对可能伴随游玩的身体危险的描述</span>
+            </span>
+          </div>
+          <div class="trans" style="margin-left:32px;">对可能伴随游玩的身体危险的描述</div><div class="q-answer-area">
+              <input class="q-input compact" id="ans29" placeholder="填写字母…" oninput="saveAnswer('29',this.value)" />
+              <span class="q-result-badge" id="res29"></span>
+            </div></div><div id="q30" class="q-item" data-num="30" data-para="para-G">
+          <div class="q-stem">
+            <span class="q-num">30</span>
+            <span class="q-stem-text">
+              <span class="q-stem-text-en">a description of the mental activities which are exercised and developed during play</span>
+              <span class="q-stem-text-cn">对在游玩期间得到锻炼和发展的心理活动的描述</span>
+            </span>
+          </div>
+          <div class="trans" style="margin-left:32px;">对在游玩期间得到锻炼和发展的心理活动的描述</div><div class="q-answer-area">
+              <input class="q-input compact" id="ans30" placeholder="填写字母…" oninput="saveAnswer('30',this.value)" />
+              <span class="q-result-badge" id="res30"></span>
+            </div></div><div id="q31" class="q-item" data-num="31" data-para="para-I">
+          <div class="q-stem">
+            <span class="q-num">31</span>
+            <span class="q-stem-text">
+              <span class="q-stem-text-en">the possible effects that a reduction in play opportunities will have on humans</span>
+              <span class="q-stem-text-cn">减少游玩机会可能对人类产生的影响</span>
+            </span>
+          </div>
+          <div class="trans" style="margin-left:32px;">减少游玩机会可能对人类产生的影响</div><div class="q-answer-area">
+              <input class="q-input compact" id="ans31" placeholder="填写字母…" oninput="saveAnswer('31',this.value)" />
+              <span class="q-result-badge" id="res31"></span>
+            </div></div><div id="q32" class="q-item" data-num="32" data-para="para-B">
+          <div class="q-stem">
+            <span class="q-num">32</span>
+            <span class="q-stem-text">
+              <span class="q-stem-text-en">the classes of animals for which play is important</span>
+              <span class="q-stem-text-cn">游玩对其很重要的动物类别</span>
+            </span>
+          </div>
+          <div class="trans" style="margin-left:32px;">游玩对其很重要的动物类别</div><div class="q-answer-area">
+              <input class="q-input compact" id="ans32" placeholder="填写字母…" oninput="saveAnswer('32',this.value)" />
+              <span class="q-result-badge" id="res32"></span>
+            </div></div></div><div class="card">
+        <div class="card-header">Questions 33–35 · Multiple Choice (Multiple)</div>
+        <div class="q-instruction">
+          Choose THREE letters A–F. Write your answers in boxes 33–35 on your answer sheet. The list below gives some ways of regarding play. Which THREE ways are mentioned by the writer of the text?
+          <div class="trans">选择三个字母A-F。在答题卡33-35题中写下你的答案。下面的列表给出了一些关于游玩的看法。作者在文中提到了哪三种方式？</div>
+        </div><div id="q33_35" class="q-item" data-num="33-35" data-para="para-B,C,D">
+          <div class="q-stem">
+            <span class="q-num">33-35</span>
+            <span class="q-stem-text">
+              <span class="q-stem-text-en">Which THREE ways are mentioned by the writer of the text?</span>
+              <span class="q-stem-text-cn">作者提到了哪三种方式？</span>
+            </span>
+          </div>
+          <div class="trans" style="margin-left:32px;">作者提到了哪三种方式？</div><div class="mc-options-wrap"><div onclick="selectMC(this,'33-35','A')" class="mc-option">
+              <span class="mc-letter">A</span>
+              <span class="q-opt-text-en">a rehearsal for later adult activities</span>
+              <span class="q-opt-text-cn">为后来的成年活动进行演练</span>
+            </div><div onclick="selectMC(this,'33-35','B')" class="mc-option">
+              <span class="mc-letter">B</span>
+              <span class="q-opt-text-en">a method animals use to prove themselves to their peer group</span>
+              <span class="q-opt-text-cn">动物用来向同伴群体证明自己的方法</span>
+            </div><div onclick="selectMC(this,'33-35','C')" class="mc-option">
+              <span class="mc-letter">C</span>
+              <span class="q-opt-text-en">an activity intended to build up strength for adulthood</span>
+              <span class="q-opt-text-cn">旨在为成年期积累力量的活动</span>
+            </div><div onclick="selectMC(this,'33-35','D')" class="mc-option">
+              <span class="mc-letter">D</span>
+              <span class="q-opt-text-en">a means of communicating feelings</span>
+              <span class="q-opt-text-cn">交流感情的一种手段</span>
+            </div><div onclick="selectMC(this,'33-35','E')" class="mc-option">
+              <span class="mc-letter">E</span>
+              <span class="q-opt-text-en">a defensive strategy</span>
+              <span class="q-opt-text-cn">一种防御策略</span>
+            </div><div onclick="selectMC(this,'33-35','F')" class="mc-option">
+              <span class="mc-letter">F</span>
+              <span class="q-opt-text-en">an activity assisting organ growth</span>
+              <span class="q-opt-text-cn">辅助器官生长的活动</span>
+            </div></div><span class="q-result-badge" id="res33-35"></span></div></div><div class="card">
+        <div class="card-header">Questions 36–40 · Matching Features</div>
+        <div class="q-instruction">
+          Look at the following researchers (Questions 36–40) and the list of findings below. Match each researcher with the correct finding. Write the correct letter A–H in boxes 36–40 on your answer sheet.
+          <div class="trans">查看以下研究人员（第36-40题）及下方的调查结果列表。将每位研究人员与正确的调查结果匹配。在答题卡36-40题中写下正确的字母A-H。</div>
+        </div><div id="q36" class="q-item" data-num="36" data-para="para-E">
+          <div class="q-stem">
+            <span class="q-num">36</span>
+            <span class="q-stem-text">
+              <span class="q-stem-text-en">Robert Barton</span>
+              <span class="q-stem-text-cn">罗伯特·巴顿</span>
+            </span>
+          </div>
+          <div class="trans" style="margin-left:32px;">罗伯特·巴顿</div><div class="q-answer-area">
+              <input class="q-input compact" id="ans36" placeholder="填写字母…" oninput="saveAnswer('36',this.value)" />
+              <span class="q-result-badge" id="res36"></span>
+            </div></div><div id="q37" class="q-item" data-num="37" data-para="para-G">
+          <div class="q-stem">
+            <span class="q-num">37</span>
+            <span class="q-stem-text">
+              <span class="q-stem-text-en">Marc Bekoff</span>
+              <span class="q-stem-text-cn">马克·贝考夫</span>
+            </span>
+          </div>
+          <div class="trans" style="margin-left:32px;">马克·贝考夫</div><div class="q-answer-area">
+              <input class="q-input compact" id="ans37" placeholder="填写字母…" oninput="saveAnswer('37',this.value)" />
+              <span class="q-result-badge" id="res37"></span>
+            </div></div><div id="q38" class="q-item" data-num="38" data-para="para-A,C,F">
+          <div class="q-stem">
+            <span class="q-num">38</span>
+            <span class="q-stem-text">
+              <span class="q-stem-text-en">John Byers</span>
+              <span class="q-stem-text-cn">约翰·拜尔斯</span>
+            </span>
+          </div>
+          <div class="trans" style="margin-left:32px;">约翰·拜尔斯</div><div class="q-answer-area">
+              <input class="q-input compact" id="ans38" placeholder="填写字母…" oninput="saveAnswer('38',this.value)" />
+              <span class="q-result-badge" id="res38"></span>
+            </div></div><div id="q39" class="q-item" data-num="39" data-para="para-E">
+          <div class="q-stem">
+            <span class="q-num">39</span>
+            <span class="q-stem-text">
+              <span class="q-stem-text-en">Sergio Pellis</span>
+              <span class="q-stem-text-cn">塞尔吉奥·佩利斯</span>
+            </span>
+          </div>
+          <div class="trans" style="margin-left:32px;">塞尔吉奥·佩利斯</div><div class="q-answer-area">
+              <input class="q-input compact" id="ans39" placeholder="填写字母…" oninput="saveAnswer('39',this.value)" />
+              <span class="q-result-badge" id="res39"></span>
+            </div></div><div id="q40" class="q-item" data-num="40" data-para="para-H">
+          <div class="q-stem">
+            <span class="q-num">40</span>
+            <span class="q-stem-text">
+              <span class="q-stem-text-en">Stephen Siviy</span>
+              <span class="q-stem-text-cn">史蒂芬·西维</span>
+            </span>
+          </div>
+          <div class="trans" style="margin-left:32px;">史蒂芬·西维</div><div class="q-answer-area">
+              <input class="q-input compact" id="ans40" placeholder="填写字母…" oninput="saveAnswer('40',this.value)" />
+              <span class="q-result-badge" id="res40"></span>
+            </div></div></div>
+
+    <!-- Score card (hidden until submit) -->
+    <div class="card" id="score-card">
+      <div class="card-header">📊 成绩 · PLAY IS A SERIOUS BUSINESS</div>
+      <div id="score-content"></div>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const STORAGE_KEY = 'ielts_reading_C4T2R3';
+const CORRECT_ANSWERS = {"27":"H","28":"F","29":"A","30":"G","31":"I","32":"B","33":"A","34":"C","35":"F","36":"B","37":"G","38":"E","39":"D","40":"A"};
+const HAS_ANSWERS = Object.keys(CORRECT_ANSWERS).length > 0;
+const TOTAL_Q = 14;
+
+let answers = {};
+try { answers = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) {}
+let timerInterval = null, seconds = 1200, timerRunning = false;
+let studyActive = false, transActive = false;
+let currentAttempt = 1;
+let isSubmitted = false;
+
+// ── Attempt ──
+function setAttempt(n, btn) {
+  currentAttempt = n;
+  document.querySelectorAll('.attempt-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ── Restore answers from localStorage ──
+function restoreAnswers() {
+  document.querySelectorAll('.q-item').forEach(item => {
+    const q = item.dataset.num || item.id.replace(/^q/,'');
+    if (!answers[q]) return;
+    const v = answers[q];
+    const inp = item.querySelector('.q-input');
+    if (inp) inp.value = v;
+    item.querySelectorAll('.mc-option').forEach(o => {
+      if ((o.querySelector('.mc-letter')||{}).textContent === v) o.classList.add('selected');
+    });
+    item.querySelectorAll('.tf-btn').forEach(b => {
+      if (b.textContent.trim() === v) {
+        const cls = btnClass(v); if (cls) b.classList.add(cls);
+      }
+    });
+  });
+  updateProgress();
+}
+
+function btnClass(val) {
+  if (val === 'TRUE' || val === 'YES') return 'sel-yes';
+  if (val === 'FALSE' || val === 'NO') return 'sel-no';
+  if (val === 'NOT GIVEN') return 'sel-ng';
+  return 'sel-match';
+}
+
+function selectTF(btn, q, val) {
+  btn.closest('.q-item').querySelectorAll('.tf-btn').forEach(b => b.className = 'tf-btn');
+  btn.classList.add(btnClass(val));
+  answers[q] = val; persist(); updateProgress();
+}
+function selectYN(btn, q, val) {
+  btn.closest('.q-item').querySelectorAll('.tf-btn').forEach(b => b.className = 'tf-btn');
+  btn.classList.add(btnClass(val));
+  answers[q] = val; persist();
+  const para = btn.closest('.q-item').dataset.para;
+  if (para) scrollPassage(para);
+  updateProgress();
+}
+function selectMatch(btn, q, val) {
+  btn.closest('.q-item').querySelectorAll('.tf-btn').forEach(b => b.className = 'tf-btn');
+  btn.classList.add('sel-match');
+  answers[q] = val; persist();
+  const para = btn.closest('.q-item').dataset.para;
+  if (para) scrollPassage(para);
+  updateProgress();
+}
+function selectMC(div, q, val) {
+  div.closest('.q-item').querySelectorAll('.mc-option').forEach(o => o.classList.remove('selected'));
+  div.classList.add('selected');
+  answers[q] = val; persist();
+  const para = div.closest('.q-item').dataset.para;
+  if (para) scrollPassage(para);
+  updateProgress();
+}
+function saveAnswer(q, val) { answers[q] = val; persist(); updateProgress(); }
+function persist() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(answers)); } catch(e){} }
+function updateProgress() {
+  const done = Object.keys(answers).filter(k => answers[k] && String(answers[k]).trim()).length;
+  document.getElementById('progress-bar').style.width = Math.round(done/TOTAL_Q*100) + '%';
+}
+function scrollPassage(paraId) {
+  const el = document.getElementById(paraId);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+document.querySelectorAll('.q-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const para = item.dataset.para;
+    if (para) scrollPassage(para);
+  });
+});
+
+// ── Timer (unchanged) ──
+function toggleTimer() {
+  const btn = document.getElementById('btn-timer');
+  if (timerRunning) {
+    clearInterval(timerInterval); timerRunning = false; btn.textContent = '▶ 计时';
+  } else {
+    timerInterval = setInterval(() => {
+      seconds--;
+      const m = String(Math.floor(seconds/60)).padStart(2,'0');
+      const s = String(seconds%60).padStart(2,'0');
+      document.getElementById('timer-display').textContent = m+':'+s;
+      if (seconds <= 0) { clearInterval(timerInterval); showToast('⏰ 时间到！', 'ok'); }
+      if (seconds === 120) showToast('⚠️ 还剩2分钟！', 'ok');
+    }, 1000);
+    timerRunning = true; btn.textContent = '⏸ 暂停';
+  }
+}
+
+// ── Modes (unchanged) ──
+function toggleTrans() {
+  transActive = !transActive;
+  document.body.classList.toggle('trans-active', transActive);
+  document.getElementById('btn-trans').classList.toggle('active', transActive);
+  showToast(transActive ? '🌐 译文已开启' : '译文已关闭', 'ok');
+}
+function toggleStudy() {
+  studyActive = !studyActive;
+  document.body.classList.toggle('study-active', studyActive);
+  document.getElementById('btn-study').classList.toggle('active', studyActive);
+  showToast(studyActive ? '🎯 学习模式已开启' : '学习模式已关闭', 'ok');
+}
+
+// ── ⭐ NEW: Check & Grade Answers ──
+function checkAnswers() {
+  const answered = Object.keys(answers).filter(k => answers[k] && String(answers[k]).trim()).length;
+  if (answered < TOTAL_Q) {
+    showToast(`⚠️ 还有 ${TOTAL_Q - answered} 题未作答`, 'err'); return;
+  }
+  isSubmitted = true;
+  document.body.classList.add('submitted');
+
+  let correct = 0, wrong = 0, noKey = 0;
+  const wrongDetails = [];
+
+  document.querySelectorAll('.q-item').forEach(item => {
+    const q = item.dataset.num || item.id.replace(/^q/,'');
+    const ua = (answers[q] || '').toString().trim().toUpperCase();
+    const ca = (CORRECT_ANSWERS[q] || '').toString().trim().toUpperCase();
+    const badge = document.getElementById('res' + q);
+    if (!badge) return;
+
+    if (!CORRECT_ANSWERS[q]) {
+      noKey++;
+      badge.className = 'q-result-badge no-key';
+      badge.textContent = '— 无答案Key';
+    } else if (ua === ca) {
+      correct++;
+      badge.className = 'q-result-badge correct';
+      badge.textContent = '✓ ' + (CORRECT_ANSWERS[q] || '');
+      item.classList.add('item-correct');
+    } else {
+      wrong++;
+      badge.className = 'q-result-badge wrong';
+      badge.textContent = '✗ → ' + (CORRECT_ANSWERS[q] || '');
+      item.classList.add('item-wrong');
+      wrongDetails.push({ q, ua: answers[q] || '—', ca: CORRECT_ANSWERS[q] || '—' });
+    }
+  });
+
+  buildScoreCard(correct, wrong, noKey, wrongDetails);
+  document.getElementById('score-card').style.display = 'block';
+  setTimeout(() => document.getElementById('score-card').scrollIntoView({ behavior:'smooth', block:'start' }), 100);
+  showToast(`🎯 ${correct}/${TOTAL_Q - noKey} · ${getLabel(correct, TOTAL_Q - noKey)}`, 'ok');
+}
+
+function getLabel(c, t) {
+  if (!t) return '';
+  const p = c/t;
+  if (p >= 0.9) return '优秀 🎉';
+  if (p >= 0.7) return '良好 👍';
+  if (p >= 0.5) return '及格 📚';
+  return '需加强 💪';
+}
+
+function getBand(c, t) {
+  if (!t) return '—';
+  const p = c/t;
+  if (p >= 0.9) return '8.0–9.0';
+  if (p >= 0.7) return '7.0–8.0';
+  if (p >= 0.5) return '5.5–6.5';
+  return '4.0–5.0';
+}
+
+function buildScoreCard(correct, wrong, noKey, wrongDetails) {
+  const gradable = TOTAL_Q - noKey;
+  const pct = gradable > 0 ? correct / gradable : 0;
+  const ringCls = pct >= 0.9 ? 'good' : pct >= 0.6 ? 'mid' : 'low';
+
+  let wrongHTML = wrongDetails.map(w =>
+    `<div class="score-wrong-item">
+      <span class="score-wrong-label">Q${w.q}</span>
+      你答：<strong>${w.ua}</strong> &nbsp;→&nbsp; 正确：<strong style="color:#059669;">${w.ca}</strong>
+    </div>`
+  ).join('');
+
+  const correctNums = Object.keys(CORRECT_ANSWERS).filter(q => {
+    const ua = (answers[q]||'').toString().trim().toUpperCase();
+    const ca = (CORRECT_ANSWERS[q]||'').toString().trim().toUpperCase();
+    return ua === ca;
+  });
+  const correctChips = correctNums.map(q => `<span class="score-correct-chip">Q${q} ✓</span>`).join('');
+
+  document.getElementById('score-content').innerHTML = `
+    <div class="score-ring-wrap">
+      <div class="score-ring ${ringCls}">
+        <div style="font-size:1.4rem;font-weight:700;line-height:1;">${correct}</div>
+        <div style="font-size:0.6rem;font-weight:700;">/ ${gradable}</div>
+      </div>
+      <div>
+        <div style="font-size:1.1rem;font-weight:700;color:#1e293b;">${getLabel(correct,gradable)}</div>
+        <div style="font-size:0.78rem;color:#64748b;margin-top:2px;">正确 ${correct} · 错误 ${wrong}${noKey?' · '+noKey+'题无Key':''}</div>
+        <div class="band-est">推测 Band: <strong>${getBand(correct,gradable)}</strong></div>
+      </div>
+    </div>
+    ${wrong > 0 ? `<div style="font-size:11px;font-weight:700;color:#ef4444;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">✗ 错误题目 (${wrong}题)</div>${wrongHTML}` : ''}
+    ${correctChips ? `<div style="font-size:11px;font-weight:700;color:#059669;text-transform:uppercase;letter-spacing:.06em;margin-top:8px;margin-bottom:4px;">✓ 正确题目</div><div class="score-correct-list">${correctChips}</div>` : ''}
+    <div class="score-action-row">
+      <button class="score-btn score-btn-reset" onclick="resetAnswers()">🔄 重新作答</button>
+      <button class="score-btn score-btn-export" onclick="exportAnswers()">🚀 导出 AI 分析 JSON</button>
+    </div>
+  `;
+}
+
+function resetAnswers() {
+  answers = {}; persist();
+  isSubmitted = false;
+  document.body.classList.remove('submitted');
+  document.querySelectorAll('.q-item').forEach(item => {
+    item.classList.remove('item-correct','item-wrong');
+    item.querySelectorAll('.q-result-badge').forEach(b => { b.className='q-result-badge'; b.textContent=''; });
+    item.querySelectorAll('.q-input').forEach(i => i.value = '');
+    item.querySelectorAll('.mc-option').forEach(o => o.classList.remove('selected'));
+    item.querySelectorAll('.tf-btn').forEach(b => b.className = 'tf-btn');
+  });
+  document.getElementById('score-card').style.display = 'none';
+  updateProgress();
+  showToast('🔄 已重置，重新作答', 'ok');
+}
+
+// ── Export JSON (upgraded with attempt & AI instruction) ──
+function exportAnswers() {
+  const elapsed = 1200 - seconds;
+  const gradable = TOTAL_Q - Object.keys(CORRECT_ANSWERS).filter(q => !CORRECT_ANSWERS[q]).length;
+  const correct = isSubmitted
+    ? Object.keys(CORRECT_ANSWERS).filter(q => {
+        const ua = (answers[q]||'').toString().trim().toUpperCase();
+        const ca = (CORRECT_ANSWERS[q]||'').toString().trim().toUpperCase();
+        return ua === ca;
+      }).length
+    : null;
+
+  let instr = '';
+  if (currentAttempt === 1) instr = '这是用户第一次作答。请不要直接给出答案，提供关键词引导、paraphrase 提示和原文定位建议，帮助用户自己找到正确答案。';
+  else if (currentAttempt <= 3) instr = `这是第 ${currentAttempt} 次作答。请分析错误原因，指出 paraphrase 陷阱和定位段落，适当给出提示。`;
+  else instr = '超过3次作答，请给出完整答案解析、错题分析、逐题原文定位，以及针对性的阅读提升策略。';
+
+  const payload = {
+    test_id: 'PLAY IS A SERIOUS BUSINESS',
+    module: 'reading',
+    attempt: currentAttempt,
+    duration_seconds: elapsed,
+    total_questions: TOTAL_Q,
+    score: correct !== null ? correct + '/' + gradable : 'not_submitted',
+    user_answers: answers,
+    correct_answers: CORRECT_ANSWERS,
+    wrong_questions: isSubmitted
+      ? Object.keys(CORRECT_ANSWERS).filter(q => {
+          const ua = (answers[q]||'').toString().trim().toUpperCase();
+          const ca = (CORRECT_ANSWERS[q]||'').toString().trim().toUpperCase();
+          return ua !== ca;
+        })
+      : [],
+    ai_instruction: instr,
+    request: '请根据以上答题数据，分析错题原因（重点关注 paraphrase 替换、定位段落、题型陷阱），给出具体改进建议并估算当前 Band 分。'
+  };
+
+  const text = JSON.stringify(payload, null, 2);
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => showToast('✅ JSON 已复制！粘贴给 AI 深度分析', 'ok'));
+  } else {
+    const el = document.createElement('textarea');
+    el.value = text; el.style.cssText = 'position:fixed;opacity:0;';
+    document.body.appendChild(el); el.select(); document.execCommand('copy');
+    document.body.removeChild(el);
+    showToast('✅ JSON 已复制！粘贴给 AI 深度分析', 'ok');
+  }
+}
+
+// ── Toast (upgraded) ──
+function showToast(msg, type='ok') {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = type;
+  requestAnimationFrame(() => requestAnimationFrame(() => t.classList.add('show')));
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ── User Highlight & Annotation (UNCHANGED) ──
+let userHighlights = [];
+try { userHighlights = JSON.parse(localStorage.getItem(STORAGE_KEY+'_hl') || '[]'); } catch(e) {}
+let pendingRange = null;
+const hlToolbar = document.getElementById('hl-toolbar');
+const hlTooltip = document.getElementById('hl-tooltip');
+
+function persistHL() { try { localStorage.setItem(STORAGE_KEY+'_hl', JSON.stringify(userHighlights)); } catch(e) {} }
+function applyStoredHighlights() { userHighlights.forEach(h => applyHighlight(h.id, h.text, h.note, false)); }
+let hlIdCounter = Date.now();
+function applyHighlight(id, text, note, save) {
+  if (document.getElementById('uhl-'+id)) return;
+  const walker = document.createTreeWalker(document.getElementById('main'), NodeFilter.SHOW_TEXT);
+  let node;
+  while ((node = walker.nextNode())) {
+    const idx = node.textContent.indexOf(text);
+    if (idx === -1) continue;
+    const span = document.createElement('span');
+    span.className = 'user-hl'; span.id = 'uhl-'+id;
+    span.dataset.note = note || ''; span.dataset.hlId = id;
+    span.addEventListener('mouseenter', e => showHLTooltip(e, note, id));
+    span.addEventListener('mouseleave', () => { hlTooltip.style.display='none'; });
+    span.addEventListener('click', e => { e.stopPropagation(); promptEditNote(id); });
+    const frag = document.createDocumentFragment();
+    if (idx > 0) frag.appendChild(document.createTextNode(node.textContent.slice(0, idx)));
+    span.textContent = text; frag.appendChild(span);
+    const after = node.textContent.slice(idx + text.length);
+    if (after) frag.appendChild(document.createTextNode(after));
+    node.parentNode.replaceChild(frag, node); break;
+  }
+  if (save) { userHighlights.push({ id, text, note: note||'' }); persistHL(); }
+}
+function showHLTooltip(e, note, id) {
+  if (!note) { hlTooltip.style.display='none'; return; }
+  hlTooltip.textContent = note; hlTooltip.style.display = 'block';
+  hlTooltip.style.left = Math.min(e.clientX+10, window.innerWidth-260)+'px';
+  hlTooltip.style.top = (e.clientY-40+window.scrollY)+'px';
+}
+function promptEditNote(id) {
+  const entry = userHighlights.find(h => h.id === id); if (!entry) return;
+  const note = prompt('编辑注释（留空则删除注释）：', entry.note || '');
+  if (note === null) return;
+  entry.note = note;
+  const span = document.getElementById('uhl-'+id);
+  if (span) span.dataset.note = note;
+  persistHL();
+}
+function removeHighlight(id) {
+  const span = document.getElementById('uhl-'+id);
+  if (span) span.replaceWith(document.createTextNode(span.textContent));
+  userHighlights = userHighlights.filter(h => h.id !== id); persistHL();
+}
+function clearAllHighlights() {
+  document.querySelectorAll('.user-hl').forEach(s => s.replaceWith(document.createTextNode(s.textContent)));
+  userHighlights = []; persistHL();
+  showToast('🗑 所有手动标注已清除', 'ok');
+}
+document.addEventListener('mouseup', e => {
+  if (hlToolbar.contains(e.target)) return;
+  const sel = window.getSelection();
+  if (!sel || sel.isCollapsed || !sel.toString().trim()) { hlToolbar.style.display='none'; pendingRange=null; return; }
+  const anchor = sel.anchorNode;
+  if (!document.getElementById('main').contains(anchor)) { hlToolbar.style.display='none'; return; }
+  pendingRange = { text: sel.toString().trim(), range: sel.getRangeAt(0).cloneRange() };
+  const rect = sel.getRangeAt(0).getBoundingClientRect();
+  hlToolbar.style.display = 'flex';
+  hlToolbar.style.left = Math.min(rect.left+rect.width/2-60, window.innerWidth-200)+'px';
+  hlToolbar.style.top = (rect.top-44+window.scrollY)+'px';
+});
+document.getElementById('hl-do-btn').addEventListener('click', () => {
+  if (!pendingRange) return;
+  const id = ++hlIdCounter;
+  applyHighlight(id, pendingRange.text, '', true);
+  window.getSelection().removeAllRanges(); hlToolbar.style.display='none'; pendingRange=null;
+  showToast('✅ 已高亮标注，点击可添加注释', 'ok');
+});
+document.getElementById('hl-note-btn').addEventListener('click', () => {
+  if (!pendingRange) return;
+  const note = prompt('为选中短语添加注释：'); if (note === null) return;
+  const id = ++hlIdCounter;
+  applyHighlight(id, pendingRange.text, note, true);
+  window.getSelection().removeAllRanges(); hlToolbar.style.display='none'; pendingRange=null;
+  showToast('💬 已添加注释标注', 'ok');
+});
+document.getElementById('hl-cancel-btn').addEventListener('click', () => {
+  window.getSelection().removeAllRanges(); hlToolbar.style.display='none'; pendingRange=null;
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { hlToolbar.style.display='none'; window.getSelection().removeAllRanges(); pendingRange=null; }
+});
+
+function toggleHL(cls) {
+  document.querySelectorAll('.hl-'+cls).forEach(el => {
+    el.style.visibility = el.style.visibility === 'hidden' ? '' : 'hidden';
+  });
+}
+
+// ── Init ──
+restoreAnswers();
+applyStoredHighlights();
+</script>
+</body>
+</html>

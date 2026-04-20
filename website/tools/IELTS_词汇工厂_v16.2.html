@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>IELTS 词汇工厂 v16.1</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  /* ── Design Tokens (浅色命令科技风) ── */
+  :root {
+    --bg: #f0f4f8; --surface: #e8edf3; --card: #ffffff; --border: #d1dae6;
+    --blue: #3b82f6; --blue-light: #2563eb; --green: #10b981; --amber: #f59e0b;
+    --text: #1e293b; --muted: #64748b; --accent: #818cf8; --purple: #7c3aed; --cyan: #0891b2;
+    --shadow: 0 4px 24px rgba(30,41,59,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Quicksand', 'Noto Sans SC', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(59,130,246,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59,130,246,0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+  .factory { width: 100%; max-width: 560px; position: relative; }
+
+  /* ── Header ── */
+  .header { text-align: center; margin-bottom: 28px; }
+  .header-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3);
+    border-radius: 99px; padding: 4px 14px;
+    font-size: 0.7rem; font-weight: 700; color: var(--blue-light);
+    letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px;
+  }
+  .header h1 {
+    font-size: 1.8rem; font-weight: 700;
+    background: linear-gradient(135deg, #3b82f6, #7c3aed);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .header p { color: var(--muted); font-size: 0.8rem; margin-top: 6px; }
+
+  /* ── Steps ── */
+  .steps { display: flex; flex-direction: column; gap: 12px; }
+  .step {
+    background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+    padding: 18px 20px; transition: border-color 0.3s, box-shadow 0.3s;
+    position: relative; overflow: hidden; box-shadow: var(--shadow);
+  }
+  .step::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 3px; height: 100%; background: var(--blue); opacity: 0; transition: opacity 0.3s;
+  }
+  .step:hover { border-color: rgba(59,130,246,0.4); box-shadow: 0 4px 24px rgba(59,130,246,0.12); }
+  .step:hover::before { opacity: 1; }
+  .step-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .step-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: rgba(59,130,246,0.12); border: 1.5px solid rgba(59,130,246,0.35);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; font-weight: 700; color: var(--blue-light); flex-shrink: 0;
+  }
+  .step-title { font-weight: 700; font-size: 0.9rem; color: var(--text); }
+  .step-desc { font-size: 0.72rem; color: var(--muted); margin-top: 1px; }
+
+  /* ── Buttons ── */
+  .btn {
+    width: 100%; padding: 13px 18px; border-radius: 14px;
+    font-weight: 700; font-size: 0.9rem; font-family: inherit;
+    cursor: pointer; border: none; transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-blue { background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; box-shadow: 0 4px 15px rgba(59,130,246,0.25); }
+  .btn-blue:hover { box-shadow: 0 6px 20px rgba(59,130,246,0.4); }
+  .btn-green { background: linear-gradient(135deg, #10b981, #059669); color: white; box-shadow: 0 4px 15px rgba(16,185,129,0.25); }
+  .btn-green:hover { box-shadow: 0 6px 20px rgba(16,185,129,0.4); }
+  .btn-amber { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; box-shadow: 0 4px 15px rgba(245,158,11,0.25); }
+  .btn-sm {
+    width: auto; padding: 8px 16px; border-radius: 10px;
+    font-size: 0.8rem; font-weight: 700; font-family: inherit;
+    cursor: pointer; border: none; transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn-sm:active { transform: scale(0.96); }
+
+  /* ── Toast ── */
+  .toast {
+    position: fixed; top: 20px; left: 50%;
+    transform: translateX(-50%) translateY(-80px);
+    background: #10b981; color: white;
+    padding: 10px 20px; border-radius: 99px;
+    font-size: 0.85rem; font-weight: 700;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 9999; white-space: nowrap;
+    box-shadow: 0 4px 20px rgba(16,185,129,0.35);
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+  .toast.error { background: #ef4444; box-shadow: 0 4px 20px rgba(239,68,68,0.35); }
+
+  /* ── Form elements ── */
+  textarea, input[type="text"], input[type="password"] {
+    width: 100%; background: var(--surface); border: 1.5px solid var(--border);
+    color: #0f766e; padding: 12px 14px; border-radius: 14px;
+    font-family: 'Courier New', monospace; font-size: 0.8rem;
+    resize: vertical; transition: border-color 0.2s; outline: none;
+  }
+  textarea:focus, input[type="text"]:focus, input[type="password"]:focus {
+    border-color: rgba(59,130,246,0.5); box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+  }
+  textarea::placeholder, input::placeholder { color: #94a3b8; }
+  .filename-row {
+    display: flex; align-items: center; gap: 0;
+    background: var(--surface); border: 1.5px solid var(--border);
+    border-radius: 14px; overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .filename-row:focus-within { border-color: rgba(59,130,246,0.5); box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+  .filename-prefix {
+    padding: 12px 14px; font-family: 'Courier New', monospace;
+    font-size: 0.8rem; font-weight: 700; color: var(--blue-light);
+    background: rgba(59,130,246,0.08); border-right: 1.5px solid var(--border);
+    white-space: nowrap; user-select: none; flex-shrink: 0;
+  }
+  .filename-row input { border: none; border-radius: 0; background: transparent; padding: 12px 14px; flex: 1; }
+  .filename-row input:focus { box-shadow: none; }
+
+  /* ── JSON Status ── */
+  .json-status { display: flex; align-items: center; gap: 6px; font-size: 0.7rem; margin-top: 6px; color: var(--muted); }
+  .json-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); flex-shrink: 0; }
+  .json-dot.valid { background: var(--green); box-shadow: 0 0 6px var(--green); }
+  .json-dot.invalid { background: #ef4444; box-shadow: 0 0 6px #ef4444; }
+
+  /* ── Misc layout ── */
+  .arrow-divider { text-align: center; color: var(--border); font-size: 1rem; margin: -2px 0; }
+  .upgrade-list { list-style: none; display: flex; flex-direction: column; gap: 7px; margin-top: 2px; }
+  .upgrade-list li { display: flex; align-items: flex-start; gap: 8px; font-size: 0.72rem; color: var(--muted); line-height: 1.5; }
+  .upgrade-list li .dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+  .dot-b { background: #3b82f6; } .dot-g { background: #10b981; } .dot-a { background: #f59e0b; }
+  .dot-c { background: #22d3ee; } .dot-p { background: #a78bfa; } .dot-o { background: #f97316; }
+  .upgrade-list li strong { color: var(--text); }
+  .callout {
+    background: rgba(59,130,246,0.05); border: 1px solid rgba(59,130,246,0.2);
+    border-radius: 14px; padding: 12px 14px;
+    font-size: 0.72rem; color: #475569; line-height: 1.7; margin-top: 12px;
+  }
+  .callout-title { font-weight: 700; color: var(--blue); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+  .prompt-preview {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 12px 14px;
+    font-size: 0.7rem; color: var(--muted); line-height: 1.6;
+    margin-top: 10px; display: none;
+  }
+  .prompt-preview.show { display: block; }
+  .prompt-preview strong { color: #475569; }
+
+  /* ── ElevenLabs Step ── */
+  .el-step { background: linear-gradient(135deg, rgba(251,191,36,0.06), rgba(59,130,246,0.06)); border-color: rgba(251,191,36,0.3) !important; }
+  .el-step::before { background: #f59e0b !important; }
+  .api-row { display: flex; gap: 8px; align-items: stretch; margin-bottom: 8px; }
+  .api-row input { flex: 1; margin: 0; }
+  .key-status {
+    margin-top: 8px; padding: 8px 12px; border-radius: 10px;
+    font-size: 0.72rem; font-weight: 600; display: none;
+  }
+  .key-status.ok { display: flex; align-items: center; gap: 6px; background: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
+  .key-status.fail { display: flex; align-items: center; gap: 6px; background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+  .key-status.warn { display: flex; align-items: center; gap: 6px; background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+
+  /* ── Progress Modal ── */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(15,23,42,0.7);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 10000; padding: 20px; display: none;
+  }
+  .modal-overlay.show { display: flex; }
+  .modal-box {
+    background: var(--card); border-radius: 24px;
+    padding: 28px; width: 100%; max-width: 440px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    border: 1px solid var(--border);
+  }
+  .modal-title { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .modal-sub { font-size: 0.75rem; color: var(--muted); margin-bottom: 16px; line-height: 1.5; }
+  .modal-prog-track { height: 8px; background: var(--surface); border-radius: 99px; overflow: hidden; margin-bottom: 12px; }
+  .modal-prog-fill {
+    height: 100%; border-radius: 99px;
+    background: linear-gradient(90deg, #3b82f6, #10b981);
+    transition: width 0.4s ease; width: 0%;
+  }
+  .modal-count { font-size: 0.78rem; font-weight: 700; color: var(--blue); margin-bottom: 8px; }
+  .modal-current { font-size: 0.7rem; color: var(--muted); min-height: 36px; line-height: 1.5; word-break: break-word; }
+  .modal-btns { display: flex; gap: 8px; margin-top: 16px; }
+
+  /* ── Resume Key Input (in modal) ── */
+  .resume-box {
+    background: #fffbeb; border: 1px solid #fde68a;
+    border-radius: 14px; padding: 14px; margin-top: 12px; display: none;
+  }
+  .resume-box.show { display: block; }
+  .resume-box p { font-size: 0.75rem; color: #92400e; margin-bottom: 8px; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="factory">
+  <div class="header">
+    <div class="header-badge">⚙️ IELTS Factory v16.1</div>
+    <h1>雅思词汇生成工厂</h1>
+    <p>语境先行 · 题眼识别 · 同义替换强化 · AI 语音朗读</p>
+  </div>
+
+  <div class="steps">
+
+    <!-- What's new -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">🆕</div>
+        <div>
+          <div class="step-title">v16.1 升级了什么</div>
+          <div class="step-desc">在 v16 全部功能基础上，新增 ElevenLabs AI 语音朗读</div>
+        </div>
+      </div>
+      <ul class="upgrade-list">
+        <li><span class="dot dot-b"></span><div><strong>语境猜词模式</strong> — 先遮住单词，看真题例句猜意思，建立语境→词义连接</div></li>
+        <li><span class="dot dot-g"></span><div><strong>题眼训练（v16）</strong> — 专门训练 paraphrase 识别，原文词 vs 题目替换词配对练习</div></li>
+        <li><span class="dot dot-a"></span><div><strong>做题模拟（v16）</strong> — 真题原句填空，模拟考场阅读逻辑</div></li>
+        <li><span class="dot dot-c"></span><div><strong>强化复习回路</strong> — 标「不识/模糊」自动进强化轮，不过关不停止</div></li>
+        <li><span class="dot dot-o"></span><div><strong>ElevenLabs 语音（v16.1 新增）</strong> — 导出时自动生成所有例句 MP3，词汇页每句话带 PLAY 按钮</div></li>
+      </ul>
+    </div>
+
+    <div class="arrow-divider">↓</div>
+
+    <!-- Step 1 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-title">复制 v16 提取规范 Prompt</div>
+          <div class="step-desc">粘贴至 Gemini / Claude，再上传真题文本</div>
+        </div>
+      </div>
+      <button class="btn btn-blue" onclick="copyPrompt()">
+        <span>📋</span> 复制 v16.1 提取 Prompt
+      </button>
+      <div class="prompt-preview" id="promptPreview">
+        <strong>Prompt 已复制 — v16 新增字段：</strong><br>
+        · trap: 雅思题目中的同义替换陷阱词<br>
+        · paraphrase: 原文→题目配对示例<br>
+        · questionStem: 典型出题类型
+      </div>
+    </div>
+
+    <div class="arrow-divider">↓</div>
+
+    <!-- Step 2 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-title">粘贴 AI 生成的 JSON</div>
+          <div class="step-desc">含 vocabulary 和 phrases；有 trap/paraphrase 字段则自动解锁题眼训练</div>
+        </div>
+      </div>
+      <textarea id="jsonBox" rows="7" placeholder='{"vocabulary":{"level1":[...],"level2":[...],"level3":[...]},"phrases":[...]}' oninput="validateJSON()"></textarea>
+      <div class="json-status">
+        <div class="json-dot" id="jsonDot"></div>
+        <span id="jsonStatus">等待粘贴 JSON...</span>
+      </div>
+    </div>
+
+    <div class="arrow-divider">↓</div>
+
+    <!-- Step 3 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-title">输入题目编号</div>
+          <div class="step-desc">例如输入 C4T3L1，文件将保存为 voc_C4T3L1.html</div>
+        </div>
+      </div>
+      <div class="filename-row">
+        <span class="filename-prefix">voc_</span>
+        <input type="text" id="fileName" placeholder="C4T3L1">
+      </div>
+    </div>
+
+    <div class="arrow-divider">↓</div>
+
+    <!-- Step 3.5 — ElevenLabs -->
+    <div class="step el-step">
+      <div class="step-header">
+        <div class="step-num">🎙️</div>
+        <div>
+          <div class="step-title">ElevenLabs API Key（可选）</div>
+          <div class="step-desc">填写后导出时自动生成所有例句 MP3；先下载 HTML，再将 _mp3.zip 解压到同目录</div>
+        </div>
+      </div>
+      <div class="api-row">
+        <input type="password" id="elKey" placeholder="sk_xxxxxxxxxxxxxxxxxxxxxxxx" autocomplete="off">
+      </div>
+      <div style="display:flex;gap:8px;margin-top:8px;">
+        <button class="btn-sm btn-blue" onclick="testELKey()">🔌 测试连接</button>
+        <button class="btn-sm btn-green" onclick="saveELKey()">💾 保存 Key</button>
+        <button class="btn-sm" style="background:#f1f5f9;color:#64748b;border:1px solid #d1dae6;" onclick="clearELKey()">🗑 清除</button>
+      </div>
+      <div id="keyStatus" class="key-status"></div>
+      <div class="callout" style="margin-top:10px;">
+        <div class="callout-title">🎙️ 语音参数</div>
+        音色: Bella · 模型: eleven_turbo_v2_5<br>
+        stability: 0.75 · similarity: 0.85 · style: 0.1 · speed: 1.0
+      </div>
+    </div>
+
+    <div class="arrow-divider">↓</div>
+
+    <!-- Step 4 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">4</div>
+        <div>
+          <div class="step-title">导出 v16.1 词汇系统</div>
+          <div class="step-desc">含 API Key 则同时生成 HTML + 音频 ZIP；否则仅导出 HTML</div>
+        </div>
+      </div>
+      <button class="btn btn-green" id="exportBtn" onclick="doExport()">
+        <span>🚀</span> 导出词汇系统
+      </button>
+      <div class="callout">
+        <div class="callout-title">✦ 导出包含四大模块 + 音频</div>
+        ① 语境识词 — 先句后词，猜完再翻牌，每句带 PLAY 按钮<br>
+        ② 题眼训练 — paraphrase识别 + 同义替换选择<br>
+        ③ 做题模拟 — 真题填空，练做题感<br>
+        ④ 强化复习 — 生词自动二轮，连对才算掌握<br>
+        ⑤ 将 _mp3.zip 解压到 HTML 同目录后 PLAY 按钮生效
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Progress Modal -->
+<div class="modal-overlay" id="progressModal">
+  <div class="modal-box">
+    <div class="modal-title">🎙️ 正在生成音频...</div>
+    <div class="modal-sub" id="modalSub">使用 ElevenLabs Bella 音色为所有例句生成 MP3</div>
+    <div class="modal-prog-track"><div class="modal-prog-fill" id="modalProgFill"></div></div>
+    <div class="modal-count" id="modalCount">0 / 0</div>
+    <div class="modal-current" id="modalCurrent">准备中...</div>
+    <!-- Resume box for token exhausted -->
+    <div class="resume-box" id="resumeBox">
+      <p>⚠️ Token 已用完（402/429/403），请输入新的 API Key 继续生成，已生成的音频不会重复：</p>
+      <div class="api-row" style="margin-bottom:8px;">
+        <input type="password" id="resumeKey" placeholder="新 Key...">
+      </div>
+      <button class="btn-sm btn-blue" onclick="resumeGeneration()">▶ 继续生成</button>
+    </div>
+    <div class="modal-btns">
+      <button class="btn-sm btn-amber" id="pauseBtn" onclick="pauseAndDownload()">⏸ 暂停并下载已生成部分</button>
+      <button class="btn-sm" style="background:#f1f5f9;color:#64748b;border:1px solid #d1dae6;" id="cancelBtn" onclick="cancelGeneration()">✕ 取消</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════
+   PROMPT
+════════════════════════════════════════════════ */
+const PROMPT = `你是一名专业的雅思词汇提取专家。请从我提供的雅思真题文本中，严格按以下规范提取词汇，仅输出纯 JSON，不得添加任何 markdown 代码块、前缀或说明文字。第一个字符必须是 {。
+
+【v16 核心升级——为什么学完单词还看不懂题？】
+雅思题目会用同义词替换原文词汇（paraphrase），考生必须识别这种替换。
+本次提取新增三个字段：
+- trap: 该词在雅思题目中常被替换的同义词/近义表达（如 "decrease → decline, drop, fall"）
+- paraphrase: 真实配对示例，格式："原文: XXX → 题目: YYY"
+- questionStem: 该词在题目中的典型出题形式（如 TRUE/FALSE判断、填空、匹配）
+
+【规范要求】
+1. 词汇量：45-60个，分 level1（基础）/ level2（中阶）/ level3（高阶 7.0+）三级
+2. 短语：不少于 15 个真题高频短语（phrases 数组）
+3. 每词必须包含：word, phonetic, meaning, root, rootExt, derive, syn, trap, paraphrase, questionStem, example（真题原句，严禁改编）, translation
+4. phrases 每项：word, meaning, syn, trap, example, translation
+5. JSON 结构：{"vocabulary":{"level1":[...],"level2":[...],"level3":[...]},"phrases":[...]}
+
+- trap 和 paraphrase 必须填写，不可为空
+- 仅输出 JSON，第一个字符必须是 {`;
+
+/* ════════════════════════════════════════════════
+   TOAST
+════════════════════════════════════════════════ */
+function showToast(msg, isError = false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast' + (isError ? ' error' : '');
+  requestAnimationFrame(() => requestAnimationFrame(() => t.classList.add('show')));
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+/* ════════════════════════════════════════════════
+   PROMPT COPY
+════════════════════════════════════════════════ */
+function copyPrompt() {
+  const done = () => {
+    showToast('✅ v16.1 Prompt 已复制！');
+    document.getElementById('promptPreview').classList.add('show');
+  };
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(PROMPT).then(done).catch(fallback);
+  } else { fallback(); }
+  function fallback() {
+    const el = Object.assign(document.createElement('textarea'), { value: PROMPT });
+    el.style.cssText = 'position:fixed;opacity:0;';
+    document.body.appendChild(el); el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    done();
+  }
+}
+
+/* ════════════════════════════════════════════════
+   JSON VALIDATE
+════════════════════════════════════════════════ */
+function validateJSON() {
+  const val = document.getElementById('jsonBox').value.trim();
+  const dot = document.getElementById('jsonDot');
+  const status = document.getElementById('jsonStatus');
+  if (!val) { dot.className = 'json-dot'; status.textContent = '等待粘贴 JSON...'; return false; }
+  try {
+    const d = JSON.parse(val);
+    const hasVocab = d.vocabulary && (d.vocabulary.level1 || d.vocabulary.level2 || d.vocabulary.level3);
+    const hasPhrases = Array.isArray(d.phrases);
+    const words = [...(d.vocabulary?.level1||[]), ...(d.vocabulary?.level2||[]), ...(d.vocabulary?.level3||[])];
+    const hasV16 = words[0]?.trap || words[0]?.paraphrase;
+    if (hasVocab) {
+      dot.className = 'json-dot valid';
+      status.textContent = `✓ 有效 · ${words.length}词` +
+        (hasPhrases ? ` · ${d.phrases.length}短语` : '') +
+        (hasV16 ? ' · ✦ 含v16题眼字段' : ' · ⚠ 建议用v16 Prompt重生成');
+      return true;
+    } else {
+      dot.className = 'json-dot invalid';
+      status.textContent = '⚠️ 缺少 vocabulary 字段';
+      return false;
+    }
+  } catch(e) {
+    dot.className = 'json-dot invalid';
+    status.textContent = '✗ JSON格式错误：' + e.message.substring(0, 40);
+    return false;
+  }
+}
+
+/* ════════════════════════════════════════════════
+   ELEVENLABS KEY MANAGEMENT
+════════════════════════════════════════════════ */
+// Auto-load saved key on page load
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('el_api_key');
+  if (saved) document.getElementById('elKey').value = saved;
+});
+
+function saveELKey() {
+  const key = document.getElementById('elKey').value.trim();
+  if (!key) { showToast('⚠️ 请先输入 Key', true); return; }
+  localStorage.setItem('el_api_key', key);
+  showToast('💾 Key 已保存到本地');
+}
+
+function clearELKey() {
+  localStorage.removeItem('el_api_key');
+  document.getElementById('elKey').value = '';
+  setKeyStatus('', '');
+  showToast('🗑 Key 已清除');
+}
+
+function setKeyStatus(type, msg) {
+  const el = document.getElementById('keyStatus');
+  el.className = 'key-status' + (type ? ' ' + type : '');
+  el.textContent = msg;
+}
+
+async function testELKey() {
+  const key = document.getElementById('elKey').value.trim();
+  if (!key) { showToast('⚠️ 请先输入 Key', true); return; }
+  setKeyStatus('', '🔄 测试中...');
+  document.getElementById('keyStatus').style.display = 'flex';
+  try {
+    const resp = await fetch('https://api.elevenlabs.io/v1/user', {
+      headers: { 'xi-api-key': key }
+    });
+    if (resp.ok) {
+      const data = await resp.json();
+      const remaining = data.subscription?.character_count != null
+        ? `剩余 ${(data.subscription.character_limit - data.subscription.character_count).toLocaleString()} 字符`
+        : '';
+      setKeyStatus('ok', `✅ 连接成功！${remaining}`);
+    } else if (resp.status === 401) {
+      // Old-format keys may still work for TTS even if /user returns 401
+      setKeyStatus('warn', '⚠️ /user 端点返回 401（旧格式 Key），但 TTS 生成通常仍可正常使用，可直接导出试试。');
+    } else {
+      setKeyStatus('fail', `✗ 连接失败 (${resp.status})：请检查 Key 是否正确`);
+    }
+  } catch(e) {
+    setKeyStatus('fail', '✗ 网络错误：' + e.message);
+  }
+}
+
+/* ════════════════════════════════════════════════
+   AUDIO GENERATION STATE
+════════════════════════════════════════════════ */
+let audioState = {
+  items: [],        // [{id, text}] — all sentences to generate
+  generated: {},    // {id: ArrayBuffer}
+  paused: false,
+  cancelled: false,
+  currentKey: '',
+  zip: null,
+};
+
+/* ════════════════════════════════════════════════
+   BUILD SENTENCE LIST FROM PARSED JSON
+════════════════════════════════════════════════ */
+function buildAudioItems(parsed) {
+  const items = [];
+  const vocab = parsed.vocabulary || {};
+  let vIdx = 0;
+  for (const lv of ['level1','level2','level3']) {
+    for (const w of (vocab[lv] || [])) {
+      vIdx++;
+      if (w.example) {
+        items.push({
+          id: `vocab_${String(vIdx).padStart(3,'0')}_${slugify(w.word)}`,
+          text: w.example,
+          word: w.word
+        });
+      }
+    }
+  }
+  let pIdx = 0;
+  for (const ph of (parsed.phrases || [])) {
+    pIdx++;
+    if (ph.example) {
+      items.push({
+        id: `phrase_${String(pIdx).padStart(3,'0')}_${slugify(ph.word)}`,
+        text: ph.example,
+        word: ph.word
+      });
+    }
+  }
+  return items;
+}
+
+function slugify(str) {
+  return (str || '').toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '').substring(0, 30) || 'item';
+}
+
+/* ════════════════════════════════════════════════
+   ELEVENLABS TTS CALL
+════════════════════════════════════════════════ */
+async function generateOneTTS(text, apiKey) {
+  const resp = await fetch('https://api.elevenlabs.io/v1/text-to-speech/EXAVITQu4vr4xnSDxMaL', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'xi-api-key': apiKey,
+    },
+    body: JSON.stringify({
+      text: text,
+      model_id: 'eleven_turbo_v2_5',
+      voice_settings: {
+        stability: 0.75,
+        similarity_boost: 0.85,
+        style: 0.1,
+        speed: 1.0,
+      }
+    })
+  });
+  if (!resp.ok) throw Object.assign(new Error(`TTS API error ${resp.status}`), { status: resp.status });
+  return await resp.arrayBuffer();
+}
+
+/* ════════════════════════════════════════════════
+   MODAL HELPERS
+════════════════════════════════════════════════ */
+function openModal() { document.getElementById('progressModal').classList.add('show'); }
+function closeModal() { document.getElementById('progressModal').classList.remove('show'); }
+function setModalProgress(done, total, currentText) {
+  const pct = total ? Math.round((done / total) * 100) : 0;
+  document.getElementById('modalProgFill').style.width = pct + '%';
+  document.getElementById('modalCount').textContent = `${done} / ${total}`;
+  document.getElementById('modalCurrent').textContent = currentText || '';
+}
+function setModalTitle(txt) { document.getElementById('modalTitle') && (document.getElementById('modalTitle').textContent = txt); }
+
+/* ════════════════════════════════════════════════
+   GENERATION LOOP
+════════════════════════════════════════════════ */
+async function runGenerationLoop() {
+  const state = audioState;
+  const total = state.items.length;
+  let done = Object.keys(state.generated).length;
+
+  for (let i = 0; i < state.items.length; i++) {
+    if (state.cancelled) break;
+    if (state.paused) { /* wait for resume — handled externally */ break; }
+
+    const item = state.items[i];
+    if (state.generated[item.id]) { done++; setModalProgress(done, total, `[跳过已生成] ${item.word}`); continue; }
+
+    setModalProgress(done, total, `正在生成 ${done + 1}/${total}：${item.text.substring(0, 60)}...`);
+    try {
+      const buf = await generateOneTTS(item.text, state.currentKey);
+      state.generated[item.id] = buf;
+      done++;
+      setModalProgress(done, total, `✅ ${item.word} 完成`);
+    } catch(e) {
+      // Token/quota errors → pause for new key
+      if (e.status === 402 || e.status === 429 || e.status === 403) {
+        state.paused = true;
+        document.getElementById('resumeBox').classList.add('show');
+        setModalProgress(done, total, `⚠️ Token 用完（${e.status}）— 请在下方输入新 Key 继续`);
+        return; // exit loop; resumeGeneration() will restart
+      }
+      // Other errors: skip this item
+      console.error('TTS error for', item.id, e);
+      done++;
+      setModalProgress(done, total, `⚠️ 跳过（错误）：${item.word}`);
+    }
+
+    // Small delay to avoid rate limiting
+    await new Promise(r => setTimeout(r, 300));
+  }
+
+  if (!state.paused && !state.cancelled) {
+    // All done — finalize
+    await finalizeExport();
+  }
+}
+
+async function resumeGeneration() {
+  const newKey = document.getElementById('resumeKey').value.trim();
+  if (!newKey) { showToast('⚠️ 请输入新 Key', true); return; }
+  audioState.currentKey = newKey;
+  audioState.paused = false;
+  document.getElementById('resumeBox').classList.remove('show');
+  await runGenerationLoop();
+}
+
+function pauseAndDownload() {
+  audioState.paused = true;
+  finalizeExport(true);
+}
+
+function cancelGeneration() {
+  audioState.cancelled = true;
+  closeModal();
+}
+
+/* ════════════════════════════════════════════════
+   FINALIZE: pack ZIP + download HTML
+════════════════════════════════════════════════ */
+async function finalizeExport(partial = false) {
+  const state = audioState;
+  const name = state.exportName;
+  const generatedIds = Object.keys(state.generated);
+
+  // 1. Download HTML
+  const blob = new Blob([state.htmlContent], { type: 'text/html;charset=utf-8' });
+  triggerDownload(blob, `voc_${name}.html`);
+
+  // 2. Pack ZIP if any audio was generated
+  if (generatedIds.length > 0) {
+    document.getElementById('modalCurrent').textContent = '📦 正在打包 ZIP...';
+    const zip = new JSZip();
+    for (const id of generatedIds) {
+      zip.file(id + '.mp3', state.generated[id]);
+    }
+    const zipBlob = await zip.generateAsync({ type: 'blob' });
+    triggerDownload(zipBlob, `voc_${name}_mp3.zip`);
+    showToast(`🎉 导出完成！请将 mp3.zip 解压到与 HTML 同一文件夹`);
+  } else {
+    showToast(`🎉 voc_${name}.html 已导出（无音频）`);
+  }
+
+  closeModal();
+}
+
+function triggerDownload(blob, filename) {
+  const a = Object.assign(document.createElement('a'), {
+    href: URL.createObjectURL(blob),
+    download: filename
+  });
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+}
+
+/* ════════════════════════════════════════════════
+   MAIN EXPORT ENTRY
+════════════════════════════════════════════════ */
+async function doExport() {
+  const jsonStr = document.getElementById('jsonBox').value.trim();
+  const name = (document.getElementById('fileName').value.trim() || 'Task').replace(/^voc_/i, '');
+  if (!jsonStr) { showToast('⚠️ 请先粘贴 JSON', true); return; }
+  if (!validateJSON()) { showToast('⚠️ JSON 格式有误', true); return; }
+
+  let parsed;
+  try { parsed = JSON.parse(jsonStr); } catch(e) { showToast('JSON 解析失败', true); return; }
+
+  const l1 = parsed.vocabulary?.level1 || [];
+  const l2 = parsed.vocabulary?.level2 || [];
+  const l3 = parsed.vocabulary?.level3 || [];
+  const elKey = document.getElementById('elKey').value.trim();
+
+  // Build audio items list to know IDs
+  const audioItems = buildAudioItems(parsed);
+
+  // Build output HTML (with placeholders for audio filenames)
+  const htmlContent = buildOutputHTML(name, jsonStr, l1.length, l2.length, l3.length, audioItems);
+
+  if (!elKey) {
+    // No API key: just download HTML
+    triggerDownload(new Blob([htmlContent], { type: 'text/html;charset=utf-8' }), `voc_${name}.html`);
+    showToast(`🎉 voc_${name}.html 已导出（无音频）`);
+    return;
+  }
+
+  // Setup state and open modal
+  audioState = {
+    items: audioItems,
+    generated: {},
+    paused: false,
+    cancelled: false,
+    currentKey: elKey,
+    exportName: name,
+    htmlContent: htmlContent,
+  };
+
+  document.getElementById('resumeBox').classList.remove('show');
+  document.getElementById('resumeKey').value = '';
+  setModalProgress(0, audioItems.length, '准备中...');
+  document.querySelector('.modal-box .modal-title').textContent = '🎙️ 正在生成音频...';
+  openModal();
+
+  await runGenerationLoop();
+}
+
+/* ════════════════════════════════════════════════
+   BUILD OUTPUT HTML (the exported voc_xxxx.html)
+════════════════════════════════════════════════ */
+function buildOutputHTML(name, jsonStr, c1, c2, c3, audioItems) {
+  // Build a lookup map: word → audio file id
+  // We use the same slugify logic so PLAY buttons know the file
+  const audioMap = {};
+  for (const item of audioItems) {
+    audioMap[item.id] = item.id + '.mp3';
+  }
+  const audioMapJSON = JSON.stringify(audioMap);
+
+  // We need to embed the audioItems as well for the PLAY button matching logic
+  // The exported HTML matches example text → id via word lookup
+  const audioItemsJSON = JSON.stringify(audioItems.map(i => ({ id: i.id, word: i.word })));
+
+  return `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>IELTS 词汇系统 v16.1 — ${name}</title>
+<script src="https://cdn.tailwindcss.com"><\/script>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body { font-family:'Quicksand','Noto Sans SC',sans-serif; background:#f1f5f9; color:#1e293b; touch-action:manipulation; }
+  .container { max-width:500px; margin:0 auto; padding:12px; }
+  .tab-bar { display:flex; gap:3px; background:#e2e8f0; padding:4px; border-radius:16px; margin-bottom:12px; overflow-x:auto; }
+  .tab { flex:1; min-width:56px; padding:9px 3px; text-align:center; cursor:pointer; border-radius:12px; font-size:0.72rem; font-weight:700; color:#64748b; transition:0.2s; white-space:nowrap; }
+  .tab.active { background:#fff; color:#3b82f6; box-shadow:0 2px 8px rgba(0,0,0,0.05); }
+  .card { background:white; border-radius:24px; padding:1.25rem; box-shadow:0 8px 20px rgba(0,0,0,0.04); min-height:580px; display:flex; flex-direction:column; border:3px solid #e2e8f0; position:relative; }
+  .ex-box { background:#eff6ff; border-radius:16px; border-left:4px solid #3b82f6; padding:1rem; margin:0.75rem 0; }
+  .detail-box { background:#f8fafc; border-radius:16px; border:1px solid #edf2f7; padding:0.85rem; font-size:0.85rem; }
+  .root-box { background:#fff7ed; border-radius:16px; border:1px solid #ffedd5; padding:0.85rem; margin-top:0.75rem; font-size:0.85rem; }
+  .trap-box { background:linear-gradient(135deg,#fdf4ff,#eff6ff); border-radius:16px; border:1px solid #e9d5ff; padding:0.85rem; margin-top:0.75rem; font-size:0.85rem; }
+  .trap-title { font-size:0.6rem; font-weight:800; text-transform:uppercase; letter-spacing:0.1em; color:#9333ea; margin-bottom:6px; }
+  .trap-row { display:flex; align-items:flex-start; gap:8px; margin-bottom:4px; }
+  .trap-lbl { font-size:0.58rem; font-weight:700; background:#ede9fe; color:#7c3aed; padding:2px 7px; border-radius:99px; white-space:nowrap; flex-shrink:0; margin-top:1px; }
+  .trap-val { color:#4c1d95; font-size:0.8rem; line-height:1.4; }
+  .lbl { font-weight:800; color:#3b82f6; font-size:0.65rem; text-transform:uppercase; margin-right:8px; display:inline-block; width:65px; flex-shrink:0; }
+  .lbl-r { color:#f59e0b; }
+  .btn-mark { padding:1rem 0.5rem; border-radius:16px; font-size:0.85rem; font-weight:700; color:white; transition:0.2s; cursor:pointer; border:none; font-family:inherit; }
+  .btn-mark:active { transform:scale(0.95); }
+  .opt-btn { width:100%; padding:1rem; margin-bottom:0.75rem; border:2px solid #f1f5f9; border-radius:16px; text-align:left; font-size:0.95rem; background:#fff; font-family:inherit; cursor:pointer; transition:0.15s; }
+  .opt-btn:hover { background:#f8fafc; }
+  .section { display:none; } .section.active { display:block; }
+  .flash-green { animation:flash 0.8s; --c:#10b981; }
+  .flash-amber { animation:flash 0.8s; --c:#f59e0b; }
+  .flash-rose  { animation:flash 0.8s; --c:#ef4444; }
+  @keyframes flash { 0%,100%{border-color:#e2e8f0} 50%{border-color:var(--c);box-shadow:0 0 15px var(--c)} }
+  .prog-bar { height:3px; background:#e2e8f0; border-radius:99px; overflow:hidden; margin-bottom:12px; }
+  .prog-fill { height:100%; background:linear-gradient(90deg,#3b82f6,#a78bfa); border-radius:99px; transition:width 0.4s; }
+  .lv-nav { display:flex; gap:6px; margin-bottom:10px; }
+  .lv-btn { flex:1; padding:7px 4px; border-radius:10px; font-size:0.68rem; font-weight:700; text-align:center; cursor:pointer; border:1.5px solid #e2e8f0; background:white; color:#64748b; transition:0.2s; }
+  .lv-btn.active { border-color:#3b82f6; background:#eff6ff; color:#2563eb; }
+  .mode-toggle { display:flex; gap:6px; margin-bottom:12px; }
+  .mode-btn { flex:1; padding:8px; border-radius:10px; font-size:0.7rem; font-weight:700; text-align:center; cursor:pointer; border:1.5px solid #e2e8f0; background:white; color:#64748b; transition:0.2s; }
+  .mode-btn.active { border-color:#7c3aed; background:#faf5ff; color:#7c3aed; }
+  .ctx-blank { display:inline-block; background:#cbd5e1; color:transparent; border-radius:6px; cursor:pointer; user-select:none; padding:0 6px; min-width:60px; transition:all 0.3s; }
+  .ctx-blank.revealed { background:transparent; color:#2563eb; font-weight:700; }
+  .reinforce-badge { display:inline-flex; align-items:center; gap:4px; background:#fef3c7; border:1px solid #fde68a; border-radius:99px; padding:3px 10px; font-size:0.65rem; font-weight:700; color:#92400e; margin-bottom:10px; }
+  #mk-empty { color:#94a3b8; text-align:center; padding:40px 20px; }
+  .mk-item { background:white; border-radius:16px; padding:14px; margin-bottom:10px; border:2px solid #fecaca; }
+  .mk-word { font-size:1.1rem; font-weight:700; color:#ef4444; }
+  .mk-meaning { color:#64748b; font-size:0.85rem; margin-top:2px; }
+  /* ── PLAY button ── */
+  .play-btn {
+    display:inline-flex; align-items:center; justify-content:center;
+    width:28px; height:28px; border-radius:50%;
+    background:#10b981; color:white; border:none; cursor:pointer;
+    font-size:0.7rem; flex-shrink:0; margin-left:8px;
+    transition:background 0.2s, transform 0.1s;
+    vertical-align:middle; box-shadow:0 2px 8px rgba(16,185,129,0.35);
+  }
+  .play-btn:hover { background:#059669; }
+  .play-btn:active { transform:scale(0.92); }
+  .play-btn.playing { background:#3b82f6; }
+  .audio-missing { font-size:0.65rem; color:#94a3b8; display:inline-block; margin-left:6px; }
+<\/style>
+<\/head>
+<body>
+<div class="container">
+  <div style="text-align:center;margin-bottom:12px;">
+    <span style="font-size:0.6rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.1em;">IELTS · ${name} · v16.1<\/span>
+  <\/div>
+  <div class="tab-bar">
+    <div class="tab active" onclick="switchTab('vocab')">语境识词<\/div>
+    <div class="tab" onclick="switchTab('trap')">题眼训练<\/div>
+    <div class="tab" onclick="switchTab('sim')">做题模拟<\/div>
+    <div class="tab" onclick="switchTab('phrases')">真题短语<\/div>
+    <div class="tab" onclick="switchTab('mistakes')">强化复习<\/div>
+  <\/div>
+
+  <!-- ① 语境识词 -->
+  <div id="vocab" class="section active">
+    <div class="lv-nav">
+      <div class="lv-btn active" id="lv1btn" onclick="jumpLevel('level1')">LV1 基础(${c1})<\/div>
+      <div class="lv-btn" id="lv2btn" onclick="jumpLevel('level2')">LV2 中阶(${c2})<\/div>
+      <div class="lv-btn" id="lv3btn" onclick="jumpLevel('level3')">LV3 高阶(${c3})<\/div>
+    <\/div>
+    <div class="mode-toggle">
+      <div class="mode-btn active" id="modeCtx" onclick="setMode('ctx')">🕵️ 语境猜词<\/div>
+      <div class="mode-btn" id="modeDir" onclick="setMode('dir')">📖 直接学词<\/div>
+    <\/div>
+    <div class="prog-bar"><div class="prog-fill" id="vocabProg" style="width:0%"><\/div><\/div>
+    <div id="reinforce-notice" style="display:none;"><div class="reinforce-badge">🔄 强化复习中 — 标记过的词再过一遍<\/div><\/div>
+    <div class="card" id="vocab-card"><\/div>
+  <\/div>
+
+  <!-- ② 题眼训练 -->
+  <div id="trap" class="section">
+    <div class="prog-bar"><div class="prog-fill" id="trapProg" style="width:0%"><\/div><\/div>
+    <div class="card" id="trap-card"><\/div>
+  <\/div>
+
+  <!-- ③ 做题模拟 -->
+  <div id="sim" class="section">
+    <div class="prog-bar"><div class="prog-fill" id="simProg" style="width:0%"><\/div><\/div>
+    <div class="card" id="sim-card"><\/div>
+  <\/div>
+
+  <!-- ④ 真题短语 -->
+  <div id="phrases" class="section">
+    <div class="prog-bar"><div class="prog-fill" id="phraseProg" style="width:0%"><\/div><\/div>
+    <div class="card" id="phrase-card"><\/div>
+  <\/div>
+
+  <!-- ⑤ 强化复习 -->
+  <div id="mistakes" class="section">
+    <div style="font-size:0.75rem;color:#64748b;margin-bottom:10px;">标「不识」或「模糊」的词在此强化<\/div>
+    <div id="mk-list"><\/div>
+  <\/div>
+<\/div>
+
+<script>
+const rawData = ${jsonStr};
+const vocabulary = rawData.vocabulary || {};
+const phrasesData = rawData.phrases || [];
+
+/* ── Audio engine ── */
+const AUDIO_ITEMS = ${audioItemsJSON};
+// Map: word → audio filename (id.mp3)
+// We rebuild it to match word → file id
+const wordAudioMap = {};
+for (const item of AUDIO_ITEMS) { wordAudioMap[item.word.toLowerCase()] = item.id + '.mp3'; }
+
+let _currentAudio = null; // singleton player
+let _currentBtn = null;
+
+function playExample(btn, word) {
+  const filename = wordAudioMap[word.toLowerCase()];
+  if (!filename) {
+    // No audio file available, show tip once
+    const tip = btn.nextElementSibling;
+    if (tip && tip.classList.contains('audio-missing')) {
+      tip.style.display = 'inline-block';
+      setTimeout(() => { tip.style.display = 'none'; }, 3000);
+    }
+    return;
+  }
+
+  // If same button is playing → pause
+  if (_currentBtn === btn && _currentAudio && !_currentAudio.paused) {
+    _currentAudio.pause();
+    btn.classList.remove('playing');
+    btn.textContent = '▶';
+    _currentBtn = null;
+    return;
+  }
+
+  // Stop previous
+  if (_currentAudio) {
+    _currentAudio.pause();
+    _currentAudio.currentTime = 0;
+    if (_currentBtn) { _currentBtn.classList.remove('playing'); _currentBtn.textContent = '▶'; }
+  }
+
+  const audio = new Audio(filename);
+  audio.loop = true;
+  audio.play().then(() => {
+    _currentAudio = audio;
+    _currentBtn = btn;
+    btn.classList.add('playing');
+    btn.textContent = '⏸';
+    audio.onended = () => {}; // loop keeps going
+    audio.onerror = () => {
+      btn.classList.remove('playing');
+      btn.textContent = '▶';
+      _currentBtn = null;
+      // Show tip
+      const tip = btn.nextElementSibling;
+      if (tip && tip.classList.contains('audio-missing')) {
+        tip.textContent = '⚠️ 请将 _mp3.zip 解压到与此 HTML 同一目录';
+        tip.style.display = 'inline-block';
+        setTimeout(() => { tip.style.display = 'none'; tip.textContent = '音频文件未找到'; }, 4000);
+      }
+    };
+  }).catch(() => {
+    const tip = btn.nextElementSibling;
+    if (tip && tip.classList.contains('audio-missing')) {
+      tip.textContent = '⚠️ 请将 _mp3.zip 解压到与此 HTML 同一目录';
+      tip.style.display = 'inline-block';
+      setTimeout(() => { tip.style.display = 'none'; tip.textContent = '音频文件未找到'; }, 4000);
+    }
+  });
+}
+
+/* Generates PLAY button HTML for a given word */
+function playBtnHTML(word) {
+  const esc = (word||'').replace(/'/g,"\\\\'");
+  return \`<button class="play-btn" onclick="playExample(this,'\${esc}')">▶<\/button><span class="audio-missing" style="display:none">音频文件未找到<\/span>\`;
+}
+
+/* ── State ── */
+let curLv = 'level1', curWIdx = 0, curPIdx = 0;
+let vocabMode = 'ctx';
+let reinforceQueue = [], reinforcing = false;
+const mistakeMap = new Map();
+let trapSet = [], curTrapIdx = 0;
+let simSet = [], curSimIdx = 0;
+
+/* ── Tab switch ── */
+function switchTab(id) {
+  document.querySelectorAll('.tab').forEach(t => {
+    t.classList.toggle('active', t.getAttribute('onclick') && t.getAttribute('onclick').includes("'" + id + "'"));
+  });
+  document.querySelectorAll('.section').forEach(s => s.classList.toggle('active', s.id === id));
+  if (id === 'trap') initTrap();
+  if (id === 'sim') initSim();
+  if (id === 'mistakes') renderMistakes();
+  if (id === 'phrases') renderPhrase();
+}
+
+function speak(text) {
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-GB';
+  window.speechSynthesis.speak(u);
+}
+
+function escQ(s) { return (s||'').replace(/\\\\/g,'\\\\\\\\').replace(/'/g,"\\\\'"); }
+
+function setMode(m) {
+  vocabMode = m;
+  document.getElementById('modeCtx').classList.toggle('active', m === 'ctx');
+  document.getElementById('modeDir').classList.toggle('active', m === 'dir');
+  renderVocab();
+}
+
+function jumpLevel(lv) {
+  curLv = lv; curWIdx = 0;
+  ['lv1btn','lv2btn','lv3btn'].forEach((id, i) => {
+    document.getElementById(id).classList.toggle('active', lv === 'level' + (i+1));
+  });
+  renderVocab();
+}
+
+/* ── Trap-box HTML helper ── */
+function trapBlockHTML(d) {
+  if (!d.trap && !d.paraphrase && !d.questionStem) return '';
+  let s = '<div class="trap-box"><div class="trap-title">⚡ 题眼信息 — 雅思考点<\\/div>';
+  if (d.trap) s += '<div class="trap-row"><span class="trap-lbl">陷阱替换<\\/span><span class="trap-val">' + d.trap + '<\\/span><\\/div>';
+  if (d.paraphrase) s += '<div class="trap-row"><span class="trap-lbl">Paraphrase<\\/span><span class="trap-val">' + d.paraphrase + '<\\/span><\\/div>';
+  if (d.questionStem) s += '<div class="trap-row"><span class="trap-lbl">题型提示<\\/span><span class="trap-val">' + d.questionStem + '<\\/span><\\/div>';
+  return s + '<\\/div>';
+}
+
+/* ── ① Vocab ── */
+function renderVocab() {
+  const list = reinforcing ? reinforceQueue : (vocabulary[curLv] || []);
+  if (!list.length) {
+    document.getElementById('vocab-card').innerHTML = '<div class="text-center p-10 text-slate-400">该等级暂无词汇<\\/div>';
+    return;
+  }
+  const idx = reinforcing ? 0 : curWIdx;
+  const data = list[idx];
+  if (!data) return;
+  document.getElementById('reinforce-notice').style.display = reinforcing ? 'block' : 'none';
+  document.getElementById('vocabProg').style.width = Math.round((idx / list.length) * 100) + '%';
+  speak(data.word);
+  if (vocabMode === 'ctx') renderVocabCtx(data, list.length, idx);
+  else renderVocabDir(data, list.length, idx);
+}
+
+function renderVocabCtx(data, total, idx) {
+  const ex = data.example || '';
+  const _wi = ex.toLowerCase().indexOf(data.word.toLowerCase());
+  const blanked = _wi >= 0
+    ? ex.slice(0,_wi) + '<span class=\\'ctx-blank\\' id=\\'ctx-hw\\' onclick=\\'revealWord()\\'>' + '_'.repeat(Math.min(data.word.length,8)) + '<\\/span>' + ex.slice(_wi+data.word.length)
+    : ex;
+  const hasBlanked = blanked !== ex;
+
+  document.getElementById('vocab-card').innerHTML = \`
+    <div class="flex justify-between items-start mb-1">
+      <div class="text-[0.58rem] font-bold text-blue-500 uppercase tracking-widest">\${curLv} · 语境猜词<\/div>
+      <div class="text-[0.6rem] text-slate-300 font-bold">\${idx+1} / \${total}<\/div>
+    <\/div>
+    <div class="ex-box">
+      <div class="text-[0.6rem] font-bold text-blue-500 mb-1 flex items-center gap-1">
+        📖 真题原句 — \${hasBlanked ? '点击空格揭开单词' : '阅读并尝试理解'}
+        \${playBtnHTML(data.word)}
+      <\/div>
+      <p class="text-sm font-bold text-blue-900 leading-snug">\${hasBlanked ? blanked : ex}<\/p>
+      <p class="text-[0.72rem] text-blue-700/70 mt-1">\${data.translation || ''}<\/p>
+    <\/div>
+    <div class="text-[0.68rem] text-slate-400 text-center mb-2">👆 先读句子猜意思，再点击揭开单词<\/div>
+    <div id="word-reveal" style="display:none">
+      <div class="flex justify-between items-start mb-2">
+        <div>
+          <h1 class="text-3xl font-bold text-slate-800">\${data.word}<\/h1>
+          <div class="text-slate-400 text-sm mt-1">\${data.phonetic || ''} <span onclick="speak('\${data.word.replace(/'/g,"\\\\'")}'')" class="cursor-pointer">🔊<\/span><\/div>
+        <\/div>
+        <div class="text-blue-600 font-bold text-xl text-right">\${data.meaning}<\/div>
+      <\/div>
+      <div class="detail-box space-y-2">
+        <div class="flex"><span class="lbl">同义替换<\/span><span class="text-slate-600 font-bold">\${data.syn||'—'}<\/span><\/div>
+        <div class="flex"><span class="lbl">派生词<\/span><span class="text-slate-600">\${data.derive||'—'}<\/span><\/div>
+      <\/div>
+      <div class="root-box">
+        <div class="flex items-center mb-1"><span class="lbl lbl-r">词根词缀<\/span><span class="font-bold text-orange-800">\${data.root||'—'}<\/span><\/div>
+        <div class="text-xs text-orange-600/80 italic pl-[73px]">同根: \${data.rootExt||'—'}<\/div>
+      <\/div>
+      \${trapBlockHTML(data)}
+    <\/div>
+    <div class="grid grid-cols-3 gap-3 mt-auto pt-4" id="mark-btns" style="\${hasBlanked ? 'display:none' : ''}">
+      <button class="btn-mark bg-emerald-500" onclick="handleMark('known','v')">掌握 ✓<\/button>
+      <button class="btn-mark bg-amber-500" onclick="handleMark('unsure','v')">模糊 ~<\/button>
+      <button class="btn-mark bg-rose-500" onclick="handleMark('unknown','v')">不识 ✗<\/button>
+    <\/div>
+  \`;
+  if (!hasBlanked) {
+    document.getElementById('word-reveal').style.display = 'block';
+  }
+}
+
+function revealWord() {
+  const hw = document.getElementById('ctx-hw');
+  const list = reinforcing ? reinforceQueue : (vocabulary[curLv] || []);
+  const data = list[reinforcing ? 0 : curWIdx];
+  if (hw && data) { hw.classList.add('revealed'); hw.textContent = data.word; }
+  document.getElementById('word-reveal').style.display = 'block';
+  const mb = document.getElementById('mark-btns');
+  if (mb) mb.style.display = 'grid';
+}
+
+function renderVocabDir(data, total, idx) {
+  document.getElementById('vocab-card').innerHTML = \`
+    <div class="flex justify-between items-start">
+      <div class="flex-1">
+        <div class="text-[0.58rem] font-bold text-blue-500 uppercase tracking-widest mb-1">\${curLv}<\/div>
+        <h1 class="text-3xl font-bold text-slate-800">\${data.word}<\/h1>
+        <div class="text-slate-400 text-sm mt-1">\${data.phonetic || ''} <span onclick="speak('\${data.word.replace(/'/g,"\\\\'")}'')" class="cursor-pointer ml-2">🔊<\/span><\/div>
+      <\/div>
+      <div class="text-right">
+        <div class="text-slate-300 text-[0.6rem] font-bold mb-2">\${idx+1} / \${total}<\/div>
+        <div class="text-blue-600 font-bold text-xl">\${data.meaning}<\/div>
+      <\/div>
+    <\/div>
+    <div class="ex-box">
+      <div class="flex items-center gap-1 mb-1">
+        <span class="text-[0.6rem] font-bold text-blue-500">真题例句<\/span>
+        \${playBtnHTML(data.word)}
+      <\/div>
+      <p class="text-sm font-bold text-blue-900 leading-snug">"\${data.example||''}"<\/p>
+      <p class="text-[0.75rem] text-blue-700/70 mt-1">\${data.translation||''}<\/p>
+    <\/div>
+    <div class="detail-box space-y-2">
+      <div class="flex"><span class="lbl">同义替换<\/span><span class="text-slate-600 font-bold">\${data.syn||'—'}<\/span><\/div>
+      <div class="flex"><span class="lbl">派生词<\/span><span class="text-slate-600">\${data.derive||'—'}<\/span><\/div>
+    <\/div>
+    <div class="root-box">
+      <div class="flex items-center mb-1"><span class="lbl lbl-r">词根词缀<\/span><span class="font-bold text-orange-800">\${data.root||'—'}<\/span><\/div>
+      <div class="text-xs text-orange-600/80 italic pl-[73px]">同根: \${data.rootExt||'—'}<\/div>
+    <\/div>
+    \${trapBlockHTML(data)}
+    <div class="grid grid-cols-3 gap-3 mt-auto pt-4">
+      <button class="btn-mark bg-emerald-500" onclick="handleMark('known','v')">掌握 ✓<\/button>
+      <button class="btn-mark bg-amber-500" onclick="handleMark('unsure','v')">模糊 ~<\/button>
+      <button class="btn-mark bg-rose-500" onclick="handleMark('unknown','v')">不识 ✗<\/button>
+    <\/div>
+  \`;
+}
+
+function handleMark(status, type) {
+  const cardId = type === 'v' ? 'vocab-card' : 'phrase-card';
+  const card = document.getElementById(cardId);
+  const cls = status === 'known' ? 'flash-green' : (status === 'unsure' ? 'flash-amber' : 'flash-rose');
+  card.classList.add(cls);
+  if (status === 'unknown' || status === 'unsure') {
+    const item = type === 'v'
+      ? (reinforcing ? reinforceQueue[0] : (vocabulary[curLv]||[])[curWIdx])
+      : phrasesData[curPIdx];
+    if (item) {
+      const key = item.word;
+      if (!mistakeMap.has(key)) mistakeMap.set(key, { data: item, count: 1 });
+      else mistakeMap.get(key).count++;
+      if (!reinforceQueue.find(x => x.word === key)) reinforceQueue.push(item);
+    }
+  }
+  setTimeout(() => {
+    card.classList.remove(cls);
+    if (type === 'v') advanceVocab();
+    else advancePhrase();
+  }, 800);
+}
+
+function advanceVocab() {
+  if (reinforcing) {
+    reinforceQueue.shift();
+    if (!reinforceQueue.length) {
+      reinforcing = false;
+      document.getElementById('reinforce-notice').style.display = 'none';
+      document.getElementById('vocab-card').innerHTML = '<div class="text-center p-10"><div class="text-5xl mb-4">🎯<\\/div><div class="text-xl font-bold text-emerald-600">强化轮完成！<\\/div><div class="text-sm text-slate-400 mt-2">切换「题眼训练」或「做题模拟」检验效果<\\/div><\\/div>';
+    } else { renderVocab(); }
+    return;
+  }
+  const list = vocabulary[curLv] || [];
+  if (curWIdx < list.length - 1) { curWIdx++; renderVocab(); }
+  else if (reinforceQueue.length) {
+    reinforcing = true;
+    renderVocab();
+  } else {
+    const nextLv = { level1:'level2', level2:'level3' }[curLv];
+    document.getElementById('vocab-card').innerHTML = \`
+      <div class="text-center p-10">
+        <div class="text-5xl mb-4">✅<\/div>
+        <div class="text-xl font-bold text-emerald-600">本级完成！无生词 🎉<\/div>
+        \${nextLv ? \`<button class="mt-6 px-6 py-3 bg-blue-500 text-white rounded-2xl font-bold" onclick="jumpLevel('\${nextLv}')">继续下一级 →<\/button>\` : ''}
+      <\/div>
+    \`;
+  }
+}
+
+/* ── ④ Phrase ── */
+function renderPhrase() {
+  if (!phrasesData.length) {
+    document.getElementById('phrase-card').innerHTML = '<div class="text-center p-10 text-slate-400">暂无短语数据<\\/div>';
+    return;
+  }
+  const data = phrasesData[curPIdx];
+  const total = phrasesData.length;
+  document.getElementById('phraseProg').style.width = Math.round((curPIdx / total) * 100) + '%';
+  document.getElementById('phrase-card').innerHTML = \`
+    <div class="flex justify-between items-start">
+      <div class="flex-1">
+        <div class="text-[0.6rem] font-bold text-emerald-500 uppercase tracking-widest mb-1">真题短语<\/div>
+        <h1 class="text-2xl font-bold text-slate-800">\${data.word}<\/h1>
+      <\/div>
+      <div class="text-right">
+        <div class="text-slate-300 text-[0.6rem] font-bold mb-2">\${curPIdx+1} / \${total}<\/div>
+        <div class="text-emerald-600 font-bold text-lg">\${data.meaning}<\/div>
+      <\/div>
+    <\/div>
+    <div class="ex-box" style="border-left-color:#10b981;background:#ecfdf5;">
+      <div class="flex items-center gap-1 mb-1">
+        <span class="text-[0.6rem] font-bold text-emerald-600">真题例句<\/span>
+        \${playBtnHTML(data.word)}
+      <\/div>
+      <p class="text-sm font-bold text-emerald-900 leading-snug">"\${data.example||''}"<\/p>
+      <p class="text-[0.75rem] text-emerald-700/70 mt-1">\${data.translation||''}<\/p>
+    <\/div>
+    <div class="detail-box">
+      <div class="flex"><span class="lbl" style="color:#10b981">同义替换<\/span><span class="text-slate-600 font-bold">\${data.syn||'—'}<\/span><\/div>
+    <\/div>
+    \${data.trap ? \`<div class="trap-box"><div class="trap-title">⚡ 短语陷阱词<\\/div><div class="trap-row"><span class="trap-lbl">陷阱替换<\\/span><span class="trap-val">\${data.trap}<\\/span><\\/div><\\/div>\` : ''}
+    <div class="grid grid-cols-3 gap-3 mt-auto pt-4">
+      <button class="btn-mark bg-emerald-500" onclick="handleMark('known','p')">掌握 ✓<\/button>
+      <button class="btn-mark bg-amber-500" onclick="handleMark('unsure','p')">模糊 ~<\/button>
+      <button class="btn-mark bg-rose-500" onclick="handleMark('unknown','p')">不识 ✗<\/button>
+    <\/div>
+  \`;
+}
+
+function advancePhrase() {
+  if (curPIdx < phrasesData.length - 1) { curPIdx++; renderPhrase(); }
+  else {
+    document.getElementById('phrase-card').innerHTML = '<div class="text-center p-10"><div class="text-5xl mb-4">🏁<\\/div><div class="text-xl font-bold text-emerald-600">短语已全部复习！<\\/div><button class="mt-6 px-6 py-3 bg-emerald-500 text-white rounded-2xl font-bold" onclick="curPIdx=0;renderPhrase()">再练一遍<\\/button><\\/div>';
+  }
+}
+
+/* ── ② Trap Quiz ── */
+function initTrap() {
+  const all = [...(vocabulary.level1||[]), ...(vocabulary.level2||[]), ...(vocabulary.level3||[])];
+  const withTrap = all.filter(w => w.trap || w.paraphrase || w.syn);
+  if (!withTrap.length) {
+    document.getElementById('trap-card').innerHTML = '<div class="text-center p-10 text-slate-400"><div class="text-4xl mb-4">⚠️<\\/div><div class="font-bold mb-2">暂无题眼数据<\\/div><div class="text-sm">请用 v16 Prompt 重新生成 JSON，即可解锁此模块<\\/div><\\/div>';
+    return;
+  }
+  trapSet = [...withTrap].sort(() => Math.random() - 0.5).slice(0, Math.min(20, withTrap.length));
+  curTrapIdx = 0;
+  renderTrap();
+}
+
+function renderTrap() {
+  const q = trapSet[curTrapIdx];
+  const total = trapSet.length;
+  document.getElementById('trapProg').style.width = Math.round((curTrapIdx / total) * 100) + '%';
+  const all = [...(vocabulary.level1||[]), ...(vocabulary.level2||[]), ...(vocabulary.level3||[])];
+
+  if (q.paraphrase && Math.random() > 0.4) {
+    document.getElementById('trap-card').innerHTML = \`
+      <div class="text-[0.6rem] font-bold text-purple-600 uppercase tracking-widest mb-3">题眼训练 \${curTrapIdx+1}/\${total} · Paraphrase 配对<\/div>
+      <div class="trap-box mb-3">
+        <div class="trap-title">Paraphrase 配对<\/div>
+        <div class="text-base font-bold text-purple-900 leading-relaxed">\${q.paraphrase}<\/div>
+      <\/div>
+      <div class="detail-box mb-3">
+        原词 <strong class="text-blue-600">\${q.word}<\/strong> 在题目中被替换为 <strong class="text-purple-600">\${q.trap || q.syn || '?'}<\/strong>
+      <\/div>
+      <div class="text-xs text-slate-400 mb-4">记住：题目出现 <strong>\${q.trap || q.syn || ''}<\/strong> → 对应原文的 <strong>\${q.word}<\/strong><\/div>
+      <div class="mt-auto">
+        <button class="w-full py-4 bg-purple-600 text-white rounded-2xl font-bold text-base" onclick="advanceTrap()">已理解，下一题 →<\/button>
+      <\/div>
+    \`;
+    return;
+  }
+
+  const correct = q.trap || q.syn || q.word;
+  const decoys = all.filter(x => x.word !== q.word).sort(() => Math.random()-0.5).slice(0,3)
+    .map(x => x.trap || x.syn || x.word).filter(Boolean);
+  const opts = [correct, ...decoys].sort(() => Math.random() - 0.5);
+  document.getElementById('trap-card').innerHTML = \`
+    <div class="text-[0.6rem] font-bold text-purple-600 uppercase tracking-widest mb-4">题眼训练 \${curTrapIdx+1}/\${total} · 同义替换识别<\/div>
+    <div class="text-sm text-slate-500 mb-1">原文出现了：<\/div>
+    <div class="text-4xl font-bold text-slate-800 mb-2 cursor-pointer" onclick="speak('\${q.word.replace(/'/g,"\\\\'")}'')">\${q.word} 🔊<\/div>
+    <div class="text-slate-400 text-sm mb-4">\${q.meaning || ''}<\/div>
+    <div class="text-sm font-bold text-slate-600 mb-3">题目中最可能用哪个词替换它？<\/div>
+    <div class="space-y-2">\${opts.map(o => \`<button class="opt-btn" onclick="checkTrap(this,'\${escQ(o)}','\${escQ(correct)}')">\${o}<\/button>\`).join('')}<\/div>
+    \${q.example ? \`<div class="text-xs text-slate-300 mt-3 pt-3 border-t border-slate-100">例句: \${q.example}<\\/div>\` : ''}
+  \`;
+}
+
+function checkTrap(el, sel, cor) {
+  document.querySelectorAll('#trap-card .opt-btn').forEach(b => b.disabled = true);
+  if (sel === cor) {
+    el.style.borderColor = '#10b981'; el.style.background = '#ecfdf5';
+    setTimeout(advanceTrap, 600);
+  } else {
+    el.style.borderColor = '#ef4444'; el.style.background = '#fef2f2';
+    document.querySelectorAll('#trap-card .opt-btn').forEach(b => {
+      if (b.textContent.trim() === cor) { b.style.borderColor = '#10b981'; b.style.background = '#ecfdf5'; }
+    });
+    setTimeout(advanceTrap, 1400);
+  }
+}
+
+function advanceTrap() {
+  if (curTrapIdx < trapSet.length - 1) { curTrapIdx++; renderTrap(); }
+  else {
+    document.getElementById('trapProg').style.width = '100%';
+    document.getElementById('trap-card').innerHTML = '<div class="text-center p-10"><div class="text-5xl mb-4">🏆<\\/div><div class="text-xl font-bold text-purple-600">题眼训练完成！<\\/div><div class="text-sm text-slate-400 mt-2">去「做题模拟」实战检验吧<\\/div><button class="mt-6 px-6 py-3 bg-purple-500 text-white rounded-2xl font-bold" onclick="initTrap()">再练一遍<\\/button><\\/div>';
+  }
+}
+
+/* ── ③ Sim Quiz ── */
+function initSim() {
+  const all = [...(vocabulary.level1||[]), ...(vocabulary.level2||[]), ...(vocabulary.level3||[]), ...phrasesData];
+  if (!all.length) return;
+  simSet = [...all].sort(() => Math.random() - 0.5).slice(0, Math.min(20, all.length));
+  curSimIdx = 0;
+  renderSim();
+}
+
+function renderSim() {
+  const total = simSet.length;
+  document.getElementById('simProg').style.width = Math.round((curSimIdx / total) * 100) + '%';
+  const q = simSet[curSimIdx];
+  const all = [...(vocabulary.level1||[]), ...(vocabulary.level2||[]), ...(vocabulary.level3||[]), ...phrasesData];
+
+  if (q.example) {
+    const _qi = q.example.toLowerCase().indexOf(q.word.toLowerCase());
+    const blanked = _qi >= 0 && !/[a-zA-Z]/.test(q.example[_qi-1]||'') && !/[a-zA-Z]/.test(q.example[_qi+q.word.length]||'')
+      ? q.example.slice(0,_qi)+'______'+q.example.slice(_qi+q.word.length) : q.example;
+    if (blanked !== q.example) {
+      const decoys = all.filter(x => x.word !== q.word).sort(() => Math.random()-0.5).slice(0,3).map(x => x.word);
+      const opts = [q.word, ...decoys].sort(() => Math.random() - 0.5);
+      document.getElementById('sim-card').innerHTML = \`
+        <div class="text-[0.6rem] font-bold text-cyan-600 uppercase tracking-widest mb-3">做题模拟 \${curSimIdx+1}/\${total} · 真题填空<\/div>
+        <div class="text-xs text-slate-400 mb-2 font-bold">选出填入空格的正确词：<\/div>
+        <div class="ex-box" style="border-left-color:#0ea5e9;background:#f0f9ff;">
+          <p class="text-base font-bold text-slate-700 leading-relaxed">\${blanked}<\/p>
+        <\/div>
+        <div class="text-xs text-slate-400 mb-3">译: \${q.translation||''}<\/div>
+        \${q.trap ? \`<div class="text-xs text-purple-500 mb-3">⚡ 注意：可能被替换为 <strong>\${q.trap}<\\/strong><\\/div>\` : ''}
+        <div class="space-y-2">\${opts.map(o => \`<button class="opt-btn" onclick="checkSim(this,'\${escQ(o)}','\${escQ(q.word)}')">\${o}<\/button>\`).join('')}<\/div>
+      \`;
+      return;
+    }
+  }
+
+  const decoys = all.filter(x => x.word !== q.word).sort(() => Math.random()-0.5).slice(0,3).map(x => x.word);
+  const opts = [q.word, ...decoys].sort(() => Math.random() - 0.5);
+  document.getElementById('sim-card').innerHTML = \`
+    <div class="text-[0.6rem] font-bold text-cyan-600 uppercase tracking-widest mb-3">做题模拟 \${curSimIdx+1}/\${total} · 词义配对<\/div>
+    <div class="text-xl font-bold text-slate-800 p-4 bg-sky-50 rounded-2xl mb-3">\${q.meaning||''}<\/div>
+    \${q.trap ? \`<div class="text-xs text-purple-500 mb-3">⚡ 注意：可能被替换为 <strong>\${q.trap}<\\/strong><\\/div>\` : ''}
+    <div class="space-y-2">\${opts.map(o => \`<button class="opt-btn" onclick="checkSim(this,'\${escQ(o)}','\${escQ(q.word)}')">\${o}<\/button>\`).join('')}<\/div>
+  \`;
+}
+
+function checkSim(el, sel, cor) {
+  document.querySelectorAll('#sim-card .opt-btn').forEach(b => b.disabled = true);
+  const advance = () => {
+    if (curSimIdx < simSet.length - 1) { curSimIdx++; renderSim(); }
+    else {
+      document.getElementById('simProg').style.width = '100%';
+      document.getElementById('sim-card').innerHTML = '<div class="text-center p-10"><div class="text-5xl mb-4">🎯<\\/div><div class="text-xl font-bold text-cyan-600">模拟完成！<\\/div><button class="mt-6 px-6 py-3 bg-cyan-500 text-white rounded-2xl font-bold" onclick="initSim()">再来一轮<\\/button><\\/div>';
+    }
+  };
+  if (sel === cor) {
+    el.style.borderColor = '#10b981'; el.style.background = '#ecfdf5';
+    setTimeout(advance, 500);
+  } else {
+    el.style.borderColor = '#ef4444'; el.style.background = '#fef2f2';
+    document.querySelectorAll('#sim-card .opt-btn').forEach(b => {
+      if (b.textContent.trim() === cor) { b.style.borderColor = '#10b981'; b.style.background = '#ecfdf5'; }
+    });
+    setTimeout(advance, 1400);
+  }
+}
+
+/* ── ⑤ Mistakes ── */
+function renderMistakes() {
+  const list = document.getElementById('mk-list');
+  if (!mistakeMap.size) {
+    list.innerHTML = '<div id="mk-empty">🎉 暂无生词<br><small>学习时标记「不识」或「模糊」的词会出现在这里<\\/small><\\/div>';
+    return;
+  }
+  list.innerHTML = [...mistakeMap.values()].map(({ data: w, count }) => \`
+    <div class="mk-item">
+      <div class="flex justify-between items-start">
+        <div>
+          <div class="mk-word">\${w.word}<\/div>
+          <div class="mk-meaning">\${w.meaning}<\/div>
+        <\/div>
+        <div class="text-[0.65rem] bg-red-50 border border-red-200 text-red-500 rounded-full px-2 py-0.5 font-bold">错\${count}次<\/div>
+      <\/div>
+      \${w.trap ? \`<div class="text-xs text-purple-500 mt-2">⚡ 陷阱替换: \${w.trap}<\\/div>\` : ''}
+      \${w.example ? \`<div class="text-xs text-slate-400 mt-1 flex items-center gap-1"><span class="italic flex-1">\${w.example}<\\/span>\${playBtnHTML(w.word)}<\\/div>\` : ''}
+    <\/div>
+  \`).join('');
+}
+
+renderVocab();
+renderPhrase();
+<\/script>
+<\/body>
+<\/html>`;
+}
+</script>
+</body>
+</html>

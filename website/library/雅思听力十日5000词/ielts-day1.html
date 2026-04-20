@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10天5000雅思听力核心词汇 - Day 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-start: #f0f4f8;
+    --bg-end: #e3f2fd;
+    --card-bg: #ffffff;
+    --blue-primary: #1565c0;
+    --blue-light: #1e88e5;
+    --blue-accent: #42a5f5;
+    --text-en: #1565c0;
+    --text-zh: #455a64;
+    --text-muted: #78909c;
+    --border: #e3f2fd;
+    --shadow: 0 2px 12px rgba(21,101,192,0.08);
+    --shadow-hover: 0 8px 28px rgba(21,101,192,0.18);
+    --radius: 14px;
+    --radius-sm: 8px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Source Sans 3', 'Noto Sans SC', sans-serif;
+    background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+    min-height: 100vh;
+    color: #263238;
+    padding-bottom: 60px;
+  }
+
+  /* HEADER */
+  .site-header {
+    background: linear-gradient(120deg, #1565c0 0%, #1e88e5 60%, #42a5f5 100%);
+    padding: 48px 24px 36px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .site-header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 30%, rgba(255,255,255,0.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .header-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.35);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 16px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+  .site-header h1 {
+    font-size: clamp(22px, 5vw, 36px);
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+  .site-header .subtitle {
+    color: rgba(255,255,255,0.85);
+    font-size: 15px;
+    font-weight: 400;
+  }
+  .header-stats {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+  .stat-item {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 12px;
+    padding: 12px 24px;
+    text-align: center;
+    min-width: 100px;
+  }
+  .stat-num {
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    display: block;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.78);
+    margin-top: 4px;
+    display: block;
+  }
+
+  /* MAIN */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 16px;
+  }
+
+  /* SECTION CARD */
+  .section-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(21,101,192,0.07);
+    transition: box-shadow 0.25s;
+  }
+  .section-card:hover { box-shadow: var(--shadow-hover); }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px;
+    cursor: pointer;
+    user-select: none;
+    background: linear-gradient(90deg, #f8fbff 0%, #fff 100%);
+    border-bottom: 2px solid var(--border);
+    transition: background 0.2s;
+  }
+  .section-header:hover { background: linear-gradient(90deg, #e8f4fd 0%, #f0f8ff 100%); }
+  .section-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--blue-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-icon {
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, #1e88e5, #42a5f5);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .section-count {
+    background: #e3f2fd;
+    color: var(--blue-primary);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 12px;
+  }
+  .toggle-btn {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: #e3f2fd;
+    border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--blue-primary);
+    font-size: 18px;
+    transition: transform 0.3s, background 0.2s;
+    flex-shrink: 0;
+  }
+  .toggle-btn.open { transform: rotate(180deg); background: var(--blue-primary); color: #fff; }
+
+  .section-body {
+    padding: 20px 20px 24px;
+    display: none;
+  }
+  .section-body.open { display: block; }
+
+  /* WORD GRID */
+  .word-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+  }
+  .word-item {
+    background: linear-gradient(135deg, #f8fbff 0%, #fff 100%);
+    border: 1px solid #dbeafe;
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+    cursor: default;
+  }
+  .word-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(21,101,192,0.14);
+    border-color: var(--blue-accent);
+  }
+  .word-en {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-en);
+    line-height: 1.3;
+    margin-bottom: 3px;
+  }
+  .word-zh {
+    font-size: 12px;
+    color: var(--text-zh);
+    line-height: 1.3;
+  }
+
+  /* SUBSECTION LABEL */
+  .subsection-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--blue-accent);
+    letter-spacing: 0.5px;
+    margin: 16px 0 10px;
+    padding-left: 8px;
+    border-left: 3px solid var(--blue-accent);
+  }
+  .subsection-label:first-child { margin-top: 0; }
+
+  /* FOOTER */
+  .site-footer {
+    background: linear-gradient(120deg, #1565c0, #1e88e5);
+    color: #fff;
+    text-align: center;
+    padding: 32px 24px;
+    margin-top: 40px;
+  }
+  .footer-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .tips-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .tip-item {
+    background: rgba(255,255,255,0.13);
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 10px;
+    padding: 8px 18px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.9);
+  }
+  .footer-note {
+    margin-top: 20px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+  }
+
+  /* DAY NAV */
+  .day-progress {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 20px 16px 0;
+    flex-wrap: wrap;
+  }
+  .day-dot {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    background: #fff;
+    border: 2px solid #dbeafe;
+    color: var(--text-muted);
+  }
+  .day-dot.active {
+    background: var(--blue-primary);
+    border-color: var(--blue-primary);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(21,101,192,0.3);
+  }
+
+  @media (max-width: 600px) {
+    .word-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; }
+    .section-header { padding: 14px 16px; }
+    .section-body { padding: 14px 12px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-badge">IELTS Listening Vocabulary</div>
+  <h1>10天5000雅思听力核心词汇</h1>
+  <p class="subtitle">Day 1 · 基础数据与描述类 — 数字、日期、时间、颜色、形状、测量与拼写</p>
+  <div class="header-stats">
+    <div class="stat-item"><span class="stat-num">10</span><span class="stat-label">总天数</span></div>
+    <div class="stat-item"><span class="stat-num">500</span><span class="stat-label">今日词汇</span></div>
+    <div class="stat-item"><span class="stat-num">5000</span><span class="stat-label">总词汇量</span></div>
+    <div class="stat-item"><span class="stat-num">Day 1</span><span class="stat-label">当前进度</span></div>
+  </div>
+</header>
+
+<div class="day-progress">
+  <div class="day-dot active">1</div>
+  <div class="day-dot">2</div><div class="day-dot">3</div><div class="day-dot">4</div><div class="day-dot">5</div>
+  <div class="day-dot">6</div><div class="day-dot">7</div><div class="day-dot">8</div><div class="day-dot">9</div><div class="day-dot">10</div>
+</div>
+
+<div class="container">
+
+  <!-- SECTION 1 -->
+  <div class="section-card">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-title">
+        <div class="section-icon">①</div>
+        一、基础数字与计数词 <span class="section-count">58词</span>
+      </div>
+      <button class="toggle-btn open">▼</button>
+    </div>
+    <div class="section-body open">
+      <div class="subsection-label">基数词 Cardinal Numbers</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">zero</div><div class="word-zh">零</div></div>
+        <div class="word-item"><div class="word-en">one</div><div class="word-zh">一</div></div>
+        <div class="word-item"><div class="word-en">two</div><div class="word-zh">二</div></div>
+        <div class="word-item"><div class="word-en">three</div><div class="word-zh">三</div></div>
+        <div class="word-item"><div class="word-en">four</div><div class="word-zh">四</div></div>
+        <div class="word-item"><div class="word-en">five</div><div class="word-zh">五</div></div>
+        <div class="word-item"><div class="word-en">six</div><div class="word-zh">六</div></div>
+        <div class="word-item"><div class="word-en">seven</div><div class="word-zh">七</div></div>
+        <div class="word-item"><div class="word-en">eight</div><div class="word-zh">八</div></div>
+        <div class="word-item"><div class="word-en">nine</div><div class="word-zh">九</div></div>
+        <div class="word-item"><div class="word-en">ten</div><div class="word-zh">十</div></div>
+        <div class="word-item"><div class="word-en">eleven</div><div class="word-zh">十一</div></div>
+        <div class="word-item"><div class="word-en">twelve</div><div class="word-zh">十二</div></div>
+        <div class="word-item"><div class="word-en">thirteen</div><div class="word-zh">十三</div></div>
+        <div class="word-item"><div class="word-en">fourteen</div><div class="word-zh">十四</div></div>
+        <div class="word-item"><div class="word-en">fifteen</div><div class="word-zh">十五</div></div>
+        <div class="word-item"><div class="word-en">sixteen</div><div class="word-zh">十六</div></div>
+        <div class="word-item"><div class="word-en">seventeen</div><div class="word-zh">十七</div></div>
+        <div class="word-item"><div class="word-en">eighteen</div><div class="word-zh">十八</div></div>
+        <div class="word-item"><div class="word-en">nineteen</div><div class="word-zh">十九</div></div>
+        <div class="word-item"><div class="word-en">twenty</div><div class="word-zh">二十</div></div>
+        <div class="word-item"><div class="word-en">thirty</div><div class="word-zh">三十</div></div>
+        <div class="word-item"><div class="word-en">forty</div><div class="word-zh">四十</div></div>
+        <div class="word-item"><div class="word-en">fifty</div><div class="word-zh">五十</div></div>
+        <div class="word-item"><div class="word-en">sixty</div><div class="word-zh">六十</div></div>
+        <div class="word-item"><div class="word-en">seventy</div><div class="word-zh">七十</div></div>
+        <div class="word-item"><div class="word-en">eighty</div><div class="word-zh">八十</div></div>
+        <div class="word-item"><div class="word-en">ninety</div><div class="word-zh">九十</div></div>
+        <div class="word-item"><div class="word-en">hundred</div><div class="word-zh">百</div></div>
+        <div class="word-item"><div class="word-en">thousand</div><div class="word-zh">千</div></div>
+        <div class="word-item"><div class="word-en">million</div><div class="word-zh">百万</div></div>
+        <div class="word-item"><div class="word-en">billion</div><div class="word-zh">十亿</div></div>
+      </div>
+      <div class="subsection-label">序数词 Ordinal Numbers</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">first</div><div class="word-zh">第一</div></div>
+        <div class="word-item"><div class="word-en">second</div><div class="word-zh">第二</div></div>
+        <div class="word-item"><div class="word-en">third</div><div class="word-zh">第三</div></div>
+        <div class="word-item"><div class="word-en">fourth</div><div class="word-zh">第四</div></div>
+        <div class="word-item"><div class="word-en">fifth</div><div class="word-zh">第五</div></div>
+        <div class="word-item"><div class="word-en">sixth</div><div class="word-zh">第六</div></div>
+        <div class="word-item"><div class="word-en">seventh</div><div class="word-zh">第七</div></div>
+        <div class="word-item"><div class="word-en">eighth</div><div class="word-zh">第八</div></div>
+        <div class="word-item"><div class="word-en">ninth</div><div class="word-zh">第九</div></div>
+        <div class="word-item"><div class="word-en">tenth</div><div class="word-zh">第十</div></div>
+        <div class="word-item"><div class="word-en">eleventh</div><div class="word-zh">第十一</div></div>
+        <div class="word-item"><div class="word-en">twelfth</div><div class="word-zh">第十二</div></div>
+        <div class="word-item"><div class="word-en">twentieth</div><div class="word-zh">第二十</div></div>
+        <div class="word-item"><div class="word-en">thirtieth</div><div class="word-zh">第三十</div></div>
+        <div class="word-item"><div class="word-en">hundredth</div><div class="word-zh">第一百</div></div>
+        <div class="word-item"><div class="word-en">last</div><div class="word-zh">最后一个</div></div>
+        <div class="word-item"><div class="word-en">next</div><div class="word-zh">下一个</div></div>
+        <div class="word-item"><div class="word-en">previous</div><div class="word-zh">前一个</div></div>
+        <div class="word-item"><div class="word-en">former</div><div class="word-zh">前者</div></div>
+        <div class="word-item"><div class="word-en">latter</div><div class="word-zh">后者</div></div>
+        <div class="word-item"><div class="word-en">final</div><div class="word-zh">最终的</div></div>
+        <div class="word-item"><div class="word-en">initial</div><div class="word-zh">最初的</div></div>
+        <div class="word-item"><div class="word-en">subsequent</div><div class="word-zh">随后的</div></div>
+        <div class="word-item"><div class="word-en">consecutive</div><div class="word-zh">连续的</div></div>
+        <div class="word-item"><div class="word-en">alternate</div><div class="word-zh">交替的</div></div>
+        <div class="word-item"><div class="word-en">respective</div><div class="word-zh">各自的</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="section-card">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-title">
+        <div class="section-icon">②</div>
+        二、日期与月份年份 <span class="section-count">42词</span>
+      </div>
+      <button class="toggle-btn open">▼</button>
+    </div>
+    <div class="section-body open">
+      <div class="subsection-label">月份 Months</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">January</div><div class="word-zh">一月</div></div>
+        <div class="word-item"><div class="word-en">February</div><div class="word-zh">二月</div></div>
+        <div class="word-item"><div class="word-en">March</div><div class="word-zh">三月</div></div>
+        <div class="word-item"><div class="word-en">April</div><div class="word-zh">四月</div></div>
+        <div class="word-item"><div class="word-en">May</div><div class="word-zh">五月</div></div>
+        <div class="word-item"><div class="word-en">June</div><div class="word-zh">六月</div></div>
+        <div class="word-item"><div class="word-en">July</div><div class="word-zh">七月</div></div>
+        <div class="word-item"><div class="word-en">August</div><div class="word-zh">八月</div></div>
+        <div class="word-item"><div class="word-en">September</div><div class="word-zh">九月</div></div>
+        <div class="word-item"><div class="word-en">October</div><div class="word-zh">十月</div></div>
+        <div class="word-item"><div class="word-en">November</div><div class="word-zh">十一月</div></div>
+        <div class="word-item"><div class="word-en">December</div><div class="word-zh">十二月</div></div>
+      </div>
+      <div class="subsection-label">星期 Days of the Week</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">Monday</div><div class="word-zh">星期一</div></div>
+        <div class="word-item"><div class="word-en">Tuesday</div><div class="word-zh">星期二</div></div>
+        <div class="word-item"><div class="word-en">Wednesday</div><div class="word-zh">星期三</div></div>
+        <div class="word-item"><div class="word-en">Thursday</div><div class="word-zh">星期四</div></div>
+        <div class="word-item"><div class="word-en">Friday</div><div class="word-zh">星期五</div></div>
+        <div class="word-item"><div class="word-en">Saturday</div><div class="word-zh">星期六</div></div>
+        <div class="word-item"><div class="word-en">Sunday</div><div class="word-zh">星期日</div></div>
+        <div class="word-item"><div class="word-en">weekday</div><div class="word-zh">工作日</div></div>
+        <div class="word-item"><div class="word-en">weekend</div><div class="word-zh">周末</div></div>
+        <div class="word-item"><div class="word-en">fortnight</div><div class="word-zh">两周</div></div>
+      </div>
+      <div class="subsection-label">日期表达 Date Expressions</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">date</div><div class="word-zh">日期</div></div>
+        <div class="word-item"><div class="word-en">deadline</div><div class="word-zh">截止日期</div></div>
+        <div class="word-item"><div class="word-en">due date</div><div class="word-zh">到期日</div></div>
+        <div class="word-item"><div class="word-en">anniversary</div><div class="word-zh">周年纪念日</div></div>
+        <div class="word-item"><div class="word-en">quarter</div><div class="word-zh">季度</div></div>
+        <div class="word-item"><div class="word-en">semester</div><div class="word-zh">学期</div></div>
+        <div class="word-item"><div class="word-en">term</div><div class="word-zh">学期/学季</div></div>
+        <div class="word-item"><div class="word-en">annual</div><div class="word-zh">每年的</div></div>
+        <div class="word-item"><div class="word-en">biannual</div><div class="word-zh">每半年的</div></div>
+        <div class="word-item"><div class="word-en">biennial</div><div class="word-zh">每两年的</div></div>
+        <div class="word-item"><div class="word-en">decade</div><div class="word-zh">十年</div></div>
+        <div class="word-item"><div class="word-en">century</div><div class="word-zh">世纪</div></div>
+        <div class="word-item"><div class="word-en">millennium</div><div class="word-zh">千年</div></div>
+        <div class="word-item"><div class="word-en">fiscal year</div><div class="word-zh">财政年度</div></div>
+        <div class="word-item"><div class="word-en">leap year</div><div class="word-zh">闰年</div></div>
+        <div class="word-item"><div class="word-en">calendar</div><div class="word-zh">日历</div></div>
+        <div class="word-item"><div class="word-en">schedule</div><div class="word-zh">日程表</div></div>
+        <div class="word-item"><div class="word-en">timetable</div><div class="word-zh">时间表</div></div>
+        <div class="word-item"><div class="word-en">agenda</div><div class="word-zh">议程</div></div>
+        <div class="word-item"><div class="word-en">itinerary</div><div class="word-zh">行程单</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3 -->
+  <div class="section-card">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-title">
+        <div class="section-icon">③</div>
+        三、时间表达与时段 <span class="section-count">48词</span>
+      </div>
+      <button class="toggle-btn">▼</button>
+    </div>
+    <div class="section-body">
+      <div class="subsection-label">基本时间词 Basic Time Words</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">morning</div><div class="word-zh">早上</div></div>
+        <div class="word-item"><div class="word-en">afternoon</div><div class="word-zh">下午</div></div>
+        <div class="word-item"><div class="word-en">evening</div><div class="word-zh">傍晚/晚上</div></div>
+        <div class="word-item"><div class="word-en">night</div><div class="word-zh">夜晚</div></div>
+        <div class="word-item"><div class="word-en">midnight</div><div class="word-zh">午夜</div></div>
+        <div class="word-item"><div class="word-en">noon</div><div class="word-zh">正午</div></div>
+        <div class="word-item"><div class="word-en">dawn</div><div class="word-zh">黎明</div></div>
+        <div class="word-item"><div class="word-en">dusk</div><div class="word-zh">黄昏</div></div>
+        <div class="word-item"><div class="word-en">sunrise</div><div class="word-zh">日出</div></div>
+        <div class="word-item"><div class="word-en">sunset</div><div class="word-zh">日落</div></div>
+        <div class="word-item"><div class="word-en">daybreak</div><div class="word-zh">破晓</div></div>
+        <div class="word-item"><div class="word-en">nightfall</div><div class="word-zh">夜幕降临</div></div>
+      </div>
+      <div class="subsection-label">时间单位 Time Units</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">second</div><div class="word-zh">秒</div></div>
+        <div class="word-item"><div class="word-en">minute</div><div class="word-zh">分钟</div></div>
+        <div class="word-item"><div class="word-en">hour</div><div class="word-zh">小时</div></div>
+        <div class="word-item"><div class="word-en">half an hour</div><div class="word-zh">半小时</div></div>
+        <div class="word-item"><div class="word-en">quarter hour</div><div class="word-zh">一刻钟</div></div>
+        <div class="word-item"><div class="word-en">day</div><div class="word-zh">天</div></div>
+        <div class="word-item"><div class="word-en">week</div><div class="word-zh">周</div></div>
+        <div class="word-item"><div class="word-en">month</div><div class="word-zh">月</div></div>
+        <div class="word-item"><div class="word-en">year</div><div class="word-zh">年</div></div>
+        <div class="word-item"><div class="word-en">o'clock</div><div class="word-zh">…点整</div></div>
+        <div class="word-item"><div class="word-en">a.m.</div><div class="word-zh">上午</div></div>
+        <div class="word-item"><div class="word-en">p.m.</div><div class="word-zh">下午/晚上</div></div>
+      </div>
+      <div class="subsection-label">时间副词与短语 Time Adverbs</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">recently</div><div class="word-zh">最近</div></div>
+        <div class="word-item"><div class="word-en">currently</div><div class="word-zh">目前</div></div>
+        <div class="word-item"><div class="word-en">previously</div><div class="word-zh">之前</div></div>
+        <div class="word-item"><div class="word-en">formerly</div><div class="word-zh">从前</div></div>
+        <div class="word-item"><div class="word-en">shortly</div><div class="word-zh">不久</div></div>
+        <div class="word-item"><div class="word-en">immediately</div><div class="word-zh">立即</div></div>
+        <div class="word-item"><div class="word-en">gradually</div><div class="word-zh">逐渐地</div></div>
+        <div class="word-item"><div class="word-en">eventually</div><div class="word-zh">最终</div></div>
+        <div class="word-item"><div class="word-en">simultaneously</div><div class="word-zh">同时</div></div>
+        <div class="word-item"><div class="word-en">temporarily</div><div class="word-zh">暂时地</div></div>
+        <div class="word-item"><div class="word-en">permanently</div><div class="word-zh">永久地</div></div>
+        <div class="word-item"><div class="word-en">occasionally</div><div class="word-zh">偶尔</div></div>
+        <div class="word-item"><div class="word-en">frequently</div><div class="word-zh">频繁地</div></div>
+        <div class="word-item"><div class="word-en">regularly</div><div class="word-zh">定期地</div></div>
+        <div class="word-item"><div class="word-en">constantly</div><div class="word-zh">不断地</div></div>
+        <div class="word-item"><div class="word-en">at once</div><div class="word-zh">立刻</div></div>
+        <div class="word-item"><div class="word-en">at present</div><div class="word-zh">目前</div></div>
+        <div class="word-item"><div class="word-en">in advance</div><div class="word-zh">提前</div></div>
+        <div class="word-item"><div class="word-en">on time</div><div class="word-zh">准时</div></div>
+        <div class="word-item"><div class="word-en">ahead of schedule</div><div class="word-zh">提前</div></div>
+        <div class="word-item"><div class="word-en">behind schedule</div><div class="word-zh">落后于计划</div></div>
+        <div class="word-item"><div class="word-en">duration</div><div class="word-zh">持续时间</div></div>
+        <div class="word-item"><div class="word-en">interval</div><div class="word-zh">间隔</div></div>
+        <div class="word-item"><div class="word-en">period</div><div class="word-zh">时期</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4 -->
+  <div class="section-card">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-title">
+        <div class="section-icon">④</div>
+        四、价格货币与数量 <span class="section-count">44词</span>
+      </div>
+      <button class="toggle-btn">▼</button>
+    </div>
+    <div class="section-body">
+      <div class="subsection-label">货币与价格 Currency & Price</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">pound</div><div class="word-zh">英镑</div></div>
+        <div class="word-item"><div class="word-en">dollar</div><div class="word-zh">美元</div></div>
+        <div class="word-item"><div class="word-en">euro</div><div class="word-zh">欧元</div></div>
+        <div class="word-item"><div class="word-en">penny</div><div class="word-zh">便士</div></div>
+        <div class="word-item"><div class="word-en">cent</div><div class="word-zh">美分</div></div>
+        <div class="word-item"><div class="word-en">pence</div><div class="word-zh">便士(复数)</div></div>
+        <div class="word-item"><div class="word-en">price</div><div class="word-zh">价格</div></div>
+        <div class="word-item"><div class="word-en">cost</div><div class="word-zh">费用</div></div>
+        <div class="word-item"><div class="word-en">fee</div><div class="word-zh">费用/收费</div></div>
+        <div class="word-item"><div class="word-en">charge</div><div class="word-zh">收费/费用</div></div>
+        <div class="word-item"><div class="word-en">rate</div><div class="word-zh">费率/价格</div></div>
+        <div class="word-item"><div class="word-en">fare</div><div class="word-zh">票价</div></div>
+        <div class="word-item"><div class="word-en">tariff</div><div class="word-zh">关税/收费标准</div></div>
+        <div class="word-item"><div class="word-en">discount</div><div class="word-zh">折扣</div></div>
+        <div class="word-item"><div class="word-en">reduction</div><div class="word-zh">减价</div></div>
+        <div class="word-item"><div class="word-en">refund</div><div class="word-zh">退款</div></div>
+        <div class="word-item"><div class="word-en">deposit</div><div class="word-zh">押金/定金</div></div>
+        <div class="word-item"><div class="word-en">budget</div><div class="word-zh">预算</div></div>
+        <div class="word-item"><div class="word-en">invoice</div><div class="word-zh">发票</div></div>
+        <div class="word-item"><div class="word-en">receipt</div><div class="word-zh">收据</div></div>
+      </div>
+      <div class="subsection-label">数量表达 Quantity Expressions</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">amount</div><div class="word-zh">数量/金额</div></div>
+        <div class="word-item"><div class="word-en">quantity</div><div class="word-zh">数量</div></div>
+        <div class="word-item"><div class="word-en">total</div><div class="word-zh">总计</div></div>
+        <div class="word-item"><div class="word-en">sum</div><div class="word-zh">总和</div></div>
+        <div class="word-item"><div class="word-en">average</div><div class="word-zh">平均数</div></div>
+        <div class="word-item"><div class="word-en">majority</div><div class="word-zh">大多数</div></div>
+        <div class="word-item"><div class="word-en">minority</div><div class="word-zh">少数</div></div>
+        <div class="word-item"><div class="word-en">proportion</div><div class="word-zh">比例</div></div>
+        <div class="word-item"><div class="word-en">percentage</div><div class="word-zh">百分比</div></div>
+        <div class="word-item"><div class="word-en">fraction</div><div class="word-zh">分数/部分</div></div>
+        <div class="word-item"><div class="word-en">ratio</div><div class="word-zh">比率</div></div>
+        <div class="word-item"><div class="word-en">half</div><div class="word-zh">一半</div></div>
+        <div class="word-item"><div class="word-en">quarter</div><div class="word-zh">四分之一</div></div>
+        <div class="word-item"><div class="word-en">third</div><div class="word-zh">三分之一</div></div>
+        <div class="word-item"><div class="word-en">double</div><div class="word-zh">两倍</div></div>
+        <div class="word-item"><div class="word-en">triple</div><div class="word-zh">三倍</div></div>
+        <div class="word-item"><div class="word-en">dozen</div><div class="word-zh">一打（12个）</div></div>
+        <div class="word-item"><div class="word-en">score</div><div class="word-zh">二十</div></div>
+        <div class="word-item"><div class="word-en">plenty</div><div class="word-zh">充足</div></div>
+        <div class="word-item"><div class="word-en">sufficient</div><div class="word-zh">足够的</div></div>
+        <div class="word-item"><div class="word-en">scarce</div><div class="word-zh">稀缺的</div></div>
+        <div class="word-item"><div class="word-en">abundant</div><div class="word-zh">丰富的</div></div>
+        <div class="word-item"><div class="word-en">approximate</div><div class="word-zh">近似的</div></div>
+        <div class="word-item"><div class="word-en">roughly</div><div class="word-zh">大约</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5 -->
+  <div class="section-card">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-title">
+        <div class="section-icon">⑤</div>
+        五、颜色与外观描述 <span class="section-count">52词</span>
+      </div>
+      <button class="toggle-btn">▼</button>
+    </div>
+    <div class="section-body">
+      <div class="subsection-label">基本颜色 Basic Colors</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">red</div><div class="word-zh">红色</div></div>
+        <div class="word-item"><div class="word-en">blue</div><div class="word-zh">蓝色</div></div>
+        <div class="word-item"><div class="word-en">green</div><div class="word-zh">绿色</div></div>
+        <div class="word-item"><div class="word-en">yellow</div><div class="word-zh">黄色</div></div>
+        <div class="word-item"><div class="word-en">orange</div><div class="word-zh">橙色</div></div>
+        <div class="word-item"><div class="word-en">purple</div><div class="word-zh">紫色</div></div>
+        <div class="word-item"><div class="word-en">pink</div><div class="word-zh">粉色</div></div>
+        <div class="word-item"><div class="word-en">brown</div><div class="word-zh">棕色</div></div>
+        <div class="word-item"><div class="word-en">black</div><div class="word-zh">黑色</div></div>
+        <div class="word-item"><div class="word-en">white</div><div class="word-zh">白色</div></div>
+        <div class="word-item"><div class="word-en">grey / gray</div><div class="word-zh">灰色</div></div>
+        <div class="word-item"><div class="word-en">beige</div><div class="word-zh">米色</div></div>
+        <div class="word-item"><div class="word-en">navy</div><div class="word-zh">深蓝色</div></div>
+        <div class="word-item"><div class="word-en">turquoise</div><div class="word-zh">青绿色</div></div>
+        <div class="word-item"><div class="word-en">crimson</div><div class="word-zh">深红色</div></div>
+        <div class="word-item"><div class="word-en">scarlet</div><div class="word-zh">鲜红色</div></div>
+      </div>
+      <div class="subsection-label">颜色修饰词 Color Modifiers</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">light blue</div><div class="word-zh">浅蓝色</div></div>
+        <div class="word-item"><div class="word-en">dark green</div><div class="word-zh">深绿色</div></div>
+        <div class="word-item"><div class="word-en">pale yellow</div><div class="word-zh">淡黄色</div></div>
+        <div class="word-item"><div class="word-en">bright red</div><div class="word-zh">鲜红色</div></div>
+        <div class="word-item"><div class="word-en">deep purple</div><div class="word-zh">深紫色</div></div>
+        <div class="word-item"><div class="word-en">dull grey</div><div class="word-zh">暗灰色</div></div>
+        <div class="word-item"><div class="word-en">vivid</div><div class="word-zh">鲜艳的</div></div>
+        <div class="word-item"><div class="word-en">faded</div><div class="word-zh">褪色的</div></div>
+      </div>
+      <div class="subsection-label">外观描述词 Appearance Words</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">appearance</div><div class="word-zh">外观</div></div>
+        <div class="word-item"><div class="word-en">pattern</div><div class="word-zh">图案</div></div>
+        <div class="word-item"><div class="word-en">texture</div><div class="word-zh">质地</div></div>
+        <div class="word-item"><div class="word-en">striped</div><div class="word-zh">条纹的</div></div>
+        <div class="word-item"><div class="word-en">spotted</div><div class="word-zh">有斑点的</div></div>
+        <div class="word-item"><div class="word-en">plain</div><div class="word-zh">素色的</div></div>
+        <div class="word-item"><div class="word-en">transparent</div><div class="word-zh">透明的</div></div>
+        <div class="word-item"><div class="word-en">opaque</div><div class="word-zh">不透明的</div></div>
+        <div class="word-item"><div class="word-en">glossy</div><div class="word-zh">有光泽的</div></div>
+        <div class="word-item"><div class="word-en">matte</div><div class="word-zh">无光泽的</div></div>
+        <div class="word-item"><div class="word-en">shiny</div><div class="word-zh">发亮的</div></div>
+        <div class="word-item"><div class="word-en">rough</div><div class="word-zh">粗糙的</div></div>
+        <div class="word-item"><div class="word-en">smooth</div><div class="word-zh">光滑的</div></div>
+        <div class="word-item"><div class="word-en">dull</div><div class="word-zh">无光泽的</div></div>
+        <div class="word-item"><div class="word-en">elegant</div><div class="word-zh">优雅的</div></div>
+        <div class="word-item"><div class="word-en">stylish</div><div class="word-zh">时尚的</div></div>
+        <div class="word-item"><div class="word-en">shabby</div><div class="word-zh">破旧的</div></div>
+        <div class="word-item"><div class="word-en">brand-new</div><div class="word-zh">崭新的</div></div>
+        <div class="word-item"><div class="word-en">worn</div><div class="word-zh">磨损的</div></div>
+        <div class="word-item"><div class="word-en">tidy</div><div class="word-zh">整洁的</div></div>
+        <div class="word-item"><div class="word-en">neat</div><div class="word-zh">整齐的</div></div>
+        <div class="word-item"><div class="word-en">messy</div><div class="word-zh">凌乱的</div></div>
+        <div class="word-item"><div class="word-en">cluttered</div><div class="word-zh">杂乱的</div></div>
+        <div class="word-item"><div class="word-en">decorated</div><div class="word-zh">装饰的</div></div>
+        <div class="word-item"><div class="word-en">furnished</div><div class="word-zh">配有家具的</div></div>
+        <div class="word-item"><div class="word-en">visible</div><div class="word-zh">可见的</div></div>
+        <div class="word-item"><div class="word-en">noticeable</div><div class="word-zh">显眼的</div></div>
+        <div class="word-item"><div class="word-en">distinctive</div><div class="word-zh">有特色的</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6 -->
+  <div class="section-card">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-title">
+        <div class="section-icon">⑥</div>
+        六、形状与几何描述 <span class="section-count">46词</span>
+      </div>
+      <button class="toggle-btn">▼</button>
+    </div>
+    <div class="section-body">
+      <div class="subsection-label">基本形状 Basic Shapes</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">circle</div><div class="word-zh">圆形</div></div>
+        <div class="word-item"><div class="word-en">square</div><div class="word-zh">正方形</div></div>
+        <div class="word-item"><div class="word-en">rectangle</div><div class="word-zh">长方形</div></div>
+        <div class="word-item"><div class="word-en">triangle</div><div class="word-zh">三角形</div></div>
+        <div class="word-item"><div class="word-en">oval</div><div class="word-zh">椭圆形</div></div>
+        <div class="word-item"><div class="word-en">diamond</div><div class="word-zh">菱形</div></div>
+        <div class="word-item"><div class="word-en">star</div><div class="word-zh">星形</div></div>
+        <div class="word-item"><div class="word-en">sphere</div><div class="word-zh">球体</div></div>
+        <div class="word-item"><div class="word-en">cube</div><div class="word-zh">立方体</div></div>
+        <div class="word-item"><div class="word-en">cylinder</div><div class="word-zh">圆柱体</div></div>
+        <div class="word-item"><div class="word-en">cone</div><div class="word-zh">圆锥体</div></div>
+        <div class="word-item"><div class="word-en">pyramid</div><div class="word-zh">棱锥体</div></div>
+        <div class="word-item"><div class="word-en">arc</div><div class="word-zh">弧形</div></div>
+        <div class="word-item"><div class="word-en">spiral</div><div class="word-zh">螺旋形</div></div>
+        <div class="word-item"><div class="word-en">hexagon</div><div class="word-zh">六边形</div></div>
+        <div class="word-item"><div class="word-en">pentagon</div><div class="word-zh">五边形</div></div>
+      </div>
+      <div class="subsection-label">尺寸大小 Size & Dimension</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">large</div><div class="word-zh">大的</div></div>
+        <div class="word-item"><div class="word-en">small</div><div class="word-zh">小的</div></div>
+        <div class="word-item"><div class="word-en">medium</div><div class="word-zh">中等的</div></div>
+        <div class="word-item"><div class="word-en">tiny</div><div class="word-zh">极小的</div></div>
+        <div class="word-item"><div class="word-en">enormous</div><div class="word-zh">巨大的</div></div>
+        <div class="word-item"><div class="word-en">vast</div><div class="word-zh">广阔的</div></div>
+        <div class="word-item"><div class="word-en">miniature</div><div class="word-zh">微型的</div></div>
+        <div class="word-item"><div class="word-en">compact</div><div class="word-zh">紧凑的</div></div>
+        <div class="word-item"><div class="word-en">wide</div><div class="word-zh">宽的</div></div>
+        <div class="word-item"><div class="word-en">narrow</div><div class="word-zh">窄的</div></div>
+        <div class="word-item"><div class="word-en">tall</div><div class="word-zh">高的</div></div>
+        <div class="word-item"><div class="word-en">short</div><div class="word-zh">矮的</div></div>
+        <div class="word-item"><div class="word-en">long</div><div class="word-zh">长的</div></div>
+        <div class="word-item"><div class="word-en">thick</div><div class="word-zh">厚的</div></div>
+        <div class="word-item"><div class="word-en">thin</div><div class="word-zh">薄的</div></div>
+        <div class="word-item"><div class="word-en">deep</div><div class="word-zh">深的</div></div>
+        <div class="word-item"><div class="word-en">shallow</div><div class="word-zh">浅的</div></div>
+        <div class="word-item"><div class="word-en">flat</div><div class="word-zh">平的</div></div>
+        <div class="word-item"><div class="word-en">curved</div><div class="word-zh">弯曲的</div></div>
+        <div class="word-item"><div class="word-en">pointed</div><div class="word-zh">尖的</div></div>
+        <div class="word-item"><div class="word-en">rounded</div><div class="word-zh">圆润的</div></div>
+        <div class="word-item"><div class="word-en">hollow</div><div class="word-zh">空心的</div></div>
+        <div class="word-item"><div class="word-en">solid</div><div class="word-zh">实心的</div></div>
+        <div class="word-item"><div class="word-en">symmetrical</div><div class="word-zh">对称的</div></div>
+        <div class="word-item"><div class="word-en">diagonal</div><div class="word-zh">对角线的</div></div>
+        <div class="word-item"><div class="word-en">vertical</div><div class="word-zh">垂直的</div></div>
+        <div class="word-item"><div class="word-en">horizontal</div><div class="word-zh">水平的</div></div>
+        <div class="word-item"><div class="word-en">parallel</div><div class="word-zh">平行的</div></div>
+        <div class="word-item"><div class="word-en">perpendicular</div><div class="word-zh">垂直的</div></div>
+        <div class="word-item"><div class="word-en">angular</div><div class="word-zh">有棱角的</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 7 -->
+  <div class="section-card">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-title">
+        <div class="section-icon">⑦</div>
+        七、测量单位与计量 <span class="section-count">56词</span>
+      </div>
+      <button class="toggle-btn">▼</button>
+    </div>
+    <div class="section-body">
+      <div class="subsection-label">长度单位 Length Units</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">millimetre</div><div class="word-zh">毫米 (mm)</div></div>
+        <div class="word-item"><div class="word-en">centimetre</div><div class="word-zh">厘米 (cm)</div></div>
+        <div class="word-item"><div class="word-en">metre</div><div class="word-zh">米 (m)</div></div>
+        <div class="word-item"><div class="word-en">kilometre</div><div class="word-zh">千米 (km)</div></div>
+        <div class="word-item"><div class="word-en">inch</div><div class="word-zh">英寸</div></div>
+        <div class="word-item"><div class="word-en">foot / feet</div><div class="word-zh">英尺</div></div>
+        <div class="word-item"><div class="word-en">yard</div><div class="word-zh">码</div></div>
+        <div class="word-item"><div class="word-en">mile</div><div class="word-zh">英里</div></div>
+        <div class="word-item"><div class="word-en">length</div><div class="word-zh">长度</div></div>
+        <div class="word-item"><div class="word-en">width</div><div class="word-zh">宽度</div></div>
+        <div class="word-item"><div class="word-en">height</div><div class="word-zh">高度</div></div>
+        <div class="word-item"><div class="word-en">depth</div><div class="word-zh">深度</div></div>
+        <div class="word-item"><div class="word-en">diameter</div><div class="word-zh">直径</div></div>
+        <div class="word-item"><div class="word-en">radius</div><div class="word-zh">半径</div></div>
+        <div class="word-item"><div class="word-en">circumference</div><div class="word-zh">周长</div></div>
+        <div class="word-item"><div class="word-en">perimeter</div><div class="word-zh">周长</div></div>
+      </div>
+      <div class="subsection-label">重量与容积 Weight & Volume</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">gram</div><div class="word-zh">克 (g)</div></div>
+        <div class="word-item"><div class="word-en">kilogram</div><div class="word-zh">千克 (kg)</div></div>
+        <div class="word-item"><div class="word-en">tonne</div><div class="word-zh">公吨</div></div>
+        <div class="word-item"><div class="word-en">ounce</div><div class="word-zh">盎司</div></div>
+        <div class="word-item"><div class="word-en">pound</div><div class="word-zh">磅</div></div>
+        <div class="word-item"><div class="word-en">stone</div><div class="word-zh">英石（重量）</div></div>
+        <div class="word-item"><div class="word-en">millilitre</div><div class="word-zh">毫升 (ml)</div></div>
+        <div class="word-item"><div class="word-en">litre</div><div class="word-zh">升 (L)</div></div>
+        <div class="word-item"><div class="word-en">pint</div><div class="word-zh">品脱</div></div>
+        <div class="word-item"><div class="word-en">gallon</div><div class="word-zh">加仑</div></div>
+        <div class="word-item"><div class="word-en">fluid ounce</div><div class="word-zh">液量盎司</div></div>
+        <div class="word-item"><div class="word-en">capacity</div><div class="word-zh">容量</div></div>
+        <div class="word-item"><div class="word-en">volume</div><div class="word-zh">体积/容积</div></div>
+        <div class="word-item"><div class="word-en">area</div><div class="word-zh">面积</div></div>
+      </div>
+      <div class="subsection-label">温度与其他单位 Temperature & Others</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">degree</div><div class="word-zh">度</div></div>
+        <div class="word-item"><div class="word-en">Celsius</div><div class="word-zh">摄氏度</div></div>
+        <div class="word-item"><div class="word-en">Fahrenheit</div><div class="word-zh">华氏度</div></div>
+        <div class="word-item"><div class="word-en">speed</div><div class="word-zh">速度</div></div>
+        <div class="word-item"><div class="word-en">mph</div><div class="word-zh">英里/小时</div></div>
+        <div class="word-item"><div class="word-en">km/h</div><div class="word-zh">千米/小时</div></div>
+        <div class="word-item"><div class="word-en">watt</div><div class="word-zh">瓦特</div></div>
+        <div class="word-item"><div class="word-en">kilowatt</div><div class="word-zh">千瓦</div></div>
+        <div class="word-item"><div class="word-en">voltage</div><div class="word-zh">电压</div></div>
+        <div class="word-item"><div class="word-en">frequency</div><div class="word-zh">频率</div></div>
+        <div class="word-item"><div class="word-en">square metre</div><div class="word-zh">平方米</div></div>
+        <div class="word-item"><div class="word-en">hectare</div><div class="word-zh">公顷</div></div>
+        <div class="word-item"><div class="word-en">acre</div><div class="word-zh">英亩</div></div>
+        <div class="word-item"><div class="word-en">dimension</div><div class="word-zh">尺寸/维度</div></div>
+        <div class="word-item"><div class="word-en">measurement</div><div class="word-zh">测量/尺寸</div></div>
+        <div class="word-item"><div class="word-en">scale</div><div class="word-zh">比例/刻度</div></div>
+        <div class="word-item"><div class="word-en">approximate</div><div class="word-zh">近似值</div></div>
+        <div class="word-item"><div class="word-en">precise</div><div class="word-zh">精确的</div></div>
+        <div class="word-item"><div class="word-en">accurate</div><div class="word-zh">准确的</div></div>
+        <div class="word-item"><div class="word-en">estimate</div><div class="word-zh">估计</div></div>
+        <div class="word-item"><div class="word-en">calculate</div><div class="word-zh">计算</div></div>
+        <div class="word-item"><div class="word-en">convert</div><div class="word-zh">换算/转换</div></div>
+        <div class="word-item"><div class="word-en">weigh</div><div class="word-zh">称重</div></div>
+        <div class="word-item"><div class="word-en">measure</div><div class="word-zh">测量</div></div>
+        <div class="word-item"><div class="word-en">gauge</div><div class="word-zh">量具/测量</div></div>
+        <div class="word-item"><div class="word-en">benchmark</div><div class="word-zh">基准</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 8 -->
+  <div class="section-card">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-title">
+        <div class="section-icon">⑧</div>
+        八、基本方向与位置词 <span class="section-count">46词</span>
+      </div>
+      <button class="toggle-btn">▼</button>
+    </div>
+    <div class="section-body">
+      <div class="subsection-label">基本方向 Directions</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">north</div><div class="word-zh">北</div></div>
+        <div class="word-item"><div class="word-en">south</div><div class="word-zh">南</div></div>
+        <div class="word-item"><div class="word-en">east</div><div class="word-zh">东</div></div>
+        <div class="word-item"><div class="word-en">west</div><div class="word-zh">西</div></div>
+        <div class="word-item"><div class="word-en">northeast</div><div class="word-zh">东北</div></div>
+        <div class="word-item"><div class="word-en">northwest</div><div class="word-zh">西北</div></div>
+        <div class="word-item"><div class="word-en">southeast</div><div class="word-zh">东南</div></div>
+        <div class="word-item"><div class="word-en">southwest</div><div class="word-zh">西南</div></div>
+        <div class="word-item"><div class="word-en">left</div><div class="word-zh">左边</div></div>
+        <div class="word-item"><div class="word-en">right</div><div class="word-zh">右边</div></div>
+        <div class="word-item"><div class="word-en">straight ahead</div><div class="word-zh">直行</div></div>
+        <div class="word-item"><div class="word-en">turn left</div><div class="word-zh">左转</div></div>
+        <div class="word-item"><div class="word-en">turn right</div><div class="word-zh">右转</div></div>
+        <div class="word-item"><div class="word-en">go forward</div><div class="word-zh">向前走</div></div>
+        <div class="word-item"><div class="word-en">go back</div><div class="word-zh">往回走</div></div>
+        <div class="word-item"><div class="word-en">clockwise</div><div class="word-zh">顺时针</div></div>
+        <div class="word-item"><div class="word-en">anticlockwise</div><div class="word-zh">逆时针</div></div>
+        <div class="word-item"><div class="word-en">upward</div><div class="word-zh">向上</div></div>
+        <div class="word-item"><div class="word-en">downward</div><div class="word-zh">向下</div></div>
+        <div class="word-item"><div class="word-en">inward</div><div class="word-zh">向内</div></div>
+        <div class="word-item"><div class="word-en">outward</div><div class="word-zh">向外</div></div>
+        <div class="word-item"><div class="word-en">sideways</div><div class="word-zh">侧向</div></div>
+      </div>
+      <div class="subsection-label">位置介词 Location Prepositions</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">above</div><div class="word-zh">在…上方</div></div>
+        <div class="word-item"><div class="word-en">below</div><div class="word-zh">在…下方</div></div>
+        <div class="word-item"><div class="word-en">beside</div><div class="word-zh">在…旁边</div></div>
+        <div class="word-item"><div class="word-en">between</div><div class="word-zh">在…之间</div></div>
+        <div class="word-item"><div class="word-en">among</div><div class="word-zh">在…之中</div></div>
+        <div class="word-item"><div class="word-en">opposite</div><div class="word-zh">对面</div></div>
+        <div class="word-item"><div class="word-en">adjacent</div><div class="word-zh">毗邻的</div></div>
+        <div class="word-item"><div class="word-en">nearby</div><div class="word-zh">附近</div></div>
+        <div class="word-item"><div class="word-en">surrounding</div><div class="word-zh">周围的</div></div>
+        <div class="word-item"><div class="word-en">underneath</div><div class="word-zh">在…正下方</div></div>
+        <div class="word-item"><div class="word-en">alongside</div><div class="word-zh">在…旁边</div></div>
+        <div class="word-item"><div class="word-en">within</div><div class="word-zh">在…内</div></div>
+        <div class="word-item"><div class="word-en">beyond</div><div class="word-zh">超过/在…那边</div></div>
+        <div class="word-item"><div class="word-en">beneath</div><div class="word-zh">在…下面</div></div>
+        <div class="word-item"><div class="word-en">throughout</div><div class="word-zh">遍及</div></div>
+        <div class="word-item"><div class="word-en">diagonal</div><div class="word-zh">斜对面</div></div>
+        <div class="word-item"><div class="word-en">central</div><div class="word-zh">中央的</div></div>
+        <div class="word-item"><div class="word-en">peripheral</div><div class="word-zh">外围的</div></div>
+        <div class="word-item"><div class="word-en">interior</div><div class="word-zh">内部</div></div>
+        <div class="word-item"><div class="word-en">exterior</div><div class="word-zh">外部</div></div>
+        <div class="word-item"><div class="word-en">vicinity</div><div class="word-zh">附近地区</div></div>
+        <div class="word-item"><div class="word-en">proximity</div><div class="word-zh">接近/附近</div></div>
+        <div class="word-item"><div class="word-en">remote</div><div class="word-zh">偏远的</div></div>
+        <div class="word-item"><div class="word-en">accessible</div><div class="word-zh">可到达的</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 9 -->
+  <div class="section-card">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-title">
+        <div class="section-icon">⑨</div>
+        九、拼写与字母相关词 <span class="section-count">38词</span>
+      </div>
+      <button class="toggle-btn">▼</button>
+    </div>
+    <div class="section-body">
+      <div class="subsection-label">字母拼读 Spelling & Letters</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">spell</div><div class="word-zh">拼写</div></div>
+        <div class="word-item"><div class="word-en">capital letter</div><div class="word-zh">大写字母</div></div>
+        <div class="word-item"><div class="word-en">lowercase</div><div class="word-zh">小写字母</div></div>
+        <div class="word-item"><div class="word-en">initial</div><div class="word-zh">首字母</div></div>
+        <div class="word-item"><div class="word-en">abbreviation</div><div class="word-zh">缩写</div></div>
+        <div class="word-item"><div class="word-en">acronym</div><div class="word-zh">首字母缩略词</div></div>
+        <div class="word-item"><div class="word-en">hyphen</div><div class="word-zh">连字符 (‑)</div></div>
+        <div class="word-item"><div class="word-en">apostrophe</div><div class="word-zh">撇号 (')</div></div>
+        <div class="word-item"><div class="word-en">slash</div><div class="word-zh">斜杠 (/)</div></div>
+        <div class="word-item"><div class="word-en">dot / period</div><div class="word-zh">句号/点</div></div>
+        <div class="word-item"><div class="word-en">underscore</div><div class="word-zh">下划线 (_)</div></div>
+        <div class="word-item"><div class="word-en">at sign</div><div class="word-zh">@符号</div></div>
+        <div class="word-item"><div class="word-en">double</div><div class="word-zh">双写（字母）</div></div>
+        <div class="word-item"><div class="word-en">silent letter</div><div class="word-zh">不发音字母</div></div>
+      </div>
+      <div class="subsection-label">电话号码表达 Phone Numbers</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">phone number</div><div class="word-zh">电话号码</div></div>
+        <div class="word-item"><div class="word-en">mobile number</div><div class="word-zh">手机号码</div></div>
+        <div class="word-item"><div class="word-en">extension</div><div class="word-zh">分机号</div></div>
+        <div class="word-item"><div class="word-en">area code</div><div class="word-zh">区号</div></div>
+        <div class="word-item"><div class="word-en">dial</div><div class="word-zh">拨号</div></div>
+        <div class="word-item"><div class="word-en">fax</div><div class="word-zh">传真</div></div>
+        <div class="word-item"><div class="word-en">landline</div><div class="word-zh">固定电话</div></div>
+        <div class="word-item"><div class="word-en">toll-free</div><div class="word-zh">免费电话</div></div>
+        <div class="word-item"><div class="word-en">voicemail</div><div class="word-zh">语音邮件</div></div>
+        <div class="word-item"><div class="word-en">callback</div><div class="word-zh">回拨</div></div>
+      </div>
+      <div class="subsection-label">编码与邮政 Codes & Postcode</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">postcode</div><div class="word-zh">邮政编码</div></div>
+        <div class="word-item"><div class="word-en">zip code</div><div class="word-zh">邮政编码（美）</div></div>
+        <div class="word-item"><div class="word-en">reference number</div><div class="word-zh">参考编号</div></div>
+        <div class="word-item"><div class="word-en">booking code</div><div class="word-zh">预订编码</div></div>
+        <div class="word-item"><div class="word-en">serial number</div><div class="word-zh">序列号</div></div>
+        <div class="word-item"><div class="word-en">ID number</div><div class="word-zh">身份证号</div></div>
+        <div class="word-item"><div class="word-en">pin code</div><div class="word-zh">密码/PIN码</div></div>
+        <div class="word-item"><div class="word-en">barcode</div><div class="word-zh">条形码</div></div>
+        <div class="word-item"><div class="word-en">confirmation</div><div class="word-zh">确认号</div></div>
+        <div class="word-item"><div class="word-en">alphanumeric</div><div class="word-zh">字母数字混合</div></div>
+        <div class="word-item"><div class="word-en">digits</div><div class="word-zh">数字位数</div></div>
+        <div class="word-item"><div class="word-en">numeric</div><div class="word-zh">数字的</div></div>
+        <div class="word-item"><div class="word-en">code</div><div class="word-zh">代码/编号</div></div>
+        <div class="word-item"><div class="word-en">password</div><div class="word-zh">密码</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 10 -->
+  <div class="section-card">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-title">
+        <div class="section-icon">⑩</div>
+        十、数据变化与统计描述 <span class="section-count">62词</span>
+      </div>
+      <button class="toggle-btn">▼</button>
+    </div>
+    <div class="section-body">
+      <div class="subsection-label">上升趋势 Increase Trends</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">increase</div><div class="word-zh">增加</div></div>
+        <div class="word-item"><div class="word-en">rise</div><div class="word-zh">上升</div></div>
+        <div class="word-item"><div class="word-en">grow</div><div class="word-zh">增长</div></div>
+        <div class="word-item"><div class="word-en">climb</div><div class="word-zh">攀升</div></div>
+        <div class="word-item"><div class="word-en">surge</div><div class="word-zh">急剧上升</div></div>
+        <div class="word-item"><div class="word-en">soar</div><div class="word-zh">猛增</div></div>
+        <div class="word-item"><div class="word-en">jump</div><div class="word-zh">骤升</div></div>
+        <div class="word-item"><div class="word-en">expand</div><div class="word-zh">扩张</div></div>
+        <div class="word-item"><div class="word-en">improve</div><div class="word-zh">提升</div></div>
+        <div class="word-item"><div class="word-en">accelerate</div><div class="word-zh">加速增长</div></div>
+        <div class="word-item"><div class="word-en">advance</div><div class="word-zh">前进/提升</div></div>
+        <div class="word-item"><div class="word-en">boost</div><div class="word-zh">促进/增强</div></div>
+      </div>
+      <div class="subsection-label">下降趋势 Decrease Trends</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">decrease</div><div class="word-zh">减少</div></div>
+        <div class="word-item"><div class="word-en">decline</div><div class="word-zh">下降</div></div>
+        <div class="word-item"><div class="word-en">fall</div><div class="word-zh">下落</div></div>
+        <div class="word-item"><div class="word-en">drop</div><div class="word-zh">骤降</div></div>
+        <div class="word-item"><div class="word-en">plummet</div><div class="word-zh">急跌</div></div>
+        <div class="word-item"><div class="word-en">plunge</div><div class="word-zh">暴跌</div></div>
+        <div class="word-item"><div class="word-en">dip</div><div class="word-zh">小幅下降</div></div>
+        <div class="word-item"><div class="word-en">reduce</div><div class="word-zh">减少</div></div>
+        <div class="word-item"><div class="word-en">shrink</div><div class="word-zh">缩小</div></div>
+        <div class="word-item"><div class="word-en">contract</div><div class="word-zh">收缩</div></div>
+        <div class="word-item"><div class="word-en">deteriorate</div><div class="word-zh">恶化</div></div>
+        <div class="word-item"><div class="word-en">worsen</div><div class="word-zh">变糟</div></div>
+      </div>
+      <div class="subsection-label">平稳与波动 Stable & Fluctuate</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">stable</div><div class="word-zh">稳定的</div></div>
+        <div class="word-item"><div class="word-en">steady</div><div class="word-zh">平稳的</div></div>
+        <div class="word-item"><div class="word-en">constant</div><div class="word-zh">不变的</div></div>
+        <div class="word-item"><div class="word-en">unchanged</div><div class="word-zh">未改变的</div></div>
+        <div class="word-item"><div class="word-en">fluctuate</div><div class="word-zh">波动</div></div>
+        <div class="word-item"><div class="word-en">vary</div><div class="word-zh">变化</div></div>
+        <div class="word-item"><div class="word-en">oscillate</div><div class="word-zh">摆动/振荡</div></div>
+        <div class="word-item"><div class="word-en">level off</div><div class="word-zh">趋于平稳</div></div>
+        <div class="word-item"><div class="word-en">plateau</div><div class="word-zh">达到平台期</div></div>
+        <div class="word-item"><div class="word-en">recover</div><div class="word-zh">恢复</div></div>
+        <div class="word-item"><div class="word-en">rebound</div><div class="word-zh">反弹</div></div>
+        <div class="word-item"><div class="word-en">peak</div><div class="word-zh">达到峰值</div></div>
+        <div class="word-item"><div class="word-en">trough</div><div class="word-zh">低谷</div></div>
+        <div class="word-item"><div class="word-en">trend</div><div class="word-zh">趋势</div></div>
+      </div>
+      <div class="subsection-label">程度副词 Degree Adverbs</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">sharply</div><div class="word-zh">急剧地</div></div>
+        <div class="word-item"><div class="word-en">dramatically</div><div class="word-zh">显著地</div></div>
+        <div class="word-item"><div class="word-en">significantly</div><div class="word-zh">大幅地</div></div>
+        <div class="word-item"><div class="word-en">considerably</div><div class="word-zh">相当大地</div></div>
+        <div class="word-item"><div class="word-en">substantially</div><div class="word-zh">实质性地</div></div>
+        <div class="word-item"><div class="word-en">moderately</div><div class="word-zh">适度地</div></div>
+        <div class="word-item"><div class="word-en">slightly</div><div class="word-zh">轻微地</div></div>
+        <div class="word-item"><div class="word-en">marginally</div><div class="word-zh">少量地</div></div>
+        <div class="word-item"><div class="word-en">steadily</div><div class="word-zh">稳步地</div></div>
+        <div class="word-item"><div class="word-en">rapidly</div><div class="word-zh">迅速地</div></div>
+        <div class="word-item"><div class="word-en">gradually</div><div class="word-zh">逐渐地</div></div>
+        <div class="word-item"><div class="word-en">noticeably</div><div class="word-zh">显著地</div></div>
+        <div class="word-item"><div class="word-en">roughly</div><div class="word-zh">大约</div></div>
+        <div class="word-item"><div class="word-en">nearly</div><div class="word-zh">几乎</div></div>
+        <div class="word-item"><div class="word-en">approximately</div><div class="word-zh">大约</div></div>
+        <div class="word-item"><div class="word-en">exactly</div><div class="word-zh">恰好</div></div>
+        <div class="word-item"><div class="word-en">precisely</div><div class="word-zh">精确地</div></div>
+        <div class="word-item"><div class="word-en">altogether</div><div class="word-zh">总共</div></div>
+        <div class="word-item"><div class="word-en">relatively</div><div class="word-zh">相对地</div></div>
+        <div class="word-item"><div class="word-en">comparatively</div><div class="word-zh">相比较地</div></div>
+        <div class="word-item"><div class="word-en">collectively</div><div class="word-zh">总体地</div></div>
+        <div class="word-item"><div class="word-en">individually</div><div class="word-zh">单独地</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 11 -->
+  <div class="section-card">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-title">
+        <div class="section-icon">⑪</div>
+        十一、联系方式与个人信息 <span class="section-count">36词</span>
+      </div>
+      <button class="toggle-btn">▼</button>
+    </div>
+    <div class="section-body">
+      <div class="subsection-label">个人信息 Personal Details</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">name</div><div class="word-zh">姓名</div></div>
+        <div class="word-item"><div class="word-en">surname</div><div class="word-zh">姓氏</div></div>
+        <div class="word-item"><div class="word-en">first name</div><div class="word-zh">名字</div></div>
+        <div class="word-item"><div class="word-en">middle name</div><div class="word-zh">中间名</div></div>
+        <div class="word-item"><div class="word-en">full name</div><div class="word-zh">全名</div></div>
+        <div class="word-item"><div class="word-en">title</div><div class="word-zh">称谓（Mr/Ms）</div></div>
+        <div class="word-item"><div class="word-en">nationality</div><div class="word-zh">国籍</div></div>
+        <div class="word-item"><div class="word-en">age</div><div class="word-zh">年龄</div></div>
+        <div class="word-item"><div class="word-en">date of birth</div><div class="word-zh">出生日期</div></div>
+        <div class="word-item"><div class="word-en">gender</div><div class="word-zh">性别</div></div>
+        <div class="word-item"><div class="word-en">occupation</div><div class="word-zh">职业</div></div>
+        <div class="word-item"><div class="word-en">address</div><div class="word-zh">地址</div></div>
+        <div class="word-item"><div class="word-en">email address</div><div class="word-zh">电子邮件地址</div></div>
+        <div class="word-item"><div class="word-en">passport</div><div class="word-zh">护照</div></div>
+        <div class="word-item"><div class="word-en">membership</div><div class="word-zh">会员资格</div></div>
+        <div class="word-item"><div class="word-en">registration</div><div class="word-zh">注册</div></div>
+        <div class="word-item"><div class="word-en">enrolment</div><div class="word-zh">入学/注册</div></div>
+        <div class="word-item"><div class="word-en">application</div><div class="word-zh">申请</div></div>
+      </div>
+      <div class="subsection-label">表格填写词 Form-filling Words</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">form</div><div class="word-zh">表格</div></div>
+        <div class="word-item"><div class="word-en">fill in</div><div class="word-zh">填写</div></div>
+        <div class="word-item"><div class="word-en">complete</div><div class="word-zh">完成/填完</div></div>
+        <div class="word-item"><div class="word-en">submit</div><div class="word-zh">提交</div></div>
+        <div class="word-item"><div class="word-en">signature</div><div class="word-zh">签名</div></div>
+        <div class="word-item"><div class="word-en">sign</div><div class="word-zh">签字</div></div>
+        <div class="word-item"><div class="word-en">tick</div><div class="word-zh">打勾</div></div>
+        <div class="word-item"><div class="word-en">cross out</div><div class="word-zh">划掉</div></div>
+        <div class="word-item"><div class="word-en">blank</div><div class="word-zh">空格</div></div>
+        <div class="word-item"><div class="word-en">field</div><div class="word-zh">字段</div></div>
+        <div class="word-item"><div class="word-en">section</div><div class="word-zh">部分/栏目</div></div>
+        <div class="word-item"><div class="word-en">column</div><div class="word-zh">列</div></div>
+        <div class="word-item"><div class="word-en">row</div><div class="word-zh">行</div></div>
+        <div class="word-item"><div class="word-en">entry</div><div class="word-zh">条目</div></div>
+        <div class="word-item"><div class="word-en">required</div><div class="word-zh">必填的</div></div>
+        <div class="word-item"><div class="word-en">optional</div><div class="word-zh">可选的</div></div>
+        <div class="word-item"><div class="word-en">mandatory</div><div class="word-zh">强制的</div></div>
+        <div class="word-item"><div class="word-en">verify</div><div class="word-zh">验证/核实</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 12 -->
+  <div class="section-card">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-title">
+        <div class="section-icon">⑫</div>
+        十二、数据题高频听力词汇 <span class="section-count">72词</span>
+      </div>
+      <button class="toggle-btn">▼</button>
+    </div>
+    <div class="section-body">
+      <div class="subsection-label">比较与对比 Comparison</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">compare</div><div class="word-zh">比较</div></div>
+        <div class="word-item"><div class="word-en">contrast</div><div class="word-zh">对比</div></div>
+        <div class="word-item"><div class="word-en">differ</div><div class="word-zh">不同</div></div>
+        <div class="word-item"><div class="word-en">similar</div><div class="word-zh">相似的</div></div>
+        <div class="word-item"><div class="word-en">identical</div><div class="word-zh">相同的</div></div>
+        <div class="word-item"><div class="word-en">equivalent</div><div class="word-zh">等同的</div></div>
+        <div class="word-item"><div class="word-en">exceed</div><div class="word-zh">超过</div></div>
+        <div class="word-item"><div class="word-en">outnumber</div><div class="word-zh">数量超过</div></div>
+        <div class="word-item"><div class="word-en">surpass</div><div class="word-zh">超越</div></div>
+        <div class="word-item"><div class="word-en">match</div><div class="word-zh">匹配/相等</div></div>
+        <div class="word-item"><div class="word-en">equal</div><div class="word-zh">相等</div></div>
+        <div class="word-item"><div class="word-en">more than</div><div class="word-zh">多于</div></div>
+        <div class="word-item"><div class="word-en">less than</div><div class="word-zh">少于</div></div>
+        <div class="word-item"><div class="word-en">as many as</div><div class="word-zh">多达</div></div>
+        <div class="word-item"><div class="word-en">up to</div><div class="word-zh">多达/高达</div></div>
+        <div class="word-item"><div class="word-en">at least</div><div class="word-zh">至少</div></div>
+        <div class="word-item"><div class="word-en">at most</div><div class="word-zh">最多</div></div>
+        <div class="word-item"><div class="word-en">no more than</div><div class="word-zh">不超过</div></div>
+        <div class="word-item"><div class="word-en">no fewer than</div><div class="word-zh">不少于</div></div>
+        <div class="word-item"><div class="word-en">as high as</div><div class="word-zh">高达</div></div>
+      </div>
+      <div class="subsection-label">数学运算词 Math Operations</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">add</div><div class="word-zh">加</div></div>
+        <div class="word-item"><div class="word-en">subtract</div><div class="word-zh">减</div></div>
+        <div class="word-item"><div class="word-en">multiply</div><div class="word-zh">乘</div></div>
+        <div class="word-item"><div class="word-en">divide</div><div class="word-zh">除</div></div>
+        <div class="word-item"><div class="word-en">addition</div><div class="word-zh">加法</div></div>
+        <div class="word-item"><div class="word-en">subtraction</div><div class="word-zh">减法</div></div>
+        <div class="word-item"><div class="word-en">multiplication</div><div class="word-zh">乘法</div></div>
+        <div class="word-item"><div class="word-en">division</div><div class="word-zh">除法</div></div>
+        <div class="word-item"><div class="word-en">remainder</div><div class="word-zh">余数</div></div>
+        <div class="word-item"><div class="word-en">quotient</div><div class="word-zh">商</div></div>
+        <div class="word-item"><div class="word-en">factor</div><div class="word-zh">因数</div></div>
+        <div class="word-item"><div class="word-en">multiple</div><div class="word-zh">倍数</div></div>
+        <div class="word-item"><div class="word-en">prime</div><div class="word-zh">质数/素数</div></div>
+        <div class="word-item"><div class="word-en">square</div><div class="word-zh">平方</div></div>
+        <div class="word-item"><div class="word-en">cube</div><div class="word-zh">立方</div></div>
+        <div class="word-item"><div class="word-en">root</div><div class="word-zh">根</div></div>
+      </div>
+      <div class="subsection-label">统计描述词 Statistics Words</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">statistics</div><div class="word-zh">统计数据</div></div>
+        <div class="word-item"><div class="word-en">data</div><div class="word-zh">数据</div></div>
+        <div class="word-item"><div class="word-en">figure</div><div class="word-zh">数字/图表</div></div>
+        <div class="word-item"><div class="word-en">graph</div><div class="word-zh">图表</div></div>
+        <div class="word-item"><div class="word-en">chart</div><div class="word-zh">图表</div></div>
+        <div class="word-item"><div class="word-en">table</div><div class="word-zh">表格</div></div>
+        <div class="word-item"><div class="word-en">diagram</div><div class="word-zh">示意图</div></div>
+        <div class="word-item"><div class="word-en">survey</div><div class="word-zh">调查</div></div>
+        <div class="word-item"><div class="word-en">sample</div><div class="word-zh">样本</div></div>
+        <div class="word-item"><div class="word-en">population</div><div class="word-zh">总体人口</div></div>
+        <div class="word-item"><div class="word-en">median</div><div class="word-zh">中位数</div></div>
+        <div class="word-item"><div class="word-en">mode</div><div class="word-zh">众数</div></div>
+        <div class="word-item"><div class="word-en">mean</div><div class="word-zh">均值</div></div>
+        <div class="word-item"><div class="word-en">range</div><div class="word-zh">范围/区间</div></div>
+        <div class="word-item"><div class="word-en">distribution</div><div class="word-zh">分布</div></div>
+        <div class="word-item"><div class="word-en">frequency</div><div class="word-zh">频率/频次</div></div>
+        <div class="word-item"><div class="word-en">correlation</div><div class="word-zh">相关性</div></div>
+        <div class="word-item"><div class="word-en">variable</div><div class="word-zh">变量</div></div>
+        <div class="word-item"><div class="word-en">hypothesis</div><div class="word-zh">假设</div></div>
+        <div class="word-item"><div class="word-en">evidence</div><div class="word-zh">证据</div></div>
+        <div class="word-item"><div class="word-en">result</div><div class="word-zh">结果</div></div>
+        <div class="word-item"><div class="word-en">finding</div><div class="word-zh">发现/结果</div></div>
+        <div class="word-item"><div class="word-en">conclusion</div><div class="word-zh">结论</div></div>
+        <div class="word-item"><div class="word-en">implication</div><div class="word-zh">含义/暗示</div></div>
+        <div class="word-item"><div class="word-en">significant</div><div class="word-zh">重要的/显著的</div></div>
+        <div class="word-item"><div class="word-en">representative</div><div class="word-zh">代表性的</div></div>
+        <div class="word-item"><div class="word-en">reliable</div><div class="word-zh">可靠的</div></div>
+        <div class="word-item"><div class="word-en">valid</div><div class="word-zh">有效的</div></div>
+        <div class="word-item"><div class="word-en">consistent</div><div class="word-zh">一致的</div></div>
+        <div class="word-item"><div class="word-en">bias</div><div class="word-zh">偏差/偏见</div></div>
+        <div class="word-item"><div class="word-en">random</div><div class="word-zh">随机的</div></div>
+        <div class="word-item"><div class="word-en">systematic</div><div class="word-zh">系统的</div></div>
+        <div class="word-item"><div class="word-en">qualitative</div><div class="word-zh">定性的</div></div>
+        <div class="word-item"><div class="word-en">quantitative</div><div class="word-zh">定量的</div></div>
+        <div class="word-item"><div class="word-en">numerical</div><div class="word-zh">数字的</div></div>
+        <div class="word-item"><div class="word-en">statistical</div><div class="word-zh">统计的</div></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<footer class="site-footer">
+  <div class="footer-title">📚 Day 1 学习建议</div>
+  <div class="tips-grid">
+    <div class="tip-item">📖 每天分3-4组学习，每组20分钟</div>
+    <div class="tip-item">🔊 听BBC/VOA练习数字听写</div>
+    <div class="tip-item">✍️ 重点记忆易混数字（13 vs 30）</div>
+    <div class="tip-item">📅 月份与日期需反复拼写练习</div>
+    <div class="tip-item">💰 价格费用词汇听力高频必考</div>
+    <div class="tip-item">📊 统计词在Section 4讲座中常见</div>
+  </div>
+  <p class="footer-note">10天5000雅思听力核心词汇 · Day 1/10 · 基础数据与描述类 · 共约500词</p>
+</footer>
+
+<script>
+  function toggle(header) {
+    const body = header.nextElementSibling;
+    const btn = header.querySelector('.toggle-btn');
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    btn.classList.toggle('open', !isOpen);
+  }
+</script>
+
+<!-- Day 1 已生成，单词已记录。请回复"生成Day 2"继续 -->
+</html>

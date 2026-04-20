@@ -1,0 +1,1510 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>IELTS 词汇系统 v16 — C4T2R3</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Quicksand','Noto Sans SC',sans-serif; background:#f1f5f9; color:#1e293b; touch-action:manipulation; }
+  .container { max-width:500px; margin:0 auto; padding:12px; }
+  .tab-bar { display:flex; gap:3px; background:#e2e8f0; padding:4px; border-radius:16px; margin-bottom:12px; overflow-x:auto; }
+  .tab { flex:1; min-width:56px; padding:9px 3px; text-align:center; cursor:pointer; border-radius:12px; font-size:0.72rem; font-weight:700; color:#64748b; transition:0.2s; white-space:nowrap; }
+  .tab.active { background:#fff; color:#3b82f6; box-shadow:0 2px 8px rgba(0,0,0,0.05); }
+  .card { background:white; border-radius:24px; padding:1.25rem; box-shadow:0 8px 20px rgba(0,0,0,0.04); min-height:580px; display:flex; flex-direction:column; border:3px solid #e2e8f0; position:relative; }
+  .ex-box { background:#eff6ff; border-radius:16px; border-left:4px solid #3b82f6; padding:1rem; margin:0.75rem 0; }
+  .detail-box { background:#f8fafc; border-radius:16px; border:1px solid #edf2f7; padding:0.85rem; font-size:0.85rem; }
+  .root-box { background:#fff7ed; border-radius:16px; border:1px solid #ffedd5; padding:0.85rem; margin-top:0.75rem; font-size:0.85rem; }
+  .trap-box { background:linear-gradient(135deg,#fdf4ff,#eff6ff); border-radius:16px; border:1px solid #e9d5ff; padding:0.85rem; margin-top:0.75rem; font-size:0.85rem; }
+  .trap-title { font-size:0.6rem; font-weight:800; text-transform:uppercase; letter-spacing:0.1em; color:#9333ea; margin-bottom:6px; }
+  .trap-row { display:flex; align-items:flex-start; gap:8px; margin-bottom:4px; }
+  .trap-lbl { font-size:0.58rem; font-weight:700; background:#ede9fe; color:#7c3aed; padding:2px 7px; border-radius:99px; white-space:nowrap; flex-shrink:0; margin-top:1px; }
+  .trap-val { color:#4c1d95; font-size:0.8rem; line-height:1.4; }
+  .lbl { font-weight:800; color:#3b82f6; font-size:0.65rem; text-transform:uppercase; margin-right:8px; display:inline-block; width:65px; flex-shrink:0; }
+  .lbl-r { color:#f59e0b; }
+  .btn-mark { padding:1rem 0.5rem; border-radius:16px; font-size:0.85rem; font-weight:700; color:white; transition:0.2s; cursor:pointer; border:none; font-family:inherit; }
+  .btn-mark:active { transform:scale(0.95); }
+  .opt-btn { width:100%; padding:1rem; margin-bottom:0.75rem; border:2px solid #f1f5f9; border-radius:16px; text-align:left; font-size:0.95rem; background:#fff; font-family:inherit; cursor:pointer; transition:0.15s; }
+  .opt-btn:hover { background:#f8fafc; }
+  .section { display:none; } .section.active { display:block; }
+  .flash-green { animation:flash 0.8s; --c:#10b981; }
+  .flash-amber { animation:flash 0.8s; --c:#f59e0b; }
+  .flash-rose  { animation:flash 0.8s; --c:#ef4444; }
+  @keyframes flash { 0%,100%{border-color:#e2e8f0} 50%{border-color:var(--c);box-shadow:0 0 15px var(--c)} }
+  .prog-bar { height:3px; background:#e2e8f0; border-radius:99px; overflow:hidden; margin-bottom:12px; }
+  .prog-fill { height:100%; background:linear-gradient(90deg,#3b82f6,#a78bfa); border-radius:99px; transition:width 0.4s; }
+  .lv-nav { display:flex; gap:6px; margin-bottom:10px; }
+  .lv-btn { flex:1; padding:7px 4px; border-radius:10px; font-size:0.68rem; font-weight:700; text-align:center; cursor:pointer; border:1.5px solid #e2e8f0; background:white; color:#64748b; transition:0.2s; }
+  .lv-btn.active { border-color:#3b82f6; background:#eff6ff; color:#2563eb; }
+  .mode-toggle { display:flex; gap:6px; margin-bottom:12px; }
+  .mode-btn { flex:1; padding:8px; border-radius:10px; font-size:0.7rem; font-weight:700; text-align:center; cursor:pointer; border:1.5px solid #e2e8f0; background:white; color:#64748b; transition:0.2s; }
+  .mode-btn.active { border-color:#7c3aed; background:#faf5ff; color:#7c3aed; }
+  .ctx-blank { display:inline-block; background:#cbd5e1; color:transparent; border-radius:6px; cursor:pointer; user-select:none; padding:0 6px; min-width:60px; transition:all 0.3s; }
+  .ctx-blank.revealed { background:transparent; color:#2563eb; font-weight:700; }
+  .reinforce-badge { display:inline-flex; align-items:center; gap:4px; background:#fef3c7; border:1px solid #fde68a; border-radius:99px; padding:3px 10px; font-size:0.65rem; font-weight:700; color:#92400e; margin-bottom:10px; }
+  #mk-empty { color:#94a3b8; text-align:center; padding:40px 20px; }
+  .mk-item { background:white; border-radius:16px; padding:14px; margin-bottom:10px; border:2px solid #fecaca; }
+  .mk-word { font-size:1.1rem; font-weight:700; color:#ef4444; }
+  .mk-meaning { color:#64748b; font-size:0.85rem; margin-top:2px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div style="text-align:center;margin-bottom:12px;">
+    <span style="font-size:0.6rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.1em;">IELTS · C4T2R3 · v16</span>
+  </div>
+  <div class="tab-bar">
+    <div class="tab active" onclick="switchTab('vocab')">语境识词</div>
+    <div class="tab" onclick="switchTab('trap')">题眼训练</div>
+    <div class="tab" onclick="switchTab('sim')">做题模拟</div>
+    <div class="tab" onclick="switchTab('phrases')">真题短语</div>
+    <div class="tab" onclick="switchTab('mistakes')">强化复习</div>
+  </div>
+
+  <!-- ① 语境识词 -->
+  <div id="vocab" class="section active">
+    <div class="lv-nav">
+      <div class="lv-btn active" id="lv1btn" onclick="jumpLevel('level1')">LV1 基础(20)</div>
+      <div class="lv-btn" id="lv2btn" onclick="jumpLevel('level2')">LV2 中阶(20)</div>
+      <div class="lv-btn" id="lv3btn" onclick="jumpLevel('level3')">LV3 高阶(20)</div>
+    </div>
+    <div class="mode-toggle">
+      <div class="mode-btn active" id="modeCtx" onclick="setMode('ctx')">🕵️ 语境猜词</div>
+      <div class="mode-btn" id="modeDir" onclick="setMode('dir')">📖 直接学词</div>
+    </div>
+    <div class="prog-bar"><div class="prog-fill" id="vocabProg" style="width:0%"></div></div>
+    <div id="reinforce-notice" style="display:none;"><div class="reinforce-badge">🔄 强化复习中 — 标记过的词再过一遍</div></div>
+    <div class="card" id="vocab-card"></div>
+  </div>
+
+  <!-- ② 题眼训练 -->
+  <div id="trap" class="section">
+    <div class="prog-bar"><div class="prog-fill" id="trapProg" style="width:0%"></div></div>
+    <div class="card" id="trap-card"></div>
+  </div>
+
+  <!-- ③ 做题模拟 -->
+  <div id="sim" class="section">
+    <div class="prog-bar"><div class="prog-fill" id="simProg" style="width:0%"></div></div>
+    <div class="card" id="sim-card"></div>
+  </div>
+
+  <!-- ④ 真题短语 -->
+  <div id="phrases" class="section">
+    <div class="prog-bar"><div class="prog-fill" id="phraseProg" style="width:0%"></div></div>
+    <div class="card" id="phrase-card"></div>
+  </div>
+
+  <!-- ⑤ 强化复习 -->
+  <div id="mistakes" class="section">
+    <div style="font-size:0.75rem;color:#64748b;margin-bottom:10px;">标「不识」或「模糊」的词在此强化</div>
+    <div id="mk-list"></div>
+  </div>
+</div>
+
+<script>
+const rawData = {
+  "vocabulary": {
+    "level1": [
+      {
+        "word": "serious",
+        "phonetic": "/ˈsɪəriəs/",
+        "meaning": "严肃的，严重的",
+        "root": "seri- (grave)",
+        "rootExt": "serious (earnest)",
+        "derive": "seriousness, seriously",
+        "syn": "earnest, grave, solemn",
+        "trap": "important, crucial, critical",
+        "paraphrase": "原文: serious business → 题目: important activity",
+        "questionStem": "Main idea / Title matching",
+        "example": "Playing is a serious business.",
+        "translation": "游戏是一项严肃的业务。"
+      },
+      {
+        "word": "expensive",
+        "phonetic": "/ɪkˈspensɪv/",
+        "meaning": "昂贵的，高代价的",
+        "root": "pend- (hang/pay)",
+        "rootExt": "expend (spend)",
+        "derive": "expense, expend",
+        "syn": "costly, dear",
+        "trap": "cost, energy-consuming",
+        "paraphrase": "原文: extremely expensive in terms of energy → 题目: high energy cost",
+        "questionStem": "TRUE/FALSE/NOT GIVEN",
+        "example": "It is also extremely expensive in terms of energy.",
+        "translation": "在能量方面，它的消耗也极其巨大。"
+      },
+      {
+        "word": "reason",
+        "phonetic": "/ˈriːzn/",
+        "meaning": "原因，理由",
+        "root": "rat- (calculate/think)",
+        "rootExt": "rational (logical)",
+        "derive": "reasonable, reasoning",
+        "syn": "cause, motive, logic",
+        "trap": "explanation, purpose, function",
+        "paraphrase": "原文: There must be a reason for it → 题目: an explanation for play",
+        "questionStem": "Matching Information",
+        "example": "'There must be a reason for it,' says John Byers.",
+        "translation": "“这其中一定有原因，”约翰·拜尔斯说。"
+      },
+      {
+        "word": "intelligent",
+        "phonetic": "/ɪnˈtelɪdʒənt/",
+        "meaning": "聪明的，有才智的",
+        "root": "leg- (choose/gather)",
+        "rootExt": "intellect (understanding)",
+        "derive": "intelligence, intelligently",
+        "syn": "smart, clever, bright",
+        "trap": "brain size, cognitive, mental ability",
+        "paraphrase": "原文: playing makes you intelligent → 题目: play contributes to cleverness",
+        "questionStem": "Multiple Choice",
+        "example": "In other words, playing makes you intelligent.",
+        "translation": "换句话说，玩耍让你变得聪明。"
+      },
+      {
+        "word": "common",
+        "phonetic": "/ˈkɒmən/",
+        "meaning": "常见的，普遍的",
+        "root": "com- (together) + mun- (service)",
+        "rootExt": "community (shared group)",
+        "derive": "commonly, commonality",
+        "syn": "widespread, usual, frequent",
+        "trap": "universal, typical, general",
+        "paraphrase": "原文: play, it seems, is common only among mammals → 题目: play is found in many mammal species",
+        "questionStem": "Summary Completion",
+        "example": "Play, it seems, is common only among mammals.",
+        "translation": "游玩似乎只在哺乳动物中常见。"
+      },
+      {
+        "word": "skill",
+        "phonetic": "/skɪl/",
+        "meaning": "技能，技巧",
+        "root": "sk- (cut/separate)",
+        "rootExt": "skillful (expert)",
+        "derive": "skilled, skillful",
+        "syn": "ability, prowess, competence",
+        "trap": "manoeuvre, capability, training",
+        "paraphrase": "原文: help juveniles develop the skills they will need → 题目: practice for adult tasks",
+        "questionStem": "Matching Features",
+        "example": "It helps juveniles develop the skills they will need to hunt.",
+        "translation": "它帮助青少年发展狩猎所需的技能。"
+      },
+      {
+        "word": "benefit",
+        "phonetic": "/ˈbenɪfɪt/",
+        "meaning": "利益，好处",
+        "root": "bene- (good) + fic- (do)",
+        "rootExt": "beneficial (helpful)",
+        "derive": "beneficial, beneficiary",
+        "syn": "advantage, gain, profit",
+        "trap": "positive effect, improvement, helpful",
+        "paraphrase": "原文: you would expect to see permanent benefits → 题目: lasting advantages",
+        "questionStem": "Matching Information",
+        "example": "But Byers points out that the benefits of increased exercise disappear rapidly.",
+        "translation": "但拜尔斯指出，增加运动带来的益处会迅速消失。"
+      },
+      {
+        "word": "decline",
+        "phonetic": "/dɪˈklaɪn/",
+        "meaning": "下降，衰落",
+        "root": "clin- (bend)",
+        "rootExt": "incline (lean)",
+        "derive": "declension",
+        "syn": "decrease, drop, fall",
+        "trap": "reduction, less, stop",
+        "paraphrase": "原文: play tends to peak... and then decline → 题目: the amount of play falls",
+        "questionStem": "TRUE/FALSE/NOT GIVEN",
+        "example": "Across species, play tends to peak about halfway through the suckling stage and then decline.",
+        "translation": "在各物种中，游玩往往在哺乳期的中间阶段达到巅峰，然后下降。"
+      },
+      {
+        "word": "clue",
+        "phonetic": "/kluː/",
+        "meaning": "线索，提示",
+        "root": "clew (ball of thread)",
+        "rootExt": "clue (guide)",
+        "derive": "clueless",
+        "syn": "hint, evidence, indication",
+        "trap": "insight, information, sign",
+        "paraphrase": "原文: provides an important clue to what's going on → 题目: gives an indication of its function",
+        "questionStem": "Matching Information",
+        "example": "The timing of the playful stage in young animals provides an important clue.",
+        "translation": "幼年动物玩耍阶段的时间点提供了重要线索。"
+      },
+      {
+        "word": "creative",
+        "phonetic": "/kriˈeɪtɪv/",
+        "meaning": "创造性的",
+        "root": "cre- (grow/make)",
+        "rootExt": "creation, creator",
+        "derive": "creativity, create",
+        "syn": "innovative, imaginative",
+        "trap": "unusual connections, flexibility",
+        "paraphrase": "原文: play may enhance creativity → 题目: beneficial unusual connections",
+        "questionStem": "Matching Information",
+        "example": "By allowing link-ups between brain areas... play may enhance creativity.",
+        "translation": "通过允许大脑区域之间的联系，游戏可能会增强创造力。"
+      },
+      {
+        "word": "important",
+        "phonetic": "/ɪmˈpɔːtnt/",
+        "meaning": "重要的",
+        "root": "port- (carry)",
+        "rootExt": "import (bring in)",
+        "derive": "importance, importantly",
+        "syn": "significant, vital, essential",
+        "trap": "crucial, core, fundamental",
+        "paraphrase": "原文: provides an important clue → 题目: significant indication",
+        "questionStem": "Multiple Choice",
+        "example": "The timing of the playful stage in young animals provides an important clue.",
+        "translation": "幼年动物玩耍阶段的时间点提供了重要线索。"
+      },
+      {
+        "word": "rapidly",
+        "phonetic": "/ˈræpɪdli/",
+        "meaning": "迅速地",
+        "root": "rap- (seize)",
+        "rootExt": "rapid (fast)",
+        "derive": "rapid, rapidity",
+        "syn": "quickly, swiftly, fast",
+        "trap": "immediately, soon, shortly",
+        "paraphrase": "原文: benefits of increased exercise disappear rapidly → 题目: advantages are lost quickly",
+        "questionStem": "TRUE/FALSE/NOT GIVEN",
+        "example": "But Byers points out that the benefits of increased exercise disappear rapidly.",
+        "translation": "但拜尔斯指出，增加运动带来的益处会迅速消失。"
+      },
+      {
+        "word": "perform",
+        "phonetic": "/pəˈfɔːm/",
+        "meaning": "执行，表演",
+        "root": "form- (shape)",
+        "rootExt": "performance",
+        "derive": "performance, performer",
+        "syn": "execute, conduct, do",
+        "trap": "carry out, manage",
+        "paraphrase": "原文: animals that play... perform better → 题目: achieve higher success rates",
+        "questionStem": "Matching Features",
+        "example": "The way the cats played had no significant effect on how they performed.",
+        "translation": "猫玩耍的方式对它们的表现没有显著影响。"
+      },
+      {
+        "word": "opportunity",
+        "phonetic": "/ˌɒpəˈtjuːnəti/",
+        "meaning": "机会",
+        "root": "port- (harbor/gate)",
+        "rootExt": "opportune (timely)",
+        "derive": "opportune",
+        "syn": "chance, opening, possibility",
+        "trap": "access, window",
+        "paraphrase": "原文: denied the chance to play → 题目: lack of opportunity for play",
+        "questionStem": "Summary Completion",
+        "example": "Rat pups denied the chance to play grow smaller brain components.",
+        "translation": "被剥夺游戏机会的小鼠幼崽大脑组件会长得较小。"
+      },
+      {
+        "word": "physical",
+        "phonetic": "/ˈfɪzɪkl/",
+        "meaning": "物理的，身体的",
+        "root": "phys- (nature)",
+        "rootExt": "physic (medicine)",
+        "derive": "physically, physician",
+        "syn": "bodily, corporeal",
+        "trap": "biological, health, external",
+        "paraphrase": "原文: deaths among young fur seals → 题目: the physical hazards of play",
+        "questionStem": "Matching Information",
+        "example": "Eighty per cent of deaths... occur because playing pups fail to spot predators.",
+        "translation": "80%的死亡……是因为玩耍的幼崽未能发现捕食者。"
+      },
+      {
+        "word": "social",
+        "phonetic": "/ˈsəʊʃl/",
+        "meaning": "社会的，社交的",
+        "root": "soci- (companion)",
+        "rootExt": "society (group)",
+        "derive": "socially, society, socialize",
+        "syn": "communal, collective",
+        "trap": "interactive, group rules",
+        "paraphrase": "原文: play involves complex assessments of playmates → 题目: learn social rules",
+        "questionStem": "Sentence Completion",
+        "example": "Play often involves complex assessments of playmates.",
+        "translation": "游戏通常涉及对玩伴的复杂评估。"
+      },
+      {
+        "word": "stage",
+        "phonetic": "/steɪdʒ/",
+        "meaning": "阶段，舞台",
+        "root": "sta- (stand)",
+        "rootExt": "status (standing)",
+        "derive": "staged",
+        "syn": "phase, period, step",
+        "trap": "time, level",
+        "paraphrase": "原文: through the suckling stage → 题目: during the early period of life",
+        "questionStem": "Matching Information",
+        "example": "Play tends to peak about halfway through the suckling stage.",
+        "translation": "游玩往往在哺乳期的中间阶段达到巅峰。"
+      },
+      {
+        "word": "evidence",
+        "phonetic": "/ˈevɪdəns/",
+        "meaning": "证据，迹象",
+        "root": "vid- (see)",
+        "rootExt": "evident (clear)",
+        "derive": "evident, evidently",
+        "syn": "proof, data, testimony",
+        "trap": "finding, fact, indication",
+        "paraphrase": "原文: provide an important clue → 题目: scientific evidence for play",
+        "questionStem": "Matching Information",
+        "example": "The timing... provides an important clue to what's going on.",
+        "translation": "时间点……为正在发生的事情提供了重要线索。"
+      },
+      {
+        "word": "complex",
+        "phonetic": "/ˈkɒmpleks/",
+        "meaning": "复杂的",
+        "root": "plect- (weave)",
+        "rootExt": "complicate",
+        "derive": "complexity",
+        "syn": "complicated, intricate, sophisticated",
+        "trap": "varied, detailed, difficult",
+        "paraphrase": "原文: markedly more complex and subdivided → 题目: detailed and intricate activities",
+        "questionStem": "Matching Features",
+        "example": "The kind of behaviour involved was markedly more complex.",
+        "translation": "所涉及的行为明显更复杂。"
+      },
+      {
+        "word": "enhance",
+        "phonetic": "/ɪnˈhɑːns/",
+        "meaning": "增强，提高",
+        "root": "alt- (high)",
+        "rootExt": "exalt (raise high)",
+        "derive": "enhancement",
+        "syn": "improve, boost, augment",
+        "trap": "strengthen, develop, facilitate",
+        "paraphrase": "原文: play may enhance creativity → 题目: play improves imagination",
+        "questionStem": "TRUE/FALSE/NOT GIVEN",
+        "example": "By allowing link-ups between brain areas... play may enhance creativity.",
+        "translation": "通过允许大脑区域之间的联系，游戏可能会增强创造力。"
+      }
+    ],
+    "level2": [
+      {
+        "word": "engrossed",
+        "phonetic": "/ɪnˈɡrəʊst/",
+        "meaning": "全神贯注的",
+        "root": "gross (large/total)",
+        "rootExt": "engross (absorb)",
+        "derive": "engrossing",
+        "syn": "absorbed, occupied, immersed",
+        "trap": "concentrated, focused",
+        "paraphrase": "原文: Children engrossed in a make-believe world → 题目: children fully occupied by play",
+        "questionStem": "Summary Completion",
+        "example": "Children engrossed in a make-believe world... aren't just having fun.",
+        "translation": "沉浸在幻想世界中的孩子……并不仅仅是在玩乐。"
+      },
+      {
+        "word": "exuberant",
+        "phonetic": "/ɪɡˈzjuːbərənt/",
+        "meaning": "精力充沛的，繁茂的",
+        "root": "uber (fertile)",
+        "rootExt": "exuberance (abundance)",
+        "derive": "exuberance",
+        "syn": "energetic, vigorous, high-spirited",
+        "trap": "full of energy, active",
+        "paraphrase": "原文: carefree and exuberant way to pass the time → 题目: energetic play",
+        "questionStem": "TRUE/FALSE/NOT GIVEN",
+        "example": "Play may look like a carefree and exuberant way to pass the time.",
+        "translation": "游戏看起来可能是一种无忧无虑且充满活力的消磨时间的方式。"
+      },
+      {
+        "word": "predator",
+        "phonetic": "/ˈpredətə(r)/",
+        "meaning": "捕食者",
+        "root": "pred- (prey)",
+        "rootExt": "predatory (hunting)",
+        "derive": "predation, predatory",
+        "syn": "hunter, killer",
+        "trap": "danger, physical hazards",
+        "paraphrase": "原文: pups fail to spot predators approaching → 题目: the physical hazards of play",
+        "questionStem": "Matching Information",
+        "example": "Eighty per cent of deaths... occur because playing pups fail to spot predators.",
+        "translation": "年轻毛皮海豹的死亡中有80%是因为玩耍的幼崽未能发现捕食者的接近。"
+      },
+      {
+        "word": "evolve",
+        "phonetic": "/ɪˈvɒlv/",
+        "meaning": "进化，演变",
+        "root": "volv- (roll)",
+        "rootExt": "evolution (unrolling)",
+        "derive": "evolution, evolutionary",
+        "syn": "develop, progress, emerge",
+        "trap": "origin, developmental, history",
+        "paraphrase": "原文: why did it evolve? → 题目: the purpose for which play developed",
+        "questionStem": "Matching Information",
+        "example": "But if play is not simply a developmental hiccup... why did it evolve?",
+        "translation": "但如果游戏不只是发育中的小插曲……它为什么要进化呢？"
+      },
+      {
+        "word": "juvenile",
+        "phonetic": "/ˈdʒuːvənaɪl/",
+        "meaning": "青少年的，幼年的",
+        "root": "juven- (young)",
+        "rootExt": "rejuvenate (make young again)",
+        "derive": "juvenility",
+        "syn": "young, adolescent, immature",
+        "trap": "pups, kittens, young animals",
+        "paraphrase": "原文: it helps juveniles develop → 题目: recording how much time young animals spend",
+        "questionStem": "Matching Information",
+        "example": "A popular explanation of play has been that it helps juveniles develop the skills.",
+        "translation": "关于游戏的一个流行解释是，它帮助青少年发展技能。"
+      },
+      {
+        "word": "inspection",
+        "phonetic": "/ɪnˈspekʃn/",
+        "meaning": "视察，检查",
+        "root": "spec- (look)",
+        "rootExt": "inspect (look into)",
+        "derive": "inspector, inspect",
+        "syn": "examination, scrutiny, analysis",
+        "trap": "study, research, observation",
+        "paraphrase": "原文: a closer inspection reveals → 题目: detailed study of kittens",
+        "questionStem": "TRUE/FALSE/NOT GIVEN",
+        "example": "But a closer inspection reveals this interpretation as too simplistic.",
+        "translation": "但进一步的观察发现，这种解释过于简单。"
+      },
+      {
+        "word": "stimulus",
+        "phonetic": "/ˈstɪmjələs/",
+        "meaning": "刺激（物）",
+        "root": "stig- (prick/goad)",
+        "rootExt": "stimulate (encourage)",
+        "derive": "stimuli (pl.), stimulate",
+        "syn": "incentive, spur, input",
+        "trap": "environmental cues, signals",
+        "paraphrase": "原文: sensitive to developmental stimuli → 题目: environmental cues to the brain",
+        "questionStem": "Multiple Choice",
+        "example": "Large brains are more sensitive to developmental stimuli than smaller brains.",
+        "translation": "与较小的大脑相比，大的大脑对发育刺激更敏感。"
+      },
+      {
+        "word": "pattern",
+        "phonetic": "/ˈpætən/",
+        "meaning": "模式，图案",
+        "root": "pater- (father/model)",
+        "rootExt": "patron (model)",
+        "derive": "patterned",
+        "syn": "model, trend, design",
+        "trap": "timing, sequence, plot",
+        "paraphrase": "原文: discover a pattern associated with → 题目: insights from recording time",
+        "questionStem": "Matching Information",
+        "example": "You discover a pattern typically associated with a 'sensitive period'.",
+        "translation": "你发现了一种通常与“敏感期”相关的模式。"
+      },
+      {
+        "word": "activate",
+        "phonetic": "/ˈæktɪveɪt/",
+        "meaning": "激活，使活动",
+        "root": "act- (do)",
+        "rootExt": "action, active",
+        "derive": "activation, activity",
+        "syn": "trigger, stimulate, energize",
+        "trap": "light up, involvement, use",
+        "paraphrase": "原文: play lights everything up → 题目: amount of brain activated",
+        "questionStem": "Matching Features",
+        "example": "Such behaviour activates many different parts of the brain.",
+        "translation": "这种行为激活了大脑的许多不同部分。"
+      },
+      {
+        "word": "flexibility",
+        "phonetic": "/ˌfleksəˈbɪləti/",
+        "meaning": "灵活性，柔韧性",
+        "root": "flex- (bend)",
+        "rootExt": "flexible (bendable)",
+        "derive": "flexible, flexibly",
+        "syn": "adaptability, versatility",
+        "trap": "complex manoeuvres, unusual connections",
+        "paraphrase": "原文: greater behavioural flexibility → 题目: adapt to different situations",
+        "questionStem": "Matching Features",
+        "example": "He believes that play creates a brain that has greater behavioural flexibility.",
+        "translation": "他认为，游戏创造了一个具有更强行为灵活性的大脑。"
+      },
+      {
+        "word": "sophisticated",
+        "phonetic": "/səˈfɪstɪkeɪtɪd/",
+        "meaning": "复杂的，世故的",
+        "root": "soph- (wise)",
+        "rootExt": "philosophy (love of wisdom)",
+        "derive": "sophistication",
+        "syn": "complex, advanced, elaborate",
+        "trap": "varied, detailed, high-level",
+        "paraphrase": "原文: perform complex manoeuvres → 题目: achieve sophisticated tasks",
+        "questionStem": "Sentence Completion",
+        "example": "Play allows animals to perform complex manoeuvres with greater flexibility.",
+        "translation": "游戏让动物能够更灵活地执行复杂的动作。"
+      },
+      {
+        "word": "disappear",
+        "phonetic": "/ˌdɪsəˈpɪə(r)/",
+        "meaning": "消失",
+        "root": "par- (show)",
+        "rootExt": "appear (show up)",
+        "derive": "disappearance",
+        "syn": "vanish, fade, dissolve",
+        "trap": "lost, stop, end",
+        "paraphrase": "原文: benefits... disappear rapidly → 题目: advantages are lost quickly",
+        "questionStem": "TRUE/FALSE/NOT GIVEN",
+        "example": "Byers points out that the benefits... disappear rapidly.",
+        "translation": "拜尔斯指出，这些好处……会迅速消失。"
+      },
+      {
+        "word": "interpretation",
+        "phonetic": "/ɪnˌtɜːprɪˈteɪʃn/",
+        "meaning": "理解，解释",
+        "root": "pret- (price/value)",
+        "rootExt": "interpret (explain)",
+        "derive": "interpret, interpretive",
+        "syn": "explanation, view, analysis",
+        "trap": "conclusion, theory, perspective",
+        "paraphrase": "原文: reveals this interpretation as too simplistic → 题目: an inadequate explanation",
+        "questionStem": "Matching Features",
+        "example": "A closer inspection reveals this interpretation as too simplistic.",
+        "translation": "进一步的观察发现，这种解释过于简单。"
+      },
+      {
+        "word": "correlation",
+        "phonetic": "/ˌkɒrəˈleɪʃn/",
+        "meaning": "相关性",
+        "root": "relat- (bring back/tell)",
+        "rootExt": "relation (connection)",
+        "derive": "correlate",
+        "syn": "connection, link, association",
+        "trap": "link, relationship, bond",
+        "paraphrase": "原文: a strong positive link → 题目: direct correlation between brain size and play",
+        "questionStem": "Multiple Choice",
+        "example": "There is a strong positive link between brain size and playfulness.",
+        "translation": "大脑大小与玩耍程度之间存在极强的正向联系。"
+      },
+      {
+        "word": "stimulation",
+        "phonetic": "/ˌstɪmjuˈleɪʃn/",
+        "meaning": "刺激",
+        "root": "stig- (prick)",
+        "rootExt": "stimulus",
+        "derive": "stimulate",
+        "syn": "encouragement, incentive, input",
+        "trap": "activation, trigger, influence",
+        "paraphrase": "原文: associated with the stimulation and growth → 题目: causes the brain to develop",
+        "questionStem": "Matching Features",
+        "example": "A particular chemical associated with the stimulation and growth of nerve cells.",
+        "translation": "一种与神经细胞刺激和生长相关的特定化学物质。"
+      },
+      {
+        "word": "assessment",
+        "phonetic": "/əˈsesmənt/",
+        "meaning": "评估，估算",
+        "root": "sess- (sit)",
+        "rootExt": "assess (sit beside)",
+        "derive": "assess, assessor",
+        "syn": "evaluation, appraisal, judgement",
+        "trap": "analysis, study, check",
+        "paraphrase": "原文: complex assessments of playmates → 题目: judging the behavior of others",
+        "questionStem": "Summary Completion",
+        "example": "Play often involves complex assessments of playmates.",
+        "translation": "游戏通常涉及对玩伴的复杂评估。"
+      },
+      {
+        "word": "permanent",
+        "phonetic": "/ˈpɜːmənənt/",
+        "meaning": "永久的，持久的",
+        "root": "man- (stay)",
+        "rootExt": "remain (stay back)",
+        "derive": "permanence, permanently",
+        "syn": "lasting, enduring, stable",
+        "trap": "long-term, constant, fixed",
+        "paraphrase": "原文: see permanent benefits → 题目: achieve lasting advantages",
+        "questionStem": "TRUE/FALSE/NOT GIVEN",
+        "example": "You would expect to see permanent benefits from it.",
+        "translation": "你会期望从中看到持久的益处。"
+      },
+      {
+        "word": "juvenile",
+        "phonetic": "/ˈdʒuːvənaɪl/",
+        "meaning": "青少年的",
+        "root": "juven- (young)",
+        "rootExt": "rejuvenate",
+        "syn": "young, adolescent, immature",
+        "trap": "pups, kittens, offspring",
+        "paraphrase": "原文: help juveniles develop skills → 题目: prepare young animals for adulthood",
+        "questionStem": "Matching Features",
+        "example": "It helps juveniles develop the skills they will need to hunt.",
+        "translation": "它帮助青少年发展狩猎所需的技能。"
+      },
+      {
+        "word": "peak",
+        "phonetic": "/piːk/",
+        "meaning": "达到顶峰，顶点",
+        "root": "pike (sharp point)",
+        "rootExt": "peak (top)",
+        "derive": "peaked",
+        "syn": "climax, top, zenith",
+        "trap": "maximum, highest point",
+        "paraphrase": "原文: play tends to peak → 题目: play reaches its maximum level",
+        "questionStem": "Sentence Completion",
+        "example": "Across species, play tends to peak about halfway through.",
+        "translation": "在各个物种中，游戏往往在中间阶段达到巅峰。"
+      },
+      {
+        "word": "markedly",
+        "phonetic": "/ˈmɑːkɪdli/",
+        "meaning": "显著地，明显地",
+        "root": "mark- (sign)",
+        "rootExt": "market (sign of trade)",
+        "derive": "marked, mark",
+        "syn": "significantly, noticeably, strikingly",
+        "trap": "very, extremely, clearly",
+        "paraphrase": "原文: markedly more complex → 题目: significantly more detailed",
+        "questionStem": "TRUE/FALSE/NOT GIVEN",
+        "example": "The kind of behaviour involved was markedly more complex.",
+        "translation": "所涉及的行为明显更复杂。"
+      }
+    ],
+    "level3": [
+      {
+        "word": "hiccup",
+        "phonetic": "/ˈhɪkʌp/",
+        "meaning": "小挫折，打嗝",
+        "root": "imitative (sound)",
+        "rootExt": "hiccup (minor interruption)",
+        "derive": "hiccuped",
+        "syn": "glitch, setback, minor problem",
+        "trap": "incidental, byproduct, useless",
+        "paraphrase": "原文: simply a developmental hiccup → 题目: play has no real purpose",
+        "questionStem": "Multiple Choice",
+        "example": "But if play is not simply a developmental hiccup...",
+        "translation": "但如果游戏不仅仅是发育中的一个小插曲……"
+      },
+      {
+        "word": "superficially",
+        "phonetic": "/ˌsuːpəˈfɪʃəli/",
+        "meaning": "表面地",
+        "root": "super- (above) + fic- (face)",
+        "rootExt": "surface (top layer)",
+        "derive": "superficial",
+        "syn": "apparently, outwardly",
+        "trap": "look like, appear to be",
+        "paraphrase": "原文: activity superficially resembling adult behaviour → 题目: play looks like serious activity",
+        "questionStem": "Summary Completion",
+        "example": "To indicate that activity superficially resembling adult behaviour is not really in earnest.",
+        "translation": "表明这种表面上模仿成年行为的活动并非真的在认真进行。"
+      },
+      {
+        "word": "respiratory",
+        "phonetic": "/rəˈspɪrətri/",
+        "meaning": "呼吸的",
+        "root": "spir- (breathe)",
+        "rootExt": "respire (breathe)",
+        "derive": "respiration, respire",
+        "syn": "breathing",
+        "trap": "endurance, physical strength",
+        "paraphrase": "原文: improving their respiratory endurance → 题目: build up strength for adulthood",
+        "questionStem": "Multiple Choice (Multiple)",
+        "example": "Young animals to get in shape... by improving their respiratory endurance.",
+        "translation": "幼年动物通过提高呼吸耐力来锻炼体型。"
+      },
+      {
+        "word": "prowess",
+        "phonetic": "/ˈpraʊəs/",
+        "meaning": "高超技能，英勇",
+        "root": "pro- (forth) + esse (be)",
+        "rootExt": "proud (brave)",
+        "syn": "expertise, mastery, skill",
+        "trap": "hunting success, ability",
+        "paraphrase": "原文: significant effect on their hunting prowess → 题目: help develop hunting skills",
+        "questionStem": "TRUE/FALSE/NOT GIVEN",
+        "example": "The way the cats played had no significant effect on their hunting prowess in later life.",
+        "translation": "猫玩耍的方式对它们以后的狩猎能力没有显著影响。"
+      },
+      {
+        "word": "converse",
+        "phonetic": "/ˈkɒnvɜːs/",
+        "meaning": "相反的事物；相反的",
+        "root": "vers- (turn)",
+        "rootExt": "reverse (turn back)",
+        "derive": "conversely",
+        "syn": "opposite, reverse, contrary",
+        "trap": "on the other hand, in contrast",
+        "paraphrase": "原文: The converse was also found to be true → 题目: animals with smaller brains play less",
+        "questionStem": "Summary Completion",
+        "example": "The converse was also found to be true.",
+        "translation": "反之亦然（指大脑小则玩耍少）。"
+      },
+      {
+        "word": "mould",
+        "phonetic": "/məʊld/",
+        "meaning": "塑造，模具",
+        "root": "mod- (measure/manner)",
+        "rootExt": "model (shape)",
+        "derive": "moulding",
+        "syn": "shape, form, fashion",
+        "trap": "modify, develop, build",
+        "paraphrase": "原文: help mould them for adulthood → 题目: development of the brain",
+        "questionStem": "Matching Features",
+        "example": "They require more play to help mould them for adulthood.",
+        "translation": "它们需要更多的游戏来帮助塑造其成年状态。"
+      },
+      {
+        "word": "subdivided",
+        "phonetic": "/ˌsʌbdɪˈvaɪdɪd/",
+        "meaning": "进一步细分的",
+        "root": "sub- (under) + vid- (separate)",
+        "rootExt": "division (split)",
+        "derive": "subdivision",
+        "syn": "categorized, detailed, split",
+        "trap": "complex, varied",
+        "paraphrase": "原文: markedly more complex and subdivided → 题目: detailed mental activities",
+        "questionStem": "Matching Information",
+        "example": "The kind of behaviour involved was markedly more complex and subdivided than that of adults.",
+        "translation": "所涉及的行为明显比成年的行为更复杂且细分。"
+      },
+      {
+        "word": "reciprocity",
+        "phonetic": "/ˌresɪˈprɒsəti/",
+        "meaning": "互惠，互助",
+        "root": "reci- (back) + pro- (forward)",
+        "rootExt": "reciprocal (mutual)",
+        "derive": "reciprocal",
+        "syn": "mutuality, exchange",
+        "trap": "social rules, interaction",
+        "paraphrase": "原文: ideas of reciprocity → 题目: social rules when they interact",
+        "questionStem": "Summary Completion",
+        "example": "Play often involves complex assessments of playmates, ideas of reciprocity.",
+        "translation": "游戏通常涉及对玩伴的复杂评估和互惠理念。"
+      },
+      {
+        "word": "creativity",
+        "phonetic": "/ˌkriːeɪˈtɪvəti/",
+        "meaning": "创造力",
+        "root": "cre- (make)",
+        "rootExt": "create",
+        "derive": "creative",
+        "syn": "imagination, ingenuity",
+        "trap": "unusual connections, new ideas",
+        "paraphrase": "原文: play may enhance creativity → 题目: causes unusual connections in the brain",
+        "questionStem": "Matching Information",
+        "example": "By allowing link-ups between brain areas... play may enhance creativity.",
+        "translation": "通过允许大脑区域之间的连接，游戏可能会增强创造力。"
+      },
+      {
+        "word": "component",
+        "phonetic": "/kəmˈpəʊnənt/",
+        "meaning": "组成部分，成分",
+        "root": "pon- (put)",
+        "rootExt": "compose (put together)",
+        "derive": "composition",
+        "syn": "part, element, section",
+        "trap": "areas, regions, parts of brain",
+        "paraphrase": "原文: grow smaller brain components → 题目: reduced brain size",
+        "questionStem": "Summary Completion",
+        "example": "Rat pups denied the chance to play grow smaller brain components.",
+        "translation": "被剥夺游戏机会的小鼠幼崽大脑组件会长得较小。"
+      },
+      {
+        "word": "optimal",
+        "phonetic": "/ˈɒptɪməl/",
+        "meaning": "最佳的，最理想的",
+        "root": "opt- (best)",
+        "rootExt": "optimism (best outlook)",
+        "derive": "optimize, optimum",
+        "syn": "best, ideal, prime",
+        "trap": "peak, window of opportunity",
+        "paraphrase": "原文: window of opportunity reaches its peak → 题目: optimal period for development",
+        "questionStem": "Multiple Choice",
+        "example": "Just as this 'window of opportunity' reaches its peak.",
+        "translation": "正如这个“机会之窗”达到顶峰时。"
+      },
+      {
+        "word": "endurance",
+        "phonetic": "/ɪnˈdjʊərəns/",
+        "meaning": "忍耐力，耐力",
+        "root": "dur- (hard/last)",
+        "rootExt": "durable (lasting)",
+        "derive": "endure",
+        "syn": "stamina, persistence, tolerance",
+        "trap": "fitness, shape, strength",
+        "paraphrase": "原文: improving their respiratory endurance → 题目: develop physical strength",
+        "questionStem": "Matching Features",
+        "example": "Young animals... get in shape by improving their respiratory endurance.",
+        "translation": "幼年动物……通过提高呼吸耐力来锻炼体型。"
+      },
+      {
+        "word": "simplistic",
+        "phonetic": "/sɪmˈplɪstɪk/",
+        "meaning": "过分简单化的",
+        "root": "sim- (one/same)",
+        "rootExt": "simple",
+        "derive": "simplification",
+        "syn": "shallow, naive, superficial",
+        "trap": "not adequate, incomplete explanation",
+        "paraphrase": "原文: reveals this interpretation as too simplistic → 题目: an inadequate explanation",
+        "questionStem": "Matching Features",
+        "example": "A closer inspection reveals this interpretation as too simplistic.",
+        "translation": "进一步观察发现，这种解释过于简单化。"
+      },
+      {
+        "word": "predisposition",
+        "phonetic": "/ˌpriːdɪspəˈzɪʃn/",
+        "meaning": "倾向，易患病体质",
+        "root": "posit- (place/put)",
+        "rootExt": "disposition (arrangement)",
+        "derive": "predispose",
+        "syn": "tendency, inclination, bias",
+        "trap": "born with, inherent, link",
+        "paraphrase": "原文: a strong positive link between brain size and playfulness → 题目: a genetic predisposition to play",
+        "questionStem": "Matching Information",
+        "example": "I believe there is a strong positive link between brain size and playfulness.",
+        "translation": "我相信大脑大小和玩耍之间存在强烈的正相关。"
+      },
+      {
+        "word": "underestimate",
+        "phonetic": "/ˌʌndərˈestɪmeɪt/",
+        "meaning": "低估",
+        "root": "under- (below) + estim- (value)",
+        "rootExt": "estimate",
+        "derive": "estimation",
+        "syn": "underrate, undervalue",
+        "trap": "overlook, fail to recognize",
+        "paraphrase": "原文: People have not paid enough attention to → 题目: underestimate the importance of brain activation",
+        "questionStem": "Multiple Choice",
+        "example": "People have not paid enough attention to the amount of the brain activated.",
+        "translation": "人们没有足够重视大脑激活的数量。"
+      },
+      {
+        "word": "cognitive",
+        "phonetic": "/ˈkɒɡnətɪv/",
+        "meaning": "认知的",
+        "root": "gnos- (know)",
+        "rootExt": "recognize",
+        "derive": "cognition",
+        "syn": "mental, intellectual",
+        "trap": "learning, brain development",
+        "paraphrase": "原文: playing makes you intelligent → 题目: play develops cognitive skills",
+        "questionStem": "Summary Completion",
+        "example": "In other words, playing makes you intelligent.",
+        "translation": "换句话说，玩耍让你变得聪明。"
+      },
+      {
+        "word": "manoeuvre",
+        "phonetic": "/məˈnuːvə(r)/",
+        "meaning": "策略，操纵，动作",
+        "root": "manu- (hand) + oper- (work)",
+        "rootExt": "manuscript (handwritten)",
+        "syn": "movement, movement, tactic",
+        "trap": "skill, complex behavior",
+        "paraphrase": "原文: perform complex manoeuvres → 题目: execute difficult movements",
+        "questionStem": "Matching Features",
+        "example": "Play allows animals to perform complex manoeuvres.",
+        "translation": "游戏让动物能够执行复杂的动作。"
+      },
+      {
+        "word": "sensitive",
+        "phonetic": "/ˈsensətɪv/",
+        "meaning": "敏感的，灵敏的",
+        "root": "sens- (feel)",
+        "rootExt": "sensation",
+        "derive": "sensitivity",
+        "syn": "responsive, delicate, perceptive",
+        "trap": "vulnerable, reactive, window",
+        "paraphrase": "原文: more sensitive to developmental stimuli → 题目: react more strongly to environmental cues",
+        "questionStem": "Matching Information",
+        "example": "Large brains are more sensitive to developmental stimuli.",
+        "translation": "大脑越大，对发育刺激越敏感。"
+      },
+      {
+        "word": "incidental",
+        "phonetic": "/ˌɪnsɪˈdentl/",
+        "meaning": "偶然的，伴随的",
+        "root": "cid- (fall)",
+        "rootExt": "incident (event)",
+        "derive": "incidentally",
+        "syn": "accidental, minor, secondary",
+        "trap": "hiccup, byproduct, no purpose",
+        "paraphrase": "原文: simply a developmental hiccup → 题目: an incidental part of growing up",
+        "questionStem": "Multiple Choice",
+        "example": "But if play is not simply a developmental hiccup...",
+        "translation": "但如果游戏不仅仅是一个发育中的小插曲……"
+      },
+      {
+        "word": "deprive",
+        "phonetic": "/dɪˈpraɪv/",
+        "meaning": "剥夺",
+        "root": "priv- (separate/own)",
+        "rootExt": "private (own one's self)",
+        "derive": "deprivation, deprived",
+        "syn": "strip, deny, take away",
+        "trap": "not allow, remove",
+        "paraphrase": "原文: denied the chance to play → 题目: being deprived of play",
+        "questionStem": "Summary Completion",
+        "example": "Rat pups denied the chance to play grow smaller brain components.",
+        "translation": "被剥夺游戏机会的小鼠幼崽大脑组件会长得较小。"
+      }
+    ]
+  },
+  "phrases": [
+    {
+      "word": "engrossed in",
+      "meaning": "沉浸于，全神贯注于",
+      "syn": "absorbed in, immersed in",
+      "trap": "concentrate on, busy with",
+      "example": "Children engrossed in a make-believe world.",
+      "translation": "沉浸在幻想世界中的孩子。"
+    },
+    {
+      "word": "pass the time",
+      "meaning": "消磨时间",
+      "syn": "kill time, spend time",
+      "trap": "use time, occupy time",
+      "example": "A carefree and exuberant way to pass the time.",
+      "translation": "一种无忧无虑且充满活力的消磨时间的方式。"
+    },
+    {
+      "word": "in terms of",
+      "meaning": "在……方面，就……而言",
+      "syn": "regarding, as for",
+      "trap": "related to, concerning",
+      "example": "It is also extremely expensive in terms of energy.",
+      "translation": "在能量方面，它的消耗也极其巨大。"
+    },
+    {
+      "word": "get into shape",
+      "meaning": "强身健体，锻炼体型",
+      "syn": "keep fit, exercise",
+      "trap": "build muscle, stay healthy",
+      "example": "'If the function of play was to get into shape,' says Byers.",
+      "translation": "“如果游戏的功能是为了健身，”拜尔斯说。"
+    },
+    {
+      "word": "at first glance",
+      "meaning": "乍一看",
+      "syn": "initially, on the surface",
+      "trap": "at first, superficially",
+      "example": "At first glance, playing animals do appear to be practising.",
+      "translation": "乍一看，玩耍中的动物确实表现出在练习。"
+    },
+    {
+      "word": "significant effect",
+      "meaning": "显著影响",
+      "syn": "notable impact, major influence",
+      "trap": "important result, consequence",
+      "example": "The way the cats played had no significant effect on their hunting prowess.",
+      "translation": "猫玩耍的方式对它们的狩猎能力没有显著影响。"
+    },
+    {
+      "word": "positive link",
+      "meaning": "正相关，积极联系",
+      "syn": "correlation, connection",
+      "trap": "relationship, association",
+      "example": "There is a strong positive link between brain size and playfulness.",
+      "translation": "大脑大小与玩耍程度之间存在极强的正相关。"
+    },
+    {
+      "word": "due to",
+      "meaning": "由于，因为",
+      "syn": "because of, owing to",
+      "trap": "as a result of, reason",
+      "example": "I concluded it's to do with learning (implied cause).",
+      "translation": "我的结论是这与学习有关。"
+    },
+    {
+      "word": "sensitive period",
+      "meaning": "敏感期，关键期",
+      "syn": "critical window, key stage",
+      "trap": "brief development window",
+      "example": "A pattern typically associated with a 'sensitive period'.",
+      "translation": "一种通常与“敏感期”相关的模式。"
+    },
+    {
+      "word": "window of opportunity",
+      "meaning": "机会之窗，良机",
+      "syn": "chance, optimal time",
+      "trap": "peak time, best time",
+      "example": "Just as this 'window of opportunity' reaches its peak.",
+      "translation": "正当这个“机会之窗”达到顶峰时。"
+    },
+    {
+      "word": "pay attention to",
+      "meaning": "关注，注意",
+      "syn": "focus on, concentrate on",
+      "trap": "notice, consider, study",
+      "example": "People have not paid enough attention to the amount of the brain activated.",
+      "translation": "人们还没有足够关注被激活的大脑区域数量。"
+    },
+    {
+      "word": "be associated with",
+      "meaning": "与……有关，与……联系在一起",
+      "syn": "be linked to, be connected with",
+      "trap": "relate to, involve",
+      "example": "A particular chemical associated with the stimulation and growth of nerve cells.",
+      "translation": "一种与神经细胞刺激和生长相关的特定化学物质。"
+    },
+    {
+      "word": "light up",
+      "meaning": "照亮，激活（大脑）",
+      "syn": "activate, trigger",
+      "trap": "stimulate, involve",
+      "example": "'Play lights everything up,' he says.",
+      "translation": "“游戏点亮了一切，”他说。"
+    },
+    {
+      "word": "exam-oriented",
+      "meaning": "以考试为导向的",
+      "syn": "test-driven, academic-focused",
+      "trap": "schooling, education system",
+      "example": "With schooling beginning earlier and becoming increasingly exam-oriented.",
+      "translation": "随着学校教育开始得更早且日益趋向考试导向。"
+    },
+    {
+      "word": "get a look-in",
+      "meaning": "有成功的机会，参与的机会",
+      "syn": "get a chance, be considered",
+      "trap": "opportunity, possibility",
+      "example": "Play is likely to get even less of a look-in.",
+      "translation": "游戏的机会可能会变得更少。"
+    }
+  ]
+};
+const vocabulary = rawData.vocabulary || {};
+const phrasesData = rawData.phrases || [];
+
+// State
+let curLv = 'level1', curWIdx = 0, curPIdx = 0;
+let vocabMode = 'ctx'; // 'ctx' | 'dir'
+let reinforceQueue = [], reinforcing = false;
+const mistakeMap = new Map(); // word -> {data, count}
+
+// Trap quiz
+let trapSet = [], curTrapIdx = 0;
+// Sim quiz
+let simSet = [], curSimIdx = 0;
+
+// ── Tab switch ──
+function switchTab(id) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => {
+    if (t.getAttribute('onclick') && t.getAttribute('onclick').includes("'" + id + "'")) t.classList.add('active');
+  });
+  document.querySelectorAll('.section').forEach(s => s.classList.toggle('active', s.id === id));
+  if (id === 'trap') initTrap();
+  if (id === 'sim') initSim();
+  if (id === 'mistakes') renderMistakes();
+  if (id === 'phrases') renderPhrase();
+}
+
+function speak(text) {
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-GB';
+  window.speechSynthesis.speak(u);
+}
+
+function escQ(s) { return (s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
+
+function setMode(m) {
+  vocabMode = m;
+  document.getElementById('modeCtx').classList.toggle('active', m === 'ctx');
+  document.getElementById('modeDir').classList.toggle('active', m === 'dir');
+  renderVocab();
+}
+
+function jumpLevel(lv) {
+  curLv = lv; curWIdx = 0;
+  ['lv1btn','lv2btn','lv3btn'].forEach((id, i) => {
+    document.getElementById(id).classList.toggle('active', lv === 'level' + (i+1));
+  });
+  renderVocab();
+}
+
+// ── Trap-box HTML helper ──
+function trapBlockHTML(d) {
+  if (!d.trap && !d.paraphrase && !d.questionStem) return '';
+  let s = '<div class="trap-box"><div class="trap-title">⚡ 题眼信息 — 雅思考点<\/div>';
+  if (d.trap) s += '<div class="trap-row"><span class="trap-lbl">陷阱替换<\/span><span class="trap-val">' + (d.trap||'') + '<\/span><\/div>';
+  if (d.paraphrase) s += '<div class="trap-row"><span class="trap-lbl">Paraphrase<\/span><span class="trap-val">' + (d.paraphrase||'') + '<\/span><\/div>';
+  if (d.questionStem) s += '<div class="trap-row"><span class="trap-lbl">题型提示<\/span><span class="trap-val">' + (d.questionStem||'') + '<\/span><\/div>';
+  return s + '<\/div>';
+}
+
+// ── ① Vocab ──
+function renderVocab() {
+  const list = reinforcing ? reinforceQueue : (vocabulary[curLv] || []);
+  if (!list.length) {
+    document.getElementById('vocab-card').innerHTML = '<div class="text-center p-10 text-slate-400">该等级暂无词汇<\/div>';
+    return;
+  }
+  const idx = reinforcing ? 0 : curWIdx;
+  const data = list[idx];
+  if (!data) return;
+  document.getElementById('reinforce-notice').style.display = reinforcing ? 'block' : 'none';
+  document.getElementById('vocabProg').style.width = Math.round((idx / list.length) * 100) + '%';
+  speak(data.word);
+  if (vocabMode === 'ctx') renderVocabCtx(data, list.length, idx);
+  else renderVocabDir(data, list.length, idx);
+}
+
+function renderVocabCtx(data, total, idx) {
+  // Blank out the word in the example sentence
+  const ex = data.example || '';
+  const _wi = ex.toLowerCase().indexOf(data.word.toLowerCase());
+  const blanked = _wi >= 0 ? ex.slice(0,_wi)+'<span class=\'ctx-blank\' id=\'ctx-hw\' onclick=\'revealWord()\'>'+'_'.repeat(Math.min(data.word.length,8))+'<\/span>'+ex.slice(_wi+data.word.length) : ex;
+  const hasBlanked = blanked !== ex;
+
+  document.getElementById('vocab-card').innerHTML = `
+    <div class="flex justify-between items-start mb-1">
+      <div class="text-[0.58rem] font-bold text-blue-500 uppercase tracking-widest">${curLv} · 语境猜词</div>
+      <div class="text-[0.6rem] text-slate-300 font-bold">${idx+1} / ${total}</div>
+    </div>
+    <div class="ex-box">
+      <div class="text-[0.6rem] font-bold text-blue-500 mb-1">📖 真题原句 — ${hasBlanked ? '点击空格揭开单词' : '阅读并尝试理解'}</div>
+      <p class="text-sm font-bold text-blue-900 leading-snug">${hasBlanked ? blanked : ex}</p>
+      <p class="text-[0.72rem] text-blue-700/70 mt-1">${data.translation || ''}</p>
+    </div>
+    <div class="text-[0.68rem] text-slate-400 text-center mb-2">👆 先读句子猜意思，再点击揭开单词</div>
+    <div id="word-reveal" style="display:none">
+      <div class="flex justify-between items-start mb-2">
+        <div>
+          <h1 class="text-3xl font-bold text-slate-800">${data.word}</h1>
+          <div class="text-slate-400 text-sm mt-1">${data.phonetic || ''} <span onclick="speak('${data.word.replace(/'/g,"\\'")}'')" class="cursor-pointer">🔊</span></div>
+        </div>
+        <div class="text-blue-600 font-bold text-xl text-right">${data.meaning}</div>
+      </div>
+      <div class="detail-box space-y-2">
+        <div class="flex"><span class="lbl">同义替换</span><span class="text-slate-600 font-bold">${data.syn||'—'}</span></div>
+        <div class="flex"><span class="lbl">派生词</span><span class="text-slate-600">${data.derive||'—'}</span></div>
+      </div>
+      <div class="root-box">
+        <div class="flex items-center mb-1"><span class="lbl lbl-r">词根词缀</span><span class="font-bold text-orange-800">${data.root||'—'}</span></div>
+        <div class="text-xs text-orange-600/80 italic pl-[73px]">同根: ${data.rootExt||'—'}</div>
+      </div>
+      ${trapBlockHTML(data)}
+    </div>
+    <div class="grid grid-cols-3 gap-3 mt-auto pt-4" id="mark-btns" style="${hasBlanked ? 'display:none' : ''}">
+      <button class="btn-mark bg-emerald-500" onclick="handleMark('known','v')">掌握 ✓</button>
+      <button class="btn-mark bg-amber-500" onclick="handleMark('unsure','v')">模糊 ~</button>
+      <button class="btn-mark bg-rose-500" onclick="handleMark('unknown','v')">不识 ✗</button>
+    </div>
+  `;
+
+  // If the word wasn't found in sentence, auto-show reveal
+  if (!hasBlanked) {
+    document.getElementById('word-reveal').style.display = 'block';
+  }
+}
+
+function revealWord() {
+  const hw = document.getElementById('ctx-hw');
+  const list = reinforcing ? reinforceQueue : (vocabulary[curLv] || []);
+  const data = list[reinforcing ? 0 : curWIdx];
+  if (hw && data) { hw.classList.add('revealed'); hw.textContent = data.word; }
+  document.getElementById('word-reveal').style.display = 'block';
+  const mb = document.getElementById('mark-btns');
+  if (mb) mb.style.display = 'grid';
+}
+
+function renderVocabDir(data, total, idx) {
+  document.getElementById('vocab-card').innerHTML = `
+    <div class="flex justify-between items-start">
+      <div class="flex-1">
+        <div class="text-[0.58rem] font-bold text-blue-500 uppercase tracking-widest mb-1">${curLv}</div>
+        <h1 class="text-3xl font-bold text-slate-800">${data.word}</h1>
+        <div class="text-slate-400 text-sm mt-1">${data.phonetic || ''} <span onclick="speak('${data.word.replace(/'/g,"\\'")}'')" class="cursor-pointer ml-2">🔊</span></div>
+      </div>
+      <div class="text-right">
+        <div class="text-slate-300 text-[0.6rem] font-bold mb-2">${idx+1} / ${total}</div>
+        <div class="text-blue-600 font-bold text-xl">${data.meaning}</div>
+      </div>
+    </div>
+    <div class="ex-box">
+      <p class="text-sm font-bold text-blue-900 mb-1 leading-snug">"${data.example||''}"</p>
+      <p class="text-[0.75rem] text-blue-700/70">${data.translation||''}</p>
+    </div>
+    <div class="detail-box space-y-2">
+      <div class="flex"><span class="lbl">同义替换</span><span class="text-slate-600 font-bold">${data.syn||'—'}</span></div>
+      <div class="flex"><span class="lbl">派生词</span><span class="text-slate-600">${data.derive||'—'}</span></div>
+    </div>
+    <div class="root-box">
+      <div class="flex items-center mb-1"><span class="lbl lbl-r">词根词缀</span><span class="font-bold text-orange-800">${data.root||'—'}</span></div>
+      <div class="text-xs text-orange-600/80 italic pl-[73px]">同根: ${data.rootExt||'—'}</div>
+    </div>
+    ${trapBlockHTML(data)}
+    <div class="grid grid-cols-3 gap-3 mt-auto pt-4">
+      <button class="btn-mark bg-emerald-500" onclick="handleMark('known','v')">掌握 ✓</button>
+      <button class="btn-mark bg-amber-500" onclick="handleMark('unsure','v')">模糊 ~</button>
+      <button class="btn-mark bg-rose-500" onclick="handleMark('unknown','v')">不识 ✗</button>
+    </div>
+  `;
+}
+
+function handleMark(status, type) {
+  const cardId = type === 'v' ? 'vocab-card' : 'phrase-card';
+  const card = document.getElementById(cardId);
+  const cls = status === 'known' ? 'flash-green' : (status === 'unsure' ? 'flash-amber' : 'flash-rose');
+  card.classList.add(cls);
+
+  // Add to mistake/reinforce tracking
+  if (status === 'unknown' || status === 'unsure') {
+    const item = type === 'v'
+      ? (reinforcing ? reinforceQueue[0] : (vocabulary[curLv]||[])[curWIdx])
+      : phrasesData[curPIdx];
+    if (item) {
+      const key = item.word;
+      if (!mistakeMap.has(key)) mistakeMap.set(key, { data: item, count: 1 });
+      else mistakeMap.get(key).count++;
+      if (!reinforceQueue.find(x => x.word === key)) reinforceQueue.push(item);
+    }
+  }
+
+  setTimeout(() => {
+    card.classList.remove(cls);
+    if (type === 'v') advanceVocab();
+    else advancePhrase();
+  }, 800);
+}
+
+function advanceVocab() {
+  if (reinforcing) {
+    reinforceQueue.shift();
+    if (reinforceQueue.length === 0) {
+      reinforcing = false;
+      document.getElementById('reinforce-notice').style.display = 'none';
+      document.getElementById('vocab-card').innerHTML = '<div class="text-center p-10"><div class="text-5xl mb-4">🎯<\/div><div class="text-xl font-bold text-emerald-600">强化轮完成！<\/div><div class="text-sm text-slate-400 mt-2">切换「题眼训练」或「做题模拟」检验效果<\/div><\/div>';
+    } else { renderVocab(); }
+    return;
+  }
+  const list = vocabulary[curLv] || [];
+  if (curWIdx < list.length - 1) { curWIdx++; renderVocab(); }
+  else if (reinforceQueue.length > 0) {
+    reinforcing = true;
+    renderVocab();
+  } else {
+    const nextLv = { level1: 'level2', level2: 'level3' }[curLv];
+    document.getElementById('vocab-card').innerHTML = `
+      <div class="text-center p-10">
+        <div class="text-5xl mb-4">✅</div>
+        <div class="text-xl font-bold text-emerald-600">本级完成！无生词 🎉</div>
+        ${nextLv ? `<button class="mt-6 px-6 py-3 bg-blue-500 text-white rounded-2xl font-bold" onclick="jumpLevel('${nextLv}')">继续下一级 →</button>` : ''}
+      </div>
+    `;
+  }
+}
+
+// ── ④ Phrase ──
+function renderPhrase() {
+  if (!phrasesData.length) {
+    document.getElementById('phrase-card').innerHTML = '<div class="text-center p-10 text-slate-400">暂无短语数据<\/div>';
+    return;
+  }
+  const data = phrasesData[curPIdx];
+  const total = phrasesData.length;
+  document.getElementById('phraseProg').style.width = Math.round((curPIdx / total) * 100) + '%';
+  document.getElementById('phrase-card').innerHTML = `
+    <div class="flex justify-between items-start">
+      <div class="flex-1">
+        <div class="text-[0.6rem] font-bold text-emerald-500 uppercase tracking-widest mb-1">真题短语</div>
+        <h1 class="text-2xl font-bold text-slate-800">${data.word}</h1>
+      </div>
+      <div class="text-right">
+        <div class="text-slate-300 text-[0.6rem] font-bold mb-2">${curPIdx+1} / ${total}</div>
+        <div class="text-emerald-600 font-bold text-lg">${data.meaning}</div>
+      </div>
+    </div>
+    <div class="ex-box" style="border-left-color:#10b981;background:#ecfdf5;">
+      <p class="text-sm font-bold text-emerald-900 mb-1 leading-snug">"${data.example||''}"</p>
+      <p class="text-[0.75rem] text-emerald-700/70">${data.translation||''}</p>
+    </div>
+    <div class="detail-box">
+      <div class="flex"><span class="lbl" style="color:#10b981">同义替换</span><span class="text-slate-600 font-bold">${data.syn||'—'}</span></div>
+    </div>
+    ${data.trap ? `<div class="trap-box"><div class="trap-title">⚡ 短语陷阱词<\/div><div class="trap-row"><span class="trap-lbl">陷阱替换<\/span><span class="trap-val">${data.trap}<\/span><\/div><\/div>` : ''}
+    <div class="grid grid-cols-3 gap-3 mt-auto pt-4">
+      <button class="btn-mark bg-emerald-500" onclick="handleMark('known','p')">掌握 ✓</button>
+      <button class="btn-mark bg-amber-500" onclick="handleMark('unsure','p')">模糊 ~</button>
+      <button class="btn-mark bg-rose-500" onclick="handleMark('unknown','p')">不识 ✗</button>
+    </div>
+  `;
+}
+
+function advancePhrase() {
+  if (curPIdx < phrasesData.length - 1) { curPIdx++; renderPhrase(); }
+  else {
+    document.getElementById('phrase-card').innerHTML = '<div class="text-center p-10"><div class="text-5xl mb-4">🏁<\/div><div class="text-xl font-bold text-emerald-600">短语已全部复习！<\/div><button class="mt-6 px-6 py-3 bg-emerald-500 text-white rounded-2xl font-bold" onclick="curPIdx=0;renderPhrase()">再练一遍<\/button><\/div>';
+  }
+}
+
+// ── ② Trap Quiz ──
+function initTrap() {
+  const all = [...(vocabulary.level1||[]), ...(vocabulary.level2||[]), ...(vocabulary.level3||[])];
+  const withTrap = all.filter(w => w.trap || w.paraphrase || w.syn);
+  if (!withTrap.length) {
+    document.getElementById('trap-card').innerHTML = '<div class="text-center p-10 text-slate-400"><div class="text-4xl mb-4">⚠️<\/div><div class="font-bold mb-2">暂无题眼数据<\/div><div class="text-sm">请用 v16 Prompt 重新生成 JSON，即可解锁此模块</div><\/div>';
+    return;
+  }
+  trapSet = [...withTrap].sort(() => Math.random() - 0.5).slice(0, Math.min(20, withTrap.length));
+  curTrapIdx = 0;
+  renderTrap();
+}
+
+function renderTrap() {
+  const q = trapSet[curTrapIdx];
+  const total = trapSet.length;
+  document.getElementById('trapProg').style.width = Math.round((curTrapIdx / total) * 100) + '%';
+  const all = [...(vocabulary.level1||[]), ...(vocabulary.level2||[]), ...(vocabulary.level3||[])];
+
+  // Alternate between paraphrase-display mode and MCQ mode
+  if (q.paraphrase && Math.random() > 0.4) {
+    document.getElementById('trap-card').innerHTML = `
+      <div class="text-[0.6rem] font-bold text-purple-600 uppercase tracking-widest mb-3">题眼训练 ${curTrapIdx+1}/${total} · Paraphrase 配对</div>
+      <div class="trap-box mb-3">
+        <div class="trap-title">Paraphrase 配对</div>
+        <div class="text-base font-bold text-purple-900 leading-relaxed">${q.paraphrase}</div>
+      </div>
+      <div class="detail-box mb-3">
+        原词 <strong class="text-blue-600">${q.word}</strong> 在题目中被替换为 <strong class="text-purple-600">${q.trap || q.syn || '?'}</strong>
+      </div>
+      <div class="text-xs text-slate-400 mb-4">记住：题目出现 <strong>${q.trap || q.syn || ''}</strong> → 对应原文的 <strong>${q.word}</strong></div>
+      <div class="mt-auto">
+        <button class="w-full py-4 bg-purple-600 text-white rounded-2xl font-bold text-base" onclick="advanceTrap()">已理解，下一题 →</button>
+      </div>
+    `;
+    return;
+  }
+
+  // MCQ: given original word, pick the paraphrase
+  const correct = q.trap || q.syn || q.word;
+  const decoys = all.filter(x => x.word !== q.word).sort(() => Math.random() - 0.5).slice(0, 3)
+    .map(x => x.trap || x.syn || x.word).filter(Boolean);
+  const opts = [correct, ...decoys].sort(() => Math.random() - 0.5);
+
+  document.getElementById('trap-card').innerHTML = `
+    <div class="text-[0.6rem] font-bold text-purple-600 uppercase tracking-widest mb-4">题眼训练 ${curTrapIdx+1}/${total} · 同义替换识别</div>
+    <div class="text-sm text-slate-500 mb-1">原文出现了：</div>
+    <div class="text-4xl font-bold text-slate-800 mb-2 cursor-pointer" onclick="speak('${q.word.replace(/'/g,"\\'")}'')">${q.word} 🔊</div>
+    <div class="text-slate-400 text-sm mb-4">${q.meaning || ''}</div>
+    <div class="text-sm font-bold text-slate-600 mb-3">题目中最可能用哪个词替换它？</div>
+    <div class="space-y-2">${opts.map(o => `<button class="opt-btn" onclick="checkTrap(this,'${escQ(o)}','${escQ(correct)}')">${o}</button>`).join('')}</div>
+    ${q.example ? `<div class="text-xs text-slate-300 mt-3 pt-3 border-t border-slate-100">例句: ${q.example}<\/div>` : ''}
+  `;
+}
+
+function checkTrap(el, sel, cor) {
+  document.querySelectorAll('#trap-card .opt-btn').forEach(b => b.disabled = true);
+  if (sel === cor) {
+    el.style.borderColor = '#10b981'; el.style.background = '#ecfdf5';
+    setTimeout(advanceTrap, 600);
+  } else {
+    el.style.borderColor = '#ef4444'; el.style.background = '#fef2f2';
+    document.querySelectorAll('#trap-card .opt-btn').forEach(b => { if (b.textContent.trim() === cor) { b.style.borderColor = '#10b981'; b.style.background = '#ecfdf5'; } });
+    setTimeout(advanceTrap, 1400);
+  }
+}
+
+function advanceTrap() {
+  if (curTrapIdx < trapSet.length - 1) { curTrapIdx++; renderTrap(); }
+  else {
+    document.getElementById('trapProg').style.width = '100%';
+    document.getElementById('trap-card').innerHTML = '<div class="text-center p-10"><div class="text-5xl mb-4">🏆<\/div><div class="text-xl font-bold text-purple-600">题眼训练完成！<\/div><div class="text-sm text-slate-400 mt-2">去「做题模拟」实战检验吧</div><button class="mt-6 px-6 py-3 bg-purple-500 text-white rounded-2xl font-bold" onclick="initTrap()">再练一遍<\/button><\/div>';
+  }
+}
+
+// ── ③ Sim Quiz ──
+function initSim() {
+  const all = [...(vocabulary.level1||[]), ...(vocabulary.level2||[]), ...(vocabulary.level3||[]), ...phrasesData];
+  if (!all.length) return;
+  simSet = [...all].sort(() => Math.random() - 0.5).slice(0, Math.min(20, all.length));
+  curSimIdx = 0;
+  renderSim();
+}
+
+function renderSim() {
+  const total = simSet.length;
+  document.getElementById('simProg').style.width = Math.round((curSimIdx / total) * 100) + '%';
+  const q = simSet[curSimIdx];
+  const all = [...(vocabulary.level1||[]), ...(vocabulary.level2||[]), ...(vocabulary.level3||[]), ...phrasesData];
+
+  // Try fill-in-blank mode
+  if (q.example) {
+    const _qi = q.example.toLowerCase().indexOf(q.word.toLowerCase());
+    const blanked = _qi >= 0 && !/[a-zA-Z]/.test(q.example[_qi-1]||'') && !/[a-zA-Z]/.test(q.example[_qi+q.word.length]||'') ? q.example.slice(0,_qi)+'______'+q.example.slice(_qi+q.word.length) : q.example;
+    if (blanked !== q.example) {
+      const decoys = all.filter(x => x.word !== q.word).sort(() => Math.random() - 0.5).slice(0, 3).map(x => x.word);
+      const opts = [q.word, ...decoys].sort(() => Math.random() - 0.5);
+      document.getElementById('sim-card').innerHTML = `
+        <div class="text-[0.6rem] font-bold text-cyan-600 uppercase tracking-widest mb-3">做题模拟 ${curSimIdx+1}/${total} · 真题填空</div>
+        <div class="text-xs text-slate-400 mb-2 font-bold">选出填入空格的正确词：</div>
+        <div class="ex-box" style="border-left-color:#0ea5e9;background:#f0f9ff;">
+          <p class="text-base font-bold text-slate-700 leading-relaxed">${blanked}</p>
+        </div>
+        <div class="text-xs text-slate-400 mb-3">译: ${q.translation||''}</div>
+        ${q.trap ? `<div class="text-xs text-purple-500 mb-3">⚡ 注意：可能被替换为 <strong>${q.trap}<\/strong><\/div>` : ''}
+        <div class="space-y-2">${opts.map(o => `<button class="opt-btn" onclick="checkSim(this,'${escQ(o)}','${escQ(q.word)}')">${o}</button>`).join('')}</div>
+      `;
+      return;
+    }
+  }
+
+  // Fallback: meaning → word MCQ
+  const decoys = all.filter(x => x.word !== q.word).sort(() => Math.random() - 0.5).slice(0, 3).map(x => x.word);
+  const opts = [q.word, ...decoys].sort(() => Math.random() - 0.5);
+  document.getElementById('sim-card').innerHTML = `
+    <div class="text-[0.6rem] font-bold text-cyan-600 uppercase tracking-widest mb-3">做题模拟 ${curSimIdx+1}/${total} · 词义配对</div>
+    <div class="text-xl font-bold text-slate-800 p-4 bg-sky-50 rounded-2xl mb-3">${q.meaning||''}</div>
+    ${q.trap ? `<div class="text-xs text-purple-500 mb-3">⚡ 注意：可能被替换为 <strong>${q.trap}<\/strong><\/div>` : ''}
+    <div class="space-y-2">${opts.map(o => `<button class="opt-btn" onclick="checkSim(this,'${escQ(o)}','${escQ(q.word)}')">${o}</button>`).join('')}</div>
+  `;
+}
+
+function checkSim(el, sel, cor) {
+  document.querySelectorAll('#sim-card .opt-btn').forEach(b => b.disabled = true);
+  const advance = () => {
+    if (curSimIdx < simSet.length - 1) { curSimIdx++; renderSim(); }
+    else {
+      document.getElementById('simProg').style.width = '100%';
+      document.getElementById('sim-card').innerHTML = '<div class="text-center p-10"><div class="text-5xl mb-4">🎯<\/div><div class="text-xl font-bold text-cyan-600">模拟完成！<\/div><button class="mt-6 px-6 py-3 bg-cyan-500 text-white rounded-2xl font-bold" onclick="initSim()">再来一轮<\/button><\/div>';
+    }
+  };
+  if (sel === cor) {
+    el.style.borderColor = '#10b981'; el.style.background = '#ecfdf5';
+    setTimeout(advance, 500);
+  } else {
+    el.style.borderColor = '#ef4444'; el.style.background = '#fef2f2';
+    document.querySelectorAll('#sim-card .opt-btn').forEach(b => { if (b.textContent.trim() === cor) { b.style.borderColor = '#10b981'; b.style.background = '#ecfdf5'; } });
+    setTimeout(advance, 1400);
+  }
+}
+
+// ── ⑤ Mistakes ──
+function renderMistakes() {
+  const list = document.getElementById('mk-list');
+  if (!mistakeMap.size) {
+    list.innerHTML = '<div id="mk-empty">🎉 暂无生词<br><small>学习时标记「不识」或「模糊」的词会出现在这里</small><\/div>';
+    return;
+  }
+  list.innerHTML = [...mistakeMap.values()].map(({ data: w, count }) => `
+    <div class="mk-item">
+      <div class="flex justify-between items-start">
+        <div>
+          <div class="mk-word">${w.word}</div>
+          <div class="mk-meaning">${w.meaning}</div>
+        </div>
+        <div class="text-[0.65rem] bg-red-50 border border-red-200 text-red-500 rounded-full px-2 py-0.5 font-bold">错${count}次</div>
+      </div>
+      ${w.trap ? `<div class="text-xs text-purple-500 mt-2">⚡ 陷阱替换: ${w.trap}<\/div>` : ''}
+      ${w.example ? `<div class="text-xs text-slate-400 mt-1 italic">${w.example}<\/div>` : ''}
+    </div>
+  `).join('');
+}
+
+renderVocab();
+renderPhrase();
+</script>
+</body>
+</html>

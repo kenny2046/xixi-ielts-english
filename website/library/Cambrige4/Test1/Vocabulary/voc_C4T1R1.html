@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>IELTS 词汇系统 v16.1 — C4T1R1</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body { font-family:'Quicksand','Noto Sans SC',sans-serif; background:#f1f5f9; color:#1e293b; touch-action:manipulation; }
+  .container { max-width:500px; margin:0 auto; padding:12px; }
+  .tab-bar { display:flex; gap:3px; background:#e2e8f0; padding:4px; border-radius:16px; margin-bottom:12px; overflow-x:auto; }
+  .tab { flex:1; min-width:56px; padding:9px 3px; text-align:center; cursor:pointer; border-radius:12px; font-size:0.72rem; font-weight:700; color:#64748b; transition:0.2s; white-space:nowrap; }
+  .tab.active { background:#fff; color:#3b82f6; box-shadow:0 2px 8px rgba(0,0,0,0.05); }
+  .card { background:white; border-radius:24px; padding:1.25rem; box-shadow:0 8px 20px rgba(0,0,0,0.04); min-height:580px; display:flex; flex-direction:column; border:3px solid #e2e8f0; position:relative; }
+  .ex-box { background:#eff6ff; border-radius:16px; border-left:4px solid #3b82f6; padding:1rem; margin:0.75rem 0; }
+  .detail-box { background:#f8fafc; border-radius:16px; border:1px solid #edf2f7; padding:0.85rem; font-size:0.85rem; }
+  .root-box { background:#fff7ed; border-radius:16px; border:1px solid #ffedd5; padding:0.85rem; margin-top:0.75rem; font-size:0.85rem; }
+  .trap-box { background:linear-gradient(135deg,#fdf4ff,#eff6ff); border-radius:16px; border:1px solid #e9d5ff; padding:0.85rem; margin-top:0.75rem; font-size:0.85rem; }
+  .trap-title { font-size:0.6rem; font-weight:800; text-transform:uppercase; letter-spacing:0.1em; color:#9333ea; margin-bottom:6px; }
+  .trap-row { display:flex; align-items:flex-start; gap:8px; margin-bottom:4px; }
+  .trap-lbl { font-size:0.58rem; font-weight:700; background:#ede9fe; color:#7c3aed; padding:2px 7px; border-radius:99px; white-space:nowrap; flex-shrink:0; margin-top:1px; }
+  .trap-val { color:#4c1d95; font-size:0.8rem; line-height:1.4; }
+  .lbl { font-weight:800; color:#3b82f6; font-size:0.65rem; text-transform:uppercase; margin-right:8px; display:inline-block; width:65px; flex-shrink:0; }
+  .lbl-r { color:#f59e0b; }
+  .btn-mark { padding:1rem 0.5rem; border-radius:16px; font-size:0.85rem; font-weight:700; color:white; transition:0.2s; cursor:pointer; border:none; font-family:inherit; }
+  .btn-mark:active { transform:scale(0.95); }
+  .opt-btn { width:100%; padding:1rem; margin-bottom:0.75rem; border:2px solid #f1f5f9; border-radius:16px; text-align:left; font-size:0.95rem; background:#fff; font-family:inherit; cursor:pointer; transition:0.15s; }
+  .opt-btn:hover { background:#f8fafc; }
+  .section { display:none; } .section.active { display:block; }
+  .flash-green { animation:flash 0.8s; --c:#10b981; }
+  .flash-amber { animation:flash 0.8s; --c:#f59e0b; }
+  .flash-rose  { animation:flash 0.8s; --c:#ef4444; }
+  @keyframes flash { 0%,100%{border-color:#e2e8f0} 50%{border-color:var(--c);box-shadow:0 0 15px var(--c)} }
+  .prog-bar { height:3px; background:#e2e8f0; border-radius:99px; overflow:hidden; margin-bottom:12px; }
+  .prog-fill { height:100%; background:linear-gradient(90deg,#3b82f6,#a78bfa); border-radius:99px; transition:width 0.4s; }
+  .lv-nav { display:flex; gap:6px; margin-bottom:10px; }
+  .lv-btn { flex:1; padding:7px 4px; border-radius:10px; font-size:0.68rem; font-weight:700; text-align:center; cursor:pointer; border:1.5px solid #e2e8f0; background:white; color:#64748b; transition:0.2s; }
+  .lv-btn.active { border-color:#3b82f6; background:#eff6ff; color:#2563eb; }
+  .mode-toggle { display:flex; gap:6px; margin-bottom:12px; }
+  .mode-btn { flex:1; padding:8px; border-radius:10px; font-size:0.7rem; font-weight:700; text-align:center; cursor:pointer; border:1.5px solid #e2e8f0; background:white; color:#64748b; transition:0.2s; }
+  .mode-btn.active { border-color:#7c3aed; background:#faf5ff; color:#7c3aed; }
+  .ctx-blank { display:inline-block; background:#cbd5e1; color:transparent; border-radius:6px; cursor:pointer; user-select:none; padding:0 6px; min-width:60px; transition:all 0.3s; }
+  .ctx-blank.revealed { background:transparent; color:#2563eb; font-weight:700; }
+  .reinforce-badge { display:inline-flex; align-items:center; gap:4px; background:#fef3c7; border:1px solid #fde68a; border-radius:99px; padding:3px 10px; font-size:0.65rem; font-weight:700; color:#92400e; margin-bottom:10px; }
+  #mk-empty { color:#94a3b8; text-align:center; padding:40px 20px; }
+  .mk-item { background:white; border-radius:16px; padding:14px; margin-bottom:10px; border:2px solid #fecaca; }
+  .mk-word { font-size:1.1rem; font-weight:700; color:#ef4444; }
+  .mk-meaning { color:#64748b; font-size:0.85rem; margin-top:2px; }
+  /* ── PLAY button ── */
+  .play-btn {
+    display:inline-flex; align-items:center; justify-content:center;
+    width:28px; height:28px; border-radius:50%;
+    background:#10b981; color:white; border:none; cursor:pointer;
+    font-size:0.7rem; flex-shrink:0; margin-left:8px;
+    transition:background 0.2s, transform 0.1s;
+    vertical-align:middle; box-shadow:0 2px 8px rgba(16,185,129,0.35);
+  }
+  .play-btn:hover { background:#059669; }
+  .play-btn:active { transform:scale(0.92); }
+  .play-btn.playing { background:#3b82f6; }
+  .audio-missing { font-size:0.65rem; color:#94a3b8; display:inline-block; margin-left:6px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div style="text-align:center;margin-bottom:12px;">
+    <span style="font-size:0.6rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.1em;">IELTS · C4T1R1 · v16.1</span>
+  </div>
+  <div class="tab-bar">
+    <div class="tab active" onclick="switchTab('vocab')">语境识词</div>
+    <div class="tab" onclick="switchTab('trap')">题眼训练</div>
+    <div class="tab" onclick="switchTab('sim')">做题模拟</div>
+    <div class="tab" onclick="switchTab('phrases')">真题短语</div>
+    <div class="tab" onclick="switchTab('mistakes')">强化复习</div>
+  </div>
+
+  <!-- ① 语境识词 -->
+  <div id="vocab" class="section active">
+    <div class="lv-nav">
+      <div class="lv-btn active" id="lv1btn" onclick="jumpLevel('level1')">LV1 基础(20)</div>
+      <div class="lv-btn" id="lv2btn" onclick="jumpLevel('level2')">LV2 中阶(20)</div>
+      <div class="lv-btn" id="lv3btn" onclick="jumpLevel('level3')">LV3 高阶(20)</div>
+    </div>
+    <div class="mode-toggle">
+      <div class="mode-btn active" id="modeCtx" onclick="setMode('ctx')">🕵️ 语境猜词</div>
+      <div class="mode-btn" id="modeDir" onclick="setMode('dir')">📖 直接学词</div>
+    </div>
+    <div class="prog-bar"><div class="prog-fill" id="vocabProg" style="width:0%"></div></div>
+    <div id="reinforce-notice" style="display:none;"><div class="reinforce-badge">🔄 强化复习中 — 标记过的词再过一遍</div></div>
+    <div class="card" id="vocab-card"></div>
+  </div>
+
+  <!-- ② 题眼训练 -->
+  <div id="trap" class="section">
+    <div class="prog-bar"><div class="prog-fill" id="trapProg" style="width:0%"></div></div>
+    <div class="card" id="trap-card"></div>
+  </div>
+
+  <!-- ③ 做题模拟 -->
+  <div id="sim" class="section">
+    <div class="prog-bar"><div class="prog-fill" id="simProg" style="width:0%"></div></div>
+    <div class="card" id="sim-card"></div>
+  </div>
+
+  <!-- ④ 真题短语 -->
+  <div id="phrases" class="section">
+    <div class="prog-bar"><div class="prog-fill" id="phraseProg" style="width:0%"></div></div>
+    <div class="card" id="phrase-card"></div>
+  </div>
+
+  <!-- ⑤ 强化复习 -->
+  <div id="mistakes" class="section">
+    <div style="font-size:0.75rem;color:#64748b;margin-bottom:10px;">标「不识」或「模糊」的词在此强化</div>
+    <div id="mk-list"></div>
+  </div>
+</div>
+
+<script>
+const rawData = {
+  "vocabulary": {
+    "level1": [
+      {
+        "word": "alarming",
+        "phonetic": "/əˈlɑːrmɪŋ/",
+        "meaning": "告急的，惊人的，令人担忧的",
+        "root": "alarm",
+        "rootExt": "来自古法语 alarme (警告)，意为“到武器那里去”",
+        "derive": "alarm (n./v. 警报), alarmingly (adv.)",
+        "syn": "shocking, frightening, disturbing",
+        "trap": "alarming → rapid, high rate, serious",
+        "paraphrase": "原文: alarming rate → 题目: rapid rate / high speed",
+        "questionStem": "TFNG/MC",
+        "example": "Adults and children are frequently confronted with statements about the alarming rate of loss of tropical rainforests.",
+        "translation": "成年人和儿童经常面临有关热带雨林流失速度惊人的陈述。"
+      },
+      {
+        "word": "destroy",
+        "phonetic": "/dɪˈstrɔɪ/",
+        "meaning": "破坏，摧毁",
+        "root": "stru/struct",
+        "rootExt": "de- (去掉) + stru (建立) = 拆除建立的东西",
+        "derive": "destruction (n.), destructive (adj.)",
+        "syn": "damage, ruin, devastate",
+        "trap": "destroy → loss, disappear, no longer exist",
+        "paraphrase": "原文: rainforests are being destroyed → 题目: loss of the rainforests",
+        "questionStem": "Matching/Fill-in-the-blank",
+        "example": "It was common to see human-made pollution as responsible for the destruction of the environment.",
+        "translation": "人们通常认为人为污染是对环境破坏负责的原因。"
+      },
+      {
+        "word": "location",
+        "phonetic": "/loʊˈkeɪʃn/",
+        "meaning": "位置，地点",
+        "root": "loc",
+        "rootExt": "loc (地方) + -ation (名词后缀)",
+        "derive": "locate (v.), local (adj.)",
+        "syn": "place, position, site",
+        "trap": "location → where, geographic, country, area",
+        "paraphrase": "原文: terms of geographic location → 题目: where the rainforests were",
+        "questionStem": "Matching/Multiple Choice",
+        "example": "Some children also gave more general locations, such as being near the Equator.",
+        "translation": "一些孩子还给出了更广泛的地点，比如在赤道附近。"
+      },
+      {
+        "word": "pure",
+        "phonetic": "/pjʊr/",
+        "meaning": "纯净的，纯粹的",
+        "root": "pur",
+        "rootExt": "来自拉丁语 purus (清洁)",
+        "derive": "purity (n.), purify (v.)",
+        "syn": "clean, clear, unpolluted",
+        "trap": "pure → free from pollution, clean air",
+        "paraphrase": "原文: oxygen as a sort of pure air → 题目: rainforests provided us with clean air",
+        "questionStem": "TFNG/Matching",
+        "example": "These students seemed to represent the oxygen as a sort of pure air, free from pollution.",
+        "translation": "这些学生似乎将氧气表现为一种纯净的、没有污染的空气。"
+      },
+      {
+        "word": "common",
+        "phonetic": "/ˈkɑːmən/",
+        "meaning": "常见的，共同的",
+        "root": "com/mun",
+        "rootExt": "com- (共同) + mun (公共的)",
+        "derive": "commonly (adv.), community (n.)",
+        "syn": "frequent, typical, widespread",
+        "trap": "common → most, majority, usual",
+        "paraphrase": "原文: the most frequent responses → 题目: the most common response",
+        "questionStem": "Multiple Matching",
+        "example": "The most frequent responses to the first question in the questionnaire, which asked what a rainforest is...",
+        "translation": "问卷第一个问题（询问什么是热带雨林）中最常见的回答是..."
+      },
+      {
+        "word": "habitats",
+        "phonetic": "/ˈhæbɪtæts/",
+        "meaning": "栖息地",
+        "root": "habit",
+        "rootExt": "hab (拥有/居住) + -itat (名词后缀)",
+        "derive": "habitation (n.), inhabit (v.)",
+        "syn": "home, environment, territory",
+        "trap": "habitats → where animal live, animal species",
+        "paraphrase": "原文: animal habitats → 题目: Without rainforests some animal species would cease to exist",
+        "questionStem": "Matching",
+        "example": "Responses to a question... tended to fall into two main categories: animal habitats and the provision of oxygen.",
+        "translation": "对一个问题的回答倾向于分为两大类：动物栖息地和氧气的提供。"
+      },
+      {
+        "word": "provide",
+        "phonetic": "/prəˈvaɪd/",
+        "meaning": "提供",
+        "root": "vid/vis",
+        "rootExt": "pro- (在前面) + vid (看) = 预见到需求并准备",
+        "derive": "provision (n.), provider (n.)",
+        "syn": "supply, offer, give",
+        "trap": "provide → source, give out, provision",
+        "paraphrase": "原文: provided us with clean air → 题目: source of oxygen",
+        "questionStem": "Matching/Fill-in-the-blank",
+        "example": "...many students said that they thought that rainforests provided us with clean air.",
+        "translation": "许多学生说他们认为雨林为我们提供了清洁的空气。"
+      },
+      {
+        "word": "atmosphere",
+        "phonetic": "/ˈætməsfɪr/",
+        "meaning": "大气，气氛",
+        "root": "atmos",
+        "rootExt": "atmos (蒸汽) + sphere (球体)",
+        "derive": "atmospheric (adj.)",
+        "syn": "air, sky, surroundings",
+        "trap": "atmosphere → air, oxygen, greenhouse effect",
+        "paraphrase": "原文: effect on the atmosphere → 题目: air pollution",
+        "questionStem": "MC/TFNG",
+        "example": "Only a few children mentioned the effect on the atmosphere or on water cycles.",
+        "translation": "只有少数孩子提到了对大气或水循环的影响。"
+      },
+      {
+        "word": "design",
+        "phonetic": "/dɪˈzaɪn/",
+        "meaning": "设计",
+        "root": "sign",
+        "rootExt": "de- (加强) + sign (标记) = 做出标记/规划",
+        "derive": "designer (n.), designation (n.)",
+        "syn": "plan, create, develop",
+        "trap": "design → develop, formulate, organize",
+        "paraphrase": "原文: help teachers design educational programmes → 题目: development of a programme",
+        "questionStem": "MC",
+        "example": "The aim... is to help teachers design educational programmes.",
+        "translation": "目的是帮助教师设计教育课程。"
+      },
+      {
+        "word": "identify",
+        "phonetic": "/aɪˈdentɪfaɪ/",
+        "meaning": "识别，鉴定",
+        "root": "ident",
+        "rootExt": "ident (相同) + -ify (使动) = 确认是同一事物",
+        "derive": "identification (n.), identity (n.)",
+        "syn": "recognize, pinpoint, name",
+        "trap": "identify → find, discover, see",
+        "paraphrase": "原文: identifying that it was common to see... → 题目: which of the responses is identified as...",
+        "questionStem": "Matching/MC",
+        "example": "These ideas need to be identified and addressed if teachers are to develop programmes.",
+        "translation": "如果教师要开发课程，就需要识别并解决这些想法。"
+      },
+      {
+        "word": "range",
+        "phonetic": "/reɪndʒ/",
+        "meaning": "范围，系列",
+        "root": "rang",
+        "rootExt": "来自古法语 rang (行/列)",
+        "derive": "arrange (v.)",
+        "syn": "variety, scope, series",
+        "trap": "range → variety, many types, different",
+        "paraphrase": "原文: represent the range of such schools → 题目: a series of studies",
+        "questionStem": "TFNG/MC",
+        "example": "The schools were chosen to represent the range of such schools in the UK.",
+        "translation": "选择这些学校是为了代表英国此类学校的范围。"
+      },
+      {
+        "word": "form",
+        "phonetic": "/fɔːrm/",
+        "meaning": "形成，形式",
+        "root": "form",
+        "rootExt": "form (形状)",
+        "derive": "formation (n.), formal (adj.)",
+        "syn": "shape, create, develop",
+        "trap": "form → build, establish, develop",
+        "paraphrase": "原文: children will have formed ideas → 题目: ideas that they encounter",
+        "questionStem": "TFNG",
+        "example": "it is likely that children will have formed ideas about rainforests.",
+        "translation": "孩子们很可能已经形成了关于热带雨林的观点。"
+      },
+      {
+        "word": "often",
+        "phonetic": "/ˈɔːfn/",
+        "meaning": "经常",
+        "root": "oft",
+        "rootExt": "中古英语 ofte",
+        "derive": "frequent (syn.)",
+        "syn": "frequently, regularly",
+        "trap": "often → common, usual, frequent",
+        "paraphrase": "原文: children often referred to → 题目: it was common to see",
+        "questionStem": "Matching",
+        "example": "At the same time, children often referred to the ozone layer.",
+        "translation": "同时，孩子们经常提到臭氧层。"
+      },
+      {
+        "word": "important",
+        "phonetic": "/ɪmˈpɔːrtnt/",
+        "meaning": "重要的",
+        "root": "port",
+        "rootExt": "im- (入) + port (带/运) = 带有分量的",
+        "derive": "importance (n.)",
+        "syn": "significant, vital, essential",
+        "trap": "important → value, role, significance",
+        "paraphrase": "原文: importance of rainforests → 题目: why... rainforests to be protected",
+        "questionStem": "Matching",
+        "example": "why they are important, what endangers them...",
+        "translation": "它们为什么重要，什么在危及它们..."
+      },
+      {
+        "word": "lead to",
+        "phonetic": "/liːd tuː/",
+        "meaning": "导致",
+        "root": "lead",
+        "rootExt": "古英语 lædan (引导)",
+        "derive": "leader (n.)",
+        "syn": "result in, cause, bring about",
+        "trap": "lead to → result of, cause",
+        "paraphrase": "原文: destruction... would lead to global warming → 题目: destruction... is the direct result of",
+        "questionStem": "Matching/TFNG",
+        "example": "...most children felt that the destruction of the rainforests would lead to global warming.",
+        "translation": "大多数孩子觉得雨林的破坏会导致全球变暖。"
+      },
+      {
+        "word": "human",
+        "phonetic": "/ˈhjuːmən/",
+        "meaning": "人类的",
+        "root": "hum",
+        "rootExt": "hum (地/土) = 土里长出来的（古人观念）",
+        "derive": "humanity (n.), human-made (adj.)",
+        "syn": "people, mankind",
+        "trap": "human → people, man-made",
+        "paraphrase": "原文: human-made pollution → 题目: people are responsible",
+        "questionStem": "Matching",
+        "example": "It was common to see human-made pollution as responsible...",
+        "translation": "人们通常认为人为污染是有责任的..."
+      },
+      {
+        "word": "country",
+        "phonetic": "/ˈkʌntri/",
+        "meaning": "国家",
+        "root": "countr",
+        "rootExt": "来自拉丁语 contra (相对)，原指对面的土地",
+        "derive": "counterpart (n.)",
+        "syn": "nation, state",
+        "trap": "country → Britain, UK, Brazil",
+        "paraphrase": "原文: in the UK → 题目: in Britain",
+        "questionStem": "MC/TFNG",
+        "example": "The schools were chosen to represent the range of such schools in the UK.",
+        "translation": "选择这些学校是为了代表英国此类学校的范围。"
+      },
+      {
+        "word": "last",
+        "phonetic": "/læst/",
+        "meaning": "最后的，持续",
+        "root": "last",
+        "rootExt": "古英语 latost (最迟的)",
+        "derive": "lastly (adv.)",
+        "syn": "final, ultimate",
+        "trap": "last → final",
+        "paraphrase": "原文: responses to the last two questions → 题目: answer to the final question",
+        "questionStem": "Matching",
+        "example": "Most of the responses to the last two questions were based on...",
+        "translation": "对最后两个问题的大部分回答都是基于..."
+      },
+      {
+        "word": "study",
+        "phonetic": "/ˈstʌdi/",
+        "meaning": "研究，学习",
+        "root": "stud",
+        "rootExt": "来自拉丁语 studium (热忱)",
+        "derive": "student (n.)",
+        "syn": "research, investigation",
+        "trap": "study → investigation, report, survey",
+        "paraphrase": "原文: present study → 题目: study reported here",
+        "questionStem": "TFNG/MC",
+        "example": "The aim of the present study is to start to provide such information.",
+        "translation": "本研究的目的是开始提供此类信息。"
+      },
+      {
+        "word": "correct",
+        "phonetic": "/kəˈrekt/",
+        "meaning": "正确的",
+        "root": "rect",
+        "rootExt": "cor- (加强) + rect (直/正)",
+        "derive": "correction (n.), incorrect (adj.)",
+        "syn": "right, accurate, true",
+        "trap": "correct → mistaken, erroneous, not always correct",
+        "paraphrase": "原文: ideas that are not always correct → 题目: hold mistaken views",
+        "questionStem": "TFNG/Matching",
+        "example": "...realize that their students already come into class with ideas that are not always correct.",
+        "translation": "...意识到他们的学生进教室时已经带了一些不总是正确的想法。"
+      }
+    ],
+    "level2": [
+      {
+        "word": "confront",
+        "phonetic": "/kənˈfrʌnt/",
+        "meaning": "面临，面对",
+        "root": "front",
+        "rootExt": "con- (共同) + front (前面/前额) = 面对面",
+        "derive": "confrontation (n.)",
+        "syn": "face, encounter, meet",
+        "trap": "confront → encounter, find, see",
+        "paraphrase": "原文: frequently confronted with statements → 题目: opinions... that they encounter",
+        "questionStem": "TFNG",
+        "example": "Adults and children are frequently confronted with statements about the alarming rate of loss of tropical rainforests.",
+        "translation": "成年人和儿童经常面临有关热带雨林流失速度惊人的陈述。"
+      },
+      {
+        "word": "misconception",
+        "phonetic": "/ˌmɪskənˈsepʃn/",
+        "meaning": "误解，错误的观念",
+        "root": "cept/ceive",
+        "rootExt": "mis- (错误) + con- (加强) + cept (拿/抓) = 抓错了想法",
+        "derive": "misconceive (v.), concept (n.)",
+        "syn": "mistaken view, error, fallacy",
+        "trap": "misconception → mistaken views, ideas... not correct",
+        "paraphrase": "原文: children harbour misconceptions → 题目: children hold mistaken views",
+        "questionStem": "TFNG/Matching",
+        "example": "Many studies have shown that children harbour misconceptions about 'pure', curriculum science.",
+        "translation": "许多研究表明，孩子们对“纯粹的”课程科学存在误解。"
+      },
+      {
+        "word": "incorporate",
+        "phonetic": "/ɪnˈkɔːrpəreɪt/",
+        "meaning": "合并，纳入，并入",
+        "root": "corp/corpor",
+        "rootExt": "in- (入) + corpor (身体/团体) = 融入身体/整体",
+        "derive": "incorporation (n.)",
+        "syn": "include, integrate, combine",
+        "trap": "incorporate → form part of, linked with, integrated",
+        "paraphrase": "原文: become incorporated into a multifaceted... framework → 题目: form part of a larger framework",
+        "questionStem": "TFNG",
+        "example": "These misconceptions do not remain isolated but become incorporated into a multifaceted, but organised, conceptual framework.",
+        "translation": "这些误解并非孤立存在，而是被纳入一个多层面但有组织的逻辑框架中。"
+      },
+      {
+        "word": "robust",
+        "phonetic": "/roʊˈbʌst/",
+        "meaning": "坚固的，稳固的",
+        "root": "rob",
+        "rootExt": "来自拉丁语 robur (橡树/力量)",
+        "derive": "robustly (adv.), robustness (n.)",
+        "syn": "strong, stable, durable",
+        "trap": "robust → harder to modify, difficult to change",
+        "paraphrase": "原文: making it... more robust → 题目: difficult to change",
+        "questionStem": "TFNG/Matching",
+        "example": "...making it and the component ideas, some of which are erroneous, more robust but also harder to modify.",
+        "translation": "...使得该框架及其组成观点（其中一些是错误的）更加稳固，但也更难修改。"
+      },
+      {
+        "word": "localized",
+        "phonetic": "/ˈloʊkəlaɪzd/",
+        "meaning": "局部的，地方性的",
+        "root": "loc",
+        "rootExt": "local (当地的) + -ize (动词后缀) = 使局部化",
+        "derive": "localize (v.), location (n.)",
+        "syn": "regional, domestic, limited",
+        "trap": "localized → specific area, local",
+        "paraphrase": "原文: more localized activities → 题目: activities in specific regions (implied)",
+        "questionStem": "Matching",
+        "example": "...those who mentioned more localized activities (such as farming and ranching).",
+        "translation": "...那些提到更局部活动的人（如农业和牧场）。"
+      },
+      {
+        "word": "indigenous",
+        "phonetic": "/ɪnˈdɪdʒənəs/",
+        "meaning": "土著的，本地的",
+        "root": "gen",
+        "rootExt": "indi- (在内) + gen (产生) = 在当地产生的",
+        "derive": "indigenously (adv.)",
+        "syn": "native, aboriginal, local",
+        "trap": "indigenous → local people, original inhabitants",
+        "paraphrase": "原文: mentioned the indigenous populations → 题目: people who say that the rainforests are home",
+        "questionStem": "Matching/Fill-in-the-blank",
+        "example": "...and even fewer mentioned the indigenous populations of the forests.",
+        "translation": "...提到森林中土著居民的人就更少了。"
+      },
+      {
+        "word": "erroneous",
+        "phonetic": "/ɪˈroʊniəs/",
+        "meaning": "错误的，不正确的",
+        "root": "err",
+        "rootExt": "err (犯错/流浪) + -oneous (形容词后缀)",
+        "derive": "error (n.), erroneously (adv.)",
+        "syn": "incorrect, mistaken, false",
+        "trap": "erroneous → mistaken views, ideas that are not always correct",
+        "paraphrase": "原文: some of which are erroneous → 题目: children hold mistaken views",
+        "questionStem": "TFNG/Matching",
+        "example": "...making it and the component ideas, some of which are erroneous, more robust.",
+        "translation": "...使得它和其中的一些错误的想法变得更加稳固。"
+      },
+      {
+        "word": "modify",
+        "phonetic": "/ˈmɑːdɪfaɪ/",
+        "meaning": "修改，更改",
+        "root": "mod",
+        "rootExt": "mod (模式/限度) + -ify (使动) = 改变模式",
+        "derive": "modification (n.)",
+        "syn": "change, alter, adjust",
+        "trap": "modify → change, replace, refine",
+        "paraphrase": "原文: harder to modify → 题目: easier to change (FALSE)",
+        "questionStem": "TFNG",
+        "example": "...more robust but also harder to modify.",
+        "translation": "...更加稳固但同时也更难修改。"
+      },
+      {
+        "word": "abundance",
+        "phonetic": "/əˈbʌndəns/",
+        "meaning": "丰富，大量",
+        "root": "und",
+        "rootExt": "ab- (加强) + und (波动/溢出) = 满得溢出来",
+        "derive": "abundant (adj.)",
+        "syn": "plenty, wealth, profusion",
+        "trap": "abundance → a lot, many, high level",
+        "paraphrase": "原文: abundance of information → 题目: high level of media coverage",
+        "questionStem": "TFNG/MC",
+        "example": "Despite the abundance of information regarding the prediction of rainforests...",
+        "translation": "尽管有大量关于雨林预测的信息..."
+      },
+      {
+        "word": "stability",
+        "phonetic": "/stəˈbɪləti/",
+        "meaning": "稳定性",
+        "root": "sta/stat",
+        "rootExt": "sta (站立/固定) + -ability (名词后缀)",
+        "derive": "stable (adj.), stabilize (v.)",
+        "syn": "steadiness, equilibrium",
+        "trap": "stability → balance, keep... pure, healthy",
+        "paraphrase": "原文: maintain environmental stability → 题目: to be protected",
+        "questionStem": "Matching/Fill-in-the-blank",
+        "example": "...role in helping to maintain environmental stability.",
+        "translation": "...在帮助维持环境稳定方面的作用。"
+      },
+      {
+        "word": "represent",
+        "phonetic": "/ˌreprɪˈzent/",
+        "meaning": "代表，表现",
+        "root": "sent",
+        "rootExt": "re- (重新) + pre- (在面) + sent (存在) = 再次呈现在面前",
+        "derive": "representation (n.), representative (adj.)",
+        "syn": "stand for, symbolize, exemplify",
+        "trap": "represent → represent the range, typical",
+        "paraphrase": "原文: represent the range of such schools → 题目: involve a high but equal number (FALSE)",
+        "questionStem": "TFNG/Matching",
+        "example": "The schools were chosen to represent the range of such schools in the UK.",
+        "translation": "这些学校被选中是为了代表英国此类学校的范围。"
+      },
+      {
+        "word": "category",
+        "phonetic": "/ˈkætəɡɔːri/",
+        "meaning": "类别，种类",
+        "root": "categor",
+        "rootExt": "来自希腊语 kategoria (指控/宣称)，引申为分类",
+        "derive": "categorize (v.)",
+        "syn": "class, type, group",
+        "trap": "category → basic ideas, two main types",
+        "paraphrase": "原文: fall into two main categories → 题目: three basic ideas",
+        "questionStem": "MC/Matching",
+        "example": "Responses... tended to fall into two main categories: animal habitats and...",
+        "translation": "回答...倾向于分为两大类：动物栖息地和..."
+      },
+      {
+        "word": "emissions",
+        "phonetic": "/iˈmɪʃnz/",
+        "meaning": "排放，排放物",
+        "root": "miss/mit",
+        "rootExt": "e- (出) + miss (送/放) = 发射出，排放",
+        "derive": "emit (v.)",
+        "syn": "discharge, release, exhaust",
+        "trap": "emissions → pollution, pollutants, car exhausts",
+        "paraphrase": "原文: factory emissions → 题目: pollutants",
+        "questionStem": "Matching/Fill-in-the-blank",
+        "example": "...pollution caused by car exhausts and factory emissions.",
+        "translation": "...汽车尾气和工厂排放造成的污染。"
+      },
+      {
+        "word": "localized",
+        "phonetic": "/ˈloʊkəlaɪzd/",
+        "meaning": "局部的，地方性的",
+        "root": "loc",
+        "rootExt": "loc (地方) + -al (形容词后缀) + -ize (动词后缀)",
+        "derive": "local (adj.)",
+        "syn": "regional, specific",
+        "trap": "localized → specific area, local",
+        "paraphrase": "原文: more localized activities → 题目: farming and ranching",
+        "questionStem": "Matching",
+        "example": "...those who mentioned more localized activities (such as farming and ranching).",
+        "translation": "...那些提到更局部活动（如农耕和放牧）的人。"
+      },
+      {
+        "word": "destruction",
+        "phonetic": "/dɪˈstrʌkʃn/",
+        "meaning": "破坏，毁坏",
+        "root": "struct",
+        "rootExt": "de- (去掉) + struct (建造) + -ion (名词后缀)",
+        "derive": "destroy (v.), destructive (adj.)",
+        "syn": "damage, ruin",
+        "trap": "destruction → loss, damage",
+        "paraphrase": "原文: causes of rainforest destruction → 题目: reason for the loss of the rainforests",
+        "questionStem": "Matching/TFNG",
+        "example": "The last two questions... were about what causes of rainforest destruction.",
+        "translation": "最后两个问题...是关于热带雨林破坏的原因。"
+      },
+      {
+        "word": "impact",
+        "phonetic": "/ˈɪmpækt/",
+        "meaning": "影响，冲击",
+        "root": "pact",
+        "rootExt": "im- (进入) + pact (紧压/协议) = 碰撞产生的影响",
+        "derive": "impacted (adj.)",
+        "syn": "effect, influence",
+        "trap": "impact → effect, result",
+        "paraphrase": "原文: impact this would have on the planet → 题目: effect on the atmosphere",
+        "questionStem": "Matching/TFNG",
+        "example": "...and the impact this would have on the planet respectively.",
+        "translation": "...以及这分别会对地球产生的影响。"
+      },
+      {
+        "word": "atmosphere",
+        "phonetic": "/ˈætməsfɪr/",
+        "meaning": "大气，气氛",
+        "root": "atmos/sphere",
+        "rootExt": "atmos (蒸气) + sphere (球)",
+        "derive": "atmospheric (adj.)",
+        "syn": "air",
+        "trap": "atmosphere → ozone layer, greenhouse effect",
+        "paraphrase": "原文: effect on the atmosphere → 题目: ozone layer destroyed",
+        "questionStem": "Matching",
+        "example": "Only a few children mentioned the effect on the atmosphere.",
+        "translation": "只有少数孩子提到了对大气的影响。"
+      },
+      {
+        "word": "coverage",
+        "phonetic": "/ˈkʌvərɪdʒ/",
+        "meaning": "覆盖，新闻报道",
+        "root": "cover",
+        "rootExt": "cover (覆盖) + -age (名词后缀)",
+        "derive": "cover (v.)",
+        "syn": "reporting, broadcasting",
+        "trap": "coverage → media, newspapers and television",
+        "paraphrase": "原文: high level of media coverage → 题目: newspapers and television",
+        "questionStem": "Matching",
+        "example": "...considering the high level of media coverage on the ice caps.",
+        "translation": "...考虑到媒体对冰盖的高度关注。"
+      },
+      {
+        "word": "realize",
+        "phonetic": "/ˈriːəlaɪz/",
+        "meaning": "意识到，实现",
+        "root": "real",
+        "rootExt": "real (真实的) + -ize (使动)",
+        "derive": "realization (n.)",
+        "syn": "understand, recognize",
+        "trap": "realize → consider, acknowledge",
+        "paraphrase": "原文: teachers must realize → 题目: teachers need to consider",
+        "questionStem": "MC/TFNG",
+        "example": "It is clear that teachers must realize that their students already come into class with ideas...",
+        "translation": "很明显，教师必须意识到他们的学生已经带着某些观点进入课堂了。"
+      },
+      {
+        "word": "recommend",
+        "phonetic": "/ˌrekəˈmend/",
+        "meaning": "推荐，建议",
+        "root": "mend",
+        "rootExt": "re- (加强) + com- (一起) + mend (托付/赞扬)",
+        "derive": "recommendation (n.)",
+        "syn": "suggest, advise",
+        "trap": "recommend → suggest, aim",
+        "paraphrase": "原文: It is recommended that... → 题目: help teachers design educational programmes",
+        "questionStem": "MC",
+        "example": "It is recommended that some elements of environmental education should start at a much younger age.",
+        "translation": "建议环境教育的一些要素应该从更小的年龄开始。"
+      }
+    ],
+    "level3": [
+      {
+        "word": "curriculum",
+        "phonetic": "/kəˈrɪkjələm/",
+        "meaning": "课程",
+        "root": "curr/curs",
+        "rootExt": "拉丁语 currere (跑)，原指跑道，引申为学业进程",
+        "derive": "curricular (adj.), extracurricular (adj.)",
+        "syn": "syllabus, academic program",
+        "trap": "curriculum science → science that they are taught, classroom science",
+        "paraphrase": "原文: misconceptions about 'pure', curriculum science → 题目: mistaken views about pure science that they are taught",
+        "questionStem": "TFNG",
+        "example": "Many studies have shown that children harbour misconceptions about 'pure', curriculum science.",
+        "translation": "许多研究表明，孩子们对“纯粹的”课程科学存在误解。"
+      },
+      {
+        "word": "multifaceted",
+        "phonetic": "/ˌmʌltiˈfæsɪtɪd/",
+        "meaning": "多层面的，多方面的",
+        "root": "multi/fac",
+        "rootExt": "multi- (多) + facet (侧面/面) = 很多面",
+        "derive": "facet (n.)",
+        "syn": "complex, diverse, varied",
+        "trap": "multifaceted → complicated, a combination of",
+        "paraphrase": "原文: incorporated into a multifaceted... framework → 题目: a complicated combination of reasons",
+        "questionStem": "Matching",
+        "example": "These misconceptions do not remain isolated but become incorporated into a multifaceted, but organised, conceptual framework.",
+        "translation": "这些误解并非孤立存在，而是被纳入一个多层面但有组织的逻辑框架中。"
+      },
+      {
+        "word": "compensate",
+        "phonetic": "/ˈkɑːmpenseɪt/",
+        "meaning": "补偿，赔偿",
+        "root": "pend/pens",
+        "rootExt": "com- (共同) + pend (悬挂/称重/支付) = 支付相等的重量",
+        "derive": "compensation (n.)",
+        "syn": "make up for, offset, balance",
+        "trap": "compensate → keep the air pure, offset pollution",
+        "paraphrase": "原文: plants was to compensate for the air pollution → 题目: role in maintaining environmental stability",
+        "questionStem": "Matching/Fill-in-the-blank",
+        "example": "Some of these children even suggested that the oxygen... given out by the plants was to compensate for the air pollution.",
+        "translation": "其中一些孩子甚至建议，植物排放的氧气是为了补偿空气污染。"
+      },
+      {
+        "word": "penetrate",
+        "phonetic": "/ˈpenətreɪt/",
+        "meaning": "渗透，穿透",
+        "root": "penetr",
+        "rootExt": "来自拉丁语 penetrare (进入内部)",
+        "derive": "penetration (n.), penetrable (adj.)",
+        "syn": "pierce, pass through, seep",
+        "trap": "penetrate → reach, enter, through",
+        "paraphrase": "原文: cause more heat to penetrate the earth → 题目: lead to global warming",
+        "questionStem": "Matching/TFNG",
+        "example": "...and that this would cause more heat to penetrate the earth from the sun.",
+        "translation": "...这将导致更多的热量从太阳渗透到地球。"
+      },
+      {
+        "word": "literacy",
+        "phonetic": "/ˈlɪtərəsi/",
+        "meaning": "素养，识字，读写能力",
+        "root": "liter",
+        "rootExt": "liter (文字) + -acy (名词后缀)",
+        "derive": "literate (adj.), literal (adj.)",
+        "syn": "proficiency, knowledge, ability",
+        "trap": "scientific literacy → understanding of science",
+        "paraphrase": "原文: link between scientific literacy... and humans → 题目: implications for science lessons",
+        "questionStem": "Multiple Choice",
+        "example": "...their ideas about the link between scientific literacy in plants and humans.",
+        "translation": "...他们关于植物和人类科学素养之间联系的想法。"
+      },
+      {
+        "word": "confronted",
+        "phonetic": "/kənˈfrʌntɪd/",
+        "meaning": "遭遇，面对",
+        "root": "front",
+        "rootExt": "con- (一起) + front (前额) = 面对面",
+        "derive": "confront (v.)",
+        "syn": "faced with",
+        "trap": "confronted → ignored (antonym)",
+        "paraphrase": "原文: frequently confronted with statements → 题目: largely been ignored (FALSE)",
+        "questionStem": "TFNG",
+        "example": "Adults and children are frequently confronted with statements...",
+        "translation": "成年人和儿童经常面临这些陈述..."
+      },
+      {
+        "word": "harbour",
+        "phonetic": "/ˈhɑːrbər/",
+        "meaning": "怀有（想法），海港",
+        "root": "harbour",
+        "rootExt": "古英语 herebeorg (军队掩体)",
+        "derive": "harbouring (v-ing)",
+        "syn": "hold, cherish, maintain",
+        "trap": "harbour → hold, encounter, have",
+        "paraphrase": "原文: children harbour misconceptions → 题目: children hold mistaken views",
+        "questionStem": "TFNG",
+        "example": "Many studies have shown that children harbour misconceptions about 'pure' science.",
+        "translation": "许多研究表明，孩子们对“纯粹”的科学持有错误的看法。"
+      },
+      {
+        "word": "prediction",
+        "phonetic": "/prɪˈdɪkʃn/",
+        "meaning": "预测，预言",
+        "root": "dict",
+        "rootExt": "pre- (预先) + dict (说) = 预先说出",
+        "derive": "predict (v.), predictable (adj.)",
+        "syn": "forecast, projection",
+        "trap": "prediction → understanding, ideas about",
+        "paraphrase": "原文: regarding the prediction of rainforests → 题目: children's understanding (NOT GIVEN)",
+        "questionStem": "TFNG",
+        "example": "Despite the abundance of information regarding the prediction of rainforests...",
+        "translation": "尽管有大量关于雨林预测的信息..."
+      },
+      {
+        "word": "questionnaire",
+        "phonetic": "/ˌkwestʃəˈner/",
+        "meaning": "问卷",
+        "root": "quest",
+        "rootExt": "quest (寻求/询问) + -ion + -naire (名词后缀)",
+        "derive": "question (n./v.)",
+        "syn": "survey, poll",
+        "trap": "questionnaire → survey, questions asked",
+        "paraphrase": "原文: complete a questionnaire → 题目: mentioned in Reading Passage 1",
+        "questionStem": "Matching",
+        "example": "The children were asked to complete a questionnaire containing five open-form questions.",
+        "translation": "孩子们被要求完成一份包含五个开放式问题的问卷。"
+      },
+      {
+        "word": "equivalent",
+        "phonetic": "/ɪˈkwɪvələnt/",
+        "meaning": "等价的，相等的",
+        "root": "equi/val",
+        "rootExt": "equi- (等) + val (力量/价值) = 力量相等的",
+        "derive": "equivalence (n.)",
+        "syn": "equal, comparable",
+        "trap": "equivalent → same as, as much as",
+        "paraphrase": "原文: equivalent to one thousand football fields → 题目: high rate (implied)",
+        "questionStem": "MC/TFNG",
+        "example": "...at a rate equivalent to one thousand football fields every forty minutes.",
+        "translation": "...速度相当于每40分钟一千个足球场。"
+      },
+      {
+        "word": "maintain",
+        "phonetic": "/meɪnˈteɪn/",
+        "meaning": "维持，保持",
+        "root": "tain",
+        "rootExt": "main (手) + tain (持/握) = 手里握着不放",
+        "derive": "maintenance (n.)",
+        "syn": "keep, preserve, sustain",
+        "trap": "maintain → keep, stability",
+        "paraphrase": "原文: helping to maintain environmental stability → 题目: rainforests to be protected",
+        "questionStem": "Matching/Fill-in-the-blank",
+        "example": "...their role in helping to maintain environmental stability.",
+        "translation": "...它们在帮助维持环境稳定方面的作用。"
+      },
+      {
+        "word": "Stability",
+        "phonetic": "/stəˈbɪləti/",
+        "meaning": "稳定性",
+        "root": "sta/stat",
+        "rootExt": "sta (站立/固定) + -ability (能力/状态)",
+        "derive": "stable (adj.)",
+        "syn": "equilibrium, steadiness",
+        "trap": "stability → balance, healthy environment",
+        "paraphrase": "原文: environmental stability → 题目: protection of the planet",
+        "questionStem": "Matching",
+        "example": "...understanding of the importance of rainforests... in helping to maintain environmental stability.",
+        "translation": "...理解雨林的重要性...在帮助维持环境稳定方面的作用。"
+      },
+      {
+        "word": "provision",
+        "phonetic": "/prəˈvɪʒn/",
+        "meaning": "提供，供应",
+        "root": "vis/vid",
+        "rootExt": "pro- (前) + vis (看) = 预见到需求并准备",
+        "derive": "provide (v.)",
+        "syn": "supply, offering",
+        "trap": "provision → provided, source",
+        "paraphrase": "原文: the provision of oxygen → 题目: source of oxygen",
+        "questionStem": "Matching",
+        "example": "...animal habitats and the provision of oxygen for the planet.",
+        "translation": "...动物栖息地以及为地球提供氧气。"
+      },
+      {
+        "word": "indigenous",
+        "phonetic": "/ɪnˈdɪdʒənəs/",
+        "meaning": "土著的，本地的",
+        "root": "gen",
+        "rootExt": "indi- (内) + gen (产生) = 天生在内的",
+        "derive": "indigene (n.)",
+        "syn": "native, local",
+        "trap": "indigenous → local people, home",
+        "paraphrase": "原文: indigenous populations → 题目: rainforests are home",
+        "questionStem": "Matching",
+        "example": "...even fewer mentioned the indigenous populations of the forests.",
+        "translation": "...甚至更少人提到森林里的土著人口。"
+      },
+      {
+        "word": "emissions",
+        "phonetic": "/iˈmɪʃnz/",
+        "meaning": "排放，排放物",
+        "root": "miss/mit",
+        "rootExt": "e- (出) + miss (发/送) = 发散出去",
+        "derive": "emit (v.)",
+        "syn": "discharge, release",
+        "trap": "emissions → pollution, exhausts",
+        "paraphrase": "原文: factory emissions → 题目: pollutants",
+        "questionStem": "Matching",
+        "example": "...air pollution caused by car exhausts and factory emissions.",
+        "translation": "...汽车尾气和工厂排放引起的空气污染。"
+      },
+      {
+        "word": "localized",
+        "phonetic": "/ˈloʊkəlaɪzd/",
+        "meaning": "局部的，地方性的",
+        "root": "loc",
+        "rootExt": "loc (地方) + -al + -ized",
+        "derive": "local (adj.)",
+        "syn": "regional, specific",
+        "trap": "localized → farming, ranching",
+        "paraphrase": "原文: more localized activities → 题目: Western Europe (FALSE/Matching)",
+        "questionStem": "Matching",
+        "example": "...those who mentioned more localized activities (such as farming and ranching).",
+        "translation": "...那些提到更局部活动（如农耕和放牧）的人。"
+      },
+      {
+        "word": "atmosphere",
+        "phonetic": "/ˈætməsfɪr/",
+        "meaning": "大气",
+        "root": "atmos/sphere",
+        "rootExt": "atmos (蒸气) + sphere (球)",
+        "derive": "atmospheric (adj.)",
+        "syn": "air",
+        "trap": "atmosphere → ozone layer, oxygen",
+        "paraphrase": "原文: effect on the atmosphere → 题目: ozone layer being destroyed",
+        "questionStem": "Matching",
+        "example": "Only a few children mentioned the effect on the atmosphere.",
+        "translation": "只有少数孩子提到了对大气层的影响。"
+      },
+      {
+        "word": "coverage",
+        "phonetic": "/ˈkʌvərɪdʒ/",
+        "meaning": "新闻报道，覆盖范围",
+        "root": "cover",
+        "rootExt": "cover (覆盖) + -age",
+        "derive": "cover (v.)",
+        "syn": "reporting, reportage",
+        "trap": "coverage → media, newspapers",
+        "paraphrase": "原文: media coverage → 题目: newspapers and television",
+        "questionStem": "Matching",
+        "example": "...considering the high level of media coverage on the ice caps.",
+        "translation": "...考虑到媒体对冰盖的高度关注。"
+      },
+      {
+        "word": "implications",
+        "phonetic": "/ˌɪmplɪˈkeɪʃnz/",
+        "meaning": "含义，启示，影响",
+        "root": "plic",
+        "rootExt": "im- (内) + plic (折叠) = 卷入其中的东西",
+        "derive": "imply (v.)",
+        "syn": "consequences, suggestions",
+        "trap": "implications → for science lessons, for teachers",
+        "paraphrase": "原文: teachers need to consider the thinking → 题目: implications for science lessons",
+        "questionStem": "MC",
+        "example": "...suggest that teachers need to consider the thinking of children about rainforests.",
+        "translation": "...表明教师需要考虑孩子们对热带雨林的思考。"
+      },
+      {
+        "word": "cognitive",
+        "phonetic": "/ˈkɑːɡnətɪv/",
+        "meaning": "认知的",
+        "root": "gnos/gnit",
+        "rootExt": "co- (加强) + gnit (知道) = 去知道，认知",
+        "derive": "cognition (n.)",
+        "syn": "mental, intellectual",
+        "trap": "cognitive model → ideas, thinking, understanding",
+        "paraphrase": "原文: developed a cognitive model → 题目: children's ideas",
+        "questionStem": "MC",
+        "example": "...expected to have developed a cognitive model of what a rainforest is.",
+        "translation": "...被期望已经建立了一个关于什么是热带雨林的认知模型。"
+      }
+    ]
+  },
+  "phrases": [
+    {
+      "word": "confronted with",
+      "meaning": "面临，面对",
+      "syn": "faced with, encountering",
+      "trap": "be confronted with → see, find, witness",
+      "example": "Adults and children are frequently confronted with statements about the alarming rate of loss of tropical rainforests.",
+      "translation": "成人和儿童经常面临有关热带雨林流失速度惊人的陈述。"
+    },
+    {
+      "word": "relate to",
+      "meaning": "联系，理解，感同身受",
+      "syn": "connect with, associate with",
+      "trap": "relate to → understand, relevant to",
+      "example": "For example, one graphic illustration to which children might readily relate is...",
+      "translation": "例如，一个孩子们可能很容易联系到的生动插图是..."
+    },
+    {
+      "word": "independent of",
+      "meaning": "独立于...之外，不受...影响",
+      "syn": "regardless of, separate from",
+      "trap": "independent of → without, no need for",
+      "example": "...formed ideas about rainforests... independent of any formal tuition.",
+      "translation": "...在没有任何正式教学的情况下，就已经形成了关于热带雨林的观点。"
+    },
+    {
+      "word": "curriculum science",
+      "meaning": "课程科学，课堂所学的科学",
+      "syn": "school science, academic science",
+      "trap": "curriculum science → science that they are taught",
+      "example": "Many studies have shown that children harbour misconceptions about 'pure', curriculum science.",
+      "translation": "许多研究表明，孩子们对“纯粹的”课程科学存在误解。"
+    },
+    {
+      "word": "harder to modify",
+      "meaning": "更难修改，更难改变",
+      "syn": "more difficult to change, resistant to change",
+      "trap": "harder to modify → robust, difficult to change",
+      "example": "...making it and the component ideas... more robust but also harder to modify.",
+      "translation": "...使得它和组成部分的想法更加稳固，但也更难修改。"
+    },
+    {
+      "word": "maintain environmental stability",
+      "meaning": "维持环境稳定",
+      "syn": "keep environment balanced, ecological balance",
+      "trap": "maintain environmental stability → protected, save the planet",
+      "example": "...reach an understanding of the importance of rainforests and their role in helping to maintain environmental stability.",
+      "translation": "...理解雨林的重要性以及它们在维持环境稳定方面的作用。"
+    },
+    {
+      "word": "secondary school",
+      "meaning": "中学",
+      "syn": "high school, middle school",
+      "trap": "secondary school → aged 11-15, young people",
+      "example": "The sample consists of secondary school children aged 11-15 years...",
+      "translation": "样本由11-15岁的中学生组成。"
+    },
+    {
+      "word": "provision of oxygen",
+      "meaning": "氧气的供应",
+      "syn": "supply of oxygen, producing oxygen",
+      "trap": "provision of oxygen → source of oxygen, provided us with clean air",
+      "example": "Responses to a question of why rainforests are important tended to fall into two main categories: animal habitats and the provision of oxygen for the planet.",
+      "translation": "关于雨林为何重要的问题，回答往往分为两大类：动物栖息地和为地球提供氧气。"
+    },
+    {
+      "word": "at a deeper level",
+      "meaning": "在更深层次上",
+      "syn": "more thoroughly, profoundly",
+      "trap": "at a deeper level → further investigation, detailed",
+      "example": "Similarly, but at a deeper level, many students said that they thought that rainforests provided us with clean air.",
+      "translation": "同样，但在更深层次上，许多学生表示，他们认为热带雨林为我们提供了清洁的空气。"
+    },
+    {
+      "word": "compensate for",
+      "meaning": "补偿，弥补",
+      "syn": "make up for, counteract",
+      "trap": "compensate for → balance out, offset pollution",
+      "example": "...given out by the plants was to compensate for the air pollution caused by car exhausts.",
+      "translation": "...由植物释放出来是为了补偿汽车尾气造成的空气污染。"
+    },
+    {
+      "word": "greenhouse effect",
+      "meaning": "温室效应",
+      "syn": "global warming, atmospheric heating",
+      "trap": "greenhouse effect → climate change, heating force",
+      "example": "...children can think of climate change, specifically the greenhouse effect, as a cause of rainforest destruction.",
+      "translation": "...孩子们可以将气候变化，特别是温室效应，视为雨林破坏的一个原因。"
+    },
+    {
+      "word": "ozone layer",
+      "meaning": "臭氧层",
+      "syn": "stratospheric layer, protective shield",
+      "trap": "ozone layer → pollutants, destroy atmospheric layer",
+      "example": "At the same time, children often referred to the ozone layer as being destroyed by the same pollutants.",
+      "translation": "与此同时，孩子们经常提到臭氧层正被同样的污染物破坏。"
+    },
+    {
+      "word": "global warming",
+      "meaning": "全球变暖",
+      "syn": "rising global temperatures, heating of the planet",
+      "trap": "global warming → greenhouse effect, heat to penetrate the earth",
+      "example": "...most children felt that the destruction of the rainforests would lead to global warming.",
+      "translation": "...大多数孩子认为热带雨林的破坏会导致全球变暖。"
+    },
+    {
+      "word": "ice caps",
+      "meaning": "冰盖，冰帽",
+      "syn": "glaciers, polar ice",
+      "trap": "ice caps → melting, arctic region",
+      "example": "...lead to global warming and the melting of the ice caps.",
+      "translation": "...导致全球变暖和冰盖融化。"
+    },
+    {
+      "word": "cognitive model",
+      "meaning": "认知模型",
+      "syn": "mental framework, conceptual map",
+      "trap": "cognitive model → ideas, thinking, framework",
+      "example": "Pupils from other countries are also expected to have developed a cognitive model of what a rainforest is.",
+      "translation": "来自其他国家的学生也被期望已经建立了一个关于什么是热带雨林的认知模型。"
+    }
+  ]
+};
+const vocabulary = rawData.vocabulary || {};
+const phrasesData = rawData.phrases || [];
+
+/* ── Audio engine ── */
+const AUDIO_ITEMS = [{"id":"vocab_001_alarming","word":"alarming"},{"id":"vocab_002_destroy","word":"destroy"},{"id":"vocab_003_location","word":"location"},{"id":"vocab_004_pure","word":"pure"},{"id":"vocab_005_common","word":"common"},{"id":"vocab_006_habitats","word":"habitats"},{"id":"vocab_007_provide","word":"provide"},{"id":"vocab_008_atmosphere","word":"atmosphere"},{"id":"vocab_009_design","word":"design"},{"id":"vocab_010_identify","word":"identify"},{"id":"vocab_011_range","word":"range"},{"id":"vocab_012_form","word":"form"},{"id":"vocab_013_often","word":"often"},{"id":"vocab_014_important","word":"important"},{"id":"vocab_015_lead_to","word":"lead to"},{"id":"vocab_016_human","word":"human"},{"id":"vocab_017_country","word":"country"},{"id":"vocab_018_last","word":"last"},{"id":"vocab_019_study","word":"study"},{"id":"vocab_020_correct","word":"correct"},{"id":"vocab_021_confront","word":"confront"},{"id":"vocab_022_misconception","word":"misconception"},{"id":"vocab_023_incorporate","word":"incorporate"},{"id":"vocab_024_robust","word":"robust"},{"id":"vocab_025_localized","word":"localized"},{"id":"vocab_026_indigenous","word":"indigenous"},{"id":"vocab_027_erroneous","word":"erroneous"},{"id":"vocab_028_modify","word":"modify"},{"id":"vocab_029_abundance","word":"abundance"},{"id":"vocab_030_stability","word":"stability"},{"id":"vocab_031_represent","word":"represent"},{"id":"vocab_032_category","word":"category"},{"id":"vocab_033_emissions","word":"emissions"},{"id":"vocab_034_localized","word":"localized"},{"id":"vocab_035_destruction","word":"destruction"},{"id":"vocab_036_impact","word":"impact"},{"id":"vocab_037_atmosphere","word":"atmosphere"},{"id":"vocab_038_coverage","word":"coverage"},{"id":"vocab_039_realize","word":"realize"},{"id":"vocab_040_recommend","word":"recommend"},{"id":"vocab_041_curriculum","word":"curriculum"},{"id":"vocab_042_multifaceted","word":"multifaceted"},{"id":"vocab_043_compensate","word":"compensate"},{"id":"vocab_044_penetrate","word":"penetrate"},{"id":"vocab_045_literacy","word":"literacy"},{"id":"vocab_046_confronted","word":"confronted"},{"id":"vocab_047_harbour","word":"harbour"},{"id":"vocab_048_prediction","word":"prediction"},{"id":"vocab_049_questionnaire","word":"questionnaire"},{"id":"vocab_050_equivalent","word":"equivalent"},{"id":"vocab_051_maintain","word":"maintain"},{"id":"vocab_052_stability","word":"Stability"},{"id":"vocab_053_provision","word":"provision"},{"id":"vocab_054_indigenous","word":"indigenous"},{"id":"vocab_055_emissions","word":"emissions"},{"id":"vocab_056_localized","word":"localized"},{"id":"vocab_057_atmosphere","word":"atmosphere"},{"id":"vocab_058_coverage","word":"coverage"},{"id":"vocab_059_implications","word":"implications"},{"id":"vocab_060_cognitive","word":"cognitive"},{"id":"phrase_001_confronted_with","word":"confronted with"},{"id":"phrase_002_relate_to","word":"relate to"},{"id":"phrase_003_independent_of","word":"independent of"},{"id":"phrase_004_curriculum_science","word":"curriculum science"},{"id":"phrase_005_harder_to_modify","word":"harder to modify"},{"id":"phrase_006_maintain_environmental_stabili","word":"maintain environmental stability"},{"id":"phrase_007_secondary_school","word":"secondary school"},{"id":"phrase_008_provision_of_oxygen","word":"provision of oxygen"},{"id":"phrase_009_at_a_deeper_level","word":"at a deeper level"},{"id":"phrase_010_compensate_for","word":"compensate for"},{"id":"phrase_011_greenhouse_effect","word":"greenhouse effect"},{"id":"phrase_012_ozone_layer","word":"ozone layer"},{"id":"phrase_013_global_warming","word":"global warming"},{"id":"phrase_014_ice_caps","word":"ice caps"},{"id":"phrase_015_cognitive_model","word":"cognitive model"}];
+// Map: word → audio filename (id.mp3)
+// We rebuild it to match word → file id
+const wordAudioMap = {};
+for (const item of AUDIO_ITEMS) { wordAudioMap[item.word.toLowerCase()] = item.id + '.mp3'; }
+
+let _currentAudio = null; // singleton player
+let _currentBtn = null;
+
+function playExample(btn, word) {
+  const filename = wordAudioMap[word.toLowerCase()];
+  if (!filename) {
+    // No audio file available, show tip once
+    const tip = btn.nextElementSibling;
+    if (tip && tip.classList.contains('audio-missing')) {
+      tip.style.display = 'inline-block';
+      setTimeout(() => { tip.style.display = 'none'; }, 3000);
+    }
+    return;
+  }
+
+  // If same button is playing → pause
+  if (_currentBtn === btn && _currentAudio && !_currentAudio.paused) {
+    _currentAudio.pause();
+    btn.classList.remove('playing');
+    btn.textContent = '▶';
+    _currentBtn = null;
+    return;
+  }
+
+  // Stop previous
+  if (_currentAudio) {
+    _currentAudio.pause();
+    _currentAudio.currentTime = 0;
+    if (_currentBtn) { _currentBtn.classList.remove('playing'); _currentBtn.textContent = '▶'; }
+  }
+
+  const audio = new Audio(filename);
+  audio.loop = true;
+  audio.play().then(() => {
+    _currentAudio = audio;
+    _currentBtn = btn;
+    btn.classList.add('playing');
+    btn.textContent = '⏸';
+    audio.onended = () => {}; // loop keeps going
+    audio.onerror = () => {
+      btn.classList.remove('playing');
+      btn.textContent = '▶';
+      _currentBtn = null;
+      // Show tip
+      const tip = btn.nextElementSibling;
+      if (tip && tip.classList.contains('audio-missing')) {
+        tip.textContent = '⚠️ 请将 _mp3.zip 解压到与此 HTML 同一目录';
+        tip.style.display = 'inline-block';
+        setTimeout(() => { tip.style.display = 'none'; tip.textContent = '音频文件未找到'; }, 4000);
+      }
+    };
+  }).catch(() => {
+    const tip = btn.nextElementSibling;
+    if (tip && tip.classList.contains('audio-missing')) {
+      tip.textContent = '⚠️ 请将 _mp3.zip 解压到与此 HTML 同一目录';
+      tip.style.display = 'inline-block';
+      setTimeout(() => { tip.style.display = 'none'; tip.textContent = '音频文件未找到'; }, 4000);
+    }
+  });
+}
+
+/* Generates PLAY button HTML for a given word */
+function playBtnHTML(word) {
+  const esc = (word||'').replace(/'/g,"\\'");
+  return `<button class="play-btn" onclick="playExample(this,'${esc}')">▶</button><span class="audio-missing" style="display:none">音频文件未找到</span>`;
+}
+
+/* ── State ── */
+let curLv = 'level1', curWIdx = 0, curPIdx = 0;
+let vocabMode = 'ctx';
+let reinforceQueue = [], reinforcing = false;
+const mistakeMap = new Map();
+let trapSet = [], curTrapIdx = 0;
+let simSet = [], curSimIdx = 0;
+
+/* ── Tab switch ── */
+function switchTab(id) {
+  document.querySelectorAll('.tab').forEach(t => {
+    t.classList.toggle('active', t.getAttribute('onclick') && t.getAttribute('onclick').includes("'" + id + "'"));
+  });
+  document.querySelectorAll('.section').forEach(s => s.classList.toggle('active', s.id === id));
+  if (id === 'trap') initTrap();
+  if (id === 'sim') initSim();
+  if (id === 'mistakes') renderMistakes();
+  if (id === 'phrases') renderPhrase();
+}
+
+function speak(text) {
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-GB';
+  window.speechSynthesis.speak(u);
+}
+
+function escQ(s) { return (s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
+
+function setMode(m) {
+  vocabMode = m;
+  document.getElementById('modeCtx').classList.toggle('active', m === 'ctx');
+  document.getElementById('modeDir').classList.toggle('active', m === 'dir');
+  renderVocab();
+}
+
+function jumpLevel(lv) {
+  curLv = lv; curWIdx = 0;
+  ['lv1btn','lv2btn','lv3btn'].forEach((id, i) => {
+    document.getElementById(id).classList.toggle('active', lv === 'level' + (i+1));
+  });
+  renderVocab();
+}
+
+/* ── Trap-box HTML helper ── */
+function trapBlockHTML(d) {
+  if (!d.trap && !d.paraphrase && !d.questionStem) return '';
+  let s = '<div class="trap-box"><div class="trap-title">⚡ 题眼信息 — 雅思考点<\/div>';
+  if (d.trap) s += '<div class="trap-row"><span class="trap-lbl">陷阱替换<\/span><span class="trap-val">' + d.trap + '<\/span><\/div>';
+  if (d.paraphrase) s += '<div class="trap-row"><span class="trap-lbl">Paraphrase<\/span><span class="trap-val">' + d.paraphrase + '<\/span><\/div>';
+  if (d.questionStem) s += '<div class="trap-row"><span class="trap-lbl">题型提示<\/span><span class="trap-val">' + d.questionStem + '<\/span><\/div>';
+  return s + '<\/div>';
+}
+
+/* ── ① Vocab ── */
+function renderVocab() {
+  const list = reinforcing ? reinforceQueue : (vocabulary[curLv] || []);
+  if (!list.length) {
+    document.getElementById('vocab-card').innerHTML = '<div class="text-center p-10 text-slate-400">该等级暂无词汇<\/div>';
+    return;
+  }
+  const idx = reinforcing ? 0 : curWIdx;
+  const data = list[idx];
+  if (!data) return;
+  document.getElementById('reinforce-notice').style.display = reinforcing ? 'block' : 'none';
+  document.getElementById('vocabProg').style.width = Math.round((idx / list.length) * 100) + '%';
+  speak(data.word);
+  if (vocabMode === 'ctx') renderVocabCtx(data, list.length, idx);
+  else renderVocabDir(data, list.length, idx);
+}
+
+function renderVocabCtx(data, total, idx) {
+  const ex = data.example || '';
+  const _wi = ex.toLowerCase().indexOf(data.word.toLowerCase());
+  const blanked = _wi >= 0
+    ? ex.slice(0,_wi) + '<span class=\'ctx-blank\' id=\'ctx-hw\' onclick=\'revealWord()\'>' + '_'.repeat(Math.min(data.word.length,8)) + '<\/span>' + ex.slice(_wi+data.word.length)
+    : ex;
+  const hasBlanked = blanked !== ex;
+
+  document.getElementById('vocab-card').innerHTML = `
+    <div class="flex justify-between items-start mb-1">
+      <div class="text-[0.58rem] font-bold text-blue-500 uppercase tracking-widest">${curLv} · 语境猜词</div>
+      <div class="text-[0.6rem] text-slate-300 font-bold">${idx+1} / ${total}</div>
+    </div>
+    <div class="ex-box">
+      <div class="text-[0.6rem] font-bold text-blue-500 mb-1 flex items-center gap-1">
+        📖 真题原句 — ${hasBlanked ? '点击空格揭开单词' : '阅读并尝试理解'}
+        ${playBtnHTML(data.word)}
+      </div>
+      <p class="text-sm font-bold text-blue-900 leading-snug">${hasBlanked ? blanked : ex}</p>
+      <p class="text-[0.72rem] text-blue-700/70 mt-1">${data.translation || ''}</p>
+    </div>
+    <div class="text-[0.68rem] text-slate-400 text-center mb-2">👆 先读句子猜意思，再点击揭开单词</div>
+    <div id="word-reveal" style="display:none">
+      <div class="flex justify-between items-start mb-2">
+        <div>
+          <h1 class="text-3xl font-bold text-slate-800">${data.word}</h1>
+          <div class="text-slate-400 text-sm mt-1">${data.phonetic || ''} <span onclick="speak('${data.word.replace(/'/g,"\\'")}'')" class="cursor-pointer">🔊</span></div>
+        </div>
+        <div class="text-blue-600 font-bold text-xl text-right">${data.meaning}</div>
+      </div>
+      <div class="detail-box space-y-2">
+        <div class="flex"><span class="lbl">同义替换</span><span class="text-slate-600 font-bold">${data.syn||'—'}</span></div>
+        <div class="flex"><span class="lbl">派生词</span><span class="text-slate-600">${data.derive||'—'}</span></div>
+      </div>
+      <div class="root-box">
+        <div class="flex items-center mb-1"><span class="lbl lbl-r">词根词缀</span><span class="font-bold text-orange-800">${data.root||'—'}</span></div>
+        <div class="text-xs text-orange-600/80 italic pl-[73px]">同根: ${data.rootExt||'—'}</div>
+      </div>
+      ${trapBlockHTML(data)}
+    </div>
+    <div class="grid grid-cols-3 gap-3 mt-auto pt-4" id="mark-btns" style="${hasBlanked ? 'display:none' : ''}">
+      <button class="btn-mark bg-emerald-500" onclick="handleMark('known','v')">掌握 ✓</button>
+      <button class="btn-mark bg-amber-500" onclick="handleMark('unsure','v')">模糊 ~</button>
+      <button class="btn-mark bg-rose-500" onclick="handleMark('unknown','v')">不识 ✗</button>
+    </div>
+  `;
+  if (!hasBlanked) {
+    document.getElementById('word-reveal').style.display = 'block';
+  }
+}
+
+function revealWord() {
+  const hw = document.getElementById('ctx-hw');
+  const list = reinforcing ? reinforceQueue : (vocabulary[curLv] || []);
+  const data = list[reinforcing ? 0 : curWIdx];
+  if (hw && data) { hw.classList.add('revealed'); hw.textContent = data.word; }
+  document.getElementById('word-reveal').style.display = 'block';
+  const mb = document.getElementById('mark-btns');
+  if (mb) mb.style.display = 'grid';
+}
+
+function renderVocabDir(data, total, idx) {
+  document.getElementById('vocab-card').innerHTML = `
+    <div class="flex justify-between items-start">
+      <div class="flex-1">
+        <div class="text-[0.58rem] font-bold text-blue-500 uppercase tracking-widest mb-1">${curLv}</div>
+        <h1 class="text-3xl font-bold text-slate-800">${data.word}</h1>
+        <div class="text-slate-400 text-sm mt-1">${data.phonetic || ''} <span onclick="speak('${data.word.replace(/'/g,"\\'")}'')" class="cursor-pointer ml-2">🔊</span></div>
+      </div>
+      <div class="text-right">
+        <div class="text-slate-300 text-[0.6rem] font-bold mb-2">${idx+1} / ${total}</div>
+        <div class="text-blue-600 font-bold text-xl">${data.meaning}</div>
+      </div>
+    </div>
+    <div class="ex-box">
+      <div class="flex items-center gap-1 mb-1">
+        <span class="text-[0.6rem] font-bold text-blue-500">真题例句</span>
+        ${playBtnHTML(data.word)}
+      </div>
+      <p class="text-sm font-bold text-blue-900 leading-snug">"${data.example||''}"</p>
+      <p class="text-[0.75rem] text-blue-700/70 mt-1">${data.translation||''}</p>
+    </div>
+    <div class="detail-box space-y-2">
+      <div class="flex"><span class="lbl">同义替换</span><span class="text-slate-600 font-bold">${data.syn||'—'}</span></div>
+      <div class="flex"><span class="lbl">派生词</span><span class="text-slate-600">${data.derive||'—'}</span></div>
+    </div>
+    <div class="root-box">
+      <div class="flex items-center mb-1"><span class="lbl lbl-r">词根词缀</span><span class="font-bold text-orange-800">${data.root||'—'}</span></div>
+      <div class="text-xs text-orange-600/80 italic pl-[73px]">同根: ${data.rootExt||'—'}</div>
+    </div>
+    ${trapBlockHTML(data)}
+    <div class="grid grid-cols-3 gap-3 mt-auto pt-4">
+      <button class="btn-mark bg-emerald-500" onclick="handleMark('known','v')">掌握 ✓</button>
+      <button class="btn-mark bg-amber-500" onclick="handleMark('unsure','v')">模糊 ~</button>
+      <button class="btn-mark bg-rose-500" onclick="handleMark('unknown','v')">不识 ✗</button>
+    </div>
+  `;
+}
+
+function handleMark(status, type) {
+  const cardId = type === 'v' ? 'vocab-card' : 'phrase-card';
+  const card = document.getElementById(cardId);
+  const cls = status === 'known' ? 'flash-green' : (status === 'unsure' ? 'flash-amber' : 'flash-rose');
+  card.classList.add(cls);
+  if (status === 'unknown' || status === 'unsure') {
+    const item = type === 'v'
+      ? (reinforcing ? reinforceQueue[0] : (vocabulary[curLv]||[])[curWIdx])
+      : phrasesData[curPIdx];
+    if (item) {
+      const key = item.word;
+      if (!mistakeMap.has(key)) mistakeMap.set(key, { data: item, count: 1 });
+      else mistakeMap.get(key).count++;
+      if (!reinforceQueue.find(x => x.word === key)) reinforceQueue.push(item);
+    }
+  }
+  setTimeout(() => {
+    card.classList.remove(cls);
+    if (type === 'v') advanceVocab();
+    else advancePhrase();
+  }, 800);
+}
+
+function advanceVocab() {
+  if (reinforcing) {
+    reinforceQueue.shift();
+    if (!reinforceQueue.length) {
+      reinforcing = false;
+      document.getElementById('reinforce-notice').style.display = 'none';
+      document.getElementById('vocab-card').innerHTML = '<div class="text-center p-10"><div class="text-5xl mb-4">🎯<\/div><div class="text-xl font-bold text-emerald-600">强化轮完成！<\/div><div class="text-sm text-slate-400 mt-2">切换「题眼训练」或「做题模拟」检验效果<\/div><\/div>';
+    } else { renderVocab(); }
+    return;
+  }
+  const list = vocabulary[curLv] || [];
+  if (curWIdx < list.length - 1) { curWIdx++; renderVocab(); }
+  else if (reinforceQueue.length) {
+    reinforcing = true;
+    renderVocab();
+  } else {
+    const nextLv = { level1:'level2', level2:'level3' }[curLv];
+    document.getElementById('vocab-card').innerHTML = `
+      <div class="text-center p-10">
+        <div class="text-5xl mb-4">✅</div>
+        <div class="text-xl font-bold text-emerald-600">本级完成！无生词 🎉</div>
+        ${nextLv ? `<button class="mt-6 px-6 py-3 bg-blue-500 text-white rounded-2xl font-bold" onclick="jumpLevel('${nextLv}')">继续下一级 →</button>` : ''}
+      </div>
+    `;
+  }
+}
+
+/* ── ④ Phrase ── */
+function renderPhrase() {
+  if (!phrasesData.length) {
+    document.getElementById('phrase-card').innerHTML = '<div class="text-center p-10 text-slate-400">暂无短语数据<\/div>';
+    return;
+  }
+  const data = phrasesData[curPIdx];
+  const total = phrasesData.length;
+  document.getElementById('phraseProg').style.width = Math.round((curPIdx / total) * 100) + '%';
+  document.getElementById('phrase-card').innerHTML = `
+    <div class="flex justify-between items-start">
+      <div class="flex-1">
+        <div class="text-[0.6rem] font-bold text-emerald-500 uppercase tracking-widest mb-1">真题短语</div>
+        <h1 class="text-2xl font-bold text-slate-800">${data.word}</h1>
+      </div>
+      <div class="text-right">
+        <div class="text-slate-300 text-[0.6rem] font-bold mb-2">${curPIdx+1} / ${total}</div>
+        <div class="text-emerald-600 font-bold text-lg">${data.meaning}</div>
+      </div>
+    </div>
+    <div class="ex-box" style="border-left-color:#10b981;background:#ecfdf5;">
+      <div class="flex items-center gap-1 mb-1">
+        <span class="text-[0.6rem] font-bold text-emerald-600">真题例句</span>
+        ${playBtnHTML(data.word)}
+      </div>
+      <p class="text-sm font-bold text-emerald-900 leading-snug">"${data.example||''}"</p>
+      <p class="text-[0.75rem] text-emerald-700/70 mt-1">${data.translation||''}</p>
+    </div>
+    <div class="detail-box">
+      <div class="flex"><span class="lbl" style="color:#10b981">同义替换</span><span class="text-slate-600 font-bold">${data.syn||'—'}</span></div>
+    </div>
+    ${data.trap ? `<div class="trap-box"><div class="trap-title">⚡ 短语陷阱词<\/div><div class="trap-row"><span class="trap-lbl">陷阱替换<\/span><span class="trap-val">${data.trap}<\/span><\/div><\/div>` : ''}
+    <div class="grid grid-cols-3 gap-3 mt-auto pt-4">
+      <button class="btn-mark bg-emerald-500" onclick="handleMark('known','p')">掌握 ✓</button>
+      <button class="btn-mark bg-amber-500" onclick="handleMark('unsure','p')">模糊 ~</button>
+      <button class="btn-mark bg-rose-500" onclick="handleMark('unknown','p')">不识 ✗</button>
+    </div>
+  `;
+}
+
+function advancePhrase() {
+  if (curPIdx < phrasesData.length - 1) { curPIdx++; renderPhrase(); }
+  else {
+    document.getElementById('phrase-card').innerHTML = '<div class="text-center p-10"><div class="text-5xl mb-4">🏁<\/div><div class="text-xl font-bold text-emerald-600">短语已全部复习！<\/div><button class="mt-6 px-6 py-3 bg-emerald-500 text-white rounded-2xl font-bold" onclick="curPIdx=0;renderPhrase()">再练一遍<\/button><\/div>';
+  }
+}
+
+/* ── ② Trap Quiz ── */
+function initTrap() {
+  const all = [...(vocabulary.level1||[]), ...(vocabulary.level2||[]), ...(vocabulary.level3||[])];
+  const withTrap = all.filter(w => w.trap || w.paraphrase || w.syn);
+  if (!withTrap.length) {
+    document.getElementById('trap-card').innerHTML = '<div class="text-center p-10 text-slate-400"><div class="text-4xl mb-4">⚠️<\/div><div class="font-bold mb-2">暂无题眼数据<\/div><div class="text-sm">请用 v16 Prompt 重新生成 JSON，即可解锁此模块<\/div><\/div>';
+    return;
+  }
+  trapSet = [...withTrap].sort(() => Math.random() - 0.5).slice(0, Math.min(20, withTrap.length));
+  curTrapIdx = 0;
+  renderTrap();
+}
+
+function renderTrap() {
+  const q = trapSet[curTrapIdx];
+  const total = trapSet.length;
+  document.getElementById('trapProg').style.width = Math.round((curTrapIdx / total) * 100) + '%';
+  const all = [...(vocabulary.level1||[]), ...(vocabulary.level2||[]), ...(vocabulary.level3||[])];
+
+  if (q.paraphrase && Math.random() > 0.4) {
+    document.getElementById('trap-card').innerHTML = `
+      <div class="text-[0.6rem] font-bold text-purple-600 uppercase tracking-widest mb-3">题眼训练 ${curTrapIdx+1}/${total} · Paraphrase 配对</div>
+      <div class="trap-box mb-3">
+        <div class="trap-title">Paraphrase 配对</div>
+        <div class="text-base font-bold text-purple-900 leading-relaxed">${q.paraphrase}</div>
+      </div>
+      <div class="detail-box mb-3">
+        原词 <strong class="text-blue-600">${q.word}</strong> 在题目中被替换为 <strong class="text-purple-600">${q.trap || q.syn || '?'}</strong>
+      </div>
+      <div class="text-xs text-slate-400 mb-4">记住：题目出现 <strong>${q.trap || q.syn || ''}</strong> → 对应原文的 <strong>${q.word}</strong></div>
+      <div class="mt-auto">
+        <button class="w-full py-4 bg-purple-600 text-white rounded-2xl font-bold text-base" onclick="advanceTrap()">已理解，下一题 →</button>
+      </div>
+    `;
+    return;
+  }
+
+  const correct = q.trap || q.syn || q.word;
+  const decoys = all.filter(x => x.word !== q.word).sort(() => Math.random()-0.5).slice(0,3)
+    .map(x => x.trap || x.syn || x.word).filter(Boolean);
+  const opts = [correct, ...decoys].sort(() => Math.random() - 0.5);
+  document.getElementById('trap-card').innerHTML = `
+    <div class="text-[0.6rem] font-bold text-purple-600 uppercase tracking-widest mb-4">题眼训练 ${curTrapIdx+1}/${total} · 同义替换识别</div>
+    <div class="text-sm text-slate-500 mb-1">原文出现了：</div>
+    <div class="text-4xl font-bold text-slate-800 mb-2 cursor-pointer" onclick="speak('${q.word.replace(/'/g,"\\'")}'')">${q.word} 🔊</div>
+    <div class="text-slate-400 text-sm mb-4">${q.meaning || ''}</div>
+    <div class="text-sm font-bold text-slate-600 mb-3">题目中最可能用哪个词替换它？</div>
+    <div class="space-y-2">${opts.map(o => `<button class="opt-btn" onclick="checkTrap(this,'${escQ(o)}','${escQ(correct)}')">${o}</button>`).join('')}</div>
+    ${q.example ? `<div class="text-xs text-slate-300 mt-3 pt-3 border-t border-slate-100">例句: ${q.example}<\/div>` : ''}
+  `;
+}
+
+function checkTrap(el, sel, cor) {
+  document.querySelectorAll('#trap-card .opt-btn').forEach(b => b.disabled = true);
+  if (sel === cor) {
+    el.style.borderColor = '#10b981'; el.style.background = '#ecfdf5';
+    setTimeout(advanceTrap, 600);
+  } else {
+    el.style.borderColor = '#ef4444'; el.style.background = '#fef2f2';
+    document.querySelectorAll('#trap-card .opt-btn').forEach(b => {
+      if (b.textContent.trim() === cor) { b.style.borderColor = '#10b981'; b.style.background = '#ecfdf5'; }
+    });
+    setTimeout(advanceTrap, 1400);
+  }
+}
+
+function advanceTrap() {
+  if (curTrapIdx < trapSet.length - 1) { curTrapIdx++; renderTrap(); }
+  else {
+    document.getElementById('trapProg').style.width = '100%';
+    document.getElementById('trap-card').innerHTML = '<div class="text-center p-10"><div class="text-5xl mb-4">🏆<\/div><div class="text-xl font-bold text-purple-600">题眼训练完成！<\/div><div class="text-sm text-slate-400 mt-2">去「做题模拟」实战检验吧<\/div><button class="mt-6 px-6 py-3 bg-purple-500 text-white rounded-2xl font-bold" onclick="initTrap()">再练一遍<\/button><\/div>';
+  }
+}
+
+/* ── ③ Sim Quiz ── */
+function initSim() {
+  const all = [...(vocabulary.level1||[]), ...(vocabulary.level2||[]), ...(vocabulary.level3||[]), ...phrasesData];
+  if (!all.length) return;
+  simSet = [...all].sort(() => Math.random() - 0.5).slice(0, Math.min(20, all.length));
+  curSimIdx = 0;
+  renderSim();
+}
+
+function renderSim() {
+  const total = simSet.length;
+  document.getElementById('simProg').style.width = Math.round((curSimIdx / total) * 100) + '%';
+  const q = simSet[curSimIdx];
+  const all = [...(vocabulary.level1||[]), ...(vocabulary.level2||[]), ...(vocabulary.level3||[]), ...phrasesData];
+
+  if (q.example) {
+    const _qi = q.example.toLowerCase().indexOf(q.word.toLowerCase());
+    const blanked = _qi >= 0 && !/[a-zA-Z]/.test(q.example[_qi-1]||'') && !/[a-zA-Z]/.test(q.example[_qi+q.word.length]||'')
+      ? q.example.slice(0,_qi)+'______'+q.example.slice(_qi+q.word.length) : q.example;
+    if (blanked !== q.example) {
+      const decoys = all.filter(x => x.word !== q.word).sort(() => Math.random()-0.5).slice(0,3).map(x => x.word);
+      const opts = [q.word, ...decoys].sort(() => Math.random() - 0.5);
+      document.getElementById('sim-card').innerHTML = `
+        <div class="text-[0.6rem] font-bold text-cyan-600 uppercase tracking-widest mb-3">做题模拟 ${curSimIdx+1}/${total} · 真题填空</div>
+        <div class="text-xs text-slate-400 mb-2 font-bold">选出填入空格的正确词：</div>
+        <div class="ex-box" style="border-left-color:#0ea5e9;background:#f0f9ff;">
+          <p class="text-base font-bold text-slate-700 leading-relaxed">${blanked}</p>
+        </div>
+        <div class="text-xs text-slate-400 mb-3">译: ${q.translation||''}</div>
+        ${q.trap ? `<div class="text-xs text-purple-500 mb-3">⚡ 注意：可能被替换为 <strong>${q.trap}<\/strong><\/div>` : ''}
+        <div class="space-y-2">${opts.map(o => `<button class="opt-btn" onclick="checkSim(this,'${escQ(o)}','${escQ(q.word)}')">${o}</button>`).join('')}</div>
+      `;
+      return;
+    }
+  }
+
+  const decoys = all.filter(x => x.word !== q.word).sort(() => Math.random()-0.5).slice(0,3).map(x => x.word);
+  const opts = [q.word, ...decoys].sort(() => Math.random() - 0.5);
+  document.getElementById('sim-card').innerHTML = `
+    <div class="text-[0.6rem] font-bold text-cyan-600 uppercase tracking-widest mb-3">做题模拟 ${curSimIdx+1}/${total} · 词义配对</div>
+    <div class="text-xl font-bold text-slate-800 p-4 bg-sky-50 rounded-2xl mb-3">${q.meaning||''}</div>
+    ${q.trap ? `<div class="text-xs text-purple-500 mb-3">⚡ 注意：可能被替换为 <strong>${q.trap}<\/strong><\/div>` : ''}
+    <div class="space-y-2">${opts.map(o => `<button class="opt-btn" onclick="checkSim(this,'${escQ(o)}','${escQ(q.word)}')">${o}</button>`).join('')}</div>
+  `;
+}
+
+function checkSim(el, sel, cor) {
+  document.querySelectorAll('#sim-card .opt-btn').forEach(b => b.disabled = true);
+  const advance = () => {
+    if (curSimIdx < simSet.length - 1) { curSimIdx++; renderSim(); }
+    else {
+      document.getElementById('simProg').style.width = '100%';
+      document.getElementById('sim-card').innerHTML = '<div class="text-center p-10"><div class="text-5xl mb-4">🎯<\/div><div class="text-xl font-bold text-cyan-600">模拟完成！<\/div><button class="mt-6 px-6 py-3 bg-cyan-500 text-white rounded-2xl font-bold" onclick="initSim()">再来一轮<\/button><\/div>';
+    }
+  };
+  if (sel === cor) {
+    el.style.borderColor = '#10b981'; el.style.background = '#ecfdf5';
+    setTimeout(advance, 500);
+  } else {
+    el.style.borderColor = '#ef4444'; el.style.background = '#fef2f2';
+    document.querySelectorAll('#sim-card .opt-btn').forEach(b => {
+      if (b.textContent.trim() === cor) { b.style.borderColor = '#10b981'; b.style.background = '#ecfdf5'; }
+    });
+    setTimeout(advance, 1400);
+  }
+}
+
+/* ── ⑤ Mistakes ── */
+function renderMistakes() {
+  const list = document.getElementById('mk-list');
+  if (!mistakeMap.size) {
+    list.innerHTML = '<div id="mk-empty">🎉 暂无生词<br><small>学习时标记「不识」或「模糊」的词会出现在这里<\/small><\/div>';
+    return;
+  }
+  list.innerHTML = [...mistakeMap.values()].map(({ data: w, count }) => `
+    <div class="mk-item">
+      <div class="flex justify-between items-start">
+        <div>
+          <div class="mk-word">${w.word}</div>
+          <div class="mk-meaning">${w.meaning}</div>
+        </div>
+        <div class="text-[0.65rem] bg-red-50 border border-red-200 text-red-500 rounded-full px-2 py-0.5 font-bold">错${count}次</div>
+      </div>
+      ${w.trap ? `<div class="text-xs text-purple-500 mt-2">⚡ 陷阱替换: ${w.trap}<\/div>` : ''}
+      ${w.example ? `<div class="text-xs text-slate-400 mt-1 flex items-center gap-1"><span class="italic flex-1">${w.example}<\/span>${playBtnHTML(w.word)}<\/div>` : ''}
+    </div>
+  `).join('');
+}
+
+renderVocab();
+renderPhrase();
+</script>
+</body>
+</html>

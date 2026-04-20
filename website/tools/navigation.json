@@ -1,0 +1,96 @@
+{
+    "title": "🌐 雅思学习导航",
+    "categories": [
+        {
+            "name": "官方考试",
+            "links": [
+                {
+                    "text": "IELTS 官网",
+                    "url": "https:\/\/www.ielts.org\/"
+                },
+                {
+                    "text": "British Council",
+                    "url": "https:\/\/takeielts.britishcouncil.org\/"
+                },
+                {
+                    "text": "Cambridge IELTS",
+                    "url": "https:\/\/www.cambridgeenglish.org\/exams-and-tests\/ielts\/"
+                }
+            ]
+        },
+        {
+            "name": "听力练习",
+            "links": [
+                {
+                    "text": "IELTS Liz 听力",
+                    "url": "https:\/\/ieltsliz.com\/listening-lessons\/"
+                },
+                {
+                    "text": "BBC Learning English",
+                    "url": "https:\/\/www.bbc.co.uk\/learningenglish\/english\/features\/ielts"
+                }
+            ]
+        },
+        {
+            "name": "阅读练习",
+            "links": [
+                {
+                    "text": "IELTS Liz 阅读",
+                    "url": "https:\/\/ieltsliz.com\/reading-lessons\/"
+                },
+                {
+                    "text": "IELTS Simon 阅读",
+                    "url": "https:\/\/www.ielts-simon.com\/ielts-help-and-english-pr\/"
+                }
+            ]
+        },
+        {
+            "name": "写作 & 口语",
+            "links": [
+                {
+                    "text": "IELTS Liz 写作",
+                    "url": "https:\/\/ieltsliz.com\/writing-task-1\/"
+                },
+                {
+                    "text": "IELTS Simon 全系列",
+                    "url": "https:\/\/www.ielts-simon.com\/"
+                }
+            ]
+        },
+        {
+            "name": "词汇学习",
+            "links": [
+                {
+                    "text": "Quizlet IELTS 词汇",
+                    "url": "https:\/\/quizlet.com\/"
+                },
+                {
+                    "text": "学为贵拼鸭_单词会拼，嘎嘎得分",
+                    "url": "https:\/\/www.guixue.com\/apps\/word\/detail\/my\/11320"
+                }
+            ]
+        },
+        {
+            "name": "模拟考试 & 其他",
+            "links": [
+                {
+                    "text": "Road to IELTS",
+                    "url": "https:\/\/www.roadtoielts.com\/"
+                },
+                {
+                    "text": "IELTS 备考社区",
+                    "url": "https:\/\/www.reddit.com\/r\/IELTS\/"
+                }
+            ]
+        },
+        {
+            "name": "学习资源",
+            "links": [
+                {
+                    "text": "顾家北手把手教你雅思写作6.0 PDF下载 - 开源雅思",
+                    "url": "https:\/\/www.ieltsday.com\/9460.html"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>音频分秒切片工具</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 700px; margin: 40px auto; background-color: #f4f7f6; }
+        .container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h2 { color: #2c3e50; text-align: center; margin-bottom: 25px; }
+        .input-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; color: #34495e; }
+        input[type="text"], input[type="file"] { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
+        .hint { font-size: 12px; color: #7f8c8d; margin-top: 5px; }
+        button { background: #27ae60; color: white; border: none; padding: 14px; border-radius: 6px; cursor: pointer; width: 100%; font-size: 16px; font-weight: bold; transition: background 0.3s; }
+        button:hover { background: #219150; }
+        button:disabled { background: #bdc3c7; cursor: not-allowed; }
+        #status { margin-top: 20px; padding: 10px; border-radius: 4px; text-align: center; font-weight: 500; }
+        .success { color: #27ae60; background: #eafaf1; }
+        .error { color: #e74c3c; background: #fdedec; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>音频自动切片器</h2>
+    
+    <div class="input-group">
+        <label>1. 上传音频文件</label>
+        <input type="file" id="audioFile" accept="audio/*">
+    </div>
+
+    <div class="input-group">
+        <label>2. 输入4个时间点 (支持 分:秒 或 秒)</label>
+        <input type="text" id="timePoints" placeholder="例如: 1:10, 2:30, 5:00, 8:15">
+        <p class="hint">用英文逗号隔开。示例：A点(1分10秒), B点(2分半)... 以此类推。</p>
+    </div>
+
+    <button id="splitBtn">立即切片并导出</button>
+    
+    <div id="status"></div>
+</div>
+
+<script>
+    // 将 "1:30" 或 "90" 统一转换为秒数
+    function parseTimeToSeconds(timeStr) {
+        timeStr = timeStr.trim();
+        if (timeStr.includes(':')) {
+            const parts = timeStr.split(':');
+            const minutes = parseFloat(parts[0]) || 0;
+            const seconds = parseFloat(parts[1]) || 0;
+            return (minutes * 60) + seconds;
+        }
+        return parseFloat(timeStr) || 0;
+    }
+
+    const splitBtn = document.getElementById('splitBtn');
+    const status = document.getElementById('status');
+
+    splitBtn.onclick = async () => {
+        const fileInput = document.getElementById('audioFile');
+        const timesInput = document.getElementById('timePoints');
+        
+        if (!fileInput.files[0] || !timesInput.value) {
+            showStatus("请确保已上传文件并填写了时间点", "error");
+            return;
+        }
+
+        // 处理时间点输入
+        const timePoints = timesInput.value.split(',').map(parseTimeToSeconds);
+        
+        if (timePoints.length !== 4) {
+            showStatus("请输入恰好 4 个时间点", "error");
+            return;
+        }
+
+        const file = fileInput.files[0];
+        const fileName = file.name.split('.').slice(0, -1).join('.');
+        
+        showStatus("正在处理音频，请稍候...", "");
+        splitBtn.disabled = true;
+
+        try {
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const arrayBuffer = await file.arrayBuffer();
+            const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+
+            const sections = [
+                [timePoints[0], timePoints[1]],
+                [timePoints[1], timePoints[2]],
+                [timePoints[2], timePoints[3]],
+                [timePoints[3], audioBuffer.duration]
+            ];
+
+            for (let i = 0; i < sections.length; i++) {
+                const [start, end] = sections[i];
+                if (start >= audioBuffer.duration) continue; 
+                
+                const safeEnd = Math.min(end, audioBuffer.duration);
+                const segmentBuffer = clipBuffer(audioBuffer, start, safeEnd, audioCtx);
+                const wavBlob = bufferToWav(segmentBuffer);
+                
+                const url = URL.createObjectURL(wavBlob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${fileName}-Section${i + 1}.wav`;
+                a.click();
+                URL.revokeObjectURL(url);
+            }
+
+            showStatus("切片成功！4个文件已送至下载队列。", "success");
+        } catch (err) {
+            console.error(err);
+            showStatus("处理失败，请检查文件格式或时间点设定。", "error");
+        } finally {
+            splitBtn.disabled = false;
+        }
+    };
+
+    function showStatus(msg, type) {
+        status.innerText = msg;
+        status.className = type;
+    }
+
+    function clipBuffer(buffer, start, end, ctx) {
+        const duration = Math.max(0, end - start);
+        const frameCount = Math.floor(duration * buffer.sampleRate);
+        const newBuffer = ctx.createBuffer(buffer.numberOfChannels, frameCount, buffer.sampleRate);
+
+        for (let i = 0; i < buffer.numberOfChannels; i++) {
+            const nowBuffering = buffer.getChannelData(i);
+            const newBuffering = newBuffer.getChannelData(i);
+            const startOffset = Math.floor(start * buffer.sampleRate);
+            newBuffering.set(nowBuffering.subarray(startOffset, startOffset + frameCount));
+        }
+        return newBuffer;
+    }
+
+    function bufferToWav(abuffer) {
+        let numOfChan = abuffer.numberOfChannels,
+            length = abuffer.length * numOfChan * 2 + 44,
+            buffer = new ArrayBuffer(length),
+            view = new DataView(buffer),
+            channels = [], i, sample, offset = 0, pos = 0;
+
+        const setUint16 = (data) => { view.setUint16(pos, data, true); pos += 2; };
+        const setUint32 = (data) => { view.setUint32(pos, data, true); pos += 4; };
+
+        setUint32(0x46464952); setUint32(length - 8); setUint32(0x45564157);
+        setUint32(0x20746d66); setUint32(16); setUint16(1); setUint16(numOfChan);
+        setUint32(abuffer.sampleRate); setUint32(abuffer.sampleRate * 2 * numOfChan);
+        setUint16(numOfChan * 2); setUint16(16); setUint32(0x61746164); setUint32(length - pos - 4);
+
+        for(i=0; i<numOfChan; i++) channels.push(abuffer.getChannelData(i));
+        while(pos < length) {
+            for(i=0; i<numOfChan; i++) {
+                sample = Math.max(-1, Math.min(1, channels[i][offset]));
+                sample = (sample < 0 ? sample * 0x8000 : sample * 0x7FFF);
+                view.setInt16(pos, sample, true);
+                pos += 2;
+            }
+            offset++;
+        }
+        return new Blob([buffer], {type: "audio/wav"});
+    }
+</script>
+
+</body>
+</html>

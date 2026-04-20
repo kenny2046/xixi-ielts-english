@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10天5000雅思听力核心词汇 - Day 2</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-start: #f0f4f8;
+    --bg-end: #e3f2fd;
+    --card-bg: #ffffff;
+    --blue-primary: #1565c0;
+    --blue-light: #1e88e5;
+    --blue-accent: #42a5f5;
+    --text-en: #1565c0;
+    --text-zh: #455a64;
+    --text-muted: #78909c;
+    --border: #e3f2fd;
+    --shadow: 0 2px 12px rgba(21,101,192,0.08);
+    --shadow-hover: 0 8px 28px rgba(21,101,192,0.18);
+    --radius: 14px;
+    --radius-sm: 8px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Source Sans 3', 'Noto Sans SC', sans-serif;
+    background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+    min-height: 100vh;
+    color: #263238;
+    padding-bottom: 60px;
+  }
+  .site-header {
+    background: linear-gradient(120deg, #1565c0 0%, #1e88e5 60%, #42a5f5 100%);
+    padding: 48px 24px 36px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .site-header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 30%, rgba(255,255,255,0.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .header-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.35);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 16px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+  .site-header h1 { font-size: clamp(22px, 5vw, 36px); font-weight: 700; color: #fff; letter-spacing: -0.5px; margin-bottom: 8px; }
+  .site-header .subtitle { color: rgba(255,255,255,0.85); font-size: 15px; }
+  .header-stats { display: flex; justify-content: center; gap: 32px; margin-top: 28px; flex-wrap: wrap; }
+  .stat-item { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); border-radius: 12px; padding: 12px 24px; text-align: center; min-width: 100px; }
+  .stat-num { font-size: 28px; font-weight: 700; color: #fff; display: block; line-height: 1; }
+  .stat-label { font-size: 12px; color: rgba(255,255,255,0.78); margin-top: 4px; display: block; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 32px 16px; }
+  .section-card { background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 20px; overflow: hidden; border: 1px solid rgba(21,101,192,0.07); transition: box-shadow 0.25s; }
+  .section-card:hover { box-shadow: var(--shadow-hover); }
+  .section-header { display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; cursor: pointer; user-select: none; background: linear-gradient(90deg, #f8fbff 0%, #fff 100%); border-bottom: 2px solid var(--border); transition: background 0.2s; }
+  .section-header:hover { background: linear-gradient(90deg, #e8f4fd 0%, #f0f8ff 100%); }
+  .section-title { font-size: 17px; font-weight: 700; color: var(--blue-primary); display: flex; align-items: center; gap: 10px; }
+  .section-icon { width: 32px; height: 32px; background: linear-gradient(135deg, #1e88e5, #42a5f5); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 16px; flex-shrink: 0; }
+  .section-count { background: #e3f2fd; color: var(--blue-primary); font-size: 12px; font-weight: 700; padding: 2px 10px; border-radius: 12px; }
+  .toggle-btn { width: 32px; height: 32px; border-radius: 50%; background: #e3f2fd; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--blue-primary); font-size: 18px; transition: transform 0.3s, background 0.2s; flex-shrink: 0; }
+  .toggle-btn.open { transform: rotate(180deg); background: var(--blue-primary); color: #fff; }
+  .section-body { padding: 20px 20px 24px; display: none; }
+  .section-body.open { display: block; }
+  .word-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+  .word-item { background: linear-gradient(135deg, #f8fbff 0%, #fff 100%); border: 1px solid #dbeafe; border-radius: var(--radius-sm); padding: 10px 12px; transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s; cursor: default; }
+  .word-item:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(21,101,192,0.14); border-color: var(--blue-accent); }
+  .word-en { font-family: 'Source Sans 3', sans-serif; font-size: 14px; font-weight: 700; color: var(--text-en); line-height: 1.3; margin-bottom: 3px; }
+  .word-zh { font-size: 12px; color: var(--text-zh); line-height: 1.3; }
+  .subsection-label { font-size: 13px; font-weight: 700; color: var(--blue-accent); letter-spacing: 0.5px; margin: 16px 0 10px; padding-left: 8px; border-left: 3px solid var(--blue-accent); }
+  .subsection-label:first-child { margin-top: 0; }
+  .site-footer { background: linear-gradient(120deg, #1565c0, #1e88e5); color: #fff; text-align: center; padding: 32px 24px; margin-top: 40px; }
+  .footer-title { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
+  .tips-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 12px; }
+  .tip-item { background: rgba(255,255,255,0.13); border: 1px solid rgba(255,255,255,0.22); border-radius: 10px; padding: 8px 18px; font-size: 13px; color: rgba(255,255,255,0.9); }
+  .footer-note { margin-top: 20px; font-size: 12px; color: rgba(255,255,255,0.6); }
+  .day-progress { display: flex; justify-content: center; gap: 8px; padding: 20px 16px 0; flex-wrap: wrap; }
+  .day-dot { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; background: #fff; border: 2px solid #dbeafe; color: var(--text-muted); }
+  .day-dot.done { background: #e3f2fd; border-color: var(--blue-accent); color: var(--blue-primary); }
+  .day-dot.active { background: var(--blue-primary); border-color: var(--blue-primary); color: #fff; box-shadow: 0 4px 12px rgba(21,101,192,0.3); }
+  @media (max-width: 600px) {
+    .word-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; }
+    .section-header { padding: 14px 16px; }
+    .section-body { padding: 14px 12px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-badge">IELTS Listening Vocabulary</div>
+  <h1>10天5000雅思听力核心词汇</h1>
+  <p class="subtitle">Day 2 · 位置地图与设施类 — 方向、地标建筑、设施、移动动词与平面图词汇</p>
+  <div class="header-stats">
+    <div class="stat-item"><span class="stat-num">10</span><span class="stat-label">总天数</span></div>
+    <div class="stat-item"><span class="stat-num">500</span><span class="stat-label">今日词汇</span></div>
+    <div class="stat-item"><span class="stat-num">5000</span><span class="stat-label">总词汇量</span></div>
+    <div class="stat-item"><span class="stat-num">Day 2</span><span class="stat-label">当前进度</span></div>
+  </div>
+</header>
+
+<div class="day-progress">
+  <div class="day-dot done">1</div>
+  <div class="day-dot active">2</div>
+  <div class="day-dot">3</div><div class="day-dot">4</div><div class="day-dot">5</div>
+  <div class="day-dot">6</div><div class="day-dot">7</div><div class="day-dot">8</div><div class="day-dot">9</div><div class="day-dot">10</div>
+</div>
+
+<div class="container">
+
+  <!-- SECTION 1 -->
+  <div class="section-card">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-title">
+        <div class="section-icon">①</div>
+        一、导航与移动动词 <span class="section-count">54词</span>
+      </div>
+      <button class="toggle-btn open">▼</button>
+    </div>
+    <div class="section-body open">
+      <div class="subsection-label">基本移动动词 Movement Verbs</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">walk</div><div class="word-zh">步行/走</div></div>
+        <div class="word-item"><div class="word-en">proceed</div><div class="word-zh">前进/继续走</div></div>
+        <div class="word-item"><div class="word-en">continue</div><div class="word-zh">继续</div></div>
+        <div class="word-item"><div class="word-en">pass</div><div class="word-zh">经过/通过</div></div>
+        <div class="word-item"><div class="word-en">cross</div><div class="word-zh">穿过/横越</div></div>
+        <div class="word-item"><div class="word-en">follow</div><div class="word-zh">沿着/跟随</div></div>
+        <div class="word-item"><div class="word-en">head</div><div class="word-zh">朝…走</div></div>
+        <div class="word-item"><div class="word-en">reach</div><div class="word-zh">到达</div></div>
+        <div class="word-item"><div class="word-en">arrive</div><div class="word-zh">抵达</div></div>
+        <div class="word-item"><div class="word-en">enter</div><div class="word-zh">进入</div></div>
+        <div class="word-item"><div class="word-en">exit</div><div class="word-zh">离开/出口</div></div>
+        <div class="word-item"><div class="word-en">leave</div><div class="word-zh">离开</div></div>
+        <div class="word-item"><div class="word-en">approach</div><div class="word-zh">靠近/接近</div></div>
+        <div class="word-item"><div class="word-en">navigate</div><div class="word-zh">导航/找路</div></div>
+        <div class="word-item"><div class="word-en">locate</div><div class="word-zh">找到/位于</div></div>
+        <div class="word-item"><div class="word-en">detour</div><div class="word-zh">绕道</div></div>
+      </div>
+      <div class="subsection-label">路线描述动词 Route Verbs</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">turn into</div><div class="word-zh">转入</div></div>
+        <div class="word-item"><div class="word-en">go along</div><div class="word-zh">沿着…走</div></div>
+        <div class="word-item"><div class="word-en">go past</div><div class="word-zh">经过</div></div>
+        <div class="word-item"><div class="word-en">go through</div><div class="word-zh">穿过</div></div>
+        <div class="word-item"><div class="word-en">go up</div><div class="word-zh">向上走</div></div>
+        <div class="word-item"><div class="word-en">go down</div><div class="word-zh">向下走</div></div>
+        <div class="word-item"><div class="word-en">go around</div><div class="word-zh">绕过</div></div>
+        <div class="word-item"><div class="word-en">bear left</div><div class="word-zh">稍微偏左</div></div>
+        <div class="word-item"><div class="word-en">bear right</div><div class="word-zh">稍微偏右</div></div>
+        <div class="word-item"><div class="word-en">veer</div><div class="word-zh">偏转方向</div></div>
+        <div class="word-item"><div class="word-en">branch off</div><div class="word-zh">分叉</div></div>
+        <div class="word-item"><div class="word-en">fork</div><div class="word-zh">分叉口</div></div>
+        <div class="word-item"><div class="word-en">wind</div><div class="word-zh">蜿蜒</div></div>
+        <div class="word-item"><div class="word-en">curve</div><div class="word-zh">弯曲/转弯</div></div>
+        <div class="word-item"><div class="word-en">slope</div><div class="word-zh">坡道</div></div>
+        <div class="word-item"><div class="word-en">descend</div><div class="word-zh">下坡/下降</div></div>
+        <div class="word-item"><div class="word-en">ascend</div><div class="word-zh">上坡/上升</div></div>
+        <div class="word-item"><div class="word-en">shortcut</div><div class="word-zh">捷径</div></div>
+      </div>
+      <div class="subsection-label">目的地与参照物 Landmarks</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">landmark</div><div class="word-zh">地标</div></div>
+        <div class="word-item"><div class="word-en">junction</div><div class="word-zh">路口/交叉点</div></div>
+        <div class="word-item"><div class="word-en">intersection</div><div class="word-zh">十字路口</div></div>
+        <div class="word-item"><div class="word-en">crossroads</div><div class="word-zh">十字路口</div></div>
+        <div class="word-item"><div class="word-en">roundabout</div><div class="word-zh">环形交叉路</div></div>
+        <div class="word-item"><div class="word-en">traffic lights</div><div class="word-zh">交通灯</div></div>
+        <div class="word-item"><div class="word-en">zebra crossing</div><div class="word-zh">斑马线</div></div>
+        <div class="word-item"><div class="word-en">pedestrian</div><div class="word-zh">行人</div></div>
+        <div class="word-item"><div class="word-en">footpath</div><div class="word-zh">小路/人行道</div></div>
+        <div class="word-item"><div class="word-en">pavement</div><div class="word-zh">人行道</div></div>
+        <div class="word-item"><div class="word-en">sidewalk</div><div class="word-zh">人行道（美）</div></div>
+        <div class="word-item"><div class="word-en">kerb</div><div class="word-zh">路缘石</div></div>
+        <div class="word-item"><div class="word-en">overpass</div><div class="word-zh">天桥/立交桥</div></div>
+        <div class="word-item"><div class="word-en">underpass</div><div class="word-zh">地下通道</div></div>
+        <div class="word-item"><div class="word-en">tunnel</div><div class="word-zh">隧道</div></div>
+        <div class="word-item"><div class="word-en">bridge</div><div class="word-zh">桥</div></div>
+        <div class="word-item"><div class="word-en">flyover</div><div class="word-zh">立交桥</div></div>
+        <div class="word-item"><div class="word-en">bypass</div><div class="word-zh">绕道/旁路</div></div>
+        <div class="word-item"><div class="word-en">corridor</div><div class="word-zh">走廊/通道</div></div>
+        <div class="word-item"><div class="word-en">passage</div><div class="word-zh">通道</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="section-card">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-title">
+        <div class="section-icon">②</div>
+        二、城市道路与街道 <span class="section-count">46词</span>
+      </div>
+      <button class="toggle-btn open">▼</button>
+    </div>
+    <div class="section-body open">
+      <div class="subsection-label">道路类型 Road Types</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">road</div><div class="word-zh">道路</div></div>
+        <div class="word-item"><div class="word-en">street</div><div class="word-zh">街道</div></div>
+        <div class="word-item"><div class="word-en">avenue</div><div class="word-zh">大道</div></div>
+        <div class="word-item"><div class="word-en">boulevard</div><div class="word-zh">林荫大道</div></div>
+        <div class="word-item"><div class="word-en">lane</div><div class="word-zh">小巷/车道</div></div>
+        <div class="word-item"><div class="word-en">alley</div><div class="word-zh">小巷/胡同</div></div>
+        <div class="word-item"><div class="word-en">highway</div><div class="word-zh">公路/干道</div></div>
+        <div class="word-item"><div class="word-en">motorway</div><div class="word-zh">高速公路</div></div>
+        <div class="word-item"><div class="word-en">expressway</div><div class="word-zh">快速路</div></div>
+        <div class="word-item"><div class="word-en">path</div><div class="word-zh">小径</div></div>
+        <div class="word-item"><div class="word-en">track</div><div class="word-zh">轨道/小路</div></div>
+        <div class="word-item"><div class="word-en">driveway</div><div class="word-zh">私家车道</div></div>
+        <div class="word-item"><div class="word-en">cul-de-sac</div><div class="word-zh">死胡同</div></div>
+        <div class="word-item"><div class="word-en">one-way street</div><div class="word-zh">单行道</div></div>
+        <div class="word-item"><div class="word-en">dual carriageway</div><div class="word-zh">双向行车道</div></div>
+        <div class="word-item"><div class="word-en">main road</div><div class="word-zh">主干道</div></div>
+        <div class="word-item"><div class="word-en">side street</div><div class="word-zh">小街/支路</div></div>
+        <div class="word-item"><div class="word-en">back street</div><div class="word-zh">后街</div></div>
+      </div>
+      <div class="subsection-label">城市区域 Urban Areas</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">city centre</div><div class="word-zh">市中心</div></div>
+        <div class="word-item"><div class="word-en">downtown</div><div class="word-zh">市区/商业区</div></div>
+        <div class="word-item"><div class="word-en">suburb</div><div class="word-zh">郊区</div></div>
+        <div class="word-item"><div class="word-en">outskirts</div><div class="word-zh">城市边缘</div></div>
+        <div class="word-item"><div class="word-en">district</div><div class="word-zh">地区/区</div></div>
+        <div class="word-item"><div class="word-en">zone</div><div class="word-zh">区域/地带</div></div>
+        <div class="word-item"><div class="word-en">neighbourhood</div><div class="word-zh">街区/邻里</div></div>
+        <div class="word-item"><div class="word-en">precinct</div><div class="word-zh">辖区/步行区</div></div>
+        <div class="word-item"><div class="word-en">quarter</div><div class="word-zh">区（城市分区）</div></div>
+        <div class="word-item"><div class="word-en">estate</div><div class="word-zh">住宅区/庄园</div></div>
+        <div class="word-item"><div class="word-en">block</div><div class="word-zh">街区</div></div>
+        <div class="word-item"><div class="word-en">plaza</div><div class="word-zh">广场/购物中心</div></div>
+        <div class="word-item"><div class="word-en">square</div><div class="word-zh">广场</div></div>
+        <div class="word-item"><div class="word-en">courtyard</div><div class="word-zh">庭院/院子</div></div>
+        <div class="word-item"><div class="word-en">compound</div><div class="word-zh">院落/大院</div></div>
+        <div class="word-item"><div class="word-en">campus</div><div class="word-zh">校园</div></div>
+        <div class="word-item"><div class="word-en">grounds</div><div class="word-zh">场地/庭院</div></div>
+        <div class="word-item"><div class="word-en">premises</div><div class="word-zh">场所/房屋</div></div>
+        <div class="word-item"><div class="word-en">site</div><div class="word-zh">地点/场地</div></div>
+        <div class="word-item"><div class="word-en">venue</div><div class="word-zh">场地/举办地</div></div>
+        <div class="word-item"><div class="word-en">locality</div><div class="word-zh">地区/当地</div></div>
+        <div class="word-item"><div class="word-en">borough</div><div class="word-zh">行政区</div></div>
+        <div class="word-item"><div class="word-en">municipality</div><div class="word-zh">市政/自治市</div></div>
+        <div class="word-item"><div class="word-en">county</div><div class="word-zh">郡/县</div></div>
+        <div class="word-item"><div class="word-en">region</div><div class="word-zh">区域/地区</div></div>
+        <div class="word-item"><div class="word-en">province</div><div class="word-zh">省份</div></div>
+        <div class="word-item"><div class="word-en">rural</div><div class="word-zh">农村的</div></div>
+        <div class="word-item"><div class="word-en">urban</div><div class="word-zh">城市的</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3 -->
+  <div class="section-card">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-title">
+        <div class="section-icon">③</div>
+        三、公共设施与场所 <span class="section-count">68词</span>
+      </div>
+      <button class="toggle-btn">▼</button>
+    </div>
+    <div class="section-body">
+      <div class="subsection-label">政府与行政 Government Buildings</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">town hall</div><div class="word-zh">市政厅</div></div>
+        <div class="word-item"><div class="word-en">council office</div><div class="word-zh">市政办公室</div></div>
+        <div class="word-item"><div class="word-en">post office</div><div class="word-zh">邮局</div></div>
+        <div class="word-item"><div class="word-en">police station</div><div class="word-zh">警察局</div></div>
+        <div class="word-item"><div class="word-en">fire station</div><div class="word-zh">消防站</div></div>
+        <div class="word-item"><div class="word-en">courthouse</div><div class="word-zh">法院</div></div>
+        <div class="word-item"><div class="word-en">embassy</div><div class="word-zh">大使馆</div></div>
+        <div class="word-item"><div class="word-en">consulate</div><div class="word-zh">领事馆</div></div>
+        <div class="word-item"><div class="word-en">immigration office</div><div class="word-zh">移民局</div></div>
+        <div class="word-item"><div class="word-en">customs</div><div class="word-zh">海关</div></div>
+      </div>
+      <div class="subsection-label">教育设施 Educational Facilities</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">school</div><div class="word-zh">学校</div></div>
+        <div class="word-item"><div class="word-en">college</div><div class="word-zh">学院</div></div>
+        <div class="word-item"><div class="word-en">university</div><div class="word-zh">大学</div></div>
+        <div class="word-item"><div class="word-en">library</div><div class="word-zh">图书馆</div></div>
+        <div class="word-item"><div class="word-en">gymnasium</div><div class="word-zh">体育馆</div></div>
+        <div class="word-item"><div class="word-en">lecture hall</div><div class="word-zh">讲堂</div></div>
+        <div class="word-item"><div class="word-en">laboratory</div><div class="word-zh">实验室</div></div>
+        <div class="word-item"><div class="word-en">canteen</div><div class="word-zh">食堂</div></div>
+        <div class="word-item"><div class="word-en">cafeteria</div><div class="word-zh">自助餐厅</div></div>
+        <div class="word-item"><div class="word-en">dormitory</div><div class="word-zh">宿舍楼</div></div>
+        <div class="word-item"><div class="word-en">auditorium</div><div class="word-zh">礼堂</div></div>
+        <div class="word-item"><div class="word-en">sports centre</div><div class="word-zh">体育中心</div></div>
+      </div>
+      <div class="subsection-label">医疗设施 Medical Facilities</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">hospital</div><div class="word-zh">医院</div></div>
+        <div class="word-item"><div class="word-en">clinic</div><div class="word-zh">诊所</div></div>
+        <div class="word-item"><div class="word-en">pharmacy</div><div class="word-zh">药店/药房</div></div>
+        <div class="word-item"><div class="word-en">surgery</div><div class="word-zh">诊室/外科</div></div>
+        <div class="word-item"><div class="word-en">health centre</div><div class="word-zh">卫生中心</div></div>
+        <div class="word-item"><div class="word-en">dental practice</div><div class="word-zh">牙科诊所</div></div>
+        <div class="word-item"><div class="word-en">optician</div><div class="word-zh">眼镜店/验光师</div></div>
+        <div class="word-item"><div class="word-en">emergency room</div><div class="word-zh">急诊室</div></div>
+        <div class="word-item"><div class="word-en">ward</div><div class="word-zh">病房</div></div>
+        <div class="word-item"><div class="word-en">outpatient</div><div class="word-zh">门诊</div></div>
+      </div>
+      <div class="subsection-label">商业娱乐设施 Commercial & Leisure</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">shopping centre</div><div class="word-zh">购物中心</div></div>
+        <div class="word-item"><div class="word-en">supermarket</div><div class="word-zh">超市</div></div>
+        <div class="word-item"><div class="word-en">department store</div><div class="word-zh">百货商店</div></div>
+        <div class="word-item"><div class="word-en">market</div><div class="word-zh">市场</div></div>
+        <div class="word-item"><div class="word-en">cinema</div><div class="word-zh">电影院</div></div>
+        <div class="word-item"><div class="word-en">theatre</div><div class="word-zh">剧院</div></div>
+        <div class="word-item"><div class="word-en">museum</div><div class="word-zh">博物馆</div></div>
+        <div class="word-item"><div class="word-en">gallery</div><div class="word-zh">画廊/美术馆</div></div>
+        <div class="word-item"><div class="word-en">concert hall</div><div class="word-zh">音乐厅</div></div>
+        <div class="word-item"><div class="word-en">stadium</div><div class="word-zh">体育场</div></div>
+        <div class="word-item"><div class="word-en">swimming pool</div><div class="word-zh">游泳池</div></div>
+        <div class="word-item"><div class="word-en">recreation centre</div><div class="word-zh">休闲中心</div></div>
+        <div class="word-item"><div class="word-en">community centre</div><div class="word-zh">社区中心</div></div>
+        <div class="word-item"><div class="word-en">church</div><div class="word-zh">教堂</div></div>
+        <div class="word-item"><div class="word-en">mosque</div><div class="word-zh">清真寺</div></div>
+        <div class="word-item"><div class="word-en">temple</div><div class="word-zh">庙宇/神殿</div></div>
+        <div class="word-item"><div class="word-en">cemetery</div><div class="word-zh">墓地</div></div>
+        <div class="word-item"><div class="word-en">park</div><div class="word-zh">公园</div></div>
+        <div class="word-item"><div class="word-en">zoo</div><div class="word-zh">动物园</div></div>
+        <div class="word-item"><div class="word-en">botanical garden</div><div class="word-zh">植物园</div></div>
+        <div class="word-item"><div class="word-en">nature reserve</div><div class="word-zh">自然保护区</div></div>
+        <div class="word-item"><div class="word-en">tourist attraction</div><div class="word-zh">旅游景点</div></div>
+        <div class="word-item"><div class="word-en">heritage site</div><div class="word-zh">遗址/遗产地</div></div>
+        <div class="word-item"><div class="word-en">monument</div><div class="word-zh">纪念碑</div></div>
+        <div class="word-item"><div class="word-en">fountain</div><div class="word-zh">喷泉</div></div>
+        <div class="word-item"><div class="word-en">statue</div><div class="word-zh">雕像</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4 -->
+  <div class="section-card">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-title">
+        <div class="section-icon">④</div>
+        四、建筑结构与内部设施 <span class="section-count">62词</span>
+      </div>
+      <button class="toggle-btn">▼</button>
+    </div>
+    <div class="section-body">
+      <div class="subsection-label">楼层与建筑部位 Building Parts</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">entrance</div><div class="word-zh">入口</div></div>
+        <div class="word-item"><div class="word-en">exit</div><div class="word-zh">出口</div></div>
+        <div class="word-item"><div class="word-en">lobby</div><div class="word-zh">大厅/门厅</div></div>
+        <div class="word-item"><div class="word-en">reception</div><div class="word-zh">前台/接待处</div></div>
+        <div class="word-item"><div class="word-en">foyer</div><div class="word-zh">门厅/休息厅</div></div>
+        <div class="word-item"><div class="word-en">hallway</div><div class="word-zh">走廊/门厅</div></div>
+        <div class="word-item"><div class="word-en">staircase</div><div class="word-zh">楼梯</div></div>
+        <div class="word-item"><div class="word-en">stairwell</div><div class="word-zh">楼梯间</div></div>
+        <div class="word-item"><div class="word-en">lift</div><div class="word-zh">电梯（英）</div></div>
+        <div class="word-item"><div class="word-en">elevator</div><div class="word-zh">电梯（美）</div></div>
+        <div class="word-item"><div class="word-en">escalator</div><div class="word-zh">自动扶梯</div></div>
+        <div class="word-item"><div class="word-en">basement</div><div class="word-zh">地下室</div></div>
+        <div class="word-item"><div class="word-en">ground floor</div><div class="word-zh">一楼（英）</div></div>
+        <div class="word-item"><div class="word-en">first floor</div><div class="word-zh">二楼（英）</div></div>
+        <div class="word-item"><div class="word-en">top floor</div><div class="word-zh">顶层</div></div>
+        <div class="word-item"><div class="word-en">mezzanine</div><div class="word-zh">夹层</div></div>
+        <div class="word-item"><div class="word-en">rooftop</div><div class="word-zh">屋顶</div></div>
+        <div class="word-item"><div class="word-en">attic</div><div class="word-zh">阁楼</div></div>
+        <div class="word-item"><div class="word-en">cellar</div><div class="word-zh">地窖</div></div>
+        <div class="word-item"><div class="word-en">wing</div><div class="word-zh">侧翼/厢房</div></div>
+      </div>
+      <div class="subsection-label">房间类型 Room Types</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">office</div><div class="word-zh">办公室</div></div>
+        <div class="word-item"><div class="word-en">meeting room</div><div class="word-zh">会议室</div></div>
+        <div class="word-item"><div class="word-en">conference room</div><div class="word-zh">会议室</div></div>
+        <div class="word-item"><div class="word-en">waiting room</div><div class="word-zh">候诊室/等候室</div></div>
+        <div class="word-item"><div class="word-en">storage room</div><div class="word-zh">储藏室</div></div>
+        <div class="word-item"><div class="word-en">changing room</div><div class="word-zh">更衣室</div></div>
+        <div class="word-item"><div class="word-en">staff room</div><div class="word-zh">员工休息室</div></div>
+        <div class="word-item"><div class="word-en">common room</div><div class="word-zh">公共休息室</div></div>
+        <div class="word-item"><div class="word-en">computer room</div><div class="word-zh">计算机室</div></div>
+        <div class="word-item"><div class="word-en">reading room</div><div class="word-zh">阅览室</div></div>
+        <div class="word-item"><div class="word-en">studio</div><div class="word-zh">工作室/单间</div></div>
+        <div class="word-item"><div class="word-en">workshop</div><div class="word-zh">工作坊/车间</div></div>
+        <div class="word-item"><div class="word-en">seminar room</div><div class="word-zh">研讨室</div></div>
+        <div class="word-item"><div class="word-en">tutorial room</div><div class="word-zh">辅导室</div></div>
+        <div class="word-item"><div class="word-en">boardroom</div><div class="word-zh">董事会会议室</div></div>
+        <div class="word-item"><div class="word-en">showroom</div><div class="word-zh">展厅</div></div>
+      </div>
+      <div class="subsection-label">建筑外部 Exterior Features</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">facade</div><div class="word-zh">建筑正面</div></div>
+        <div class="word-item"><div class="word-en">doorstep</div><div class="word-zh">门阶</div></div>
+        <div class="word-item"><div class="word-en">porch</div><div class="word-zh">门廊</div></div>
+        <div class="word-item"><div class="word-en">balcony</div><div class="word-zh">阳台</div></div>
+        <div class="word-item"><div class="word-en">terrace</div><div class="word-zh">露台/梯田</div></div>
+        <div class="word-item"><div class="word-en">veranda</div><div class="word-zh">走廊/凉台</div></div>
+        <div class="word-item"><div class="word-en">garden</div><div class="word-zh">花园</div></div>
+        <div class="word-item"><div class="word-en">fence</div><div class="word-zh">围栏</div></div>
+        <div class="word-item"><div class="word-en">gate</div><div class="word-zh">大门</div></div>
+        <div class="word-item"><div class="word-en">wall</div><div class="word-zh">墙</div></div>
+        <div class="word-item"><div class="word-en">hedge</div><div class="word-zh">树篱</div></div>
+        <div class="word-item"><div class="word-en">driveway</div><div class="word-zh">车道</div></div>
+        <div class="word-item"><div class="word-en">car park</div><div class="word-zh">停车场</div></div>
+        <div class="word-item"><div class="word-en">parking lot</div><div class="word-zh">停车场（美）</div></div>
+        <div class="word-item"><div class="word-en">garage</div><div class="word-zh">车库</div></div>
+        <div class="word-item"><div class="word-en">loading bay</div><div class="word-zh">装卸区</div></div>
+        <div class="word-item"><div class="word-en">ramp</div><div class="word-zh">坡道</div></div>
+        <div class="word-item"><div class="word-en">wheelchair access</div><div class="word-zh">轮椅通道</div></div>
+        <div class="word-item"><div class="word-en">disabled access</div><div class="word-zh">无障碍通道</div></div>
+        <div class="word-item"><div class="word-en">signage</div><div class="word-zh">标识牌</div></div>
+        <div class="word-item"><div class="word-en">notice board</div><div class="word-zh">公告栏</div></div>
+        <div class="word-item"><div class="word-en">directory</div><div class="word-zh">指引牌/目录</div></div>
+        <div class="word-item"><div class="word-en">information desk</div><div class="word-zh">问询台</div></div>
+        <div class="word-item"><div class="word-en">helpdesk</div><div class="word-zh">服务台</div></div>
+        <div class="word-item"><div class="word-en">kiosk</div><div class="word-zh">小亭/售货亭</div></div>
+        <div class="word-item"><div class="word-en">vending machine</div><div class="word-zh">自动售货机</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5 -->
+  <div class="section-card">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-title">
+        <div class="section-icon">⑤</div>
+        五、平面图与地图专用词 <span class="section-count">52词</span>
+      </div>
+      <button class="toggle-btn">▼</button>
+    </div>
+    <div class="section-body">
+      <div class="subsection-label">地图标注词 Map Labels</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">map</div><div class="word-zh">地图</div></div>
+        <div class="word-item"><div class="word-en">floor plan</div><div class="word-zh">平面图</div></div>
+        <div class="word-item"><div class="word-en">layout</div><div class="word-zh">布局/平面图</div></div>
+        <div class="word-item"><div class="word-en">blueprint</div><div class="word-zh">蓝图/设计图</div></div>
+        <div class="word-item"><div class="word-en">legend</div><div class="word-zh">图例</div></div>
+        <div class="word-item"><div class="word-en">key</div><div class="word-zh">图例/说明</div></div>
+        <div class="word-item"><div class="word-en">compass</div><div class="word-zh">指南针</div></div>
+        <div class="word-item"><div class="word-en">grid</div><div class="word-zh">方格/网格</div></div>
+        <div class="word-item"><div class="word-en">coordinates</div><div class="word-zh">坐标</div></div>
+        <div class="word-item"><div class="word-en">contour</div><div class="word-zh">等高线</div></div>
+        <div class="word-item"><div class="word-en">boundary</div><div class="word-zh">边界</div></div>
+        <div class="word-item"><div class="word-en">border</div><div class="word-zh">边境/边界</div></div>
+        <div class="word-item"><div class="word-en">plot</div><div class="word-zh">地块/图示</div></div>
+        <div class="word-item"><div class="word-en">aerial view</div><div class="word-zh">俯视图</div></div>
+        <div class="word-item"><div class="word-en">cross-section</div><div class="word-zh">横截面图</div></div>
+        <div class="word-item"><div class="word-en">elevation</div><div class="word-zh">立面图/海拔</div></div>
+      </div>
+      <div class="subsection-label">相对位置描述 Relative Position</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">next to</div><div class="word-zh">紧邻</div></div>
+        <div class="word-item"><div class="word-en">in front of</div><div class="word-zh">在…前面</div></div>
+        <div class="word-item"><div class="word-en">behind</div><div class="word-zh">在…后面</div></div>
+        <div class="word-item"><div class="word-en">on the corner of</div><div class="word-zh">在…拐角处</div></div>
+        <div class="word-item"><div class="word-en">at the end of</div><div class="word-zh">在…尽头</div></div>
+        <div class="word-item"><div class="word-en">at the top of</div><div class="word-zh">在…顶部</div></div>
+        <div class="word-item"><div class="word-en">at the bottom of</div><div class="word-zh">在…底部</div></div>
+        <div class="word-item"><div class="word-en">on the left-hand side</div><div class="word-zh">在左侧</div></div>
+        <div class="word-item"><div class="word-en">on the right-hand side</div><div class="word-zh">在右侧</div></div>
+        <div class="word-item"><div class="word-en">in the middle of</div><div class="word-zh">在…中间</div></div>
+        <div class="word-item"><div class="word-en">on the edge of</div><div class="word-zh">在…边缘</div></div>
+        <div class="word-item"><div class="word-en">facing</div><div class="word-zh">面对/朝向</div></div>
+        <div class="word-item"><div class="word-en">overlooking</div><div class="word-zh">俯瞰/面向</div></div>
+        <div class="word-item"><div class="word-en">bordering</div><div class="word-zh">毗邻</div></div>
+        <div class="word-item"><div class="word-en">running along</div><div class="word-zh">沿着…延伸</div></div>
+        <div class="word-item"><div class="word-en">leading to</div><div class="word-zh">通往</div></div>
+        <div class="word-item"><div class="word-en">connecting</div><div class="word-zh">连接</div></div>
+        <div class="word-item"><div class="word-en">dividing</div><div class="word-zh">分隔</div></div>
+        <div class="word-item"><div class="word-en">separating</div><div class="word-zh">隔开</div></div>
+        <div class="word-item"><div class="word-en">backing onto</div><div class="word-zh">背靠</div></div>
+      </div>
+      <div class="subsection-label">地图题高频动词短语 Map Task Phrases</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">is located</div><div class="word-zh">位于</div></div>
+        <div class="word-item"><div class="word-en">is situated</div><div class="word-zh">坐落于</div></div>
+        <div class="word-item"><div class="word-en">is positioned</div><div class="word-zh">被放置于</div></div>
+        <div class="word-item"><div class="word-en">is marked</div><div class="word-zh">被标记</div></div>
+        <div class="word-item"><div class="word-en">is indicated</div><div class="word-zh">被标示</div></div>
+        <div class="word-item"><div class="word-en">is shown</div><div class="word-zh">显示于</div></div>
+        <div class="word-item"><div class="word-en">label</div><div class="word-zh">标注/标签</div></div>
+        <div class="word-item"><div class="word-en">identify</div><div class="word-zh">识别/标明</div></div>
+        <div class="word-item"><div class="word-en">highlight</div><div class="word-zh">突出/标出</div></div>
+        <div class="word-item"><div class="word-en">indicate</div><div class="word-zh">指示/表明</div></div>
+        <div class="word-item"><div class="word-en">point to</div><div class="word-zh">指向</div></div>
+        <div class="word-item"><div class="word-en">mark on</div><div class="word-zh">标注在…上</div></div>
+        <div class="word-item"><div class="word-en">shade</div><div class="word-zh">阴影标注</div></div>
+        <div class="word-item"><div class="word-en">outline</div><div class="word-zh">轮廓/勾勒</div></div>
+        <div class="word-item"><div class="word-en">arrow</div><div class="word-zh">箭头</div></div>
+        <div class="word-item"><div class="word-en">symbol</div><div class="word-zh">符号</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6 -->
+  <div class="section-card">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-title">
+        <div class="section-icon">⑥</div>
+        六、自然地貌与地理特征 <span class="section-count">48词</span>
+      </div>
+      <button class="toggle-btn">▼</button>
+    </div>
+    <div class="section-body">
+      <div class="subsection-label">水域 Water Features</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">river</div><div class="word-zh">河流</div></div>
+        <div class="word-item"><div class="word-en">stream</div><div class="word-zh">小溪</div></div>
+        <div class="word-item"><div class="word-en">lake</div><div class="word-zh">湖泊</div></div>
+        <div class="word-item"><div class="word-en">pond</div><div class="word-zh">池塘</div></div>
+        <div class="word-item"><div class="word-en">reservoir</div><div class="word-zh">水库</div></div>
+        <div class="word-item"><div class="word-en">canal</div><div class="word-zh">运河</div></div>
+        <div class="word-item"><div class="word-en">harbour</div><div class="word-zh">海港</div></div>
+        <div class="word-item"><div class="word-en">bay</div><div class="word-zh">海湾</div></div>
+        <div class="word-item"><div class="word-en">coast</div><div class="word-zh">海岸</div></div>
+        <div class="word-item"><div class="word-en">beach</div><div class="word-zh">沙滩</div></div>
+        <div class="word-item"><div class="word-en">cliff</div><div class="word-zh">悬崖</div></div>
+        <div class="word-item"><div class="word-en">waterfall</div><div class="word-zh">瀑布</div></div>
+        <div class="word-item"><div class="word-en">wetland</div><div class="word-zh">湿地</div></div>
+        <div class="word-item"><div class="word-en">marsh</div><div class="word-zh">沼泽</div></div>
+        <div class="word-item"><div class="word-en">swamp</div><div class="word-zh">沼泽地</div></div>
+        <div class="word-item"><div class="word-en">delta</div><div class="word-zh">三角洲</div></div>
+      </div>
+      <div class="subsection-label">陆地与地形 Land Features</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">hill</div><div class="word-zh">小山</div></div>
+        <div class="word-item"><div class="word-en">mountain</div><div class="word-zh">山</div></div>
+        <div class="word-item"><div class="word-en">valley</div><div class="word-zh">山谷</div></div>
+        <div class="word-item"><div class="word-en">plain</div><div class="word-zh">平原</div></div>
+        <div class="word-item"><div class="word-en">plateau</div><div class="word-zh">高原</div></div>
+        <div class="word-item"><div class="word-en">forest</div><div class="word-zh">森林</div></div>
+        <div class="word-item"><div class="word-en">woodland</div><div class="word-zh">林地</div></div>
+        <div class="word-item"><div class="word-en">meadow</div><div class="word-zh">草地/牧场</div></div>
+        <div class="word-item"><div class="word-en">field</div><div class="word-zh">田野/场地</div></div>
+        <div class="word-item"><div class="word-en">farmland</div><div class="word-zh">农田</div></div>
+        <div class="word-item"><div class="word-en">wasteland</div><div class="word-zh">荒地</div></div>
+        <div class="word-item"><div class="word-en">desert</div><div class="word-zh">沙漠</div></div>
+        <div class="word-item"><div class="word-en">jungle</div><div class="word-zh">丛林</div></div>
+        <div class="word-item"><div class="word-en">ridge</div><div class="word-zh">山脊</div></div>
+        <div class="word-item"><div class="word-en">peak</div><div class="word-zh">山顶</div></div>
+        <div class="word-item"><div class="word-en">gorge</div><div class="word-zh">峡谷</div></div>
+        <div class="word-item"><div class="word-en">cave</div><div class="word-zh">洞穴</div></div>
+        <div class="word-item"><div class="word-en">island</div><div class="word-zh">岛屿</div></div>
+        <div class="word-item"><div class="word-en">peninsula</div><div class="word-zh">半岛</div></div>
+        <div class="word-item"><div class="word-en">cape</div><div class="word-zh">海角/岬角</div></div>
+        <div class="word-item"><div class="word-en">terrain</div><div class="word-zh">地形</div></div>
+        <div class="word-item"><div class="word-en">landscape</div><div class="word-zh">景观/地貌</div></div>
+        <div class="word-item"><div class="word-en">topography</div><div class="word-zh">地形学/地势</div></div>
+        <div class="word-item"><div class="word-en">altitude</div><div class="word-zh">海拔高度</div></div>
+        <div class="word-item"><div class="word-en">elevation</div><div class="word-zh">海拔</div></div>
+        <div class="word-item"><div class="word-en">slope</div><div class="word-zh">斜坡</div></div>
+        <div class="word-item"><div class="word-en">gradient</div><div class="word-zh">坡度</div></div>
+        <div class="word-item"><div class="word-en">embankment</div><div class="word-zh">路堤/堤坝</div></div>
+        <div class="word-item"><div class="word-en">dam</div><div class="word-zh">水坝</div></div>
+        <div class="word-item"><div class="word-en">levee</div><div class="word-zh">防洪堤</div></div>
+        <div class="word-item"><div class="word-en">pier</div><div class="word-zh">码头/栈桥</div></div>
+        <div class="word-item"><div class="word-en">quay</div><div class="word-zh">码头</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 7 -->
+  <div class="section-card">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-title">
+        <div class="section-icon">⑦</div>
+        七、场所功能与用途描述 <span class="section-count">44词</span>
+      </div>
+      <button class="toggle-btn">▼</button>
+    </div>
+    <div class="section-body">
+      <div class="subsection-label">功能动词 Functional Verbs</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">accommodate</div><div class="word-zh">容纳/提供住宿</div></div>
+        <div class="word-item"><div class="word-en">allocate</div><div class="word-zh">分配/指定</div></div>
+        <div class="word-item"><div class="word-en">assign</div><div class="word-zh">分配/指派</div></div>
+        <div class="word-item"><div class="word-en">designate</div><div class="word-zh">指定/划定</div></div>
+        <div class="word-item"><div class="word-en">restrict</div><div class="word-zh">限制</div></div>
+        <div class="word-item"><div class="word-en">permit</div><div class="word-zh">允许</div></div>
+        <div class="word-item"><div class="word-en">prohibit</div><div class="word-zh">禁止</div></div>
+        <div class="word-item"><div class="word-en">reserve</div><div class="word-zh">预留/预订</div></div>
+        <div class="word-item"><div class="word-en">occupy</div><div class="word-zh">占用</div></div>
+        <div class="word-item"><div class="word-en">vacate</div><div class="word-zh">腾出/搬出</div></div>
+        <div class="word-item"><div class="word-en">install</div><div class="word-zh">安装</div></div>
+        <div class="word-item"><div class="word-en">construct</div><div class="word-zh">建造</div></div>
+        <div class="word-item"><div class="word-en">demolish</div><div class="word-zh">拆除</div></div>
+        <div class="word-item"><div class="word-en">renovate</div><div class="word-zh">翻新/改建</div></div>
+        <div class="word-item"><div class="word-en">convert</div><div class="word-zh">改造/改建</div></div>
+        <div class="word-item"><div class="word-en">extend</div><div class="word-zh">扩建/延伸</div></div>
+        <div class="word-item"><div class="word-en">relocate</div><div class="word-zh">重新选址/迁移</div></div>
+        <div class="word-item"><div class="word-en">replace</div><div class="word-zh">替换</div></div>
+        <div class="word-item"><div class="word-en">upgrade</div><div class="word-zh">升级</div></div>
+        <div class="word-item"><div class="word-en">maintain</div><div class="word-zh">维护</div></div>
+      </div>
+      <div class="subsection-label">设施状态描述 Facility Conditions</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">available</div><div class="word-zh">可用的</div></div>
+        <div class="word-item"><div class="word-en">unavailable</div><div class="word-zh">不可用的</div></div>
+        <div class="word-item"><div class="word-en">open</div><div class="word-zh">开放的</div></div>
+        <div class="word-item"><div class="word-en">closed</div><div class="word-zh">关闭的</div></div>
+        <div class="word-item"><div class="word-en">under construction</div><div class="word-zh">在建设中</div></div>
+        <div class="word-item"><div class="word-en">under renovation</div><div class="word-zh">在翻修中</div></div>
+        <div class="word-item"><div class="word-en">fully booked</div><div class="word-zh">已预订满</div></div>
+        <div class="word-item"><div class="word-en">out of service</div><div class="word-zh">停止服务</div></div>
+        <div class="word-item"><div class="word-en">in operation</div><div class="word-zh">运营中</div></div>
+        <div class="word-item"><div class="word-en">functional</div><div class="word-zh">正常运作的</div></div>
+        <div class="word-item"><div class="word-en">temporary</div><div class="word-zh">临时的</div></div>
+        <div class="word-item"><div class="word-en">permanent</div><div class="word-zh">永久的</div></div>
+        <div class="word-item"><div class="word-en">portable</div><div class="word-zh">便携的/可移动的</div></div>
+        <div class="word-item"><div class="word-en">fixed</div><div class="word-zh">固定的</div></div>
+        <div class="word-item"><div class="word-en">shared</div><div class="word-zh">共用的</div></div>
+        <div class="word-item"><div class="word-en">exclusive</div><div class="word-zh">专用的/独享的</div></div>
+        <div class="word-item"><div class="word-en">adjacent</div><div class="word-zh">相邻的</div></div>
+        <div class="word-item"><div class="word-en">interconnected</div><div class="word-zh">相互连通的</div></div>
+        <div class="word-item"><div class="word-en">detached</div><div class="word-zh">独立的</div></div>
+        <div class="word-item"><div class="word-en">attached</div><div class="word-zh">附属的</div></div>
+        <div class="word-item"><div class="word-en">accessible</div><div class="word-zh">可进入的</div></div>
+        <div class="word-item"><div class="word-en">restricted</div><div class="word-zh">受限的</div></div>
+        <div class="word-item"><div class="word-en">secure</div><div class="word-zh">安全的/有保障的</div></div>
+        <div class="word-item"><div class="word-en">monitored</div><div class="word-zh">被监控的</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 8 -->
+  <div class="section-card">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-title">
+        <div class="section-icon">⑧</div>
+        八、交通枢纽与停车场所 <span class="section-count">50词</span>
+      </div>
+      <button class="toggle-btn">▼</button>
+    </div>
+    <div class="section-body">
+      <div class="subsection-label">交通站点 Transport Hubs</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">train station</div><div class="word-zh">火车站</div></div>
+        <div class="word-item"><div class="word-en">railway station</div><div class="word-zh">铁路站</div></div>
+        <div class="word-item"><div class="word-en">bus station</div><div class="word-zh">公共汽车站</div></div>
+        <div class="word-item"><div class="word-en">bus stop</div><div class="word-zh">公交站牌</div></div>
+        <div class="word-item"><div class="word-en">coach station</div><div class="word-zh">长途汽车站</div></div>
+        <div class="word-item"><div class="word-en">underground station</div><div class="word-zh">地铁站</div></div>
+        <div class="word-item"><div class="word-en">tube station</div><div class="word-zh">地铁站（英）</div></div>
+        <div class="word-item"><div class="word-en">metro station</div><div class="word-zh">地铁站（欧）</div></div>
+        <div class="word-item"><div class="word-en">ferry terminal</div><div class="word-zh">渡轮码头</div></div>
+        <div class="word-item"><div class="word-en">airport</div><div class="word-zh">机场</div></div>
+        <div class="word-item"><div class="word-en">terminal</div><div class="word-zh">航站楼/终点站</div></div>
+        <div class="word-item"><div class="word-en">platform</div><div class="word-zh">站台/月台</div></div>
+        <div class="word-item"><div class="word-en">concourse</div><div class="word-zh">大厅/候车厅</div></div>
+        <div class="word-item"><div class="word-en">waiting area</div><div class="word-zh">等候区</div></div>
+        <div class="word-item"><div class="word-en">departure lounge</div><div class="word-zh">候机室</div></div>
+        <div class="word-item"><div class="word-en">arrivals hall</div><div class="word-zh">到达大厅</div></div>
+        <div class="word-item"><div class="word-en">ticket office</div><div class="word-zh">售票处</div></div>
+        <div class="word-item"><div class="word-en">booking office</div><div class="word-zh">订票处</div></div>
+        <div class="word-item"><div class="word-en">left luggage</div><div class="word-zh">行李寄存处</div></div>
+        <div class="word-item"><div class="word-en">lost property</div><div class="word-zh">失物招领处</div></div>
+      </div>
+      <div class="subsection-label">停车与交通设施 Parking & Traffic</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">multi-storey car park</div><div class="word-zh">多层停车场</div></div>
+        <div class="word-item"><div class="word-en">underground car park</div><div class="word-zh">地下停车场</div></div>
+        <div class="word-item"><div class="word-en">pay and display</div><div class="word-zh">先付费后停车</div></div>
+        <div class="word-item"><div class="word-en">parking meter</div><div class="word-zh">停车计时器</div></div>
+        <div class="word-item"><div class="word-en">toll booth</div><div class="word-zh">收费站</div></div>
+        <div class="word-item"><div class="word-en">barrier</div><div class="word-zh">隔离栏/道闸</div></div>
+        <div class="word-item"><div class="word-en">speed bump</div><div class="word-zh">减速带</div></div>
+        <div class="word-item"><div class="word-en">speed limit</div><div class="word-zh">限速</div></div>
+        <div class="word-item"><div class="word-en">no parking zone</div><div class="word-zh">禁止停车区</div></div>
+        <div class="word-item"><div class="word-en">disabled bay</div><div class="word-zh">残疾人车位</div></div>
+        <div class="word-item"><div class="word-en">bay</div><div class="word-zh">停车位/区域</div></div>
+        <div class="word-item"><div class="word-en">slot</div><div class="word-zh">车位/位置</div></div>
+        <div class="word-item"><div class="word-en">space</div><div class="word-zh">停车空间</div></div>
+        <div class="word-item"><div class="word-en">turning circle</div><div class="word-zh">回车场</div></div>
+        <div class="word-item"><div class="word-en">cul-de-sac</div><div class="word-zh">尽头路</div></div>
+        <div class="word-item"><div class="word-en">traffic cone</div><div class="word-zh">路锥</div></div>
+        <div class="word-item"><div class="word-en">road sign</div><div class="word-zh">路标</div></div>
+        <div class="word-item"><div class="word-en">junction box</div><div class="word-zh">接线箱/路口箱</div></div>
+        <div class="word-item"><div class="word-en">bollard</div><div class="word-zh">路桩/防撞柱</div></div>
+        <div class="word-item"><div class="word-en">kerb stone</div><div class="word-zh">路缘石</div></div>
+        <div class="word-item"><div class="word-en">crash barrier</div><div class="word-zh">防撞护栏</div></div>
+        <div class="word-item"><div class="word-en">central reservation</div><div class="word-zh">中央隔离带</div></div>
+        <div class="word-item"><div class="word-en">median strip</div><div class="word-zh">中央分隔带</div></div>
+        <div class="word-item"><div class="word-en">hard shoulder</div><div class="word-zh">路肩/紧急停车带</div></div>
+        <div class="word-item"><div class="word-en">slip road</div><div class="word-zh">匝道</div></div>
+        <div class="word-item"><div class="word-en">interchange</div><div class="word-zh">立交互通</div></div>
+        <div class="word-item"><div class="word-en">ring road</div><div class="word-zh">环城路</div></div>
+        <div class="word-item"><div class="word-en">bypass road</div><div class="word-zh">绕城公路</div></div>
+        <div class="word-item"><div class="word-en">access road</div><div class="word-zh">进入道路</div></div>
+        <div class="word-item"><div class="word-en">service road</div><div class="word-zh">辅路</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 9 -->
+  <div class="section-card">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-title">
+        <div class="section-icon">⑨</div>
+        九、空间变化与规划词汇 <span class="section-count">46词</span>
+      </div>
+      <button class="toggle-btn">▼</button>
+    </div>
+    <div class="section-body">
+      <div class="subsection-label">规划与改建 Planning & Development</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">redevelopment</div><div class="word-zh">再开发</div></div>
+        <div class="word-item"><div class="word-en">regeneration</div><div class="word-zh">改造/复兴</div></div>
+        <div class="word-item"><div class="word-en">urban planning</div><div class="word-zh">城市规划</div></div>
+        <div class="word-item"><div class="word-en">land use</div><div class="word-zh">土地用途</div></div>
+        <div class="word-item"><div class="word-en">zoning</div><div class="word-zh">分区规划</div></div>
+        <div class="word-item"><div class="word-en">infrastructure</div><div class="word-zh">基础设施</div></div>
+        <div class="word-item"><div class="word-en">development</div><div class="word-zh">开发/发展</div></div>
+        <div class="word-item"><div class="word-en">residential area</div><div class="word-zh">住宅区</div></div>
+        <div class="word-item"><div class="word-en">commercial area</div><div class="word-zh">商业区</div></div>
+        <div class="word-item"><div class="word-en">industrial zone</div><div class="word-zh">工业区</div></div>
+        <div class="word-item"><div class="word-en">green belt</div><div class="word-zh">绿化带</div></div>
+        <div class="word-item"><div class="word-en">conservation area</div><div class="word-zh">保护区</div></div>
+        <div class="word-item"><div class="word-en">brownfield site</div><div class="word-zh">棕地（废弃地）</div></div>
+        <div class="word-item"><div class="word-en">greenfield site</div><div class="word-zh">绿地（未开发地）</div></div>
+        <div class="word-item"><div class="word-en">listed building</div><div class="word-zh">受保护建筑</div></div>
+        <div class="word-item"><div class="word-en">heritage building</div><div class="word-zh">遗产建筑</div></div>
+        <div class="word-item"><div class="word-en">planning permission</div><div class="word-zh">建筑许可</div></div>
+        <div class="word-item"><div class="word-en">building regulations</div><div class="word-zh">建筑法规</div></div>
+        <div class="word-item"><div class="word-en">architect</div><div class="word-zh">建筑师</div></div>
+        <div class="word-item"><div class="word-en">contractor</div><div class="word-zh">承包商</div></div>
+        <div class="word-item"><div class="word-en">surveyor</div><div class="word-zh">测量师</div></div>
+        <div class="word-item"><div class="word-en">planner</div><div class="word-zh">规划师</div></div>
+        <div class="word-item"><div class="word-en">engineer</div><div class="word-zh">工程师</div></div>
+      </div>
+      <div class="subsection-label">空间布局词 Space Layout</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">open plan</div><div class="word-zh">开放式布局</div></div>
+        <div class="word-item"><div class="word-en">partitioned</div><div class="word-zh">有隔断的</div></div>
+        <div class="word-item"><div class="word-en">enclosed</div><div class="word-zh">封闭的</div></div>
+        <div class="word-item"><div class="word-en">exposed</div><div class="word-zh">外露的/暴露的</div></div>
+        <div class="word-item"><div class="word-en">overhead</div><div class="word-zh">头顶上方</div></div>
+        <div class="word-item"><div class="word-en">underground</div><div class="word-zh">地下的</div></div>
+        <div class="word-item"><div class="word-en">indoor</div><div class="word-zh">室内的</div></div>
+        <div class="word-item"><div class="word-en">outdoor</div><div class="word-zh">室外的</div></div>
+        <div class="word-item"><div class="word-en">covered</div><div class="word-zh">有遮盖的</div></div>
+        <div class="word-item"><div class="word-en">open-air</div><div class="word-zh">露天的</div></div>
+        <div class="word-item"><div class="word-en">semi-detached</div><div class="word-zh">半独立式</div></div>
+        <div class="word-item"><div class="word-en">terraced</div><div class="word-zh">排屋式的</div></div>
+        <div class="word-item"><div class="word-en">freestanding</div><div class="word-zh">独立式的</div></div>
+        <div class="word-item"><div class="word-en">modular</div><div class="word-zh">模块化的</div></div>
+        <div class="word-item"><div class="word-en">multi-purpose</div><div class="word-zh">多功能的</div></div>
+        <div class="word-item"><div class="word-en">dedicated</div><div class="word-zh">专用的</div></div>
+        <div class="word-item"><div class="word-en">adjacent block</div><div class="word-zh">相邻楼栋</div></div>
+        <div class="word-item"><div class="word-en">annex</div><div class="word-zh">附属楼/附件</div></div>
+        <div class="word-item"><div class="word-en">extension</div><div class="word-zh">扩建部分</div></div>
+        <div class="word-item"><div class="word-en">outbuilding</div><div class="word-zh">附属建筑</div></div>
+        <div class="word-item"><div class="word-en">prefabricated</div><div class="word-zh">预制的</div></div>
+        <div class="word-item"><div class="word-en">temporary structure</div><div class="word-zh">临时建筑</div></div>
+        <div class="word-item"><div class="word-en">permanent structure</div><div class="word-zh">永久建筑</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 10 -->
+  <div class="section-card">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-title">
+        <div class="section-icon">⑩</div>
+        十、地图题答题高频词组 <span class="section-count">30词</span>
+      </div>
+      <button class="toggle-btn">▼</button>
+    </div>
+    <div class="section-body">
+      <div class="subsection-label">描述位置的完整短语 Full Location Phrases</div>
+      <div class="word-grid">
+        <div class="word-item"><div class="word-en">to the north of</div><div class="word-zh">在…的北边</div></div>
+        <div class="word-item"><div class="word-en">to the south of</div><div class="word-zh">在…的南边</div></div>
+        <div class="word-item"><div class="word-en">to the east of</div><div class="word-zh">在…的东边</div></div>
+        <div class="word-item"><div class="word-en">to the west of</div><div class="word-zh">在…的西边</div></div>
+        <div class="word-item"><div class="word-en">in the northern part of</div><div class="word-zh">在…北部</div></div>
+        <div class="word-item"><div class="word-en">in the southern part of</div><div class="word-zh">在…南部</div></div>
+        <div class="word-item"><div class="word-en">at the northern end</div><div class="word-zh">在北端</div></div>
+        <div class="word-item"><div class="word-en">at the junction of</div><div class="word-zh">在…交汇处</div></div>
+        <div class="word-item"><div class="word-en">at the entrance to</div><div class="word-zh">在…的入口处</div></div>
+        <div class="word-item"><div class="word-en">along the river</div><div class="word-zh">沿河</div></div>
+        <div class="word-item"><div class="word-en">across the road from</div><div class="word-zh">在…对面</div></div>
+        <div class="word-item"><div class="word-en">around the corner from</div><div class="word-zh">在…拐角附近</div></div>
+        <div class="word-item"><div class="word-en">within walking distance</div><div class="word-zh">步行可达</div></div>
+        <div class="word-item"><div class="word-en">close to</div><div class="word-zh">靠近</div></div>
+        <div class="word-item"><div class="word-en">far from</div><div class="word-zh">远离</div></div>
+        <div class="word-item"><div class="word-en">equidistant from</div><div class="word-zh">与…等距</div></div>
+        <div class="word-item"><div class="word-en">directly opposite</div><div class="word-zh">正对面</div></div>
+        <div class="word-item"><div class="word-en">immediately after</div><div class="word-zh">紧随…之后</div></div>
+        <div class="word-item"><div class="word-en">just before</div><div class="word-zh">就在…前</div></div>
+        <div class="word-item"><div class="word-en">between A and B</div><div class="word-zh">在A和B之间</div></div>
+        <div class="word-item"><div class="word-en">branching off from</div><div class="word-zh">从…分叉出去</div></div>
+        <div class="word-item"><div class="word-en">extending from</div><div class="word-zh">从…延伸</div></div>
+        <div class="word-item"><div class="word-en">parallel to</div><div class="word-zh">平行于</div></div>
+        <div class="word-item"><div class="word-en">perpendicular to</div><div class="word-zh">垂直于</div></div>
+        <div class="word-item"><div class="word-en">set back from</div><div class="word-zh">向后退离…</div></div>
+        <div class="word-item"><div class="word-en">jutting out from</div><div class="word-zh">从…突出</div></div>
+        <div class="word-item"><div class="word-en">tucked away</div><div class="word-zh">隐蔽处</div></div>
+        <div class="word-item"><div class="word-en">prominently placed</div><div class="word-zh">位置显眼</div></div>
+        <div class="word-item"><div class="word-en">centrally located</div><div class="word-zh">位于中心</div></div>
+        <div class="word-item"><div class="word-en">strategically positioned</div><div class="word-zh">位置战略性</div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <div class="footer-title">📚 Day 2 学习建议</div>
+  <div class="tips-grid">
+    <div class="tip-item">🗺️ 做地图题时边听边画箭头</div>
+    <div class="tip-item">📍 熟记"to the left/right of"等短语</div>
+    <div class="tip-item">🏢 公共建筑词汇在Section 1/2高频</div>
+    <div class="tip-item">🚶 移动动词要与方向词搭配记忆</div>
+    <div class="tip-item">🔄 平面图题注意"opposite/facing"</div>
+    <div class="tip-item">✍️ 练习用英文描述校园/社区地图</div>
+  </div>
+  <p class="footer-note">10天5000雅思听力核心词汇 · Day 2/10 · 位置地图与设施类 · 共约500词</p>
+</footer>
+
+<script>
+  function toggle(header) {
+    const body = header.nextElementSibling;
+    const btn = header.querySelector('.toggle-btn');
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    btn.classList.toggle('open', !isOpen);
+  }
+</script>
+
+<!-- Day 2 已生成，单词已记录。请回复"生成Day 3"继续 -->
+</html>

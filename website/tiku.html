@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IAGSv16 题库分类</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+        body {font-family: 'Noto Sans SC', sans-serif; margin:0; background:#0f172a; color:#e2e8f0;}
+        .container {max-width:1280px; margin:40px auto; padding:0 20px;}
+        h1 {text-align:center; color:#60a5fa;}
+        .filters {display:flex; gap:15px; flex-wrap:wrap; justify-content:center; margin:30px 0;}
+        .filter-btn {padding:10px 22px; background:#1e2937; border-radius:9999px; cursor:pointer;}
+        .filter-btn.active {background:#3b82f6;}
+        .grid {display:grid; grid-template-columns:repeat(auto-fit, minmax(320px,1fr)); gap:20px;}
+        .card {background:#1e2937; border-radius:16px; padding:20px;}
+        .audio {color:#67e8f9;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📖 IAGS 题库分类</h1>
+        <div class="filters" id="filters"></div>
+        <div class="grid" id="library-grid"></div>
+    </div>
+
+    <script>
+        // 题库文件列表（update_nav.sh 会自动更新）
+        let allFiles = [];
+        function renderLibrary(filterSkill = '') {
+            const grid = document.getElementById('library-grid');
+            grid.innerHTML = '';
+            allFiles.forEach(f => {
+                if (filterSkill && !f.filename.includes(filterSkill)) return;
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = f.isAudio 
+                    ? `<span class="audio">🎙️ ${f.filename}</span>` 
+                    : `<a href="library/${f.filename}" target="_blank">${f.filename}</a>`;
+                grid.appendChild(card);
+            });
+        }
+
+        // 初始加载
+        fetch('library/').then(r=>r.text()).then(html => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const files = [...doc.querySelectorAll('a[href$=".html"], a[href$=".mp3"], a[href$=".wav"], a[href$=".m4a"]')];
+            allFiles = files.map(link => ({
+                filename: link.getAttribute('href'),
+                isAudio: link.getAttribute('href').match(/\.(mp3|wav|m4a)$/)
+            }));
+            renderLibrary();
+        });
+    </script>
+</body>
+</html>

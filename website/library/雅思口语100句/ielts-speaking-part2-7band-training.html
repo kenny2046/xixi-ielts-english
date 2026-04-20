@@ -1,0 +1,1639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS Speaking Part 2 — 7-Band Cue Card Trainer</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1a1f3a;
+  --ink2: #3d4570;
+  --muted: #7a83ad;
+  --primary: #5c6bc0;
+  --primary-d: #3949ab;
+  --accent: #ff7043;
+  --accent2: #ffb300;
+  --green: #43a047;
+  --bg: #f5f6ff;
+  --card: #ffffff;
+  --border: #e4e6f5;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:#eef}::-webkit-scrollbar-thumb{background:#b0b8e8;border-radius:3px}
+
+/* ── NAV ── */
+.topbar{background:rgba(255,255,255,.94);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:60;box-shadow:0 1px 18px rgba(92,107,192,.08)}
+.topbar-inner{max-width:1100px;margin:0 auto;padding:0 18px;height:58px;display:flex;align-items:center;gap:12px}
+.logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.logo-badge{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#3949ab,#5c6bc0);display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:13px;box-shadow:0 3px 10px rgba(57,73,171,.35)}
+.logo-text{font-weight:800;font-size:14.5px;color:var(--ink);line-height:1.2}
+.logo-sub{font-size:11px;color:var(--muted);font-weight:500}
+.prog-wrap{flex:1;display:flex;align-items:center;gap:8px;min-width:0}
+.prog-bar{flex:1;max-width:160px;height:7px;background:#dde0f5;border-radius:999px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,#3949ab,#7986cb);border-radius:999px;transition:width .6s cubic-bezier(.34,1.56,.64,1)}
+.prog-label{font-size:11px;font-weight:800;color:var(--primary);white-space:nowrap}
+.nav-btn{border:none;border-radius:10px;padding:8px 16px;font-family:'DM Sans',sans-serif;font-weight:700;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .15s;white-space:nowrap;flex-shrink:0}
+.btn-orange{background:linear-gradient(135deg,#ff7043,#ff8a65);color:white;box-shadow:0 3px 10px rgba(255,112,67,.3)}
+.btn-orange:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(255,112,67,.4)}
+.btn-ghost{background:#eef0fb;color:var(--ink2);border:1px solid var(--border)}
+.btn-ghost:hover{background:#e0e4f8}
+
+/* bilingual toggle */
+.bi-toggle{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.bi-sw{position:relative;width:38px;height:21px;cursor:pointer}
+.bi-sw input{display:none}
+.bi-track{position:absolute;inset:0;border-radius:999px;background:#d0d4ee;transition:.25s}
+.bi-track::before{content:'';position:absolute;width:15px;height:15px;left:3px;top:3px;background:white;border-radius:50%;transition:.25s;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.bi-sw input:checked~.bi-track{background:linear-gradient(135deg,#3949ab,#5c6bc0)}
+.bi-sw input:checked~.bi-track::before{transform:translateX(17px)}
+.bi-label{font-size:12px;font-weight:700;color:var(--muted)}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,#1a237e 0%,#3949ab 55%,#5c6bc0 100%);padding:42px 18px 36px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 80% 20%,rgba(255,112,67,.18) 0%,transparent 55%),radial-gradient(circle at 10% 80%,rgba(255,179,0,.12) 0%,transparent 45%)}
+.hero::after{content:'2';position:absolute;right:-10px;top:-20px;font-family:'DM Serif Display',serif;font-size:220px;color:rgba(255,255,255,.04);line-height:1;pointer-events:none}
+.hero-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+.hero-eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:6px}
+.hero-title{font-family:'DM Serif Display',serif;font-size:clamp(28px,4vw,46px);color:white;line-height:1.15;margin-bottom:10px}
+.hero-title em{color:#ffb300;font-style:italic}
+.hero-desc{font-size:13.5px;color:rgba(255,255,255,.7);max-width:540px;line-height:1.7;margin-bottom:22px}
+.stat-row{display:flex;gap:12px;flex-wrap:wrap}
+.stat-chip{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:10px 18px;text-align:center;backdrop-filter:blur(6px)}
+.stat-num{font-size:24px;font-weight:900;color:white;line-height:1}
+.stat-lbl{font-size:10px;color:rgba(255,255,255,.6);font-weight:600;margin-top:2px}
+
+/* ── SEARCH + FILTER BAR ── */
+.controls{max-width:1100px;margin:0 auto;padding:20px 18px 0}
+.search-wrap{position:relative;flex:1}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#b0b8e8;font-size:16px;pointer-events:none}
+.search-input{width:100%;background:white;border:2px solid var(--border);border-radius:14px;padding:11px 16px 11px 42px;font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);outline:none;transition:border-color .2s,box-shadow .2s;box-shadow:0 2px 8px rgba(92,107,192,.05)}
+.search-input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(92,107,192,.12)}
+.topic-filters{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.tf{background:white;border:1.5px solid var(--border);border-radius:999px;padding:5px 13px;font-size:12px;font-weight:600;color:var(--ink2);cursor:pointer;transition:all .15s;white-space:nowrap}
+.tf:hover{border-color:var(--primary);color:var(--primary)}
+.tf.active{background:var(--primary);border-color:var(--primary);color:white}
+
+/* ── GRID ── */
+.cards-grid{max-width:1100px;margin:0 auto;padding:18px 18px 60px;display:grid;grid-template-columns:1fr;gap:16px}
+
+/* ── CUE CARD ── */
+.cue-card{background:white;border-radius:20px;border:1.5px solid var(--border);box-shadow:0 2px 14px rgba(92,107,192,.06);overflow:hidden;transition:box-shadow .2s,transform .15s;animation:fadeUp .4s ease both}
+.cue-card:hover{box-shadow:0 8px 32px rgba(92,107,192,.14);transform:translateY(-2px)}
+.cue-card.mastered{border-color:#a5d6a7;background:#fafffe}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+.card-top{padding:16px 18px 14px;cursor:pointer;user-select:none}
+.card-top-row{display:flex;align-items:flex-start;gap:10px}
+.card-num-badge{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;color:#7986cb;background:#eef0fb;padding:3px 8px;border-radius:6px;flex-shrink:0;margin-top:2px}
+.card-title{font-size:13.5px;font-weight:800;color:var(--ink);line-height:1.45;flex:1}
+.card-title-cn{font-size:11.5px;color:var(--muted);font-weight:500;margin-top:3px;display:none}
+.card-title-cn.vis{display:block}
+.topic-pill{font-size:10px;font-weight:700;letter-spacing:.05em;padding:2px 9px;border-radius:999px;flex-shrink:0;text-transform:uppercase}
+.card-meta{display:flex;align-items:center;gap:8px;margin-top:10px}
+.mastered-btn{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:8px;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:all .15s;flex-shrink:0}
+.mastered-btn.off{background:#eef0fb;color:var(--muted)}
+.mastered-btn.off:hover{background:#dde0f5;color:var(--primary)}
+.mastered-btn.on{background:#e8f5e9;color:var(--green)}
+.expand-btn{margin-left:auto;background:var(--bg);border:1px solid var(--border);border-radius:8px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;color:var(--muted);transition:all .2s;flex-shrink:0}
+.expand-btn:hover{background:var(--primary);color:white;border-color:var(--primary)}
+.expand-btn.open{transform:rotate(180deg);background:var(--primary);color:white;border-color:var(--primary)}
+
+/* ── CARD BODY ── */
+.card-body{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.4,0,.2,1)}
+.card-body.open{max-height:1200px}
+.card-body-inner{padding:0 18px 18px;border-top:1px solid var(--border)}
+
+/* Task prompt box */
+.task-box{background:linear-gradient(135deg,#fff8e1,#fff3cd);border:1.5px solid #ffe082;border-radius:14px;padding:14px 16px;margin-top:14px}
+.task-label{font-size:10px;font-weight:800;color:#f57f17;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.task-prompt{font-size:13px;font-weight:700;color:#5d4037;line-height:1.55;margin-bottom:8px}
+.task-prompt-cn{font-size:11.5px;color:#8d6e63;line-height:1.5;margin-top:4px;display:none}
+.task-prompt-cn.vis{display:block}
+.task-bullets{list-style:none;padding-left:0}
+.task-bullets li{font-size:12.5px;color:#6d4c41;padding:3px 0 3px 16px;position:relative;line-height:1.5}
+.task-bullets li::before{content:'•';position:absolute;left:4px;color:#ffb300;font-weight:900}
+.task-bullets li .cn{font-size:11px;color:#a1887f;display:none}
+.task-bullets li .cn.vis{display:block}
+
+/* Framework section */
+.section-hd{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--primary);margin:14px 0 8px;display:flex;align-items:center;gap:6px}
+.section-hd::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* Framework steps */
+.fw-step{background:#f8f9ff;border-radius:12px;padding:11px 14px;margin-bottom:8px;border-left:3px solid #7986cb;display:flex;gap:10px;align-items:flex-start}
+.fw-num{width:22px;height:22px;background:var(--primary);color:white;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0;margin-top:1px}
+.fw-content{flex:1}
+.fw-title{font-size:12.5px;font-weight:700;color:var(--ink);line-height:1.4}
+.fw-title-cn{font-size:11px;color:var(--muted);display:none;margin-top:2px}
+.fw-title-cn.vis{display:block}
+.fw-hint{font-size:11.5px;color:var(--ink2);margin-top:4px;line-height:1.5}
+.fw-hint-cn{font-size:11px;color:var(--muted);margin-top:2px;display:none;line-height:1.4}
+.fw-hint-cn.vis{display:block}
+
+/* Keywords */
+.kw-wrap{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.kw{font-size:11px;font-weight:600;color:#3949ab;background:#e8eaf6;padding:3px 10px;border-radius:6px}
+
+/* Sample answer */
+.sample-box{background:linear-gradient(135deg,#f3f4ff,#eef0fb);border:1.5px solid #c5cae9;border-radius:14px;padding:13px 15px;margin-top:4px}
+.sample-en{font-size:12.5px;color:var(--ink2);line-height:1.7}
+.sample-cn{font-size:11.5px;color:var(--muted);margin-top:6px;line-height:1.6;display:none;border-top:1px solid #c5cae9;padding-top:7px}
+.sample-cn.vis{display:block}
+
+/* Timer */
+.timer-strip{background:linear-gradient(135deg,#e8eaf6,#f3f4ff);border-radius:12px;padding:10px 14px;margin-top:10px;display:flex;align-items:center;gap:10px}
+.timer-display{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:var(--primary-d);min-width:52px}
+.timer-display.warn{color:#f57f17}
+.timer-display.danger{color:#d32f2f}
+.timer-btn{border:none;border-radius:8px;padding:6px 12px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;cursor:pointer;transition:all .15s}
+.timer-start{background:var(--primary);color:white}
+.timer-start:hover{background:var(--primary-d)}
+.timer-reset{background:#eef0fb;color:var(--muted)}
+.timer-label{font-size:11px;color:var(--muted);font-weight:600}
+.timer-mode-btn{font-size:10px;font-weight:700;padding:4px 8px;border-radius:6px;border:1.5px solid var(--border);background:white;color:var(--muted);cursor:pointer;transition:all .15s}
+.timer-mode-btn.active{background:var(--accent2);border-color:var(--accent2);color:white}
+
+/* copy btn */
+.copy-sm{background:#eef0fb;color:var(--primary);border:none;border-radius:6px;padding:3px 9px;font-size:10px;font-weight:700;cursor:pointer;transition:all .15s;font-family:'DM Sans',sans-serif}
+.copy-sm:hover{background:var(--primary);color:white}
+.copy-sm.done{background:#e8f5e9;color:var(--green)}
+
+/* no results */
+#noResults{display:none;text-align:center;padding:60px 20px;color:var(--muted)}
+
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(10,12,40,.6);backdrop-filter:blur(10px);z-index:200;display:flex;align-items:center;justify-content:center;padding:18px;opacity:0;pointer-events:none;transition:opacity .25s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal-box{background:white;border-radius:24px;max-width:720px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 32px 80px rgba(0,0,0,.28);transform:scale(.92) translateY(18px);transition:transform .32s cubic-bezier(.34,1.56,.64,1)}
+.modal-overlay.open .modal-box{transform:scale(1) translateY(0)}
+.modal-hd{background:linear-gradient(135deg,#1a237e,#3949ab);padding:24px 28px 20px;border-radius:24px 24px 0 0;color:white}
+
+/* toast */
+.toast{position:fixed;bottom:24px;right:24px;background:#1a1f3a;color:white;padding:11px 18px;border-radius:12px;font-size:13px;font-weight:600;z-index:999;box-shadow:0 8px 28px rgba(0,0,0,.25);transform:translateY(70px);opacity:0;transition:all .3s cubic-bezier(.34,1.56,.64,1);display:flex;align-items:center;gap:8px}
+.toast.show{transform:translateY(0);opacity:1}
+
+/* hint card */
+.hint-card{background:linear-gradient(135deg,#e8eaf6,#f3f4ff);border:1px solid #c5cae9;border-radius:18px;padding:14px 18px;margin:0 18px 18px;display:flex;gap:12px;align-items:flex-start}
+
+/* responsive */
+@media(max-width:600px){.cards-grid{grid-template-columns:1fr}.hero-title{font-size:28px}.stat-row{gap:8px}}
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="logo">
+      <div class="logo-badge">P2</div>
+      <div>
+        <div class="logo-text">IELTS Part 2 Trainer</div>
+        <div class="logo-sub">Cue Card · Framework · Timer</div>
+      </div>
+    </div>
+    <div class="prog-wrap">
+      <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+      <span class="prog-label" id="progLabel">0 / 50</span>
+    </div>
+    <div class="bi-toggle">
+      <label class="bi-sw" title="中英双语">
+        <input type="checkbox" id="biSwitch" onchange="setBilingual(this.checked)">
+        <div class="bi-track"></div>
+      </label>
+      <span class="bi-label">中文</span>
+    </div>
+    <button class="nav-btn btn-orange" onclick="randomDrill()">🎲 <span class="hidden sm:inline">Random</span></button>
+    <button class="nav-btn btn-ghost" onclick="resetAll()">Reset</button>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">IELTS Speaking — Band 7 · Part 2</div>
+    <h1 class="hero-title">Master the <em>Cue Card</em><br>Long Turn</h1>
+    <p class="hero-desc">50 高频 Part 2 题目，每题含任务卡 · 4步答题框架 · 关键词库 · 示范开头句 · 备考计时器。开启顶部「中文」切换双语模式。</p>
+    <div class="stat-row">
+      <div class="stat-chip"><div class="stat-num">50</div><div class="stat-lbl">Cue Cards</div></div>
+      <div class="stat-chip"><div class="stat-num" id="stat-m" style="color:#ffb300">0</div><div class="stat-lbl">Mastered</div></div>
+      <div class="stat-chip"><div class="stat-num">200</div><div class="stat-lbl">Framework Steps</div></div>
+      <div class="stat-chip"><div class="stat-num">50</div><div class="stat-lbl">Sample Openers</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTROLS -->
+<div class="controls">
+  <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" id="searchIn" placeholder="Search topics, keywords, frameworks..." oninput="doSearch()">
+    </div>
+    <button class="nav-btn btn-ghost" onclick="expandAll()">Expand All</button>
+    <button class="nav-btn btn-ghost" onclick="collapseAll()">Collapse All</button>
+  </div>
+  <div class="topic-filters" id="filterBtns">
+    <button class="tf active" data-t="ALL" onclick="setFilter('ALL',this)">All Topics</button>
+    <button class="tf" data-t="People" onclick="setFilter('People',this)">👤 People</button>
+    <button class="tf" data-t="Place" onclick="setFilter('Place',this)">📍 Place</button>
+    <button class="tf" data-t="Object" onclick="setFilter('Object',this)">🎁 Object</button>
+    <button class="tf" data-t="Event" onclick="setFilter('Event',this)">📅 Event</button>
+    <button class="tf" data-t="Experience" onclick="setFilter('Experience',this)">✨ Experience</button>
+    <button class="tf" data-t="Media" onclick="setFilter('Media',this)">📱 Media</button>
+    <button class="tf" data-t="Nature" onclick="setFilter('Nature',this)">🌿 Nature</button>
+  </div>
+</div>
+
+<!-- HINT -->
+<div style="max-width:1100px;margin:16px auto 0;padding:0 18px">
+  <div class="hint-card">
+    <span style="font-size:22px;flex-shrink:0">💡</span>
+    <div>
+      <div style="font-weight:800;font-size:13px;color:#3949ab;margin-bottom:4px">How to practise Part 2 / 如何练习</div>
+      <div style="font-size:12px;color:#5c6bc0;line-height:1.7">
+        <b>1.</b> Read the task card carefully (prep time: 1 min) &nbsp;→&nbsp;
+        <b>2.</b> Follow the 4-step framework to structure your answer &nbsp;→&nbsp;
+        <b>3.</b> Use the built-in timer (speak for <b>1–2 min</b>) &nbsp;→&nbsp;
+        <b>4.</b> Check the sample opener and keywords &nbsp;→&nbsp;
+        <b>5.</b> Mark ✅ when confident<br>
+        <span style="color:#9fa8da">备考时间1分钟，作答1-2分钟。跟着4步框架组织答案，使用关键词拓展细节。</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CARDS GRID -->
+<div class="cards-grid" id="cardsGrid"></div>
+<div id="noResults"><div style="font-size:40px;margin-bottom:10px">🔍</div><div style="font-size:18px;font-weight:700">No cards found</div><div style="font-size:13px;margin-top:4px">Try different keywords or filters</div></div>
+
+<!-- MODAL (Random Drill) -->
+<div class="modal-overlay" id="modalOv" onclick="closeModal(event)">
+  <div class="modal-box">
+    <div class="modal-hd">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div>
+          <div style="font-size:10px;font-weight:800;letter-spacing:.12em;color:rgba(255,255,255,.5);text-transform:uppercase;margin-bottom:4px">🎲 Random Drill Session</div>
+          <div style="font-size:20px;font-weight:900">3 Random Cue Cards</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:3px">1分钟备题，2分钟作答，训练真实考场节奏</div>
+        </div>
+        <button onclick="closeModalBtn()" style="background:rgba(255,255,255,.15);border:none;border-radius:10px;width:32px;height:32px;color:white;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center">✕</button>
+      </div>
+    </div>
+    <div id="modalContent" style="padding:18px"></div>
+    <div style="padding:0 18px 18px;display:flex;gap:10px;flex-wrap:wrap">
+      <button class="nav-btn btn-orange" onclick="randomDrill()">🔀 New Set</button>
+      <button class="nav-btn btn-ghost" onclick="closeModalBtn()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✅ <span id="toastMsg">Done!</span></div>
+
+<script>
+// ══════════════════════════════════════════════════
+// TOPIC COLORS
+// ══════════════════════════════════════════════════
+const TOPIC_COLOR = {
+  People:   {bg:'#fce4ec',color:'#c62828'},
+  Place:    {bg:'#e3f2fd',color:'#0d47a1'},
+  Object:   {bg:'#f3e5f5',color:'#6a1b9a'},
+  Event:    {bg:'#fff3e0',color:'#e65100'},
+  Experience:{bg:'#e8f5e9',color:'#1b5e20'},
+  Media:    {bg:'#e0f7fa',color:'#006064'},
+  Nature:   {bg:'#f1f8e9',color:'#33691e'},
+};
+
+// ══════════════════════════════════════════════════
+// DATA — 50 Cue Cards
+// ══════════════════════════════════════════════════
+const cards = [
+  // ── PEOPLE (1-8) ──
+  {id:1,topic:'People',
+   title:'Describe an interesting person you met recently.',
+   title_cn:'描述一个你最近认识的有趣的人。',
+   bullets:[
+     {en:'Who this person is and where you met them',cn:'这个人是谁，你们在哪里相识'},
+     {en:'What makes this person interesting or unique',cn:'是什么让这个人有趣或与众不同'},
+     {en:'What you talked about or did together',cn:'你们谈论了什么或一起做了什么'},
+     {en:'Why you think they are memorable',cn:'为什么你认为他们令人难忘'},
+   ],
+   fw:[
+     {n:1,title:'Set the scene',title_cn:'交代背景',hint:'Introduce who, when and where you met.',hint_cn:'介绍你们是谁、何时何地相识。'},
+     {n:2,title:'Describe their personality',title_cn:'描述其个性',hint:'Use vivid adjectives: charismatic, insightful, unconventional.',hint_cn:'使用生动形容词：有魅力、有洞察力、不循规蹈矩。'},
+     {n:3,title:'Share a specific story',title_cn:'分享具体故事',hint:'Narrate one memorable interaction or thing they said.',hint_cn:'讲述一次令人难忘的互动或他们说过的话。'},
+     {n:4,title:'Reflect on the impact',title_cn:'反思影响',hint:'Explain what this encounter taught you or changed in you.',hint_cn:'解释这次相遇教给你什么或改变了你什么。'},
+   ],
+   keywords:['charismatic','thought-provoking','unconventional','sparked my curiosity','left a lasting impression','struck up a conversation'],
+   sample:{en:"I'd like to talk about a fascinating individual I encountered at a photography workshop about three months ago. What struck me immediately was his completely unconventional approach to...",
+           cn:"我想谈谈大约三个月前在一次摄影工作坊上遇到的一位迷人的人物。立即让我印象深刻的是他对……完全非常规的态度。"}
+  },
+  {id:2,topic:'People',
+   title:'Describe a person who has had a positive influence on your life.',
+   title_cn:'描述一个对你的生活产生积极影响的人。',
+   bullets:[
+     {en:'Who this person is and your relationship with them',cn:'这个人是谁，你们是什么关系'},
+     {en:'How you got to know them',cn:'你是如何认识他们的'},
+     {en:'What they did that influenced you positively',cn:'他们做了什么对你产生了积极影响'},
+     {en:'Why their influence has been so important to you',cn:'为什么他们的影响对你如此重要'},
+   ],
+   fw:[
+     {n:1,title:'Introduce the person clearly',title_cn:'清晰介绍此人',hint:'State the relationship and how long you have known them.',hint_cn:'说明关系和你认识他们多久了。'},
+     {n:2,title:'Describe their qualities',title_cn:'描述其品质',hint:'Patience, wisdom, generosity — give concrete examples.',hint_cn:'耐心、智慧、慷慨——给出具体例子。'},
+     {n:3,title:'Describe the turning point',title_cn:'描述转折点',hint:'A specific moment when their guidance changed your direction.',hint_cn:'他们的指导改变你方向的具体时刻。'},
+     {n:4,title:'Describe the lasting effect',title_cn:'描述持久影响',hint:'How has your life, mindset or career changed because of them?',hint_cn:'因为他们，你的生活、思维方式或职业如何改变？'},
+   ],
+   keywords:['formative influence','shaped my worldview','words of wisdom','turning point','role model','inspired me to pursue'],
+   sample:{en:"Without a doubt, the person who has had the most profound and lasting positive influence on my life is my secondary school English teacher. She had a remarkable ability to...",
+           cn:"毫无疑问，对我的生活产生最深刻和持久积极影响的人是我的中学英语老师。她有一种非凡的能力……"}
+  },
+  {id:3,topic:'People',
+   title:'Describe a famous person you admire.',
+   title_cn:'描述一个你敬仰的名人。',
+   bullets:[
+     {en:'Who this person is and what they are famous for',cn:'这个人是谁，因何出名'},
+     {en:'How you first found out about them',cn:'你是如何第一次了解到他们的'},
+     {en:'What achievements or qualities you admire most',cn:'你最钦佩他们的哪些成就或品质'},
+     {en:'What impact they have had on society or on you personally',cn:'他们对社会或对你个人产生了什么影响'},
+   ],
+   fw:[
+     {n:1,title:'Introduce with context',title_cn:'结合背景介绍',hint:'Name, field, nationality — keep it punchy and confident.',hint_cn:'姓名、领域、国籍——简洁有力。'},
+     {n:2,title:'Outline key achievements',title_cn:'概述主要成就',hint:'Choose 2-3 remarkable accomplishments with specific details.',hint_cn:'选择2-3个卓越成就，附上具体细节。'},
+     {n:3,title:'Explain your admiration',title_cn:'解释你的敬仰',hint:'What personal qualities set them apart from others?',hint_cn:'是什么个人品质让他们与众不同？'},
+     {n:4,title:'Explain their broader impact',title_cn:'解释其更广泛的影响',hint:'On their field, on society, or on your own personal journey.',hint_cn:'对其领域、社会或你个人旅程的影响。'},
+   ],
+   keywords:['groundbreaking','visionary','relentlessly pursued','defied convention','left an indelible mark','changed the course of'],
+   sample:{en:"The famous person I admire most is Malala Yousafzai, the Pakistani education activist and Nobel laureate. I first came across her remarkable story when I was...",
+           cn:"我最钦佩的名人是巴基斯坦教育活动家和诺贝尔奖得主马拉拉·优素福扎伊。我第一次了解到她的非凡故事是在……"}
+  },
+  {id:4,topic:'People',
+   title:'Describe an elderly person you respect.',
+   title_cn:'描述一位你尊敬的老年人。',
+   bullets:[
+     {en:'Who this person is and how you know them',cn:'这个人是谁，你是如何认识他们的'},
+     {en:'What kind of life they have led',cn:'他们过着怎样的生活'},
+     {en:'What you often talk about or do together',cn:'你们经常谈论什么或一起做什么'},
+     {en:'Why you respect this particular person so deeply',cn:'为什么你如此深深尊敬这个人'},
+   ],
+   fw:[
+     {n:1,title:'Introduce and set the scene',title_cn:'介绍并设置场景',hint:'Who are they? How old? How long have you known them?',hint_cn:'他们是谁？多大年纪？你认识他们多久了？'},
+     {n:2,title:'Describe their life experience',title_cn:'描述他们的人生经历',hint:'Challenges overcome, wisdom gained, values upheld.',hint_cn:'克服的挑战、获得的智慧、坚守的价值观。'},
+     {n:3,title:'Share a meaningful conversation',title_cn:'分享一次有意义的对话',hint:'One specific piece of advice or story they shared with you.',hint_cn:'他们分享给你的一条具体建议或故事。'},
+     {n:4,title:'Explain why they inspire you',title_cn:'解释他们为何激励你',hint:'What qualities do you aspire to develop yourself?',hint_cn:'你渴望在自己身上培养哪些品质？'},
+   ],
+   keywords:['wealth of experience','quiet dignity','time-tested wisdom','resilience','selflessly dedicated','living embodiment of'],
+   sample:{en:"The elderly person I hold in the highest regard is my maternal grandfather, who is now eighty-three years old. Despite his age, he remains remarkably sharp and...",
+           cn:"我最尊敬的老年人是我的外祖父，他现在八十三岁了。尽管年龄这么大，他仍然思维敏锐，……"}
+  },
+  {id:5,topic:'People',
+   title:'Describe a person who is good at their job.',
+   title_cn:'描述一个在工作上很出色的人。',
+   bullets:[
+     {en:'Who this person is and what their job is',cn:'这个人是谁，他们的工作是什么'},
+     {en:'How long they have been doing this job',cn:'他们从事这份工作多久了'},
+     {en:'What specific skills or qualities make them excellent',cn:'是什么具体技能或品质让他们出类拔萃'},
+     {en:'Why you think they are so good at what they do',cn:'为什么你认为他们在自己的工作上如此出色'},
+   ],
+   fw:[
+     {n:1,title:'Introduce the person and role',title_cn:'介绍此人及其职责',hint:'Be specific about their job title and work environment.',hint_cn:'具体说明他们的职位和工作环境。'},
+     {n:2,title:'Describe their standout skills',title_cn:'描述其突出技能',hint:'Technical mastery + soft skills: communication, empathy, creativity.',hint_cn:'技术掌握+软技能：沟通、同理心、创造力。'},
+     {n:3,title:'Give a concrete example',title_cn:'给出具体例子',hint:'Describe a moment when you witnessed their excellence firsthand.',hint_cn:'描述你亲眼目睹他们卓越表现的时刻。'},
+     {n:4,title:'Explain what sets them apart',title_cn:'解释是什么让他们与众不同',hint:'Passion, dedication, continuous self-improvement.',hint_cn:'热情、奉献精神、持续自我提升。'},
+   ],
+   keywords:['exceptional competence','meticulous attention to detail','goes above and beyond','natural talent','dedicated professional','consummate expert'],
+   sample:{en:"I'd like to describe my university supervisor, who is without question one of the most exceptionally skilled professionals I have ever had the privilege of working with...",
+           cn:"我想描述我的大学导师，他毫无疑问是我有幸共事过的最出色的专业人士之一……"}
+  },
+  {id:6,topic:'People',
+   title:'Describe a person you know who speaks a foreign language well.',
+   title_cn:'描述一个你认识的、能说一门外语的人。',
+   bullets:[
+     {en:'Who this person is',cn:'这个人是谁'},
+     {en:'What language they speak and how well',cn:'他们说哪种语言，说得多好'},
+     {en:'How they learned this language',cn:'他们是如何学会这门语言的'},
+     {en:'How speaking this language has benefited them',cn:'会说这门语言如何让他们受益'},
+   ],
+   fw:[
+     {n:1,title:'Introduce the person',title_cn:'介绍此人',hint:'Relationship, age, background — brief but vivid.',hint_cn:'关系、年龄、背景——简短但生动。'},
+     {n:2,title:'Describe their language ability',title_cn:'描述其语言能力',hint:'Level, accent, fluency — use specific, impressive details.',hint_cn:'水平、口音、流利度——使用具体、令人印象深刻的细节。'},
+     {n:3,title:'Explain their learning journey',title_cn:'解释其学习历程',hint:'Methods, dedication, time invested, challenges overcome.',hint_cn:'方法、奉献精神、投入的时间、克服的挑战。'},
+     {n:4,title:'Describe the benefits it brought',title_cn:'描述它带来的好处',hint:'Career opportunities, cultural understanding, confidence.',hint_cn:'职业机会、文化理解、自信心。'},
+   ],
+   keywords:['near-native fluency','immersed themselves in','linguistic versatility','opened doors to','bridging cultural divides','remarkable dedication'],
+   sample:{en:"I'd like to talk about my close friend, who speaks French with what I can only describe as near-native fluency, despite having never actually lived in France...",
+           cn:"我想谈谈我的好朋友，他说法语的流利程度可以用接近母语来形容，尽管他从未在法国生活过……"}
+  },
+  {id:7,topic:'People',
+   title:'Describe a creative person whose work you admire.',
+   title_cn:'描述一个你欣赏其作品的有创意的人。',
+   bullets:[
+     {en:'Who this person is',cn:'这个人是谁'},
+     {en:'What kind of creative work they do',cn:'他们从事什么类型的创意工作'},
+     {en:'How you discovered their work',cn:'你是如何发现他们的作品的'},
+     {en:'Why you find their work so impressive or inspiring',cn:'为什么你觉得他们的作品如此令人印象深刻或鼓舞人心'},
+   ],
+   fw:[
+     {n:1,title:'Introduce and contextualise',title_cn:'介绍并提供背景',hint:'Name, medium, nationality, rough time period.',hint_cn:'姓名、创作媒介、国籍、大致时间段。'},
+     {n:2,title:'Describe their creative style',title_cn:'描述其创作风格',hint:'Distinctive techniques, themes, aesthetic choices.',hint_cn:'独特技法、主题、审美选择。'},
+     {n:3,title:'Describe a specific work',title_cn:'描述一件具体作品',hint:'Name it, explain it, describe how it made you feel.',hint_cn:'说出名字，解释它，描述它让你有何感受。'},
+     {n:4,title:'Explain the wider inspiration',title_cn:'解释更广泛的灵感',hint:'How has their work influenced your own creativity or thinking?',hint_cn:'他们的作品如何影响了你自己的创造力或思维？'},
+   ],
+   keywords:['avant-garde','pushes the boundaries','evokes powerful emotions','signature style','provocative yet beautiful','genuine artistic vision'],
+   sample:{en:"The creative person whose work I find most compelling is the Japanese architect Tadao Ando. I first encountered his work during an architecture module at university and was immediately...",
+           cn:"我认为最引人注目的创意人物是日本建筑师安藤忠雄。我第一次接触到他的作品是在大学的一门建筑课上，我立刻被……"}
+  },
+  {id:8,topic:'People',
+   title:'Describe a person you would like to spend time with.',
+   title_cn:'描述一个你想与之共度时光的人。',
+   bullets:[
+     {en:'Who this person is',cn:'这个人是谁'},
+     {en:'How you know or know about them',cn:'你是如何认识或了解他们的'},
+     {en:'What you would do or talk about together',cn:'你们会一起做什么或谈论什么'},
+     {en:'Why you would particularly enjoy spending time with them',cn:'为什么你特别享受与他们共度时光'},
+   ],
+   fw:[
+     {n:1,title:'Establish who and why',title_cn:'确立是谁以及为什么',hint:'Real person or historical figure — explain the choice.',hint_cn:'真实人物或历史人物——解释你的选择。'},
+     {n:2,title:'Describe the ideal setting',title_cn:'描述理想的场景',hint:'Where, what activity, atmosphere — paint a vivid picture.',hint_cn:'在哪里、什么活动、什么氛围——描绘生动的画面。'},
+     {n:3,title:'Describe the conversation',title_cn:'描述对话',hint:'What questions would you ask? What wisdom would you seek?',hint_cn:'你会问什么问题？你会寻求什么智慧？'},
+     {n:4,title:'Explain the value of the encounter',title_cn:'解释这次相遇的价值',hint:'What would you gain — knowledge, inspiration, perspective?',hint_cn:'你会获得什么——知识、灵感、视角？'},
+   ],
+   keywords:['once-in-a-lifetime conversation','stimulating exchange','mutual curiosity','depth of knowledge','pick their brain','genuinely enriching'],
+   sample:{en:"If I could spend time with absolutely anyone in the world, I would choose the late Nobel laureate Richard Feynman, the theoretical physicist. I'm drawn to him because of his...",
+           cn:"如果我可以和世界上任何人共度时光，我会选择已故诺贝尔奖得主理查德·费曼，这位理论物理学家。我被他吸引是因为他的……"}
+  },
+
+  // ── PLACE (9-16) ──
+  {id:9,topic:'Place',
+   title:'Describe a place you have visited that you particularly enjoyed.',
+   title_cn:'描述一个你去过并特别喜欢的地方。',
+   bullets:[
+     {en:'Where this place is and when you visited',cn:'这个地方在哪里，你何时去的'},
+     {en:'How you got there and who you went with',cn:'你是如何到那里的，和谁一起去的'},
+     {en:'What you saw and did there',cn:'你在那里看到了什么，做了什么'},
+     {en:'Why you particularly enjoyed this place',cn:'为什么你特别喜欢这个地方'},
+   ],
+   fw:[
+     {n:1,title:'Orient the listener',title_cn:'让听众有基本了解',hint:'Country, city, approximate distance from home, time of year.',hint_cn:'国家、城市、距家的大致距离、一年中的时节。'},
+     {n:2,title:'Describe the arrival and first impression',title_cn:'描述抵达和第一印象',hint:'The sights, sounds, smells — use sensory detail powerfully.',hint_cn:'景象、声音、气味——有力地运用感官细节。'},
+     {n:3,title:'Describe highlights of the visit',title_cn:'描述游览亮点',hint:'Choose 2 specific experiences or places within the place.',hint_cn:'选择2个具体体验或该地方内的景点。'},
+     {n:4,title:'Reflect on why it was special',title_cn:'反思为何特别',hint:'Atmosphere, people, food, history, personal significance.',hint_cn:'氛围、人们、食物、历史、个人意义。'},
+   ],
+   keywords:['breathtaking scenery','steeped in history','off the beaten track','vibrant atmosphere','utterly captivating','left me speechless'],
+   sample:{en:"I'd like to describe a visit I made to Kyoto in Japan two summers ago, and I have to say it was genuinely one of the most memorable travel experiences of my life...",
+           cn:"我想描述两个夏天前我去日本京都的一次旅行，我必须说那是我人生中最难忘的旅行经历之一……"}
+  },
+  {id:10,topic:'Place',
+   title:'Describe your favourite room or place in your home.',
+   title_cn:'描述你家中最喜欢的房间或地方。',
+   bullets:[
+     {en:'What room or place it is',cn:'是哪个房间或地方'},
+     {en:'What it looks like and what is in it',cn:'它看起来是什么样子，里面有什么'},
+     {en:'What you usually do there',cn:'你通常在那里做什么'},
+     {en:'Why it is your favourite place in the home',cn:'为什么它是你家中最喜欢的地方'},
+   ],
+   fw:[
+     {n:1,title:'Describe the physical space',title_cn:'描述物理空间',hint:'Size, light, décor, objects — be specific and sensory.',hint_cn:'大小、光线、装饰、物品——要具体和感官化。'},
+     {n:2,title:'Describe what you do there',title_cn:'描述你在那里做什么',hint:'Routine activities + why you prefer doing them in this space.',hint_cn:'日常活动+为什么你更喜欢在这个空间做这些事。'},
+     {n:3,title:'Describe the emotional atmosphere',title_cn:'描述情感氛围',hint:'How does it make you feel? Calm, inspired, nostalgic?',hint_cn:'它让你有何感受？平静、受启发、怀旧？'},
+     {n:4,title:'Explain why it matters to you',title_cn:'解释它为何对你重要',hint:'Personal significance, memories associated, sense of ownership.',hint_cn:'个人意义、相关记忆、归属感。'},
+   ],
+   keywords:['sanctuary','cosy atmosphere','bathed in natural light','filled with character','retreat from the world','deeply personal space'],
+   sample:{en:"My absolute favourite place in my home is a small corner of my bedroom that I've gradually transformed into a reading nook over the past two years. It's...",
+           cn:"我在家中最喜欢的地方是我卧室里的一个小角落，在过去两年里我逐渐把它变成了一个阅读角。它……"}
+  },
+  {id:11,topic:'Place',
+   title:'Describe a city or country you would like to visit in the future.',
+   title_cn:'描述一个你将来想去的城市或国家。',
+   bullets:[
+     {en:'What city or country it is',cn:'是哪个城市或国家'},
+     {en:'How you first found out about it',cn:'你是如何第一次了解到它的'},
+     {en:'What you would like to do or see there',cn:'你想在那里做什么或看什么'},
+     {en:'Why you are particularly keen to visit this place',cn:'为什么你特别渴望去这个地方'},
+   ],
+   fw:[
+     {n:1,title:'Introduce the place with enthusiasm',title_cn:'热情地介绍该地方',hint:'Location, climate, culture — one vivid hook sentence.',hint_cn:'地理位置、气候、文化——一句生动的钩子句。'},
+     {n:2,title:'Explain how you discovered it',title_cn:'解释你是如何发现它的',hint:'Documentary, book, friend\'s recommendation, social media.',hint_cn:'纪录片、书籍、朋友推荐、社交媒体。'},
+     {n:3,title:'Describe what you would do',title_cn:'描述你会做什么',hint:'Be specific: particular neighbourhoods, dishes to try, experiences.',hint_cn:'要具体：特定街区、要尝的食物、体验。'},
+     {n:4,title:'Explain your personal motivation',title_cn:'解释你的个人动机',hint:'Historical interest, culinary obsession, natural beauty, personal roots.',hint_cn:'历史兴趣、美食痴迷、自然美景、个人根源。'},
+   ],
+   keywords:['long been on my bucket list','drawn to its rich heritage','unlike anywhere else','immerse myself in','wanderlust','captivated by photographs of'],
+   sample:{en:"The destination that has been at the very top of my travel wish list for several years now is Patagonia, the remote wilderness region spanning southern Argentina and Chile...",
+           cn:"多年来一直高居我旅行愿望清单首位的目的地是巴塔哥尼亚，横跨阿根廷和智利南部的偏远荒野地区……"}
+  },
+  {id:12,topic:'Place',
+   title:'Describe a park, garden or outdoor space you enjoy.',
+   title_cn:'描述一个你喜欢的公园、花园或户外空间。',
+   bullets:[
+     {en:'Where this place is',cn:'这个地方在哪里'},
+     {en:'What it looks like and what it contains',cn:'它看起来是什么样子，里面有什么'},
+     {en:'Who goes there and what people do',cn:'谁去那里，人们做什么'},
+     {en:'Why you particularly enjoy spending time there',cn:'为什么你特别喜欢在那里度过时光'},
+   ],
+   fw:[
+     {n:1,title:'Locate and describe the space',title_cn:'定位并描述该空间',hint:'City location, size, how to reach it, overall character.',hint_cn:'城市位置、大小、如何到达、整体特点。'},
+     {n:2,title:'Paint a sensory picture',title_cn:'描绘感官画面',hint:'Trees, flowers, water, light, sounds, seasons — vivid detail.',hint_cn:'树木、花卉、水、光线、声音、季节——生动细节。'},
+     {n:3,title:'Describe your personal use',title_cn:'描述你的个人使用方式',hint:'When you visit, what you do, who you bring.',hint_cn:'你何时去、做什么、带谁去。'},
+     {n:4,title:'Explain its value to you',title_cn:'解释它对你的价值',hint:'Mental reset, physical health, creativity, community.',hint_cn:'精神重置、身体健康、创造力、社区感。'},
+   ],
+   keywords:['urban oasis','tranquil retreat','restored my energy','sense of freedom','canopy of trees','let my thoughts wander'],
+   sample:{en:"The outdoor space I find myself returning to again and again is a relatively small but beautifully designed botanical garden situated about fifteen minutes from my apartment...",
+           cn:"我发现自己一次又一次回去的户外空间是距我公寓大约十五分钟路程的一个相对较小但设计精美的植物园……"}
+  },
+  {id:13,topic:'Place',
+   title:'Describe a restaurant or café that you enjoy going to.',
+   title_cn:'描述一家你喜欢去的餐厅或咖啡馆。',
+   bullets:[
+     {en:'Where this place is and what kind of food it serves',cn:'这个地方在哪里，提供什么类型的食物'},
+     {en:'How you first discovered it',cn:'你是如何第一次发现它的'},
+     {en:'What you usually order or do there',cn:'你通常点什么或在那里做什么'},
+     {en:'Why you enjoy going there so much',cn:'为什么你那么喜欢去那里'},
+   ],
+   fw:[
+     {n:1,title:'Describe the place and ambience',title_cn:'描述地方和氛围',hint:'Location, size, décor, music, lighting — create the scene.',hint_cn:'位置、大小、装饰、音乐、灯光——创造场景。'},
+     {n:2,title:'Introduce the food or menu',title_cn:'介绍食物或菜单',hint:'Specialty dishes, flavours, presentation, price range.',hint_cn:'招牌菜、口味、摆盘、价格范围。'},
+     {n:3,title:'Share a memorable visit',title_cn:'分享一次难忘的光顾',hint:'One specific occasion that stands out vividly in your memory.',hint_cn:'一次在记忆中特别突出的具体场合。'},
+     {n:4,title:'Explain its appeal beyond food',title_cn:'解释其食物之外的吸引力',hint:'Service, community feeling, personal ritual, comfort value.',hint_cn:'服务、社区感、个人仪式、舒适价值。'},
+   ],
+   keywords:['hole-in-the-wall gem','warm hospitality','authentic flavours','ritual visit','the owner knows me by name','genuinely memorable dining experience'],
+   sample:{en:"There's a small, unpretentious ramen restaurant tucked away in a side street near my university that I have been visiting almost every week for the past two years...",
+           cn:"在我大学附近的一条小巷里有一家朴素的小拉面馆，在过去两年里我几乎每周都去那里……"}
+  },
+  {id:14,topic:'Place',
+   title:'Describe a place in your country that you think tourists should visit.',
+   title_cn:'描述你国家中你认为游客应该参观的地方。',
+   bullets:[
+     {en:'What place it is and where it is located',cn:'这是什么地方，在哪里'},
+     {en:'What is special or unique about it',cn:'它有什么特别或独特之处'},
+     {en:'What visitors can do or see there',cn:'游客可以在那里做什么或看什么'},
+     {en:'Why you would specifically recommend it to foreign visitors',cn:'为什么你会特别向外国游客推荐它'},
+   ],
+   fw:[
+     {n:1,title:'Introduce the location vividly',title_cn:'生动地介绍该地点',hint:'Geographic setting, how to get there, best time to visit.',hint_cn:'地理位置、如何到达、最佳游览时间。'},
+     {n:2,title:'Highlight what makes it unique',title_cn:'突出其独特之处',hint:'Cultural significance, natural beauty, historical importance.',hint_cn:'文化意义、自然美景、历史重要性。'},
+     {n:3,title:'Describe the visitor experience',title_cn:'描述游客体验',hint:'Activities, sights, sounds, cuisine, local customs.',hint_cn:'活动、景点、声音、美食、当地习俗。'},
+     {n:4,title:'Give a personal endorsement',title_cn:'给出个人推荐',hint:'Your own memorable experience there — emotional and vivid.',hint_cn:'你在那里的亲身难忘经历——情感丰富而生动。'},
+   ],
+   keywords:['hidden gem','cultural tapestry','authentic experience','off the tourist trail','absolutely breathtaking','quintessentially representative of'],
+   sample:{en:"If I were to recommend just one place in my country to an international visitor, it would undoubtedly be the ancient town of Lijiang in Yunnan province, which...",
+           cn:"如果我要向国际游客推荐我国的一个地方，那毫无疑问是云南省的古城丽江，它……"}
+  },
+  {id:15,topic:'Place',
+   title:'Describe a place where you like to go to relax.',
+   title_cn:'描述一个你喜欢去放松的地方。',
+   bullets:[
+     {en:'Where this place is',cn:'这个地方在哪里'},
+     {en:'How often and when you go there',cn:'你多久去一次，什么时候去'},
+     {en:'What you do there to relax',cn:'你在那里做什么来放松'},
+     {en:'Why it helps you relax so effectively',cn:'为什么它能如此有效地帮助你放松'},
+   ],
+   fw:[
+     {n:1,title:'Locate and briefly describe',title_cn:'定位并简要描述',hint:'Distance from home, accessibility, visual character.',hint_cn:'距家距离、可达性、视觉特点。'},
+     {n:2,title:'Describe your relaxation ritual',title_cn:'描述你的放松仪式',hint:'Step by step — arrival, activities, pace, duration.',hint_cn:'逐步——到达、活动、节奏、时长。'},
+     {n:3,title:'Explain the psychological effect',title_cn:'解释心理效果',hint:'Decompression, perspective shift, creative thinking.',hint_cn:'减压、视角转变、创意思维。'},
+     {n:4,title:'Contrast with your daily stress',title_cn:'与日常压力对比',hint:'Why do you need this escape? What does daily life feel like?',hint_cn:'为什么你需要这种逃脱？日常生活是什么感觉？'},
+   ],
+   keywords:['genuine escapism','completely switch off','restores my equilibrium','mental clarity','unhurried pace','world seems to slow down'],
+   sample:{en:"Whenever I feel completely overwhelmed by academic pressure, there is one place I instinctively head to — a quiet lakeside area about a thirty-minute cycle from my apartment...",
+           cn:"每当我感到学业压力完全压倒我时，有一个地方是我本能地前往的——距我公寓大约三十分钟骑行路程的一个安静的湖滨区……"}
+  },
+  {id:16,topic:'Place',
+   title:'Describe a place you visited as a child that left a strong impression.',
+   title_cn:'描述一个你童年时期去过、给你留下深刻印象的地方。',
+   bullets:[
+     {en:'Where this place was',cn:'这个地方在哪里'},
+     {en:'How old you were and who you went with',cn:'你当时多大，和谁一起去的'},
+     {en:'What you saw, did or experienced there',cn:'你在那里看到了什么、做了什么或经历了什么'},
+     {en:'Why it left such a strong impression on you',cn:'为什么它给你留下了如此深刻的印象'},
+   ],
+   fw:[
+     {n:1,title:'Set the memory scene',title_cn:'设置记忆场景',hint:'Age, season, travel companions — bring it to life.',hint_cn:'年龄、季节、旅行伙伴——使其栩栩如生。'},
+     {n:2,title:'Describe through young eyes',title_cn:'通过年轻的眼睛描述',hint:'Childlike wonder, scale, overwhelm — the world felt enormous.',hint_cn:'孩子般的惊奇、规模、震撼——那时世界感觉无比巨大。'},
+     {n:3,title:'Narrate the key moment',title_cn:'叙述关键时刻',hint:'One specific scene or experience that stays with you vividly.',hint_cn:'一个至今仍生动留存的具体场景或体验。'},
+     {n:4,title:'Reflect on its lasting significance',title_cn:'反思其持久意义',hint:'How does that childhood impression shape you today?',hint_cn:'那个童年印象如何塑造了今天的你？'},
+   ],
+   keywords:['etched in my memory','sense of wonder','formative experience','everything felt enormous','transformed my perspective','roots of my fascination'],
+   sample:{en:"One of my most vivid and treasured childhood memories is a trip my family took to the Great Wall of China when I was approximately seven years old. Even at that age...",
+           cn:"我最生动、最珍贵的童年记忆之一是大约七岁时我家去长城旅行的那次。即使在那个年纪……"}
+  },
+
+  // ── OBJECT (17-24) ──
+  {id:17,topic:'Object',
+   title:'Describe an object that is important to you.',
+   title_cn:'描述一件对你很重要的物品。',
+   bullets:[
+     {en:'What this object is and what it looks like',cn:'这件物品是什么，它看起来是什么样子'},
+     {en:'How long you have had it and how you got it',cn:'你拥有它多久了，是如何得到它的'},
+     {en:'What you use it for or how often you use it',cn:'你用它做什么，或者你多久用一次'},
+     {en:'Why it is particularly important or meaningful to you',cn:'为什么它对你特别重要或有意义'},
+   ],
+   fw:[
+     {n:1,title:'Introduce and describe physically',title_cn:'介绍并进行外观描述',hint:'Material, colour, size, condition — make it tangible.',hint_cn:'材质、颜色、大小、状况——使其具体可感。'},
+     {n:2,title:'Explain the history and provenance',title_cn:'解释历史和来源',hint:'Gift, purchase, inherited — who gave it and when.',hint_cn:'礼物、购买、继承——谁给的，何时给的。'},
+     {n:3,title:'Describe how you use it',title_cn:'描述你如何使用它',hint:'Daily use, special occasions, kept safely — be specific.',hint_cn:'日常使用、特殊场合、妥善保存——要具体。'},
+     {n:4,title:'Explain the emotional significance',title_cn:'解释情感意义',hint:'Memory, relationship, values it symbolises to you.',hint_cn:'记忆、关系、它对你象征的价值观。'},
+   ],
+   keywords:['sentimental value','irreplaceable','tangible connection to','carries deep meaning','worn with age but beautiful','treasure beyond its monetary worth'],
+   sample:{en:"The object I'd like to describe is a small, worn leather journal that my father gave me on the day I left home for university. It's roughly A5 in size...",
+           cn:"我想描述的物品是一本小巧、磨损的皮质日记本，是我父亲在我离家上大学那天送给我的。它大约是A5大小……"}
+  },
+  {id:18,topic:'Object',
+   title:'Describe a gift you received that you particularly liked.',
+   title_cn:'描述一件你收到的特别喜欢的礼物。',
+   bullets:[
+     {en:'What the gift was',cn:'礼物是什么'},
+     {en:'Who gave it to you and on what occasion',cn:'谁给你的，在什么场合'},
+     {en:'How the gift was presented to you',cn:'礼物是如何赠送给你的'},
+     {en:'Why you particularly liked this gift',cn:'为什么你特别喜欢这件礼物'},
+   ],
+   fw:[
+     {n:1,title:'Set the occasion',title_cn:'设置场合',hint:'Birthday, graduation, random act of kindness — context matters.',hint_cn:'生日、毕业、随机善意——背景很重要。'},
+     {n:2,title:'Describe the gift itself',title_cn:'描述礼物本身',hint:'What it is, how it looked, first reaction when you saw it.',hint_cn:'是什么，看起来怎样，当你看到它时的第一反应。'},
+     {n:3,title:'Describe the giver and their thought',title_cn:'描述赠礼者及其用心',hint:'Why did they choose this particular gift? How did it show they knew you?',hint_cn:'他们为什么选择这个特别的礼物？它如何体现他们了解你？'},
+     {n:4,title:'Explain its lasting meaning',title_cn:'解释其持久意义',hint:'Still use it? Kept it somewhere special? Changed you in any way?',hint_cn:'仍在使用它吗？保存在特别的地方了吗？以任何方式改变了你吗？'},
+   ],
+   keywords:['thoughtful gesture','perfectly captured who I am','beyond its monetary value','completely unexpected','genuinely moved me','showed remarkable understanding'],
+   sample:{en:"The gift I'd like to talk about is a beautifully illustrated atlas of the world that my grandmother gave me on my twelfth birthday. At the time I didn't fully appreciate...",
+           cn:"我想谈的礼物是我祖母在我十二岁生日时送给我的一本精美插图世界地图集。当时我并不完全欣赏……"}
+  },
+  {id:19,topic:'Object',
+   title:'Describe a book you have read that you found very useful.',
+   title_cn:'描述一本你读过的、觉得非常有用的书。',
+   bullets:[
+     {en:'What the book is called and who wrote it',cn:'书名是什么，作者是谁'},
+     {en:'What the book is about',cn:'这本书讲的是什么'},
+     {en:'When and why you read it',cn:'你什么时候读的，为什么读'},
+     {en:'How the book has been useful or influential to you',cn:'这本书对你有何用处或影响'},
+   ],
+   fw:[
+     {n:1,title:'Introduce the book clearly',title_cn:'清晰地介绍这本书',hint:'Title, author, genre, publication era — concise and confident.',hint_cn:'书名、作者、体裁、出版年代——简洁有力。'},
+     {n:2,title:'Summarise the key ideas',title_cn:'总结主要观点',hint:'Core message without spoilers — what problem does it solve?',hint_cn:'核心信息不含剧透——它解决什么问题？'},
+     {n:3,title:'Describe the reading experience',title_cn:'描述阅读体验',hint:'When, where, how it made you feel as you read.',hint_cn:'何时、何地、阅读时的感受。'},
+     {n:4,title:'Explain its lasting practical value',title_cn:'解释其持久实用价值',hint:'Specific ways it changed your thinking, habits or decisions.',hint_cn:'它改变你思维、习惯或决策的具体方式。'},
+   ],
+   keywords:['profoundly changed my thinking','paradigm shift','accessible yet intellectually rich','highlighted passages','fundamental principles','transformed how I approach'],
+   sample:{en:"The book I'd like to describe is 'Thinking, Fast and Slow' by Daniel Kahneman, the Nobel Prize-winning psychologist and economist. I came across it during my second year of university...",
+           cn:"我想描述的书是诺贝尔奖得主、心理学家和经济学家丹尼尔·卡尼曼写的《思考，快与慢》。我是在大学二年级时偶然发现这本书的……"}
+  },
+  {id:20,topic:'Object',
+   title:'Describe something you made yourself.',
+   title_cn:'描述一件你亲手制作的东西。',
+   bullets:[
+     {en:'What you made',cn:'你做了什么'},
+     {en:'Why you decided to make it',cn:'你为什么决定做它'},
+     {en:'How you made it — the process',cn:'你是如何做的——制作过程'},
+     {en:'How you felt about what you had made',cn:'你对自己制作的东西有什么感受'},
+   ],
+   fw:[
+     {n:1,title:'Introduce the creation',title_cn:'介绍创作',hint:'What it is, what it is made of, how big it is.',hint_cn:'是什么，由什么制成，多大。'},
+     {n:2,title:'Explain the motivation',title_cn:'解释动机',hint:'Gift, personal need, creative impulse, challenge to yourself.',hint_cn:'礼物、个人需要、创意冲动、对自己的挑战。'},
+     {n:3,title:'Narrate the making process',title_cn:'叙述制作过程',hint:'Challenges faced, skills developed, time invested.',hint_cn:'面临的挑战、发展的技能、投入的时间。'},
+     {n:4,title:'Describe the feeling of completion',title_cn:'描述完成的感受',hint:'Pride, relief, surprise at quality — what happened to the object?',hint_cn:'自豪、如释重负、对质量的惊喜——这件物品后来怎么了？'},
+   ],
+   keywords:['crafted by hand','labour of love','imperfect but mine','sense of accomplishment','tangible result of effort','poured my creativity into'],
+   sample:{en:"Something I made that I'm genuinely proud of is a hand-bound collection of my own short stories that I put together over the course of about six months last year...",
+           cn:"我真正引以为豪的一件自制物品是我去年大约花了六个月时间整理的一本手工装订的短篇故事集……"}
+  },
+  {id:21,topic:'Object',
+   title:'Describe a piece of technology you find useful.',
+   title_cn:'描述一件你觉得有用的科技产品。',
+   bullets:[
+     {en:'What it is and what it does',cn:'它是什么，有什么功能'},
+     {en:'How long you have had it or used it',cn:'你拥有或使用它多久了'},
+     {en:'How often and in what ways you use it',cn:'你多久用一次，以什么方式使用'},
+     {en:'Why you find it particularly useful in your life',cn:'为什么你觉得它在你的生活中特别有用'},
+   ],
+   fw:[
+     {n:1,title:'Introduce the device',title_cn:'介绍设备',hint:'Name, type, manufacturer — be specific, avoid vagueness.',hint_cn:'名称、类型、制造商——要具体，避免模糊。'},
+     {n:2,title:'Describe its core functionality',title_cn:'描述其核心功能',hint:'What does it do that others cannot? What problem does it solve?',hint_cn:'它能做别人做不到的什么？它解决什么问题？'},
+     {n:3,title:'Describe daily or regular use',title_cn:'描述日常或定期使用',hint:'Morning routine, work tasks, creative projects — specifics.',hint_cn:'晨间例程、工作任务、创意项目——具体细节。'},
+     {n:4,title:'Evaluate its overall impact',title_cn:'评估其整体影响',hint:'How has it changed your productivity, creativity or quality of life?',hint_cn:'它如何改变了你的生产力、创造力或生活质量？'},
+   ],
+   keywords:['seamlessly integrates into','game-changer','increased my productivity','indispensable tool','effortlessly','transformed the way I'],
+   sample:{en:"The piece of technology I find most genuinely useful in my daily life is my noise-cancelling headphones. I know that might sound underwhelming, but the impact they've had...",
+           cn:"我在日常生活中觉得最真正有用的科技产品是我的降噪耳机。我知道这听起来可能不够令人印象深刻，但它们产生的影响……"}
+  },
+  {id:22,topic:'Object',
+   title:'Describe a piece of clothing or jewellery that is special to you.',
+   title_cn:'描述一件对你有特殊意义的衣服或珠宝。',
+   bullets:[
+     {en:'What it is and what it looks like',cn:'它是什么，看起来是什么样子'},
+     {en:'Where it came from and how you got it',cn:'它从哪里来的，你是如何得到它的'},
+     {en:'When you wear or use it',cn:'你什么时候穿它或使用它'},
+     {en:'Why it holds special meaning for you',cn:'为什么它对你有特殊意义'},
+   ],
+   fw:[
+     {n:1,title:'Describe the item vividly',title_cn:'生动地描述这件物品',hint:'Colour, texture, style, condition, approximate age.',hint_cn:'颜色、质地、风格、状况、大致年龄。'},
+     {n:2,title:'Explain its origin story',title_cn:'解释其来源故事',hint:'Who made it, who owned it, what occasion prompted it.',hint_cn:'谁制作的，谁拥有过，什么场合促成了它。'},
+     {n:3,title:'Describe when you choose to wear it',title_cn:'描述你选择穿戴它的时机',hint:'Special occasions, daily use, keeping it for certain moments.',hint_cn:'特殊场合、日常使用、为某些时刻保留它。'},
+     {n:4,title:'Explain the emotional resonance',title_cn:'解释情感共鸣',hint:'Memory, person, place, or value it represents.',hint_cn:'它代表的记忆、人物、地方或价值观。'},
+   ],
+   keywords:['irreplaceable heirloom','speaks to my identity','worn with pride','carries the memory of','crafted with care','defines who I am'],
+   sample:{en:"The item of clothing I hold closest to my heart is an old, slightly frayed denim jacket that belonged originally to my older brother before he gave it to me when he moved abroad...",
+           cn:"我最珍视的衣物是一件旧的、略微磨损的牛仔夹克，最初属于我哥哥，在他移居海外之前给了我……"}
+  },
+  {id:23,topic:'Object',
+   title:'Describe a photograph that is important to you.',
+   title_cn:'描述一张对你很重要的照片。',
+   bullets:[
+     {en:'What the photograph shows',cn:'这张照片显示了什么'},
+     {en:'When and where it was taken',cn:'它是何时何地拍摄的'},
+     {en:'Who took it and the circumstances around it',cn:'谁拍的，以及当时的情况'},
+     {en:'Why this photograph is particularly special or meaningful',cn:'为什么这张照片特别特别或有意义'},
+   ],
+   fw:[
+     {n:1,title:'Describe the image itself',title_cn:'描述图像本身',hint:'Composition, colours, people, setting — let the listener see it.',hint_cn:'构图、色彩、人物、场景——让听众能看到它。'},
+     {n:2,title:'Explain the context and moment',title_cn:'解释背景和时刻',hint:'What was happening? Why was this moment captured?',hint_cn:'当时发生了什么？为什么捕捉了这个时刻？'},
+     {n:3,title:'Describe how you encounter it',title_cn:'描述你如何与它相遇',hint:'Framed on a wall, saved on a phone, tucked in a wallet.',hint_cn:'挂在墙上、存在手机里、夹在钱包里。'},
+     {n:4,title:'Explain its deep emotional significance',title_cn:'解释其深厚的情感意义',hint:'What does it represent? What would it hurt to lose?',hint_cn:'它代表什么？失去它会有多痛？'},
+   ],
+   keywords:['frozen in time','captures the essence of','floods me with emotion','irreplaceable moment','tells a thousand words','timeless reminder of'],
+   sample:{en:"The photograph I'd like to describe is a candid, slightly blurry image taken at my grandmother's 80th birthday celebration about five years ago. In the photo...",
+           cn:"我想描述的照片是大约五年前在我祖母80岁生日庆典上拍摄的一张随意、略显模糊的照片。在照片中……"}
+  },
+  {id:24,topic:'Object',
+   title:'Describe something you bought recently that you are happy with.',
+   title_cn:'描述一件你最近购买的、让你感到满意的东西。',
+   bullets:[
+     {en:'What you bought and where',cn:'你买了什么，在哪里买的'},
+     {en:'Why you decided to buy it',cn:'你为什么决定买它'},
+     {en:'How you have used it since buying it',cn:'自从购买以来你如何使用它'},
+     {en:'Why you are particularly happy with your purchase',cn:'为什么你对这次购买特别满意'},
+   ],
+   fw:[
+     {n:1,title:'Introduce the purchase',title_cn:'介绍购买的物品',hint:'What, where, when, approximate cost — context first.',hint_cn:'什么、在哪里、何时、大概费用——先介绍背景。'},
+     {n:2,title:'Explain the decision to buy',title_cn:'解释购买决定',hint:'Need, desire, research process, what finally convinced you.',hint_cn:'需求、欲望、研究过程、最终说服你的是什么。'},
+     {n:3,title:'Describe how you use it',title_cn:'描述如何使用',hint:'Frequency, specific scenarios, integration into daily life.',hint_cn:'频率、具体场景、融入日常生活。'},
+     {n:4,title:'Evaluate whether it exceeded expectations',title_cn:'评估是否超出预期',hint:'Value for money, quality, longevity, surprise benefits.',hint_cn:'性价比、质量、耐用性、意外好处。'},
+   ],
+   keywords:['excellent value for money','exceeded my expectations','genuinely transformed','considered purchase','no regrets whatsoever','well worth the investment'],
+   sample:{en:"The purchase I've been most satisfied with recently is a high-quality standing desk converter that I bought online about six weeks ago for my home study area...",
+           cn:"我最近最满意的购买是大约六周前在网上为我的家庭书房买的一个高质量的站立式桌面转换器……"}
+  },
+
+  // ── EVENT (25-32) ──
+  {id:25,topic:'Event',
+   title:'Describe a celebration or festival you enjoy.',
+   title_cn:'描述一个你喜欢的庆典或节日。',
+   bullets:[
+     {en:'What festival or celebration it is',cn:'这是什么节日或庆典'},
+     {en:'How and where it is typically celebrated',cn:'通常如何及在哪里庆祝'},
+     {en:'What you typically do during this event',cn:'在这个活动期间你通常做什么'},
+     {en:'Why you particularly enjoy this celebration',cn:'为什么你特别喜欢这个庆典'},
+   ],
+   fw:[
+     {n:1,title:'Introduce the festival with context',title_cn:'结合背景介绍节日',hint:'Name, cultural or religious origin, time of year.',hint_cn:'名称、文化或宗教起源、一年中的时节。'},
+     {n:2,title:'Describe the typical celebration',title_cn:'描述典型的庆祝活动',hint:'Traditions, food, decorations, music, community gathering.',hint_cn:'传统、食物、装饰、音乐、社区聚会。'},
+     {n:3,title:'Share a personal memory',title_cn:'分享个人记忆',hint:'One specific year that stands out vividly — story-tell it.',hint_cn:'一个特别突出的具体年份——讲述它的故事。'},
+     {n:4,title:'Explain what it means to you',title_cn:'解释它对你意味着什么',hint:'Cultural identity, family bonds, joy, gratitude, continuity.',hint_cn:'文化认同、家庭纽带、喜悦、感恩、延续性。'},
+   ],
+   keywords:['steeped in tradition','brings the community together','sense of collective joy','annual ritual','lights up the night sky','preserves cultural heritage'],
+   sample:{en:"The celebration I look forward to most every year is Chinese New Year, or Spring Festival as it's also commonly known. In my family, preparations actually begin several weeks before...",
+           cn:"我每年最期待的庆典是中国新年，也就是通常所说的春节。在我家，准备工作实际上在节日前几周就开始了……"}
+  },
+  {id:26,topic:'Event',
+   title:'Describe a sporting event you watched or took part in.',
+   title_cn:'描述一场你观看或参与过的体育赛事。',
+   bullets:[
+     {en:'What event it was and when it took place',cn:'这是什么赛事，何时举行的'},
+     {en:'Where it took place and who was involved',cn:'在哪里举行，涉及哪些人'},
+     {en:'What happened during the event',cn:'赛事期间发生了什么'},
+     {en:'Why this event was memorable or exciting for you',cn:'为什么这次赛事对你来说是难忘或令人兴奋的'},
+   ],
+   fw:[
+     {n:1,title:'Set the scene vividly',title_cn:'生动地设置场景',hint:'Venue, crowd, atmosphere, weather — immerse the listener.',hint_cn:'场地、人群、氛围、天气——让听众身临其境。'},
+     {n:2,title:'Describe key moments',title_cn:'描述关键时刻',hint:'Turning points, dramatic plays, personal performance.',hint_cn:'转折点、戏剧性动作、个人表现。'},
+     {n:3,title:'Describe the emotional journey',title_cn:'描述情感历程',hint:'Tension, excitement, disappointment, euphoria — take us through it.',hint_cn:'紧张、兴奋、失望、欣喜——带我们经历这一切。'},
+     {n:4,title:'Explain why it stays with you',title_cn:'解释为何它留在你心中',hint:'Outcome, personal achievement, the collective experience.',hint_cn:'结果、个人成就、集体体验。'},
+   ],
+   keywords:['electric atmosphere','nail-biting tension','roaring crowd','personal best','defining moment','communal celebration'],
+   sample:{en:"I'd like to talk about the time I watched my city's football club play in a crucial play-off match at their home stadium two years ago. The atmosphere outside the ground was...",
+           cn:"我想谈谈两年前在主场球场观看我的城市足球俱乐部参加一场关键附加赛的经历。球场外的气氛……"}
+  },
+  {id:27,topic:'Event',
+   title:'Describe an important event in your life.',
+   title_cn:'描述你生命中的一件重要事件。',
+   bullets:[
+     {en:'What the event was',cn:'这件事是什么'},
+     {en:'When and where it took place',cn:'它何时何地发生的'},
+     {en:'What happened and who was involved',cn:'发生了什么，涉及哪些人'},
+     {en:'Why this event was so important to you',cn:'为什么这件事对你如此重要'},
+   ],
+   fw:[
+     {n:1,title:'Introduce the event and context',title_cn:'介绍事件和背景',hint:'When, where, what type of event, who else was there.',hint_cn:'何时、何地、什么类型的事件、还有谁在场。'},
+     {n:2,title:'Describe the build-up and moment',title_cn:'描述铺垫和时刻',hint:'Anticipation, nerves, the moment itself — present tense storytelling.',hint_cn:'期待、紧张、时刻本身——用现在时讲故事。'},
+     {n:3,title:'Describe the immediate aftermath',title_cn:'描述直接结果',hint:'Emotions, reactions of others, how it felt in the hours after.',hint_cn:'情绪、他人的反应、之后几小时的感受。'},
+     {n:4,title:'Explain the long-term significance',title_cn:'解释长期意义',hint:'How has your life, identity or path changed because of this?',hint_cn:'因为这件事，你的生活、身份或道路发生了怎样的变化？'},
+   ],
+   keywords:['life-defining moment','watershed event','transformed my sense of self','pivotal turning point','changed everything','milestone achievement'],
+   sample:{en:"The most important event in my life so far has been the day I received my university acceptance letter. I had been waiting with a mixture of excitement and dread for...",
+           cn:"迄今为止我生命中最重要的事件是我收到大学录取通知书的那天。我一直带着兴奋和恐惧交织的心情等待着……"}
+  },
+  {id:28,topic:'Event',
+   title:'Describe a concert, performance or show you attended.',
+   title_cn:'描述一场你参加过的演唱会、表演或演出。',
+   bullets:[
+     {en:'What kind of performance it was and who performed',cn:'这是什么类型的表演，谁在表演'},
+     {en:'Where and when it took place',cn:'在哪里、何时举行的'},
+     {en:'What the performance was like',cn:'表演是什么样的'},
+     {en:'Why this particular show was memorable',cn:'为什么这场特别的演出令人难忘'},
+   ],
+   fw:[
+     {n:1,title:'Set the stage',title_cn:'交代舞台',hint:'Venue, size, crowd demographic, your seat — ground the listener.',hint_cn:'场地、规模、观众群体、你的座位——让听众有画面感。'},
+     {n:2,title:'Describe the performance itself',title_cn:'描述表演本身',hint:'Highlights, standout moments, production quality, energy.',hint_cn:'亮点、突出时刻、制作质量、能量感。'},
+     {n:3,title:'Describe your personal experience',title_cn:'描述你的个人体验',hint:'Emotions, physical reactions, who you were with.',hint_cn:'情绪、身体反应、和谁在一起。'},
+     {n:4,title:'Explain why it endured in memory',title_cn:'解释为何在记忆中长存',hint:'A specific song, scene, or unexpected moment that stood out.',hint_cn:'一首特别的歌、场景或意外时刻。'},
+   ],
+   keywords:['spine-tingling performance','held the audience captive','raw emotional power','brought the house down','goosebumps','an overwhelming wave of emotion'],
+   sample:{en:"The performance that stays most vividly in my memory is a chamber music concert I attended at a small, intimate venue in the city centre about eighteen months ago...",
+           cn:"在我记忆中最生动的表演是大约十八个月前我在市中心一个小而亲密的场所参加的一场室内乐音乐会……"}
+  },
+  {id:29,topic:'Event',
+   title:'Describe a time when you helped someone.',
+   title_cn:'描述一次你帮助某人的经历。',
+   bullets:[
+     {en:'Who you helped and what the situation was',cn:'你帮助了谁，当时的情况是什么'},
+     {en:'How you became aware they needed help',cn:'你是如何意识到他们需要帮助的'},
+     {en:'What you did to help them',cn:'你做了什么来帮助他们'},
+     {en:'How you felt about helping this person',cn:'你对帮助这个人有什么感受'},
+   ],
+   fw:[
+     {n:1,title:'Set up the situation',title_cn:'建立情境',hint:'Who, when, what was happening — make the need for help clear.',hint_cn:'谁、何时、发生了什么——清楚地说明需要帮助的原因。'},
+     {n:2,title:'Describe your decision to help',title_cn:'描述你决定帮忙',hint:'What made you step forward? Instinct, empathy, duty?',hint_cn:'是什么让你站出来？本能、同理心、责任感？'},
+     {n:3,title:'Narrate your actions',title_cn:'叙述你的行动',hint:'What specific things did you do? Challenges you faced.',hint_cn:'你做了哪些具体的事情？你面临的挑战。'},
+     {n:4,title:'Reflect on the outcome and feeling',title_cn:'反思结果和感受',hint:'How did it go? How did it make you feel? What did you learn?',hint_cn:'结果如何？你有什么感受？你学到了什么？'},
+   ],
+   keywords:['without hesitation','genuine desire to help','made a real difference','rewarding experience','restored my faith','felt compelled to step in'],
+   sample:{en:"I'd like to describe a time about a year ago when I helped an elderly neighbour who had suffered a minor accident at home. I was passing her apartment when I noticed...",
+           cn:"我想描述大约一年前我帮助一位在家中轻微受伤的老年邻居的经历。当时我正路过她的公寓，注意到……"}
+  },
+  {id:30,topic:'Event',
+   title:'Describe an occasion when you were particularly nervous.',
+   title_cn:'描述一次你特别紧张的场合。',
+   bullets:[
+     {en:'What the occasion was',cn:'这是什么场合'},
+     {en:'Why you were feeling so nervous',cn:'你为什么感到如此紧张'},
+     {en:'What happened during the event',cn:'活动期间发生了什么'},
+     {en:'How you managed your nerves and what the outcome was',cn:'你如何控制了紧张情绪，结果如何'},
+   ],
+   fw:[
+     {n:1,title:'Introduce the occasion and stakes',title_cn:'介绍场合和重要性',hint:'Why did this matter so much to you? Paint the pressure.',hint_cn:'为什么这对你如此重要？描绘压力感。'},
+     {n:2,title:'Describe the build-up of nerves',title_cn:'描述紧张情绪的积聚',hint:'Physical symptoms, sleepless night, racing thoughts.',hint_cn:'身体症状、失眠之夜、思绪纷乱。'},
+     {n:3,title:'Narrate what happened',title_cn:'叙述发生了什么',hint:'Moment by moment — bring the listener into the experience.',hint_cn:'一刻一刻地——带听众进入那个体验。'},
+     {n:4,title:'Reflect on what you learned',title_cn:'反思你学到了什么',hint:'About yourself, about managing pressure, about resilience.',hint_cn:'关于自己、关于管理压力、关于韧性。'},
+   ],
+   keywords:['palms sweating','heart pounding','pushed through the nerves','adrenaline rush','moment of truth','transformed anxiety into focus'],
+   sample:{en:"The occasion when I felt most genuinely nervous was the first time I had to deliver a presentation in front of a large audience — approximately 200 fellow students and faculty members...",
+           cn:"我感到最真正紧张的场合是我第一次必须在大量观众面前发表演讲——大约200名同学和教职人员……"}
+  },
+  {id:31,topic:'Event',
+   title:'Describe a time you visited a historical place.',
+   title_cn:'描述一次你参观历史名胜的经历。',
+   bullets:[
+     {en:'Where the historical place was and when you went',cn:'这个历史名胜在哪里，你何时去的'},
+     {en:'What makes the place historically significant',cn:'是什么让这个地方具有历史意义'},
+     {en:'What you saw and did during the visit',cn:'参观期间你看到了什么，做了什么'},
+     {en:'How the visit affected or moved you',cn:'这次参观如何影响或感动了你'},
+   ],
+   fw:[
+     {n:1,title:'Introduce the place and your visit',title_cn:'介绍地点和你的参观',hint:'Location, era it represents, why you went.',hint_cn:'位置、它代表的时代、你为什么去。'},
+     {n:2,title:'Describe the historical significance',title_cn:'描述历史意义',hint:'Events that happened there, people associated, its legacy.',hint_cn:'在那里发生的事件、相关人物、其遗产。'},
+     {n:3,title:'Describe what you saw and did',title_cn:'描述你看到和做了什么',hint:'Architecture, artefacts, guided tour, personal exploration.',hint_cn:'建筑、文物、导览、个人探索。'},
+     {n:4,title:'Reflect on the emotional impact',title_cn:'反思情感影响',hint:'Humility, awe, connection to history, changed perspective.',hint_cn:'谦卑、敬畏、与历史的联结、视角的改变。'},
+   ],
+   keywords:['stood in the shadow of history','sense of temporal vertigo','tangible connection to the past','awe-inspiring scale','resonated deeply','profound sense of perspective'],
+   sample:{en:"One of the most moving historical visits I have ever made was to the Auschwitz-Birkenau Memorial in Poland, which I visited as part of a university study trip three years ago...",
+           cn:"我曾经经历过的最令人感动的历史参观之一是三年前作为大学研究旅行的一部分参观波兰的奥斯维辛-比克瑙纪念馆……"}
+  },
+  {id:32,topic:'Event',
+   title:'Describe a time you overcame a difficulty.',
+   title_cn:'描述一次你克服困难的经历。',
+   bullets:[
+     {en:'What the difficulty or challenge was',cn:'是什么困难或挑战'},
+     {en:'When and how it arose',cn:'它何时以及如何出现的'},
+     {en:'What you did to overcome it',cn:'你做了什么来克服它'},
+     {en:'What you learned from the experience',cn:'你从这次经历中学到了什么'},
+   ],
+   fw:[
+     {n:1,title:'Establish the challenge clearly',title_cn:'清楚地建立挑战',hint:'What, when, why it was difficult — show, don\'t just tell.',hint_cn:'什么、何时、为何困难——展示，不仅仅是讲述。'},
+     {n:2,title:'Describe your initial response',title_cn:'描述你最初的反应',hint:'Emotions, self-doubt, the temptation to give up.',hint_cn:'情绪、自我怀疑、放弃的诱惑。'},
+     {n:3,title:'Narrate the path through',title_cn:'叙述克服的过程',hint:'Specific actions, help sought, mindset shifts, persistence.',hint_cn:'具体行动、寻求帮助、心态转变、坚持。'},
+     {n:4,title:'Reflect on the growth',title_cn:'反思成长',hint:'Skills gained, confidence built, new perspective on challenges.',hint_cn:'获得的技能、建立的信心、对挑战的新视角。'},
+   ],
+   keywords:['tested my resilience','refused to give in','incremental progress','emerged stronger','hard-won lesson','cultivated a growth mindset'],
+   sample:{en:"The most significant difficulty I've had to overcome was struggling with severe exam anxiety during my first year of university. At that time, I was so paralysed by fear that...",
+           cn:"我必须克服的最重大困难是在大学第一年与严重的考试焦虑做斗争。那时，我因恐惧而瘫痪，以至于……"}
+  },
+
+  // ── EXPERIENCE (33-40) ──
+  {id:33,topic:'Experience',
+   title:'Describe a hobby or activity you enjoy doing.',
+   title_cn:'描述一项你喜欢做的爱好或活动。',
+   bullets:[
+     {en:'What the hobby or activity is',cn:'这是什么爱好或活动'},
+     {en:'How and when you first started doing it',cn:'你如何以及何时开始做这件事的'},
+     {en:'How often you do it and how you do it',cn:'你多久做一次，以及你如何做'},
+     {en:'Why you enjoy it so much',cn:'为什么你如此喜欢它'},
+   ],
+   fw:[
+     {n:1,title:'Introduce and contextualise',title_cn:'介绍并提供背景',hint:'What it is, how long you have done it, skill level.',hint_cn:'是什么、你已经做了多久、技能水平。'},
+     {n:2,title:'Describe the activity in detail',title_cn:'详细描述活动',hint:'Equipment, process, environment, who you do it with.',hint_cn:'设备、过程、环境、和谁一起做。'},
+     {n:3,title:'Share a memorable recent session',title_cn:'分享最近一次难忘的经历',hint:'Something specific that happened recently — make it vivid.',hint_cn:'最近发生的具体事情——使其生动。'},
+     {n:4,title:'Explain its deeper appeal',title_cn:'解释其更深层的吸引力',hint:'Flow state, community, self-expression, physical/mental benefits.',hint_cn:'心流状态、社区、自我表达、身心益处。'},
+   ],
+   keywords:['complete absorption','enter a flow state','genuinely therapeutic','deeply fulfilling','lose all track of time','sense of mastery'],
+   sample:{en:"The hobby I'd like to describe is landscape photography, which I've been practising seriously for about three years now. I first got into it almost accidentally when...",
+           cn:"我想描述的爱好是风景摄影，我认真练习这项爱好大约已有三年了。我最初是几乎偶然地爱上它的，当时……"}
+  },
+  {id:34,topic:'Experience',
+   title:'Describe a trip or journey you have particularly enjoyed.',
+   title_cn:'描述一次你特别享受的旅行。',
+   bullets:[
+     {en:'Where you went and when',cn:'你去了哪里，何时去的'},
+     {en:'How you got there and who you went with',cn:'你是如何到达的，和谁一起去的'},
+     {en:'What you did and saw on the trip',cn:'旅途中你做了什么，看到了什么'},
+     {en:'Why this particular trip was so enjoyable',cn:'为什么这次特别的旅行如此令人愉快'},
+   ],
+   fw:[
+     {n:1,title:'Hook the listener with context',title_cn:'用背景吸引听众',hint:'Destination, travel companion, how long, type of trip.',hint_cn:'目的地、旅伴、时长、旅行类型。'},
+     {n:2,title:'Narrate the journey itself',title_cn:'叙述旅程本身',hint:'Key moments — arrival, a surprise, a challenge, a highlight.',hint_cn:'关键时刻——到达、意外、挑战、亮点。'},
+     {n:3,title:'Describe your favourite part',title_cn:'描述你最喜欢的部分',hint:'One specific experience — sensory, emotional, personal.',hint_cn:'一个具体体验——感官的、情感的、个人的。'},
+     {n:4,title:'Reflect on why it was special',title_cn:'反思为何特别',hint:'Who you were with, what you discovered about yourself.',hint_cn:'和谁在一起，你发现了关于自己的什么。'},
+   ],
+   keywords:['sense of adventure','serendipitous discovery','carefree atmosphere','stepping outside my comfort zone','authentic local experience','genuinely transformative'],
+   sample:{en:"The trip I'd like to describe is a ten-day solo cycling journey I undertook along the coast of northern Vietnam two summers ago. I had been planning it for months and...",
+           cn:"我想描述的旅行是两个夏天前我在越南北部海岸进行的为期十天的独自骑行之旅。我已经计划了几个月……"}
+  },
+  {id:35,topic:'Experience',
+   title:'Describe an experience you had with learning something new.',
+   title_cn:'描述一次你学习新事物的经历。',
+   bullets:[
+     {en:'What you learned and when you started learning it',cn:'你学了什么，何时开始学的'},
+     {en:'Why you decided to learn this particular thing',cn:'你为什么决定学这个特别的东西'},
+     {en:'How you went about learning it',cn:'你是如何学习它的'},
+     {en:'How learning this has affected or benefited you',cn:'学习这个如何影响或让你受益'},
+   ],
+   fw:[
+     {n:1,title:'Set up the learning journey',title_cn:'建立学习旅程',hint:'What skill, why it seemed challenging, initial intimidation.',hint_cn:'什么技能，为什么看起来有挑战性，最初的畏惧感。'},
+     {n:2,title:'Describe the learning method',title_cn:'描述学习方法',hint:'Classes, self-teaching, YouTube, mentors, practice schedule.',hint_cn:'课程、自学、YouTube、导师、练习时间表。'},
+     {n:3,title:'Describe the breakthrough moment',title_cn:'描述突破时刻',hint:'When it "clicked" — the first success that made you feel capable.',hint_cn:'当一切"豁然开朗"时——让你感到有能力的第一次成功。'},
+     {n:4,title:'Explain the broader benefits',title_cn:'解释更广泛的益处',hint:'Confidence, community, career, creative expression, joy.',hint_cn:'信心、社区、职业、创意表达、喜悦。'},
+   ],
+   keywords:['steep learning curve','persisted through frustration','breakthrough moment','unlocked a new dimension','transferable skills','sense of personal achievement'],
+   sample:{en:"The most satisfying learning experience I've had recently was teaching myself to code in Python over about four months last year. I'd been intimidated by programming for years, but...",
+           cn:"我最近最令人满足的学习体验是去年大约四个月内自学Python编程。多年来我一直对编程感到畏惧，但……"}
+  },
+  {id:36,topic:'Experience',
+   title:'Describe a time you spent time with a friend or family member you had not seen for a while.',
+   title_cn:'描述一次你和很久没见的朋友或家人相处的经历。',
+   bullets:[
+     {en:'Who this person is and how long it had been',cn:'这个人是谁，分开多久了'},
+     {en:'Why you had not seen each other for a while',cn:'你们为什么有一段时间没见面'},
+     {en:'What you did together when you met again',cn:'你们再次见面时一起做了什么'},
+     {en:'How the reunion made you feel',cn:'这次重聚让你有什么感受'},
+   ],
+   fw:[
+     {n:1,title:'Introduce the relationship and gap',title_cn:'介绍关系和分离',hint:'Who, how close, why the time apart — build emotional context.',hint_cn:'是谁、多亲密、为何分离——建立情感背景。'},
+     {n:2,title:'Describe the reunion moment',title_cn:'描述重聚时刻',hint:'Where you met, first sight, first words — make it warm and real.',hint_cn:'在哪里见面、初次见面、第一句话——使其温暖真实。'},
+     {n:3,title:'Describe what you did together',title_cn:'描述你们一起做了什么',hint:'Activities, conversations, shared meals — specifics matter.',hint_cn:'活动、对话、共餐——细节很重要。'},
+     {n:4,title:'Reflect on the value of reconnection',title_cn:'反思重新联结的价值',hint:'What does this relationship mean to you? What was strengthened?',hint_cn:'这段关系对你意味着什么？什么得到了加强？'},
+   ],
+   keywords:['picked up right where we left off','time seemed to collapse','bond had only deepened','flooded with warmth','effortlessly reconnected','depth of real friendship'],
+   sample:{en:"I'd like to describe the time I was reunited with my closest childhood friend after almost two and a half years apart, during which she had been living and working in Canada...",
+           cn:"我想描述与我最亲密的童年朋友分离近两年半后重聚的经历，在此期间她一直在加拿大生活和工作……"}
+  },
+  {id:37,topic:'Experience',
+   title:'Describe a time you experienced excellent customer service.',
+   title_cn:'描述一次你享受到出色客户服务的经历。',
+   bullets:[
+     {en:'Where this happened and when',cn:'这是在哪里、何时发生的'},
+     {en:'What you needed help with',cn:'你需要帮助解决什么'},
+     {en:'What the person did to help you',cn:'那个人做了什么来帮助你'},
+     {en:'Why the service was so impressive or memorable',cn:'为什么这次服务如此令人印象深刻或难忘'},
+   ],
+   fw:[
+     {n:1,title:'Set the scene and the need',title_cn:'设置场景和需求',hint:'Business, situation, what you needed, initial expectation.',hint_cn:'商户、情况、你需要什么、最初的期望。'},
+     {n:2,title:'Describe the service received',title_cn:'描述收到的服务',hint:'What the staff member did — specific actions, words, attitude.',hint_cn:'员工做了什么——具体行动、语言、态度。'},
+     {n:3,title:'Describe the impact',title_cn:'描述影响',hint:'How it solved your problem — and exceeded your expectations.',hint_cn:'它如何解决了你的问题——并超出了你的期望。'},
+     {n:4,title:'Reflect on what makes great service',title_cn:'反思是什么造就了出色服务',hint:'Empathy, ownership, follow-through, going the extra mile.',hint_cn:'同理心、责任感、跟进、超额付出。'},
+   ],
+   keywords:['went above and beyond','genuinely invested in helping','proactive attitude','left feeling genuinely valued','resolved promptly and professionally','set a new standard'],
+   sample:{en:"I'd like to describe an experience of exceptional customer service I received at a small independent bookshop about eight months ago. I was looking for a very specific out-of-print book...",
+           cn:"我想描述大约八个月前在一家小型独立书店收到的出色客户服务体验。我正在寻找一本非常特定的绝版书……"}
+  },
+  {id:38,topic:'Experience',
+   title:'Describe a time when you had to make an important decision.',
+   title_cn:'描述一次你必须做出重要决定的经历。',
+   bullets:[
+     {en:'What the decision was',cn:'这个决定是什么'},
+     {en:'Why it was a difficult or important decision to make',cn:'为什么这是一个困难或重要的决定'},
+     {en:'How you went about making the decision',cn:'你是如何做出决定的'},
+     {en:'What happened as a result and whether you think it was the right decision',cn:'结果发生了什么，你是否认为这是正确的决定'},
+   ],
+   fw:[
+     {n:1,title:'Introduce the decision and its weight',title_cn:'介绍决定及其重要性',hint:'What were the stakes? Who was affected? What was uncertain?',hint_cn:'风险是什么？谁受到影响？什么是不确定的？'},
+     {n:2,title:'Describe the dilemma',title_cn:'描述困境',hint:'Two or more paths — what were the pros and cons of each?',hint_cn:'两条或更多道路——每条的优缺点是什么？'},
+     {n:3,title:'Describe your decision-making process',title_cn:'描述你的决策过程',hint:'Research, advice sought, gut feeling, time taken.',hint_cn:'研究、寻求建议、直觉、花费时间。'},
+     {n:4,title:'Evaluate the outcome',title_cn:'评估结果',hint:'Right or wrong — what did you learn regardless?',hint_cn:'对或错——无论如何你学到了什么？'},
+   ],
+   keywords:['weighed up the options','agonised over','trusted my instincts','no easy answer','in hindsight','defining fork in the road'],
+   sample:{en:"The most important decision I've had to make independently was choosing between two very different job offers after finishing my degree last year. Both had significant merits...",
+           cn:"我必须独立做出的最重要决定是去年完成学业后在两份截然不同的工作邀请之间进行选择。两者都有显著优点……"}
+  },
+  {id:39,topic:'Experience',
+   title:'Describe a time you were stuck at home and how you spent the time.',
+   title_cn:'描述一次你被困在家中并如何度过时光的经历。',
+   bullets:[
+     {en:'When you were stuck at home and why',cn:'你何时被困在家中，为什么'},
+     {en:'How you felt at first',cn:'你最初有什么感受'},
+     {en:'What you did to spend the time productively',cn:'你做了什么来有效利用时间'},
+     {en:'What you learned or gained from this experience',cn:'你从这次经历中学到或获得了什么'},
+   ],
+   fw:[
+     {n:1,title:'Explain the circumstances',title_cn:'解释情况',hint:'Illness, weather, lockdown, renovation — why confined?',hint_cn:'生病、天气、封锁、装修——为何被限制？'},
+     {n:2,title:'Describe the initial reaction',title_cn:'描述最初反应',hint:'Frustration, boredom, anxiety — honest emotional response.',hint_cn:'挫败感、无聊、焦虑——诚实的情绪反应。'},
+     {n:3,title:'Describe how you adapted',title_cn:'描述你如何适应',hint:'Routine established, new hobbies tried, projects tackled.',hint_cn:'建立例程、尝试新爱好、处理项目。'},
+     {n:4,title:'Reflect on unexpected positives',title_cn:'反思意外的积极面',hint:'Creativity, self-knowledge, skills, relationships deepened.',hint_cn:'创造力、自我认知、技能、关系加深。'},
+   ],
+   keywords:['enforced solitude','discovered untapped creativity','unexpected silver lining','turned inward','productive isolation','emerged with a new appreciation'],
+   sample:{en:"I'd like to describe the two weeks I spent at home after breaking my ankle in a minor accident — an experience that turned out to be far more valuable than I initially expected...",
+           cn:"我想描述脚踝轻微骨折后在家度过的两周——这段经历最终比我最初预期的更有价值……"}
+  },
+  {id:40,topic:'Experience',
+   title:'Describe a time you tried a new food or ate in a new restaurant.',
+   title_cn:'描述一次你尝试新食物或在新餐厅就餐的经历。',
+   bullets:[
+     {en:'What the food was and where you had it',cn:'食物是什么，你在哪里吃的'},
+     {en:'Who you were with and the occasion',cn:'你和谁在一起，是什么场合'},
+     {en:'What the experience was like',cn:'这次体验是什么样的'},
+     {en:'Whether you would recommend it and why',cn:'你是否会推荐它，为什么'},
+   ],
+   fw:[
+     {n:1,title:'Set the scene',title_cn:'设置场景',hint:'Restaurant, cuisine type, location, atmosphere — paint a picture.',hint_cn:'餐厅、菜系类型、位置、氛围——描绘画面。'},
+     {n:2,title:'Describe the food itself',title_cn:'描述食物本身',hint:'Appearance, aroma, texture, taste — use rich sensory language.',hint_cn:'外观、香气、质地、味道——使用丰富的感官语言。'},
+     {n:3,title:'Narrate the experience',title_cn:'叙述体验',hint:'First bite reaction, conversation, service, overall feel.',hint_cn:'第一口的反应、对话、服务、整体感受。'},
+     {n:4,title:'Evaluate and reflect',title_cn:'评估和反思',hint:'Would you go back? Would you make it yourself? Why?',hint_cn:'你会再去吗？你会自己做吗？为什么？'},
+   ],
+   keywords:['burst of flavour','unlike anything I had tried','complex yet harmonious','broadened my culinary horizons','pleasantly surprising','deeply satisfying'],
+   sample:{en:"I'd like to describe the first time I tried authentic Ethiopian cuisine at a small family-run restaurant that had recently opened near my neighbourhood about four months ago...",
+           cn:"我想描述大约四个月前在我邻近地区新开的一家家庭经营的小餐厅第一次尝试正宗埃塞俄比亚美食的经历……"}
+  },
+
+  // ── MEDIA (41-45) ──
+  {id:41,topic:'Media',
+   title:'Describe a film or TV show you found memorable.',
+   title_cn:'描述一部你觉得难忘的电影或电视剧。',
+   bullets:[
+     {en:'What the film or show is called',cn:'这部电影或电视剧叫什么名字'},
+     {en:'What it is about',cn:'它的内容是什么'},
+     {en:'When and how you watched it',cn:'你何时以及如何观看它的'},
+     {en:'Why it left such a strong impression on you',cn:'为什么它给你留下了如此深刻的印象'},
+   ],
+   fw:[
+     {n:1,title:'Introduce the production',title_cn:'介绍这部作品',hint:'Title, genre, director, year, where you watched it.',hint_cn:'标题、类型、导演、年份、在哪里看的。'},
+     {n:2,title:'Summarise the story',title_cn:'概述故事',hint:'Plot overview without spoilers — hook the listener.',hint_cn:'不含剧透的情节概述——吸引听众。'},
+     {n:3,title:'Describe what stood out',title_cn:'描述突出之处',hint:'Performance, cinematography, writing, music, an unforgettable scene.',hint_cn:'表演、摄影、剧本、音乐、一个难忘的场景。'},
+     {n:4,title:'Explain its lasting impact',title_cn:'解释其持久影响',hint:'Changed your thinking, sparked curiosity, moved you emotionally.',hint_cn:'改变了你的思维、激发了好奇心、情感上感动了你。'},
+   ],
+   keywords:['emotionally resonant','thought-provoking narrative','compellingly told','stayed with me long after','brilliant performances','changed my perspective on'],
+   sample:{en:"The film I'd like to describe is 'Parasite' by the South Korean director Bong Joon-ho, which I watched for the first time two years ago on a quiet Sunday evening...",
+           cn:"我想描述的电影是韩国导演奉俊昊的《寄生虫》，我两年前在一个安静的周日晚上第一次观看……"}
+  },
+  {id:42,topic:'Media',
+   title:'Describe a song or type of music you enjoy.',
+   title_cn:'描述一首你喜欢的歌曲或一种你喜欢的音乐类型。',
+   bullets:[
+     {en:'What the song or music is',cn:'这首歌或音乐是什么'},
+     {en:'When you first heard it and your reaction',cn:'你何时第一次听到它，以及你的反应'},
+     {en:'When and why you listen to it',cn:'你何时以及为什么听它'},
+     {en:'Why this song or genre is particularly meaningful to you',cn:'为什么这首歌或这种类型对你特别有意义'},
+   ],
+   fw:[
+     {n:1,title:'Introduce the music',title_cn:'介绍音乐',hint:'Artist, song title or genre, country of origin, era.',hint_cn:'艺术家、歌曲名或类型、起源国、时代。'},
+     {n:2,title:'Describe the sound and feel',title_cn:'描述声音和感觉',hint:'Instrumentation, tempo, vocals, emotional texture.',hint_cn:'乐器、节奏、人声、情感质地。'},
+     {n:3,title:'Share the context of listening',title_cn:'分享聆听的背景',hint:'When you play it, what you\'re doing, who you might share it with.',hint_cn:'你何时播放它、你在做什么、你可能和谁分享。'},
+     {n:4,title:'Explain its deeper personal meaning',title_cn:'解释其更深层的个人意义',hint:'Associated memories, identity, emotional need it meets.',hint_cn:'相关记忆、身份认同、它满足的情感需求。'},
+   ],
+   keywords:['transports me to another place','stirs something deep inside','speaks to my soul','emotional catharsis','timeless quality','resonates on a cellular level'],
+   sample:{en:"The piece of music I'd like to describe is 'Clair de Lune' by Claude Debussy, a hauntingly beautiful piano composition that I first discovered by accident while studying late one night...",
+           cn:"我想描述的音乐是克劳德·德彪西的《月光》，这是一首令人难以忘怀的美丽钢琴曲，我第一次发现它是在某个深夜学习时偶然听到的……"}
+  },
+  {id:43,topic:'Media',
+   title:'Describe a newspaper or magazine article you found interesting.',
+   title_cn:'描述一篇你觉得有趣的报纸或杂志文章。',
+   bullets:[
+     {en:'What the article was about',cn:'这篇文章是关于什么的'},
+     {en:'Where you read it and when',cn:'你在哪里读到的，何时读的'},
+     {en:'What the main points or findings were',cn:'主要观点或发现是什么'},
+     {en:'Why you found it particularly interesting or important',cn:'为什么你觉得它特别有趣或重要'},
+   ],
+   fw:[
+     {n:1,title:'Introduce the article and publication',title_cn:'介绍文章和出版物',hint:'Topic, publication name, approximate date, reason you read it.',hint_cn:'话题、出版物名称、大致日期、你阅读它的原因。'},
+     {n:2,title:'Summarise the key content',title_cn:'总结主要内容',hint:'Main argument, findings, or story — concise and accurate.',hint_cn:'主要论点、发现或故事——简洁准确。'},
+     {n:3,title:'Describe your reaction',title_cn:'描述你的反应',hint:'Surprise, concern, inspiration, confirmation — be specific.',hint_cn:'惊讶、担忧、启发、证实——要具体。'},
+     {n:4,title:'Explain its wider relevance',title_cn:'解释其更广泛的相关性',hint:'Why should others read it? How does it affect our world?',hint_cn:'为什么别人应该读它？它如何影响我们的世界？'},
+   ],
+   keywords:['eye-opening research','challenged my assumptions','well-researched and balanced','stirred public debate','shed new light on','prompted me to reconsider'],
+   sample:{en:"I'd like to talk about a fascinating article I read in The Economist a few months ago, which explored the surprising long-term psychological effects of social media use on teenagers...",
+           cn:"我想谈谈几个月前在《经济学人》上读到的一篇迷人文章，它探讨了社交媒体使用对青少年出人意料的长期心理影响……"}
+  },
+  {id:44,topic:'Media',
+   title:'Describe a podcast or radio programme you enjoy.',
+   title_cn:'描述一个你喜欢的播客或广播节目。',
+   bullets:[
+     {en:'What the podcast or programme is called',cn:'播客或节目叫什么名字'},
+     {en:'What it is about and who hosts it',cn:'它的内容是什么，谁是主持人'},
+     {en:'How often you listen and in what situations',cn:'你多久听一次，在什么情况下听'},
+     {en:'Why you find it so enjoyable or valuable',cn:'为什么你觉得它如此令人愉快或有价值'},
+   ],
+   fw:[
+     {n:1,title:'Introduce the show',title_cn:'介绍节目',hint:'Name, format, topic area, how you discovered it.',hint_cn:'名称、形式、话题领域、你是如何发现的。'},
+     {n:2,title:'Describe what makes it compelling',title_cn:'描述是什么让它引人入胜',hint:'Host personality, quality of guests, depth, production quality.',hint_cn:'主持人个性、嘉宾质量、深度、制作质量。'},
+     {n:3,title:'Describe your listening habits',title_cn:'描述你的聆听习惯',hint:'Commute, exercise, cooking — when does it fit your life?',hint_cn:'通勤、锻炼、做饭——它何时融入你的生活？'},
+     {n:4,title:'Explain the value it adds',title_cn:'解释它增加的价值',hint:'Knowledge, perspective, comfort, motivation.',hint_cn:'知识、视角、慰藉、动力。'},
+   ],
+   keywords:['consistently thought-provoking','trusted voice on','genuinely informs my thinking','accessible yet substantive','loyal listener','enriches my daily routine'],
+   sample:{en:"The podcast I'd like to describe is one called 'Hidden Brain', produced by NPR in the United States, which explores the unconscious patterns that drive human behaviour...",
+           cn:"我想描述的播客叫做《隐藏的大脑》，由美国国家公共广播电台制作，探索驱动人类行为的无意识模式……"}
+  },
+  {id:45,topic:'Media',
+   title:'Describe a website or app you use regularly.',
+   title_cn:'描述一个你经常使用的网站或应用程序。',
+   bullets:[
+     {en:'What it is and what it does',cn:'它是什么，有什么功能'},
+     {en:'How you first came across it',cn:'你是如何第一次发现它的'},
+     {en:'How often and how you use it',cn:'你多久使用一次，以及如何使用它'},
+     {en:'Why you find it so useful or enjoyable',cn:'为什么你觉得它如此有用或令人愉快'},
+   ],
+   fw:[
+     {n:1,title:'Introduce the platform',title_cn:'介绍平台',hint:'Name, type, company, when it was launched if known.',hint_cn:'名称、类型、公司、如果知道的话何时推出。'},
+     {n:2,title:'Describe its core function',title_cn:'描述其核心功能',hint:'What problem does it solve? What need does it meet?',hint_cn:'它解决什么问题？它满足什么需求？'},
+     {n:3,title:'Describe your personal usage',title_cn:'描述你的个人使用',hint:'Frequency, typical session, specific features you rely on.',hint_cn:'频率、典型使用时长、你依赖的具体功能。'},
+     {n:4,title:'Evaluate its impact',title_cn:'评估其影响',hint:'What would your life or work be like without it?',hint_cn:'没有它，你的生活或工作会是什么样？'},
+   ],
+   keywords:['seamlessly designed','indispensable in my daily life','intuitive interface','saves me enormous amounts of time','reliable go-to resource','transformed my workflow'],
+   sample:{en:"The app I use most regularly and find genuinely indispensable is Anki, a spaced-repetition flashcard application that I primarily use for language learning and academic study...",
+           cn:"我最经常使用且觉得真正不可或缺的应用程序是Anki，这是一款间隔重复闪卡应用程序，我主要用于语言学习和学业研究……"}
+  },
+
+  // ── NATURE / ENVIRONMENT (46-50) ──
+  {id:46,topic:'Nature',
+   title:'Describe an animal you find interesting.',
+   title_cn:'描述一种你觉得有趣的动物。',
+   bullets:[
+     {en:'What animal it is',cn:'这是什么动物'},
+     {en:'Where it lives and what it looks like',cn:'它住在哪里，看起来是什么样子'},
+     {en:'What is interesting or unusual about it',cn:'关于它有什么有趣或不寻常的地方'},
+     {en:'Why you personally find this animal fascinating',cn:'为什么你个人觉得这种动物很迷人'},
+   ],
+   fw:[
+     {n:1,title:'Introduce the animal vividly',title_cn:'生动地介绍这种动物',hint:'Species, habitat, size, distinctive physical features.',hint_cn:'物种、栖息地、大小、独特的身体特征。'},
+     {n:2,title:'Describe its behaviour and abilities',title_cn:'描述其行为和能力',hint:'What makes it unique in the animal kingdom?',hint_cn:'是什么让它在动物王国中独一无二？'},
+     {n:3,title:'Explain its ecological role',title_cn:'解释其生态角色',hint:'Place in the food chain, impact on its environment.',hint_cn:'在食物链中的位置，对其环境的影响。'},
+     {n:4,title:'Explain your personal fascination',title_cn:'解释你个人的迷恋',hint:'Memory of encountering it, documentary seen, what it represents.',hint_cn:'遇见它的记忆、看过的纪录片、它代表什么。'},
+   ],
+   keywords:['extraordinarily adapted','apex predator','evolutionary marvel','mysterious behaviours','conservation concern','genuinely captivating creature'],
+   sample:{en:"The animal I find most fascinating without question is the octopus. I became genuinely obsessed with them after watching a nature documentary about cephalopod intelligence, which completely...",
+           cn:"我最迷人的动物毫无疑问是章鱼。在看了一部关于头足类动物智能的自然纪录片后，我对它们真正着迷了，这完全……"}
+  },
+  {id:47,topic:'Nature',
+   title:'Describe a natural landscape or environment you find beautiful.',
+   title_cn:'描述一种你觉得美丽的自然景观或环境。',
+   bullets:[
+     {en:'What the landscape or environment is',cn:'这是什么景观或环境'},
+     {en:'Where you have seen or experienced it',cn:'你在哪里见过或体验过它'},
+     {en:'What it looks, sounds or feels like',cn:'它看起来、听起来或感觉如何'},
+     {en:'Why you find this type of environment so beautiful',cn:'为什么你觉得这种类型的环境如此美丽'},
+   ],
+   fw:[
+     {n:1,title:'Introduce the landscape type',title_cn:'介绍景观类型',hint:'Desert, forest, ocean, mountain, tundra — be specific.',hint_cn:'沙漠、森林、海洋、山脉、冻原——要具体。'},
+     {n:2,title:'Describe a specific location',title_cn:'描述一个具体地点',hint:'Where you have personally seen it — real memory is powerful.',hint_cn:'你亲眼见过的地方——真实记忆是有力的。'},
+     {n:3,title:'Use rich sensory language',title_cn:'使用丰富的感官语言',hint:'What you saw, heard, smelled, felt — multiple senses.',hint_cn:'你看到的、听到的、闻到的、感觉到的——多种感官。'},
+     {n:4,title:'Reflect on why nature moves you',title_cn:'反思自然为何感动你',hint:'Scale, silence, age, complexity — what does it evoke?',hint_cn:'规模、寂静、古老、复杂——它唤起什么？'},
+   ],
+   keywords:['humbling in its scale','undisturbed wilderness','primordial silence','ineffable beauty','reconnects me with something primal','raw and magnificent'],
+   sample:{en:"The type of natural landscape I find most profoundly beautiful is old-growth temperate rainforest. I first experienced it properly during a hiking trip in the mountains of southwest China...",
+           cn:"我觉得最深刻美丽的自然景观类型是原始温带雨林。我第一次真正体验它是在中国西南部山区的一次徒步旅行中……"}
+  },
+  {id:48,topic:'Nature',
+   title:'Describe an environmental problem you are concerned about.',
+   title_cn:'描述一个你担心的环境问题。',
+   bullets:[
+     {en:'What the environmental problem is',cn:'这个环境问题是什么'},
+     {en:'What causes this problem',cn:'是什么原因导致这个问题'},
+     {en:'What effects it is having or could have',cn:'它正在产生或可能产生什么影响'},
+     {en:'What you think can be done to solve or reduce it',cn:'你认为可以做什么来解决或减轻它'},
+   ],
+   fw:[
+     {n:1,title:'Identify and explain the problem',title_cn:'识别并解释问题',hint:'Clear definition, scale, geographical scope.',hint_cn:'清晰定义、规模、地理范围。'},
+     {n:2,title:'Explain root causes',title_cn:'解释根本原因',hint:'Industrial, consumer, governmental, individual behaviour.',hint_cn:'工业的、消费者的、政府的、个人行为。'},
+     {n:3,title:'Describe the consequences',title_cn:'描述后果',hint:'Short-term and long-term, local and global impacts.',hint_cn:'短期和长期影响、本地和全球影响。'},
+     {n:4,title:'Propose thoughtful solutions',title_cn:'提出周全的解决方案',hint:'Individual, corporate and government levels — balanced.',hint_cn:'个人、企业和政府层面——平衡的。'},
+   ],
+   keywords:['systemic issue','urgent and unprecedented','disproportionate impact','vicious cycle','collective responsibility','meaningful and sustained action'],
+   sample:{en:"The environmental problem I find most concerning is ocean plastic pollution, which has reached what scientists are now calling a truly catastrophic scale. I first became...",
+           cn:"我最担心的环境问题是海洋塑料污染，它已经达到了科学家们现在称之为真正灾难性的规模。我第一次意识到……"}
+  },
+  {id:49,topic:'Nature',
+   title:'Describe a time you spent time in nature and found it beneficial.',
+   title_cn:'描述一次你在大自然中度过时光并觉得有益的经历。',
+   bullets:[
+     {en:'Where you were and what type of nature it was',cn:'你在哪里，是什么类型的自然环境'},
+     {en:'Why you decided to go there',cn:'你为什么决定去那里'},
+     {en:'What you did and observed',cn:'你做了什么，观察到了什么'},
+     {en:'How spending time there benefited you',cn:'在那里度过时光如何让你受益'},
+   ],
+   fw:[
+     {n:1,title:'Set the natural context',title_cn:'设置自然背景',hint:'Location, season, how far from urban life, companions.',hint_cn:'位置、季节、距城市生活多远、同伴。'},
+     {n:2,title:'Describe the experience in detail',title_cn:'详细描述体验',hint:'Walking, observing, listening — full sensory immersion.',hint_cn:'行走、观察、聆听——充分的感官沉浸。'},
+     {n:3,title:'Describe the mental and physical shift',title_cn:'描述身心转变',hint:'How did your mood, energy or thinking change?',hint_cn:'你的情绪、精力或思维如何改变？'},
+     {n:4,title:'Reflect on what nature offers',title_cn:'反思自然提供了什么',hint:'Perspective, peace, awe, disconnection from technology.',hint_cn:'视角、平静、敬畏、与技术的断联。'},
+   ],
+   keywords:['profound sense of calm','stripped away all distraction','reconnected with the natural world','remarkable restorative power','deep breath of clarity','slowed everything down'],
+   sample:{en:"I'd like to describe a three-day camping trip I took to a remote national park last autumn, alone, with nothing but a tent, a notebook and minimal technology...",
+           cn:"我想描述去年秋天我独自一人去一个偏远国家公园进行的为期三天的露营旅行，只带了一顶帐篷、一本笔记本和最少的科技产品……"}
+  },
+  {id:50,topic:'Nature',
+   title:'Describe a garden or green space you have helped create or maintain.',
+   title_cn:'描述一个你帮助创建或维护的花园或绿地。',
+   bullets:[
+     {en:'What this garden or green space is',cn:'这个花园或绿地是什么'},
+     {en:'How you got involved in creating or maintaining it',cn:'你是如何参与创建或维护它的'},
+     {en:'What kinds of work you did there',cn:'你在那里做了哪些工作'},
+     {en:'Why you found this experience rewarding',cn:'为什么你觉得这次经历很有价值'},
+   ],
+   fw:[
+     {n:1,title:'Introduce the space',title_cn:'介绍空间',hint:'Size, location, before and after — what was it like initially?',hint_cn:'大小、位置、前后对比——最初是什么样子？'},
+     {n:2,title:'Describe your involvement',title_cn:'描述你的参与',hint:'How you started, who else was involved, your specific role.',hint_cn:'你如何开始、还有谁参与、你的具体角色。'},
+     {n:3,title:'Describe the work done',title_cn:'描述完成的工作',hint:'Planting, weeding, designing, building — physical and creative.',hint_cn:'种植、除草、设计、建造——体力和创意工作。'},
+     {n:4,title:'Explain the reward',title_cn:'解释回报',hint:'Seeing it grow, community benefit, personal pride, environmental contribution.',hint_cn:'看着它成长、社区受益、个人自豪、环境贡献。'},
+   ],
+   keywords:['transforming a neglected space','nurturing living things','tangible visible progress','collective community effort','pride of creation','genuine green therapy'],
+   sample:{en:"I'd like to describe the small community garden project I got involved with last spring, which transformed an unused patch of land beside my apartment block into a thriving...",
+           cn:"我想描述去年春天我参与的一个小型社区花园项目，它将我公寓楼旁边一块未使用的土地改造成了一个繁荣的……"}
+  },
+];
+
+// ══════════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════════
+let mastered = {};
+let openCards = {};
+let bilingualOn = false;
+let activeFilter = 'ALL';
+let timers = {}; // cardId -> { interval, seconds, mode, running }
+
+function loadState() {
+  try {
+    const s = JSON.parse(localStorage.getItem('ielts_p2_state')||'{}');
+    mastered = s.mastered || {};
+  } catch(e) { mastered = {}; }
+  try {
+    bilingualOn = localStorage.getItem('ielts_p2_bi') === '1';
+  } catch(e) {}
+}
+
+function saveState() {
+  try { localStorage.setItem('ielts_p2_state', JSON.stringify({mastered})); } catch(e) {}
+}
+
+// ══════════════════════════════════════════════════
+// BILINGUAL
+// ══════════════════════════════════════════════════
+function setBilingual(on) {
+  bilingualOn = on;
+  try { localStorage.setItem('ielts_p2_bi', on?'1':'0'); } catch(e) {}
+  renderAll();
+}
+
+// ══════════════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════════════
+function getFiltered() {
+  const q = document.getElementById('searchIn').value.toLowerCase().trim();
+  return cards.filter(c => {
+    const topicOk = activeFilter === 'ALL' || c.topic === activeFilter;
+    if (!topicOk) return false;
+    if (!q) return true;
+    return c.title.toLowerCase().includes(q)
+      || c.title_cn.includes(q)
+      || c.keywords.some(k => k.toLowerCase().includes(q))
+      || c.fw.some(f => f.hint.toLowerCase().includes(q) || f.hint_cn.includes(q))
+      || c.sample.en.toLowerCase().includes(q)
+      || c.sample.cn.includes(q);
+  });
+}
+
+function renderAll() {
+  const grid = document.getElementById('cardsGrid');
+  const noRes = document.getElementById('noResults');
+  const filtered = getFiltered();
+  grid.innerHTML = '';
+  if (!filtered.length) { noRes.style.display = 'block'; return; }
+  noRes.style.display = 'none';
+  filtered.forEach((c, idx) => {
+    const el = buildCard(c, idx);
+    grid.appendChild(el);
+  });
+}
+
+function buildCard(c, idx) {
+  const tc = TOPIC_COLOR[c.topic] || {bg:'#eef0fb',color:'#3949ab'};
+  const isMastered = !!mastered[c.id];
+  const isOpen = !!openCards[c.id];
+
+  const div = document.createElement('div');
+  div.className = `cue-card${isMastered?' mastered':''}`;
+  div.dataset.id = c.id;
+  div.style.animationDelay = `${Math.min(idx*30,400)}ms`;
+
+  div.innerHTML = `
+    <div class="card-top" onclick="toggleCard(${c.id})">
+      <div class="card-top-row">
+        <span class="card-num-badge">#${String(c.id).padStart(2,'0')}</span>
+        <div style="flex:1;min-width:0">
+          <div class="card-title">${esc(c.title)}</div>
+          <div class="card-title-cn${bilingualOn?' vis':''}">${esc(c.title_cn)}</div>
+        </div>
+        <span class="topic-pill" style="background:${tc.bg};color:${tc.color}">${c.topic}</span>
+      </div>
+      <div class="card-meta">
+        <button class="mastered-btn ${isMastered?'on':'off'}" onclick="toggleMastered(event,${c.id})">${isMastered?'✅ Mastered':'⬜ Mark done'}</button>
+        <div class="expand-btn${isOpen?' open':''}">▼</div>
+      </div>
+    </div>
+    <div class="card-body${isOpen?' open':''}">
+      <div class="card-body-inner">
+
+        <!-- TASK CARD -->
+        <div class="task-box">
+          <div class="task-label">📋 Task Card / 任务卡</div>
+          <div class="task-prompt">${esc(c.title)}</div>
+          <div class="task-prompt-cn${bilingualOn?' vis':''}">${esc(c.title_cn)}</div>
+          <div style="font-size:11px;font-weight:700;color:#e65100;margin:8px 0 4px">You should say: / 你应该提及：</div>
+          <ul class="task-bullets">
+            ${c.bullets.map(b=>`<li>${esc(b.en)}<span class="cn${bilingualOn?' vis':''}">${esc(b.cn)}</span></li>`).join('')}
+          </ul>
+        </div>
+
+        <!-- TIMER -->
+        <div class="section-hd">⏱ Practice Timer / 练习计时器</div>
+        <div class="timer-strip" id="timer-${c.id}">
+          <div class="timer-display" id="tdisp-${c.id}">1:00</div>
+          <button class="timer-mode-btn active" id="tbtn-prep-${c.id}" onclick="setTimerMode(${c.id},'prep',this)">Prep 1min</button>
+          <button class="timer-mode-btn" id="tbtn-speak-${c.id}" onclick="setTimerMode(${c.id},'speak',this)">Speak 2min</button>
+          <button class="timer-btn timer-start" onclick="startTimer(${c.id})">▶ Start</button>
+          <button class="timer-btn timer-reset" onclick="resetTimer(${c.id})">↺</button>
+        </div>
+
+        <!-- 4-STEP FRAMEWORK -->
+        <div class="section-hd">🗺 4-Step Answer Framework / 四步答题框架</div>
+        ${c.fw.map(f=>`
+          <div class="fw-step">
+            <div class="fw-num">${f.n}</div>
+            <div class="fw-content">
+              <div class="fw-title">${esc(f.title)}</div>
+              <div class="fw-title-cn${bilingualOn?' vis':''}">${esc(f.title_cn)}</div>
+              <div class="fw-hint">${esc(f.hint)}</div>
+              <div class="fw-hint-cn${bilingualOn?' vis':''}">${esc(f.hint_cn)}</div>
+            </div>
+          </div>
+        `).join('')}
+
+        <!-- KEYWORDS -->
+        <div class="section-hd">🔑 Key Vocabulary / 关键词汇</div>
+        <div class="kw-wrap">${c.keywords.map(k=>`<span class="kw">${esc(k)}</span>`).join('')}</div>
+
+        <!-- SAMPLE OPENER -->
+        <div class="section-hd">💬 Sample Opening / 示范开头句</div>
+        <div class="sample-box">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+            <div class="sample-en">${esc(c.sample.en)}</div>
+            <button class="copy-sm" onclick="copySample(this,\`${c.sample.en.replace(/`/g,'\\`')}\`)" style="flex-shrink:0">Copy</button>
+          </div>
+          <div class="sample-cn${bilingualOn?' vis':''}">${esc(c.sample.cn)}</div>
+        </div>
+
+      </div>
+    </div>
+  `;
+  return div;
+}
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ══════════════════════════════════════════════════
+// TOGGLE CARD
+// ══════════════════════════════════════════════════
+function toggleCard(id) {
+  openCards[id] = !openCards[id];
+  const card = document.querySelector(`.cue-card[data-id="${id}"]`);
+  if (!card) return;
+  card.querySelector('.card-body').classList.toggle('open', !!openCards[id]);
+  card.querySelector('.expand-btn').classList.toggle('open', !!openCards[id]);
+}
+
+// ══════════════════════════════════════════════════
+// MASTERED
+// ══════════════════════════════════════════════════
+function toggleMastered(e, id) {
+  e.stopPropagation();
+  mastered[id] = !mastered[id];
+  if (!mastered[id]) delete mastered[id];
+  saveState(); updateProgress();
+  const card = document.querySelector(`.cue-card[data-id="${id}"]`);
+  if (!card) return;
+  const isMastered = !!mastered[id];
+  card.classList.toggle('mastered', isMastered);
+  const btn = card.querySelector('.mastered-btn');
+  if (btn) { btn.className = `mastered-btn ${isMastered?'on':'off'}`; btn.textContent = isMastered?'✅ Mastered':'⬜ Mark done'; }
+}
+
+function updateProgress() {
+  const count = Object.values(mastered).filter(Boolean).length;
+  document.getElementById('progFill').style.width = (count/50*100)+'%';
+  document.getElementById('progLabel').textContent = `${count} / 50`;
+  document.getElementById('stat-m').textContent = count;
+}
+
+// ══════════════════════════════════════════════════
+// TIMER
+// ══════════════════════════════════════════════════
+function setTimerMode(id, mode, btn) {
+  if (timers[id]?.running) return;
+  const t = timers[id] || {};
+  t.mode = mode;
+  t.seconds = mode === 'prep' ? 60 : 120;
+  timers[id] = t;
+  updateTimerDisplay(id);
+  document.getElementById(`tbtn-prep-${id}`)?.classList.toggle('active', mode==='prep');
+  document.getElementById(`tbtn-speak-${id}`)?.classList.toggle('active', mode==='speak');
+}
+
+function startTimer(id) {
+  if (timers[id]?.running) {
+    clearInterval(timers[id].interval);
+    timers[id].running = false;
+    const btn = document.querySelector(`#timer-${id} .timer-start`);
+    if (btn) btn.textContent = '▶ Start';
+    return;
+  }
+  const t = timers[id] || {mode:'prep',seconds:60};
+  if (t.seconds <= 0) { t.seconds = t.mode==='prep'?60:120; }
+  t.running = true;
+  timers[id] = t;
+  const btn = document.querySelector(`#timer-${id} .timer-start`);
+  if (btn) btn.textContent = '⏸ Pause';
+
+  t.interval = setInterval(() => {
+    timers[id].seconds--;
+    updateTimerDisplay(id);
+    if (timers[id].seconds <= 0) {
+      clearInterval(timers[id].interval);
+      timers[id].running = false;
+      const b = document.querySelector(`#timer-${id} .timer-start`);
+      if (b) b.textContent = '▶ Start';
+      showToast(timers[id].mode==='prep'? '⏰ Prep time up! Start speaking now! / 备题时间到！开始作答！' : '🏁 2 minutes! Good job! / 时间到！干得好！');
+    }
+  }, 1000);
+}
+
+function resetTimer(id) {
+  if (timers[id]?.interval) clearInterval(timers[id].interval);
+  const mode = timers[id]?.mode || 'prep';
+  timers[id] = {mode, seconds: mode==='prep'?60:120, running:false};
+  updateTimerDisplay(id);
+  const btn = document.querySelector(`#timer-${id} .timer-start`);
+  if (btn) btn.textContent = '▶ Start';
+}
+
+function updateTimerDisplay(id) {
+  const el = document.getElementById(`tdisp-${id}`);
+  if (!el) return;
+  const s = timers[id]?.seconds ?? 60;
+  const m = Math.floor(s/60);
+  const sec = s%60;
+  el.textContent = `${m}:${String(sec).padStart(2,'0')}`;
+  el.className = 'timer-display' + (s<=10?' danger': s<=30?' warn':'');
+}
+
+// ══════════════════════════════════════════════════
+// SEARCH + FILTER
+// ══════════════════════════════════════════════════
+function doSearch() { renderAll(); }
+function setFilter(t, btn) {
+  activeFilter = t;
+  document.querySelectorAll('.tf').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderAll();
+}
+
+// ══════════════════════════════════════════════════
+// EXPAND / COLLAPSE ALL
+// ══════════════════════════════════════════════════
+function expandAll() {
+  cards.forEach(c => openCards[c.id] = true);
+  document.querySelectorAll('.card-body').forEach(b => b.classList.add('open'));
+  document.querySelectorAll('.expand-btn').forEach(b => b.classList.add('open'));
+}
+function collapseAll() {
+  openCards = {};
+  document.querySelectorAll('.card-body').forEach(b => b.classList.remove('open'));
+  document.querySelectorAll('.expand-btn').forEach(b => b.classList.remove('open'));
+}
+
+// ══════════════════════════════════════════════════
+// COPY
+// ══════════════════════════════════════════════════
+function copySample(btn, text) {
+  const done = () => { btn.textContent='✓ Done'; btn.classList.add('done'); setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('done');},1800); showToast('示范句已复制 Opener copied!'); };
+  if (navigator.clipboard) { navigator.clipboard.writeText(text).then(done).catch(done); }
+  else { const t=document.createElement('textarea');t.value=text;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);done(); }
+}
+
+// ══════════════════════════════════════════════════
+// TOAST
+// ══════════════════════════════════════════════════
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ══════════════════════════════════════════════════
+// RANDOM DRILL
+// ══════════════════════════════════════════════════
+function randomDrill() {
+  const three = [...cards].sort(()=>Math.random()-.5).slice(0,3);
+  const c = document.getElementById('modalContent');
+  c.innerHTML = three.map(card => {
+    const tc = TOPIC_COLOR[card.topic]||{bg:'#eef0fb',color:'#3949ab'};
+    return `
+      <div style="border:1.5px solid #e4e6f5;border-radius:16px;overflow:hidden;margin-bottom:16px">
+        <div style="background:linear-gradient(135deg,#1a237e,#3949ab);padding:14px 18px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,255,255,.5);background:rgba(255,255,255,.1);padding:2px 7px;border-radius:5px">#${card.id}</span>
+            <span style="font-size:10px;font-weight:700;padding:2px 9px;border-radius:999px;background:${tc.bg};color:${tc.color}">${card.topic}</span>
+          </div>
+          <div style="font-size:14px;font-weight:800;color:white;line-height:1.4">${esc(card.title)}</div>
+          ${bilingualOn?`<div style="font-size:11.5px;color:rgba(255,255,255,.65);margin-top:4px">${esc(card.title_cn)}</div>`:''}
+        </div>
+        <div style="padding:12px 16px;background:#fffbeb;border-bottom:1px solid #ffe082">
+          <div style="font-size:10px;font-weight:800;color:#f57f17;letter-spacing:.08em;margin-bottom:6px">📋 YOU SHOULD SAY:</div>
+          ${card.bullets.map(b=>`<div style="font-size:12.5px;color:#5d4037;padding:2px 0 2px 14px;position:relative">
+            <span style="position:absolute;left:4px;color:#ffb300;font-weight:900">•</span>${esc(b.en)}
+            ${bilingualOn?`<div style="font-size:11px;color:#a1887f">${esc(b.cn)}</div>`:''}
+          </div>`).join('')}
+        </div>
+        <div style="padding:12px 16px">
+          <div style="font-size:10px;font-weight:800;color:#3949ab;letter-spacing:.1em;margin-bottom:8px">🗺 4-STEP FRAMEWORK:</div>
+          ${card.fw.map(f=>`<div style="display:flex;gap:8px;margin-bottom:7px;align-items:flex-start">
+            <span style="width:20px;height:20px;background:#3949ab;color:white;border-radius:5px;font-size:10px;font-weight:800;flex-shrink:0;display:flex;align-items:center;justify-content:center">${f.n}</span>
+            <div><div style="font-size:12px;font-weight:700;color:#1a1f3a">${esc(f.title)} ${bilingualOn?`<span style="color:#7a83ad;font-weight:500">${esc(f.title_cn)}</span>`:''}</div>
+            <div style="font-size:11.5px;color:#3d4570">${esc(f.hint)}</div>
+            ${bilingualOn?`<div style="font-size:11px;color:#7a83ad">${esc(f.hint_cn)}</div>`:''}</div>
+          </div>`).join('')}
+          <div style="margin-top:10px;padding:10px 12px;background:#f3f4ff;border-radius:10px;border-left:3px solid #7986cb">
+            <div style="font-size:10px;font-weight:800;color:#3949ab;margin-bottom:4px">💬 SAMPLE OPENER:</div>
+            <div style="font-size:12px;color:#3d4570;line-height:1.6">${esc(card.sample.en)}</div>
+            ${bilingualOn?`<div style="font-size:11px;color:#7a83ad;margin-top:5px;border-top:1px solid #c5cae9;padding-top:5px">${esc(card.sample.cn)}</div>`:''}
+          </div>
+          <div style="margin-top:8px;font-size:11px;color:#94a3b8;font-style:italic">🎙 Prep 1 min → Speak 1-2 min → Check your structure against the framework above</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+  document.getElementById('modalOv').classList.add('open');
+}
+
+function closeModal(e) { if (e.target.id==='modalOv') closeModalBtn(); }
+function closeModalBtn() { document.getElementById('modalOv').classList.remove('open'); }
+
+function resetAll() {
+  if (!confirm('Reset all Part 2 progress? / 确认重置所有进度？')) return;
+  mastered = {}; saveState(); updateProgress();
+  document.querySelectorAll('.cue-card').forEach(c => {
+    c.classList.remove('mastered');
+    const b = c.querySelector('.mastered-btn'); if (b) { b.className='mastered-btn off'; b.textContent='⬜ Mark done'; }
+  });
+  showToast('Progress reset / 进度已重置');
+}
+
+document.addEventListener('keydown', e => { if (e.key==='Escape') closeModalBtn(); });
+
+// INIT
+loadState();
+document.getElementById('biSwitch').checked = bilingualOn;
+renderAll();
+updateProgress();
+</script>
+
+<!-- Part 2 已生成（50题全部唯一，含任务卡+四步框架+关键词+示范开头+双语+计时器）。请用户回复"生成Part 3"以继续下一个Part。 -->
+</html>

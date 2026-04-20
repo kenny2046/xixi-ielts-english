@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>单词列表转换工具</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
+        :root {
+            --primary: #00d4ff;
+        }
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e2937);
+            color: #e2e8f0;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            max-width: 700px;
+            width: 100%;
+            background: #1e2937;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0, 212, 255, 0.15);
+            overflow: hidden;
+        }
+        header {
+            background: #0f172a;
+            padding: 20px 30px;
+            text-align: center;
+            border-bottom: 1px solid #334155;
+        }
+        h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 500;
+            color: #fff;
+        }
+        .content {
+            padding: 30px;
+        }
+        label {
+            display: block;
+            margin: 15px 0 8px;
+            font-weight: 500;
+            color: #94a3b8;
+        }
+        textarea {
+            width: 100%;
+            height: 140px;
+            padding: 14px;
+            border: 2px solid #334155;
+            border-radius: 12px;
+            background: #0f172a;
+            color: #e2e8f0;
+            font-size: 16px;
+            resize: vertical;
+            font-family: monospace;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.2);
+        }
+        .options {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .option-group {
+            flex: 1;
+            min-width: 220px;
+        }
+        select, input[type="text"] {
+            width: 100%;
+            padding: 12px 14px;
+            border: 2px solid #334155;
+            border-radius: 12px;
+            background: #0f172a;
+            color: #e2e8f0;
+            font-size: 16px;
+        }
+        button {
+            background: var(--primary);
+            color: #0f172a;
+            border: none;
+            padding: 14px 28px;
+            font-size: 17px;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 10px;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 212, 255, 0.4);
+        }
+        .output {
+            margin-top: 25px;
+            position: relative;
+        }
+        .output-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .copy-btn {
+            background: #334155;
+            color: #e2e8f0;
+            padding: 6px 14px;
+            font-size: 14px;
+            border-radius: 8px;
+        }
+        .result {
+            background: #0f172a;
+            border: 2px solid #334155;
+            border-radius: 12px;
+            padding: 14px;
+            min-height: 140px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 16px;
+            line-height: 1.5;
+            overflow-y: auto;
+        }
+        .footer {
+            text-align: center;
+            padding: 15px;
+            color: #64748b;
+            font-size: 14px;
+        }
+        .example {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>单词列表转换工具</h1>
+            <p style="margin: 8px 0 0; color: #64748b;">把空格/逗号分隔的单词快速转成一行一个或自定义格式</p>
+        </header>
+
+        <div class="content">
+            <!-- 输入区 -->
+            <label for="input">输入单词列表（空格或逗号分隔）</label>
+            <textarea id="input" placeholder="last next previous former latter final initial subsequent consecutive alternate respective"></textarea>
+            <div class="example">示例已自动填入，你也可以直接粘贴自己的单词</div>
+
+            <!-- 输出格式选项 -->
+            <div class="options">
+                <div class="option-group">
+                    <label>输出格式</label>
+                    <select id="format">
+                        <option value="newline">每行一个单词</option>
+                        <option value="comma">逗号分隔 (, )</option>
+                        <option value="space">空格分隔</option>
+                        <option value="custom">自定义分隔符</option>
+                    </select>
+                </div>
+
+                <div class="option-group" id="custom-group">
+                    <label>自定义分隔符（\n 表示换行）</label>
+                    <input type="text" id="customSep" value="\n" placeholder="输入分隔符">
+                </div>
+            </div>
+
+            <button onclick="convert()">🚀 立即转换</button>
+
+            <!-- 输出区 -->
+            <div class="output">
+                <div class="output-label">
+                    <label>转换结果</label>
+                    <button class="copy-btn" onclick="copyResult()">📋 复制</button>
+                </div>
+                <div id="result" class="result"></div>
+            </div>
+        </div>
+
+        <div class="footer">
+            简单 · 好用 · 纯前端 • 直接保存为 .html 使用
+        </div>
+    </div>
+
+    <script>
+        // 默认示例
+        window.onload = () => {
+            const defaultText = "last next previous former latter final initial subsequent consecutive alternate respective";
+            if (!document.getElementById('input').value.trim()) {
+                document.getElementById('input').value = defaultText;
+            }
+            // 默认显示转换结果
+            convert();
+        };
+
+        function convert() {
+            let text = document.getElementById('input').value.trim();
+            if (!text) {
+                document.getElementById('result').textContent = '请输入单词列表';
+                return;
+            }
+
+            // 智能分割（支持空格、逗号、换行）
+            let words = text.split(/[\s,，\n]+/).filter(word => word.length > 0);
+
+            let format = document.getElementById('format').value;
+            let custom = document.getElementById('customSep').value || '\n';
+
+            let resultText = '';
+
+            if (format === 'newline') {
+                resultText = words.join('\n');
+            } else if (format === 'comma') {
+                resultText = words.join(', ');
+            } else if (format === 'space') {
+                resultText = words.join(' ');
+            } else if (format === 'custom') {
+                // 支持 \n 转成真实换行
+                custom = custom.replace(/\\n/g, '\n');
+                resultText = words.join(custom);
+            }
+
+            document.getElementById('result').textContent = resultText || '无结果';
+        }
+
+        function copyResult() {
+            const resultEl = document.getElementById('result');
+            const text = resultEl.textContent.trim();
+            if (!text || text === '请输入单词列表' || text === '无结果') {
+                alert('没有可复制的内容');
+                return;
+            }
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                const original = btn.textContent;
+                btn.textContent = '✅ 已复制';
+                setTimeout(() => btn.textContent = original, 2000);
+            });
+        }
+
+        // 自定义分隔符输入框的显示控制
+        document.getElementById('format').addEventListener('change', function() {
+            const customGroup = document.getElementById('custom-group');
+            if (this.value === 'custom') {
+                customGroup.style.display = 'block';
+            } else {
+                customGroup.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

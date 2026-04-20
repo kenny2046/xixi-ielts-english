@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS Reading – Lost for Words</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root {
+    --m1:#fbbf24;--m1-bg:#fef3c7;--m1-border:#f59e0b;
+    --m2:#34d399;--m2-bg:#d1fae5;--m2-border:#10b981;
+    --m3:#60a5fa;--m3-bg:#dbeafe;--m3-border:#3b82f6;
+    --m4:#a78bfa;--m4-bg:#ede9fe;--m4-border:#7c3aed;
+    --accent:#1e40af;--surface:#f8fafc;--card:#ffffff;
+    --text:#1e293b;--muted:#64748b;--border:#e2e8f0;
+    --sky:#0ea5e9;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--text);height:100vh;overflow:hidden;display:flex;flex-direction:column;}
+
+  /* ── Topbar ── */
+  #topbar{background:#0f172a;color:white;padding:0 16px;height:50px;display:flex;align-items:center;gap:8px;flex-shrink:0;border-bottom:2px solid #1e40af;flex-wrap:nowrap;overflow-x:auto;}
+  #topbar h1{font-size:12px;font-weight:600;letter-spacing:.05em;color:#94a3b8;text-transform:uppercase;flex-shrink:0;}
+  .tb-badge{background:#1e3a8a;color:#93c5fd;font-size:10px;padding:2px 8px;border-radius:99px;font-weight:600;white-space:nowrap;flex-shrink:0;}
+  #timer-display{font-size:13px;font-weight:700;color:#fbbf24;font-variant-numeric:tabular-nums;min-width:48px;text-align:right;flex-shrink:0;}
+  .tb-btn{background:#1e293b;border:1px solid #334155;color:#cbd5e1;padding:4px 10px;border-radius:6px;font-size:11px;cursor:pointer;font-family:inherit;transition:all .15s;white-space:nowrap;flex-shrink:0;}
+  .tb-btn:hover{background:#334155;color:white;}
+  .tb-btn.active{background:#1e40af;border-color:#3b82f6;color:white;}
+  /* attempt buttons */
+  .attempt-grp{display:flex;gap:2px;flex-shrink:0;}
+  .attempt-btn{width:24px;height:24px;border-radius:6px;font-size:0.65rem;font-weight:700;border:1px solid #334155;background:#1e293b;color:#94a3b8;cursor:pointer;transition:.15s;}
+  .attempt-btn.active{background:#0ea5e9;color:white;border-color:#0ea5e9;}
+  .tb-sep{width:1px;height:20px;background:#334155;flex-shrink:0;}
+
+  /* ── Progress bar ── */
+  #progress-bar-wrap{height:3px;background:#1e293b;flex-shrink:0;}
+  #progress-bar{height:100%;background:linear-gradient(90deg,#0ea5e9,#a78bfa);width:0%;transition:width .3s;}
+
+  /* ── Legend bar ── */
+  #legendbar{background:#1e293b;color:white;padding:5px 16px;display:flex;align-items:center;gap:14px;flex-shrink:0;font-size:11px;flex-wrap:nowrap;overflow-x:auto;}
+  .legend-item{display:flex;align-items:center;gap:5px;cursor:pointer;white-space:nowrap;}
+  .legend-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0;}
+  .legend-label{color:#94a3b8;}
+
+  /* ── Main split ── */
+  #main{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:0;overflow:hidden;min-height:0;}
+  .panel{overflow-y:auto;padding:22px 24px;scrollbar-width:thin;scrollbar-color:#cbd5e1 transparent;}
+  .panel::-webkit-scrollbar{width:5px;}
+  .panel::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:99px;}
+  #passage-panel{border-right:1px solid var(--border);}
+
+  /* ── Cards ── */
+  .card{background:var(--card);border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.06);padding:18px 20px;margin-bottom:16px;}
+  .card-header{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);border-bottom:2px solid #dbeafe;padding-bottom:7px;margin-bottom:12px;}
+
+  /* ── Passage ── */
+  .passage-hero{background:linear-gradient(135deg,#0f172a 0%,#1e3a8a 100%);color:white;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-family:'Crimson Pro',serif;font-size:17px;font-weight:600;text-align:center;line-height:1.4;}
+  .passage-hero small{display:block;font-size:11px;font-weight:400;color:#93c5fd;margin-top:3px;}
+  .passage-title{font-family:'Crimson Pro',Georgia,serif;font-size:20px;font-weight:600;color:#0f172a;margin-bottom:3px;}
+  .passage-subtitle{font-size:11px;color:var(--muted);margin-bottom:16px;font-style:italic;}
+  .para{margin-bottom:13px;font-size:13.5px;line-height:1.78;color:#334155;position:relative;}
+  .para-label{display:inline-block;width:19px;height:19px;background:#1e3a8a;color:white;border-radius:4px;font-size:9px;font-weight:700;text-align:center;line-height:19px;margin-right:5px;vertical-align:middle;flex-shrink:0;}
+
+  /* ── Highlights ── */
+  .hl-m1{background:var(--m1-bg);border-bottom:2px solid var(--m1);padding:0 2px;border-radius:2px;}
+  .hl-m2{background:var(--m2-bg);border-bottom:2px solid var(--m2);padding:0 2px;border-radius:2px;}
+  .hl-m3{background:var(--m3-bg);border-bottom:2px solid var(--m3);padding:0 2px;border-radius:2px;}
+  .hl-m4{background:var(--m4-bg);border-bottom:2px solid var(--m4);padding:0 2px;border-radius:2px;}
+  body:not(.study-active) .q-anchor{display:none;}
+  body:not(.study-active) .hl-m1,body:not(.study-active) .hl-m2,
+  body:not(.study-active) .hl-m3,body:not(.study-active) .hl-m4{background:none;border-bottom:none;padding:0;}
+  .q-anchor{display:inline-block;background:#ef4444;color:white;font-size:9px;font-weight:700;padding:0 4px;border-radius:4px;vertical-align:super;margin-left:2px;line-height:15px;}
+
+  /* ── Translation ── */
+  .trans{display:none;font-size:11px;color:#64748b;margin-top:5px;border-left:3px solid var(--border);padding-left:7px;line-height:1.6;}
+  body.trans-active .trans{display:block;}
+  .q-stem-text-cn,.q-opt-text-cn{display:none;}
+  body.trans-active:not(.study-active) .q-stem-text-en,
+  body.trans-active:not(.study-active) .q-opt-text-en{display:none;}
+  body.trans-active:not(.study-active) .q-stem-text-cn,
+  body.trans-active:not(.study-active) .q-opt-text-cn{display:inline;}
+
+  /* ── Questions ── */
+  .q-instruction{font-size:12px;color:#475569;margin-bottom:11px;line-height:1.6;background:#f1f5f9;border-radius:6px;padding:9px 11px;border-left:3px solid var(--sky);}
+  .q-instruction .trans{border-left-color:#93c5fd;}
+  .q-item{margin-bottom:13px;}
+  .q-num{display:inline-flex;align-items:center;justify-content:center;width:23px;height:23px;background:#1e3a8a;color:white;border-radius:5px;font-size:10px;font-weight:700;margin-right:7px;flex-shrink:0;}
+  .q-stem{font-size:13px;color:#1e293b;line-height:1.65;display:flex;align-items:flex-start;}
+  .q-stem-text{flex:1;}
+  .q-tf-row{display:flex;gap:6px;margin-top:7px;flex-wrap:wrap;align-items:center;}
+  .tf-btn{padding:4px 12px;border-radius:6px;border:1.5px solid var(--border);font-size:11.5px;font-weight:600;cursor:pointer;background:white;transition:all .15s;font-family:inherit;}
+  .tf-btn:hover{border-color:var(--sky);background:#e0f2fe;color:#0369a1;}
+  .tf-btn.sel-yes{background:#16a34a;border-color:#16a34a;color:white;}
+  .tf-btn.sel-no{background:#dc2626;border-color:#dc2626;color:white;}
+  .tf-btn.sel-ng{background:#9333ea;border-color:#9333ea;color:white;}
+  .tf-btn.sel-match{background:#1e40af;border-color:#1e40af;color:white;}
+  /* ── Submitted state overrides ── */
+  body.submitted .tf-btn{pointer-events:none;}
+  body.submitted .mc-option{pointer-events:none;}
+  body.submitted .q-input{pointer-events:none;background:#f8fafc;}
+  .q-answer-area{display:flex;align-items:center;gap:8px;margin-top:6px;}
+  .q-input{border:1.5px solid var(--border);border-radius:6px;padding:5px 9px;font-size:13px;font-family:inherit;color:var(--text);width:100%;max-width:320px;transition:border-color .15s;}
+  .q-input:focus{outline:none;border-color:var(--sky);box-shadow:0 0 0 3px #e0f2fe;}
+  .q-input.compact{max-width:110px;}
+  .mc-options-wrap{margin-top:4px;}
+  .mc-option{display:flex;align-items:flex-start;gap:7px;padding:6px 9px;border-radius:6px;margin-top:4px;cursor:pointer;border:1.5px solid var(--border);transition:all .15s;font-size:12.5px;background:white;}
+  .mc-option:hover{border-color:var(--sky);background:#f0f9ff;}
+  .mc-option.selected{background:#dbeafe;border-color:#3b82f6;font-weight:600;}
+  .mc-letter{font-weight:700;color:#1e40af;min-width:16px;}
+
+  /* ── Headings ── */
+  .headings-ref{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:11px 13px;margin-bottom:12px;}
+  .headings-ref-title{font-size:9px;font-weight:800;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;}
+  .heading-option{display:flex;gap:7px;align-items:baseline;padding:3px 0;font-size:12px;color:#334155;border-bottom:1px solid #f1f5f9;}
+  .heading-option:last-child{border-bottom:none;}
+  .heading-num{font-weight:800;color:#1e40af;min-width:18px;font-size:11px;}
+  .example-row{display:flex;align-items:center;gap:7px;padding:5px 9px;background:#f1f5f9;border-radius:6px;margin-bottom:9px;font-size:12px;color:#475569;}
+  .example-badge{font-size:9px;font-weight:700;background:#475569;color:white;padding:2px 6px;border-radius:4px;}
+  .example-answer{font-weight:700;color:#1e40af;background:#dbeafe;border-radius:4px;padding:1px 7px;}
+
+  /* ── Result badges ── */
+  .q-result-badge{display:none;font-size:11px;font-weight:700;border-radius:99px;padding:2px 8px;white-space:nowrap;flex-shrink:0;}
+  body.submitted .q-result-badge{display:inline-flex;align-items:center;gap:3px;}
+  .q-result-badge.correct{background:#d1fae5;color:#065f46;border:1px solid #6ee7b7;}
+  .q-result-badge.wrong{background:#fef2f2;color:#dc2626;border:1px solid #fca5a5;}
+  .q-result-badge.no-key{background:#f1f5f9;color:#94a3b8;border:1px solid #e2e8f0;}
+  /* item level correct/wrong flash */
+  body.submitted .q-item.item-correct{border-left:3px solid #10b981;padding-left:8px;}
+  body.submitted .q-item.item-wrong{border-left:3px solid #ef4444;padding-left:8px;}
+
+  /* ── Score card ── */
+  #score-card{display:none;}
+  .score-ring-wrap{display:flex;align-items:center;gap:20px;margin-bottom:14px;}
+  .score-ring{width:72px;height:72px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;border:4px solid;}
+  .score-ring.good{border-color:#10b981;background:#ecfdf5;color:#059669;}
+  .score-ring.mid{border-color:#f59e0b;background:#fffbeb;color:#b45309;}
+  .score-ring.low{border-color:#ef4444;background:#fef2f2;color:#dc2626;}
+  .band-est{font-size:11px;color:#64748b;margin-top:3px;}
+  .band-est strong{color:#6366f1;}
+  .score-wrong-list{margin-top:10px;}
+  .score-wrong-item{background:#fef2f2;border-left:3px solid #ef4444;border-radius:0 8px 8px 0;padding:6px 10px;margin-bottom:6px;font-size:11.5px;color:#1e293b;}
+  .score-wrong-label{font-weight:700;color:#dc2626;margin-right:6px;}
+  .score-correct-list{margin-top:8px;display:flex;flex-wrap:wrap;gap:4px;}
+  .score-correct-chip{background:#d1fae5;border:1px solid #6ee7b7;border-radius:99px;padding:2px 8px;font-size:11px;font-weight:700;color:#065f46;}
+  .score-action-row{display:flex;gap:8px;margin-top:12px;}
+  .score-btn{flex:1;padding:10px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;border:none;font-family:inherit;transition:all .2s;}
+  .score-btn-reset{background:white;border:1.5px solid #e2e8f0;color:#64748b;}
+  .score-btn-reset:hover{border-color:#94a3b8;}
+  .score-btn-export{background:linear-gradient(135deg,#0ea5e9,#0369a1);color:white;box-shadow:0 3px 10px rgba(14,165,233,0.3);}
+  .score-btn-export:hover{box-shadow:0 5px 14px rgba(14,165,233,0.45);}
+
+  /* ── User highlight & annotation (unchanged) ── */
+  .user-hl{background:#fef08a;border-bottom:2px solid #eab308;padding:0 2px;border-radius:2px;cursor:pointer;}
+  .user-hl[data-note]:not([data-note=""]):after{content:"💬";font-size:9px;vertical-align:super;margin-left:1px;}
+  .user-hl-tooltip{position:fixed;background:#0f172a;color:#f8fafc;font-size:11px;padding:6px 10px;border-radius:6px;max-width:240px;line-height:1.5;z-index:9998;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,.4);display:none;}
+  #hl-toolbar{position:fixed;background:#0f172a;border:1px solid #334155;border-radius:8px;padding:5px 8px;display:flex;gap:6px;align-items:center;z-index:9997;box-shadow:0 4px 16px rgba(0,0,0,.5);}
+  #hl-toolbar button{background:#1e293b;border:1px solid #475569;color:#e2e8f0;padding:3px 9px;border-radius:5px;font-size:11px;cursor:pointer;font-family:inherit;white-space:nowrap;}
+  #hl-toolbar button:hover{background:#334155;}
+  #hl-toolbar .hl-do{background:#ca8a04;border-color:#ca8a04;color:white;}
+  #hl-toolbar .hl-do:hover{background:#d97706;}
+
+  /* ── Toast ── */
+  #toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(20px);background:#0f172a;color:white;padding:9px 18px;border-radius:99px;font-size:12.5px;opacity:0;transition:all .35s cubic-bezier(0.34,1.56,0.64,1);pointer-events:none;z-index:9999;white-space:nowrap;}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  #toast.ok{background:#10b981;}
+  #toast.err{background:#ef4444;}
+</style>
+</head>
+<body>
+
+<!-- User highlight toolbar -->
+<div id="hl-toolbar" style="display:none;">
+  <button class="hl-do" id="hl-do-btn">✏️ 高亮</button>
+  <button id="hl-note-btn">💬 注释</button>
+  <button id="hl-cancel-btn">✕</button>
+</div>
+<div class="user-hl-tooltip" id="hl-tooltip"></div>
+
+<!-- Topbar -->
+<div id="topbar">
+  <h1>IAGS · READING PASSAGE 1</h1>
+  <span class="tb-badge">Questions 1–13</span>
+  <div class="tb-sep"></div>
+  <span style="font-size:10px;color:#64748b;white-space:nowrap;">ATTEMPT</span>
+  <div class="attempt-grp" id="attempt-grp">
+    <button class="attempt-btn active" onclick="setAttempt(1,this)">1</button>
+    <button class="attempt-btn" onclick="setAttempt(2,this)">2</button>
+    <button class="attempt-btn" onclick="setAttempt(3,this)">3</button>
+    <button class="attempt-btn" onclick="setAttempt(4,this)">4+</button>
+  </div>
+  <div class="tb-sep"></div>
+  <button class="tb-btn" id="btn-trans" onclick="toggleTrans()">🌐 译文</button>
+  <button class="tb-btn" id="btn-study" onclick="toggleStudy()">🎯 学习模式</button>
+  <button class="tb-btn" id="btn-clear-hl" onclick="clearAllHighlights()" title="清除所有手动标注">🗑 清除标注</button>
+  <div class="tb-sep"></div>
+  <button class="tb-btn" onclick="checkAnswers()">✓ 提交批改</button>
+  <button class="tb-btn" onclick="exportAnswers()">📋 导出 JSON</button>
+  <div id="timer-display">20:00</div>
+  <button class="tb-btn" id="btn-timer" onclick="toggleTimer()">▶ 计时</button>
+</div>
+
+<div id="progress-bar-wrap"><div id="progress-bar"></div></div>
+
+<div id="legendbar">
+  <span style="color:#64748b;font-size:11px;font-weight:600;">考点色彩：</span>
+  <span class="legend-item" onclick="toggleHL('m1')"><span class="legend-dot" style="background:var(--m1)"></span><span class="legend-label">自然现象/数据</span></span>
+  <span class="legend-item" onclick="toggleHL('m2')"><span class="legend-dot" style="background:var(--m2)"></span><span class="legend-label">行为/人物</span></span>
+  <span class="legend-item" onclick="toggleHL('m3')"><span class="legend-dot" style="background:var(--m3)"></span><span class="legend-label">方法论/专业人员</span></span>
+  <span class="legend-item" onclick="toggleHL('m4')"><span class="legend-dot" style="background:var(--m4)"></span><span class="legend-label">术语/地名</span></span>
+  <span style="margin-left:auto;color:#64748b;font-size:10px;white-space:nowrap;">💡 选中文字可高亮标注</span>
+</div>
+
+<div id="main">
+  <!-- PASSAGE -->
+  <div class="panel" id="passage-panel">
+    <div class="card">
+      <div class="passage-hero">
+        Lost for Words
+        <small>Many minority languages are on the danger list</small>
+      </div>
+      <div class="passage-title">READING PASSAGE 1</div>
+      <div class="passage-subtitle">You should spend about 20 minutes on Questions 1–13 which are based on Reading Passage 1 below.</div>
+      <div class="trans">你应该用大约20分钟的时间完成基于阅读文章1的第1-13题。</div>
+      <div class="para" id="para-1">
+        <span class="para-label"></span>
+        In the Native American <span class="hl-m4">Navajo nation</span>, which spreads across four states in the <span class="hl-m4">American southwest</span>, the native language is dying. Most of its speakers are middle-aged or elderly. Although many students take classes in Navajo, the schools are run in English. Street signs, supermarket goods and even their own newspaper are all in English. Not surprisingly, linguists doubt that any native speakers of Navajo will remain in <span class="hl-m1">a hundred years' time</span>.<span class="q-anchor">Q10</span>
+        <div class="trans">在横跨美国西南部四个州的纳瓦霍原住民部落中，母语正在消亡。大多数说这种语言的人都是中年人或老年人。尽管许多学生选修纳瓦霍语课程，但学校是用英语运作的。路标、超市商品甚至他们自己的报纸都是英文的。不出所料，语言学家怀疑一百年后是否还会有任何以纳瓦霍语为母语的人存在。</div>
+      </div><div class="para" id="para-2">
+        <span class="para-label"></span>
+        Navajo is far from alone. Half the world's <span class="hl-m1">6,800 languages</span> are likely to vanish within two generations — that's one language lost every ten days. Never before has the planet's linguistic diversity shrunk at such a pace. 'At the moment, we are heading for about three or four languages dominating the world,' says <span class="hl-m2">Mark Pagel</span>, an evolutionary biologist at the <span class="hl-m4">University of Reading</span>. 'It's a mass extinction, and whether we will ever rebound from the loss is difficult to know.'<span class="q-anchor">Q1</span><span class="q-anchor">Q2</span><span class="q-anchor">Q7</span><span class="q-anchor">Q13</span>
+        <div class="trans">纳瓦霍语绝非个例。世界现存的6800种语言中，有一半可能在两代人之内消失——这意味着每十天就有一种语言消失。地球语言多样性的缩减从未达到过如此之快的速度。雷丁大学的进化生物学家马克·佩格尔表示：“目前，我们正趋向于三到四种语言统治世界的局面。这是一场大灭绝，我们是否能从这种损失中恢复过来尚不可知。”</div>
+      </div><div class="para" id="para-3">
+        <span class="para-label"></span>
+        Isolation breeds linguistic diversity: as a result, the world is peppered with languages spoken by only a few people. Only <span class="hl-m1">250 languages</span> have more than a million speakers, and at least 3,000 have fewer than 2,500. It is not necessarily these small languages that are about to disappear. Navajo is considered endangered despite having <span class="hl-m1">150,000 speakers</span>. What makes a language endangered is not just the number of speakers, but how old they are. If it is spoken by children it is relatively safe. The critically endangered languages are those that are only spoken by the elderly, according to <span class="hl-m2">Michael Krauss</span>, director of the <span class="hl-m4">Alaska Native Language Center</span>, in Fairbanks.<span class="q-anchor">Q1</span><span class="q-anchor">Q3</span><span class="q-anchor">Q5</span><span class="q-anchor">Q11</span>
+        <div class="trans">隔离孕育了语言的多样性：结果，世界上到处都是只有少数人使用的语言。只有250种语言的语言人数超过一百万，至少有3000种语言的使用人数不足2500人。濒临消失的并不一定是这些小语种。尽管纳瓦霍语有15万使用者，但它仍被认为处于濒危状态。决定一种语言是否濒危的不仅是使用者的人数，还有他们的年龄。如果儿童在使用它，它就相对安全。阿拉斯加大学费尔班克斯分校原住民语言中心主任迈克尔·克劳斯认为，极度濒危的语言是那些只有老年人使用的语言。</div>
+      </div><div class="para" id="para-4">
+        <span class="para-label"></span>
+        Why do people reject the language of their parents? It begins with a crisis of confidence, when a small community finds itself alongside a larger, wealthier society, says <span class="hl-m2">Nicholas Ostler</span>, of Britain's <span class="hl-m4">Foundation for Endangered Languages</span>, in Bath. 'People lose faith in their culture,' he says. 'When the next generation reaches their teens, they might not want to be induced into the old traditions.'<span class="q-anchor">Q8</span><span class="q-anchor">Q9</span>
+        <div class="trans">为什么人们会拒绝父母的语言？英国濒危语言基金会的尼古拉斯·奥斯特勒表示，这始于一种信心危机，当一个小社群发现自己处于一个更大、更富裕的社会旁边时，“人们对自己的文化失去了信心，”他说，“当下一代进入青少年时期，他们可能不想被引导进入旧的传统。”</div>
+      </div><div class="para" id="para-5">
+        <span class="para-label"></span>
+        The change is not always voluntary. Quite often, <span class="hl-m2">governments</span> try to kill off a minority language by banning its use in public or discouraging its use in schools, all to promote national unity.<span class="q-anchor">Q2</span><span class="q-anchor">Q12</span>
+        <div class="trans">这种改变并不总是自愿的。通常情况下，政府会通过禁止在公共场合使用或不鼓励在学校使用少数民族语言来试图消灭它们，这一切都是为了促进国家统一。</div>
+      </div><div class="para" id="para-6">
+        <span class="para-label"></span>
+        The former US policy of running Indian reservation schools in English, for example, effectively put languages such as Navajo on the danger list. But <span class="hl-m2">Salikoko Mufwene</span>, who chairs the Linguistics Department at the <span class="hl-m4">University of Chicago</span>, argues that the deadliest weapon is not government policy but <span class="hl-m1">economic globalisation</span>. 'Native Americans have lost pride in their language, but they have had to adapt to socio-economic pressures,' he says. 'They cannot refuse to speak English if most commercial activity is in English.' But are languages worth saving? At the very least, there is a loss of data for the study of languages and their evolution, which relies on comparisons between languages, both living and dead. When an unwritten and unrecorded language disappears, it is lost to science.<span class="q-anchor">Q6</span><span class="q-anchor">Q9</span>
+        <div class="trans">例如，美国以前在印第安保留地学校实行英语教学的政策，实际上将纳瓦霍语等语言列入了危险名单。但芝加哥大学语言学系主任萨利科科·穆夫韦内认为，最致命的武器不是政府政策，而是经济全球化。他说：“美洲原住民失去了对语言的自豪感，但他们不得不适应社会经济压力。如果大多数商业活动都是用英语进行的，他们就不能拒绝说英语。”但是，语言值得拯救吗？至少，对于研究语言及其进化的学科来说，这是一种数据的损失，因为这项研究依赖于现存和已消亡语言之间的比较。当一种没有文字、没有记录的语言消失时，它对科学来说就永远失去了。</div>
+      </div><div class="para" id="para-7">
+        <span class="para-label"></span>
+        Language is also intimately bound up with culture, so it may be difficult to preserve one without the other. 'If a person shifts from Navajo to English, they lose something,' Mufwene says. 'Moreover, the loss of diversity may also deprive us of different ways of looking at the world,' says Pagel. There is mounting evidence that learning a language produces <span class="hl-m1">physiological changes</span> in the brain. 'Your brain and mine are different from the brain of someone who speaks French, for instance,' Pagel says, and this could affect our <span class="hl-m2">thoughts and perceptions</span>. 'The patterns and connections we make among various concepts may be structured by the linguistic habits of our community.'<span class="q-anchor">Q7</span>
+        <div class="trans">语言也与文化紧密相连，因此很难在不保留其中之一的情况下保留另一个。穆夫韦内说：“如果一个人从纳瓦霍语转向英语，他们会失去一些东西。”此外，佩格尔说：“多样性的丧失也可能剥夺我们观察世界的不同方式。”越来越多的证据表明，学习一种语言会引起大脑的生理变化。佩格尔说：“例如，你我的大脑与说法语的人的大脑是不同的，”这可能会影响我们的想法和感知。“我们在各种概念之间建立的模式和联系可能是由我们社区的语言习惯构建的。”</div>
+      </div><div class="para" id="para-8">
+        <span class="para-label"></span>
+        So despite linguists' best efforts, many languages will disappear over the next century. But a growing interest in cultural identity may prevent the direst predictions from coming true. 'The key to fostering diversity is for people to learn their ancestral tongues, as well as the dominant language,' says <span class="hl-m2">Doug Whalen</span>, founder and president of the <span class="hl-m4">Endangered Language Fund</span> in New Haven, Connecticut. 'Most of these languages will not survive without a large degree of <span class="hl-m3">bilingualism</span>,' he says. In New Zealand, classes for children have slowed the erosion of Maori and rekindled interest in the language. A similar approach in Hawaii has produced about 8,000 new speakers of Polynesian languages in the past few years. In California, 'apprentice' programmes have provided life support to several indigenous languages. Volunteer 'apprentices' pair up with one of the last living speakers of a Native American tongue to learn a traditional skill such as basket weaving, with instruction exclusively in the endangered language. After about 300 hours of training, they are generally sufficiently fluent to transmit the language to the next generation. But Mufwene says that preserving a language dying out is not the same as giving it new life by using it every day: 'Preserving a language is more like preserving fruits in a jar,' he says.<span class="q-anchor">Q4</span><span class="q-anchor">Q6</span>
+        <div class="trans">因此，尽管语言学家做出了最大努力，许多语言仍将在下个世纪消失。但人们对文化认同感日益增长的兴趣可能会阻止最可怕的预言成真。康涅狄格州纽黑文濒危语言基金会的创始人兼总裁道格·惠伦说：“促进多样性的关键在于人们学习他们的祖先语言以及主流语言。”他说：“如果不实现高度的双语化，这些语言中的大多数都无法生存。”在新西兰，针对儿童的课程减缓了毛利语的流失，并重新燃起了人们对该语言的兴趣。夏威夷的类似方法在过去几年中培养了大约8000名波利尼西亚语的新使用者。在加利福尼亚，“学徒”计划为几种土著语言提供了生命支持。志愿者“学徒”与美洲原住民语言的最后几位使用者之一结对，学习篮筐编织等传统技能，教学完全使用濒危语言。经过大约300小时的训练，他们通常能够流利地将语言传给下一代。但穆夫韦内说，保护一种正在消亡的语言并不等同于通过每天使用它来赋予它新的生命：“保护一种语言更像是把水果保存在罐子里，”他说。</div>
+      </div><div class="para" id="para-9">
+        <span class="para-label"></span>
+        However, preservation can bring a language back from the dead. There are examples of languages that have survived in <span class="hl-m3">written form</span> and then been restored by later generations. But a written record is essential for this, so the possibility of <span class="hl-m1">revival</span> has led many speakers of endangered languages to develop systems of writing where none existed before.
+        <div class="trans">然而，保护可以让一种语言起死回生。有一些语言以书面形式幸存下来，然后被后代恢复的例子。但书面记录对此至关重要，因此复兴的可能性促使许多濒危语言的使用者开发了以前不存在的文字系统。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUESTIONS -->
+  <div class="panel" id="questions-panel">
+    <div class="card">
+        <div class="card-header">Questions 1–4 · Summary Completion</div>
+        <div class="q-instruction">
+          Complete the summary below. Choose NO MORE THAN TWO WORDS from the passage for each answer.
+          <div class="trans">完成下面的摘要。从文章中选择不超过两个单词作为每个答案。</div>
+        </div><div id="q1" class="q-item" data-num="1" data-para="para-3">
+          <div class="q-stem">
+            <span class="q-num">1</span>
+            <span class="q-stem-text">
+              <span class="q-stem-text-en">There are currently approximately 6,800 languages in the world. This great variety of languages came about largely as a result of geographical <span style="border-bottom:2px solid #0ea5e9;min-width:60px;display:inline-block;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>. </span>
+              <span class="q-stem-text-cn">目前世界上大约有6800种语言。这种巨大的语言多样性在很大程度上是由于地理上的___造成的。</span>
+            </span>
+          </div>
+          <div class="trans" style="margin-left:32px;">目前世界上大约有6800种语言。这种巨大的语言多样性在很大程度上是由于地理上的___造成的。</div><div class="q-answer-area">
+            <input class="q-input" id="ans1" placeholder="填写答案…" oninput="saveAnswer('1',this.value)" />
+            <span class="q-result-badge" id="res1"></span>
+          </div></div><div id="q2" class="q-item" data-num="2" data-para="para-6">
+          <div class="q-stem">
+            <span class="q-num">2</span>
+            <span class="q-stem-text">
+              <span class="q-stem-text-en">But in today's world, factors such as government initiatives and <span style="border-bottom:2px solid #0ea5e9;min-width:60px;display:inline-block;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> are contributing to a huge decrease in the number of languages. </span>
+              <span class="q-stem-text-cn">但在当今世界，政府举措和___等因素正在导致语言数量大幅减少。</span>
+            </span>
+          </div>
+          <div class="trans" style="margin-left:32px;">但在当今世界，政府举措和___等因素正在导致语言数量大幅减少。</div><div class="q-answer-area">
+            <input class="q-input" id="ans2" placeholder="填写答案…" oninput="saveAnswer('2',this.value)" />
+            <span class="q-result-badge" id="res2"></span>
+          </div></div><div id="q3" class="q-item" data-num="3" data-para="para-8">
+          <div class="q-stem">
+            <span class="q-num">3</span>
+            <span class="q-stem-text">
+              <span class="q-stem-text-en">One factor which may help to ensure that some endangered languages do not die out completely is people's increasing appreciation of their <span style="border-bottom:2px solid #0ea5e9;min-width:60px;display:inline-block;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>. </span>
+              <span class="q-stem-text-cn">有助于确保某些濒危语言不会完全消失的一个因素是人们对他们的___越来越重视。</span>
+            </span>
+          </div>
+          <div class="trans" style="margin-left:32px;">有助于确保某些濒危语言不会完全消失的一个因素是人们对他们的___越来越重视。</div><div class="q-answer-area">
+            <input class="q-input" id="ans3" placeholder="填写答案…" oninput="saveAnswer('3',this.value)" />
+            <span class="q-result-badge" id="res3"></span>
+          </div></div><div id="q4" class="q-item" data-num="4" data-para="para-8">
+          <div class="q-stem">
+            <span class="q-num">4</span>
+            <span class="q-stem-text">
+              <span class="q-stem-text-en">This has been encouraged through a programme of language classes for children and through 'apprentice' schemes, in which the endangered language is used as the medium of instruction to teach people a <span style="border-bottom:2px solid #0ea5e9;min-width:60px;display:inline-block;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>. Some speakers of endangered languages have even produced writing systems in order to help secure the survival of their mother tongue.</span>
+              <span class="q-stem-text-cn">这通过针对儿童的语言课程计划和“学徒”计划得到了鼓励，在这些计划中，濒危语言被用作教学媒介来教授人们一种___。一些濒危语言的使用者甚至创造了文字系统，以帮助确保其母语的生存。</span>
+            </span>
+          </div>
+          <div class="trans" style="margin-left:32px;">这通过针对儿童的语言课程计划和“学徒”计划得到了鼓励，在这些计划中，濒危语言被用作教学媒介来教授人们一种___。一些濒危语言的使用者甚至创造了文字系统，以帮助确保其母语的生存。</div><div class="q-answer-area">
+            <input class="q-input" id="ans4" placeholder="填写答案…" oninput="saveAnswer('4',this.value)" />
+            <span class="q-result-badge" id="res4"></span>
+          </div></div></div><div class="card">
+        <div class="card-header">Questions 5–9 · Matching</div>
+        <div class="q-instruction">
+          Match each statement with the correct person A–E. Write the appropriate letter A–E in boxes 5–9 on your answer sheet. NB You may use any letter more than once.
+          <div class="trans">将下列陈述与正确的人名 A-E 配对。在答题纸的第5-9题框内写下相应的字母 A-E。注意：任何字母都可以使用多次。</div>
+        </div><div id="q5" class="q-item" data-num="5" data-para="para-8">
+          <div class="q-stem">
+            <span class="q-num">5</span>
+            <span class="q-stem-text">
+              <span class="q-stem-text-en">Endangered languages cannot be saved unless people learn to speak more than one language.</span>
+              <span class="q-stem-text-cn">除非人们学会说一种以上的语言，否则濒危语言无法得到拯救。</span>
+            </span>
+          </div>
+          <div class="trans" style="margin-left:32px;">除非人们学会说一种以上的语言，否则濒危语言无法得到拯救。</div><div class="q-answer-area">
+              <input class="q-input compact" id="ans5" placeholder="填写字母…" oninput="saveAnswer('5',this.value)" />
+              <span class="q-result-badge" id="res5"></span>
+            </div></div><div id="q6" class="q-item" data-num="6" data-para="para-8">
+          <div class="q-stem">
+            <span class="q-num">6</span>
+            <span class="q-stem-text">
+              <span class="q-stem-text-en">Saving languages from extinction is not in itself a satisfactory goal.</span>
+              <span class="q-stem-text-cn">拯救语言使其免于灭绝本身并不是一个令人满意的目标。</span>
+            </span>
+          </div>
+          <div class="trans" style="margin-left:32px;">拯救语言使其免于灭绝本身并不是一个令人满意的目标。</div><div class="q-answer-area">
+              <input class="q-input compact" id="ans6" placeholder="填写字母…" oninput="saveAnswer('6',this.value)" />
+              <span class="q-result-badge" id="res6"></span>
+            </div></div><div id="q7" class="q-item" data-num="7" data-para="para-7">
+          <div class="q-stem">
+            <span class="q-num">7</span>
+            <span class="q-stem-text">
+              <span class="q-stem-text-en">The way we think may be determined by our language.</span>
+              <span class="q-stem-text-cn">我们的思维方式可能由我们的语言决定。</span>
+            </span>
+          </div>
+          <div class="trans" style="margin-left:32px;">我们的思维方式可能由我们的语言决定。</div><div class="q-answer-area">
+              <input class="q-input compact" id="ans7" placeholder="填写字母…" oninput="saveAnswer('7',this.value)" />
+              <span class="q-result-badge" id="res7"></span>
+            </div></div><div id="q8" class="q-item" data-num="8" data-para="para-4">
+          <div class="q-stem">
+            <span class="q-num">8</span>
+            <span class="q-stem-text">
+              <span class="q-stem-text-en">Young people often reject the established way of life in their community.</span>
+              <span class="q-stem-text-cn">年轻人经常拒绝社区中既定的生活方式。</span>
+            </span>
+          </div>
+          <div class="trans" style="margin-left:32px;">年轻人经常拒绝社区中既定的生活方式。</div><div class="q-answer-area">
+              <input class="q-input compact" id="ans8" placeholder="填写字母…" oninput="saveAnswer('8',this.value)" />
+              <span class="q-result-badge" id="res8"></span>
+            </div></div><div id="q9" class="q-item" data-num="9" data-para="para-4">
+          <div class="q-stem">
+            <span class="q-num">9</span>
+            <span class="q-stem-text">
+              <span class="q-stem-text-en">A change of language may mean a loss of traditional culture.</span>
+              <span class="q-stem-text-cn">语言的改变可能意味着传统文化的丧失。</span>
+            </span>
+          </div>
+          <div class="trans" style="margin-left:32px;">语言的改变可能意味着传统文化的丧失。</div><div class="q-answer-area">
+              <input class="q-input compact" id="ans9" placeholder="填写字母…" oninput="saveAnswer('9',this.value)" />
+              <span class="q-result-badge" id="res9"></span>
+            </div></div></div><div class="card">
+        <div class="card-header">Questions 10–13 · Yes / No / Not Given</div>
+        <div class="q-instruction">
+          Do the following statements agree with the views of the writer in Reading Passage 1? Write YES / NO / NOT GIVEN in boxes 10–13.
+          <div class="trans">下列陈述是否与阅读文章1中作者的观点一致？在第10-13题框内填写 YES / NO / NOT GIVEN。</div>
+        </div><div id="q10" class="q-item" data-num="10" data-para="para-1">
+          <div class="q-stem">
+            <span class="q-num">10</span>
+            <span class="q-stem-text">
+              <span class="q-stem-text-en">The Navajo language will die out because it currently has too few speakers.</span>
+              <span class="q-stem-text-cn">纳瓦霍语将会消失，因为目前它的使用者太少。</span>
+            </span>
+          </div>
+          <div class="trans" style="margin-left:32px;">纳瓦霍语将会消失，因为目前它的使用者太少。</div><div class="q-tf-row">
+              <button class="tf-btn" onclick="selectYN(this,'10','YES')">YES</button>
+              <button class="tf-btn" onclick="selectYN(this,'10','NO')">NO</button>
+              <button class="tf-btn" onclick="selectYN(this,'10','NOT GIVEN')">NOT GIVEN</button>
+              <span class="q-result-badge" id="res10"></span>
+            </div></div><div id="q11" class="q-item" data-num="11" data-para="para-3">
+          <div class="q-stem">
+            <span class="q-num">11</span>
+            <span class="q-stem-text">
+              <span class="q-stem-text-en">A large number of native speakers fail to guarantee the survival of a language.</span>
+              <span class="q-stem-text-cn">大量的母语使用者并不能保证一种语言的生存。</span>
+            </span>
+          </div>
+          <div class="trans" style="margin-left:32px;">大量的母语使用者并不能保证一种语言的生存。</div><div class="q-tf-row">
+              <button class="tf-btn" onclick="selectYN(this,'11','YES')">YES</button>
+              <button class="tf-btn" onclick="selectYN(this,'11','NO')">NO</button>
+              <button class="tf-btn" onclick="selectYN(this,'11','NOT GIVEN')">NOT GIVEN</button>
+              <span class="q-result-badge" id="res11"></span>
+            </div></div><div id="q12" class="q-item" data-num="12" data-para="para-5">
+          <div class="q-stem">
+            <span class="q-num">12</span>
+            <span class="q-stem-text">
+              <span class="q-stem-text-en">National governments could do more to protect endangered languages.</span>
+              <span class="q-stem-text-cn">各国政府可以采取更多措施来保护濒危语言。</span>
+            </span>
+          </div>
+          <div class="trans" style="margin-left:32px;">各国政府可以采取更多措施来保护濒危语言。</div><div class="q-tf-row">
+              <button class="tf-btn" onclick="selectYN(this,'12','YES')">YES</button>
+              <button class="tf-btn" onclick="selectYN(this,'12','NO')">NO</button>
+              <button class="tf-btn" onclick="selectYN(this,'12','NOT GIVEN')">NOT GIVEN</button>
+              <span class="q-result-badge" id="res12"></span>
+            </div></div><div id="q13" class="q-item" data-num="13" data-para="para-2">
+          <div class="q-stem">
+            <span class="q-num">13</span>
+            <span class="q-stem-text">
+              <span class="q-stem-text-en">The loss of linguistic diversity is inevitable.</span>
+              <span class="q-stem-text-cn">语言多样性的丧失是不可避免的。</span>
+            </span>
+          </div>
+          <div class="trans" style="margin-left:32px;">语言多样性的丧失是不可避免的。</div><div class="q-tf-row">
+              <button class="tf-btn" onclick="selectYN(this,'13','YES')">YES</button>
+              <button class="tf-btn" onclick="selectYN(this,'13','NO')">NO</button>
+              <button class="tf-btn" onclick="selectYN(this,'13','NOT GIVEN')">NOT GIVEN</button>
+              <span class="q-result-badge" id="res13"></span>
+            </div></div></div>
+
+    <!-- Score card (hidden until submit) -->
+    <div class="card" id="score-card">
+      <div class="card-header">📊 成绩 · Lost for Words</div>
+      <div id="score-content"></div>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const STORAGE_KEY = 'ielts_reading_C4T2R1';
+const CORRECT_ANSWERS = {"1":"isolation","2":"economic globalisation","3":"cultural identity","4":"traditional skill","5":"E","6":"B","7":"D","8":"C","9":"B","10":"NO","11":"YES","12":"NOT GIVEN","13":"YES"};
+const HAS_ANSWERS = Object.keys(CORRECT_ANSWERS).length > 0;
+const TOTAL_Q = 13;
+
+let answers = {};
+try { answers = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) {}
+let timerInterval = null, seconds = 1200, timerRunning = false;
+let studyActive = false, transActive = false;
+let currentAttempt = 1;
+let isSubmitted = false;
+
+// ── Attempt ──
+function setAttempt(n, btn) {
+  currentAttempt = n;
+  document.querySelectorAll('.attempt-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ── Restore answers from localStorage ──
+function restoreAnswers() {
+  document.querySelectorAll('.q-item').forEach(item => {
+    const q = item.dataset.num || item.id.replace(/^q/,'');
+    if (!answers[q]) return;
+    const v = answers[q];
+    const inp = item.querySelector('.q-input');
+    if (inp) inp.value = v;
+    item.querySelectorAll('.mc-option').forEach(o => {
+      if ((o.querySelector('.mc-letter')||{}).textContent === v) o.classList.add('selected');
+    });
+    item.querySelectorAll('.tf-btn').forEach(b => {
+      if (b.textContent.trim() === v) {
+        const cls = btnClass(v); if (cls) b.classList.add(cls);
+      }
+    });
+  });
+  updateProgress();
+}
+
+function btnClass(val) {
+  if (val === 'TRUE' || val === 'YES') return 'sel-yes';
+  if (val === 'FALSE' || val === 'NO') return 'sel-no';
+  if (val === 'NOT GIVEN') return 'sel-ng';
+  return 'sel-match';
+}
+
+function selectTF(btn, q, val) {
+  btn.closest('.q-item').querySelectorAll('.tf-btn').forEach(b => b.className = 'tf-btn');
+  btn.classList.add(btnClass(val));
+  answers[q] = val; persist(); updateProgress();
+}
+function selectYN(btn, q, val) {
+  btn.closest('.q-item').querySelectorAll('.tf-btn').forEach(b => b.className = 'tf-btn');
+  btn.classList.add(btnClass(val));
+  answers[q] = val; persist();
+  const para = btn.closest('.q-item').dataset.para;
+  if (para) scrollPassage(para);
+  updateProgress();
+}
+function selectMatch(btn, q, val) {
+  btn.closest('.q-item').querySelectorAll('.tf-btn').forEach(b => b.className = 'tf-btn');
+  btn.classList.add('sel-match');
+  answers[q] = val; persist();
+  const para = btn.closest('.q-item').dataset.para;
+  if (para) scrollPassage(para);
+  updateProgress();
+}
+function selectMC(div, q, val) {
+  div.closest('.q-item').querySelectorAll('.mc-option').forEach(o => o.classList.remove('selected'));
+  div.classList.add('selected');
+  answers[q] = val; persist();
+  const para = div.closest('.q-item').dataset.para;
+  if (para) scrollPassage(para);
+  updateProgress();
+}
+function saveAnswer(q, val) { answers[q] = val; persist(); updateProgress(); }
+function persist() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(answers)); } catch(e){} }
+function updateProgress() {
+  const done = Object.keys(answers).filter(k => answers[k] && String(answers[k]).trim()).length;
+  document.getElementById('progress-bar').style.width = Math.round(done/TOTAL_Q*100) + '%';
+}
+function scrollPassage(paraId) {
+  const el = document.getElementById(paraId);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+document.querySelectorAll('.q-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const para = item.dataset.para;
+    if (para) scrollPassage(para);
+  });
+});
+
+// ── Timer (unchanged) ──
+function toggleTimer() {
+  const btn = document.getElementById('btn-timer');
+  if (timerRunning) {
+    clearInterval(timerInterval); timerRunning = false; btn.textContent = '▶ 计时';
+  } else {
+    timerInterval = setInterval(() => {
+      seconds--;
+      const m = String(Math.floor(seconds/60)).padStart(2,'0');
+      const s = String(seconds%60).padStart(2,'0');
+      document.getElementById('timer-display').textContent = m+':'+s;
+      if (seconds <= 0) { clearInterval(timerInterval); showToast('⏰ 时间到！', 'ok'); }
+      if (seconds === 120) showToast('⚠️ 还剩2分钟！', 'ok');
+    }, 1000);
+    timerRunning = true; btn.textContent = '⏸ 暂停';
+  }
+}
+
+// ── Modes (unchanged) ──
+function toggleTrans() {
+  transActive = !transActive;
+  document.body.classList.toggle('trans-active', transActive);
+  document.getElementById('btn-trans').classList.toggle('active', transActive);
+  showToast(transActive ? '🌐 译文已开启' : '译文已关闭', 'ok');
+}
+function toggleStudy() {
+  studyActive = !studyActive;
+  document.body.classList.toggle('study-active', studyActive);
+  document.getElementById('btn-study').classList.toggle('active', studyActive);
+  showToast(studyActive ? '🎯 学习模式已开启' : '学习模式已关闭', 'ok');
+}
+
+// ── ⭐ NEW: Check & Grade Answers ──
+function checkAnswers() {
+  const answered = Object.keys(answers).filter(k => answers[k] && String(answers[k]).trim()).length;
+  if (answered < TOTAL_Q) {
+    showToast(`⚠️ 还有 ${TOTAL_Q - answered} 题未作答`, 'err'); return;
+  }
+  isSubmitted = true;
+  document.body.classList.add('submitted');
+
+  let correct = 0, wrong = 0, noKey = 0;
+  const wrongDetails = [];
+
+  document.querySelectorAll('.q-item').forEach(item => {
+    const q = item.dataset.num || item.id.replace(/^q/,'');
+    const ua = (answers[q] || '').toString().trim().toUpperCase();
+    const ca = (CORRECT_ANSWERS[q] || '').toString().trim().toUpperCase();
+    const badge = document.getElementById('res' + q);
+    if (!badge) return;
+
+    if (!CORRECT_ANSWERS[q]) {
+      noKey++;
+      badge.className = 'q-result-badge no-key';
+      badge.textContent = '— 无答案Key';
+    } else if (ua === ca) {
+      correct++;
+      badge.className = 'q-result-badge correct';
+      badge.textContent = '✓ ' + (CORRECT_ANSWERS[q] || '');
+      item.classList.add('item-correct');
+    } else {
+      wrong++;
+      badge.className = 'q-result-badge wrong';
+      badge.textContent = '✗ → ' + (CORRECT_ANSWERS[q] || '');
+      item.classList.add('item-wrong');
+      wrongDetails.push({ q, ua: answers[q] || '—', ca: CORRECT_ANSWERS[q] || '—' });
+    }
+  });
+
+  buildScoreCard(correct, wrong, noKey, wrongDetails);
+  document.getElementById('score-card').style.display = 'block';
+  setTimeout(() => document.getElementById('score-card').scrollIntoView({ behavior:'smooth', block:'start' }), 100);
+  showToast(`🎯 ${correct}/${TOTAL_Q - noKey} · ${getLabel(correct, TOTAL_Q - noKey)}`, 'ok');
+}
+
+function getLabel(c, t) {
+  if (!t) return '';
+  const p = c/t;
+  if (p >= 0.9) return '优秀 🎉';
+  if (p >= 0.7) return '良好 👍';
+  if (p >= 0.5) return '及格 📚';
+  return '需加强 💪';
+}
+
+function getBand(c, t) {
+  if (!t) return '—';
+  const p = c/t;
+  if (p >= 0.9) return '8.0–9.0';
+  if (p >= 0.7) return '7.0–8.0';
+  if (p >= 0.5) return '5.5–6.5';
+  return '4.0–5.0';
+}
+
+function buildScoreCard(correct, wrong, noKey, wrongDetails) {
+  const gradable = TOTAL_Q - noKey;
+  const pct = gradable > 0 ? correct / gradable : 0;
+  const ringCls = pct >= 0.9 ? 'good' : pct >= 0.6 ? 'mid' : 'low';
+
+  let wrongHTML = wrongDetails.map(w =>
+    `<div class="score-wrong-item">
+      <span class="score-wrong-label">Q${w.q}</span>
+      你答：<strong>${w.ua}</strong> &nbsp;→&nbsp; 正确：<strong style="color:#059669;">${w.ca}</strong>
+    </div>`
+  ).join('');
+
+  const correctNums = Object.keys(CORRECT_ANSWERS).filter(q => {
+    const ua = (answers[q]||'').toString().trim().toUpperCase();
+    const ca = (CORRECT_ANSWERS[q]||'').toString().trim().toUpperCase();
+    return ua === ca;
+  });
+  const correctChips = correctNums.map(q => `<span class="score-correct-chip">Q${q} ✓</span>`).join('');
+
+  document.getElementById('score-content').innerHTML = `
+    <div class="score-ring-wrap">
+      <div class="score-ring ${ringCls}">
+        <div style="font-size:1.4rem;font-weight:700;line-height:1;">${correct}</div>
+        <div style="font-size:0.6rem;font-weight:700;">/ ${gradable}</div>
+      </div>
+      <div>
+        <div style="font-size:1.1rem;font-weight:700;color:#1e293b;">${getLabel(correct,gradable)}</div>
+        <div style="font-size:0.78rem;color:#64748b;margin-top:2px;">正确 ${correct} · 错误 ${wrong}${noKey?' · '+noKey+'题无Key':''}</div>
+        <div class="band-est">推测 Band: <strong>${getBand(correct,gradable)}</strong></div>
+      </div>
+    </div>
+    ${wrong > 0 ? `<div style="font-size:11px;font-weight:700;color:#ef4444;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">✗ 错误题目 (${wrong}题)</div>${wrongHTML}` : ''}
+    ${correctChips ? `<div style="font-size:11px;font-weight:700;color:#059669;text-transform:uppercase;letter-spacing:.06em;margin-top:8px;margin-bottom:4px;">✓ 正确题目</div><div class="score-correct-list">${correctChips}</div>` : ''}
+    <div class="score-action-row">
+      <button class="score-btn score-btn-reset" onclick="resetAnswers()">🔄 重新作答</button>
+      <button class="score-btn score-btn-export" onclick="exportAnswers()">🚀 导出 AI 分析 JSON</button>
+    </div>
+  `;
+}
+
+function resetAnswers() {
+  answers = {}; persist();
+  isSubmitted = false;
+  document.body.classList.remove('submitted');
+  document.querySelectorAll('.q-item').forEach(item => {
+    item.classList.remove('item-correct','item-wrong');
+    item.querySelectorAll('.q-result-badge').forEach(b => { b.className='q-result-badge'; b.textContent=''; });
+    item.querySelectorAll('.q-input').forEach(i => i.value = '');
+    item.querySelectorAll('.mc-option').forEach(o => o.classList.remove('selected'));
+    item.querySelectorAll('.tf-btn').forEach(b => b.className = 'tf-btn');
+  });
+  document.getElementById('score-card').style.display = 'none';
+  updateProgress();
+  showToast('🔄 已重置，重新作答', 'ok');
+}
+
+// ── Export JSON (upgraded with attempt & AI instruction) ──
+function exportAnswers() {
+  const elapsed = 1200 - seconds;
+  const gradable = TOTAL_Q - Object.keys(CORRECT_ANSWERS).filter(q => !CORRECT_ANSWERS[q]).length;
+  const correct = isSubmitted
+    ? Object.keys(CORRECT_ANSWERS).filter(q => {
+        const ua = (answers[q]||'').toString().trim().toUpperCase();
+        const ca = (CORRECT_ANSWERS[q]||'').toString().trim().toUpperCase();
+        return ua === ca;
+      }).length
+    : null;
+
+  let instr = '';
+  if (currentAttempt === 1) instr = '这是用户第一次作答。请不要直接给出答案，提供关键词引导、paraphrase 提示和原文定位建议，帮助用户自己找到正确答案。';
+  else if (currentAttempt <= 3) instr = `这是第 ${currentAttempt} 次作答。请分析错误原因，指出 paraphrase 陷阱和定位段落，适当给出提示。`;
+  else instr = '超过3次作答，请给出完整答案解析、错题分析、逐题原文定位，以及针对性的阅读提升策略。';
+
+  const payload = {
+    test_id: 'Lost for Words',
+    module: 'reading',
+    attempt: currentAttempt,
+    duration_seconds: elapsed,
+    total_questions: TOTAL_Q,
+    score: correct !== null ? correct + '/' + gradable : 'not_submitted',
+    user_answers: answers,
+    correct_answers: CORRECT_ANSWERS,
+    wrong_questions: isSubmitted
+      ? Object.keys(CORRECT_ANSWERS).filter(q => {
+          const ua = (answers[q]||'').toString().trim().toUpperCase();
+          const ca = (CORRECT_ANSWERS[q]||'').toString().trim().toUpperCase();
+          return ua !== ca;
+        })
+      : [],
+    ai_instruction: instr,
+    request: '请根据以上答题数据，分析错题原因（重点关注 paraphrase 替换、定位段落、题型陷阱），给出具体改进建议并估算当前 Band 分。'
+  };
+
+  const text = JSON.stringify(payload, null, 2);
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => showToast('✅ JSON 已复制！粘贴给 AI 深度分析', 'ok'));
+  } else {
+    const el = document.createElement('textarea');
+    el.value = text; el.style.cssText = 'position:fixed;opacity:0;';
+    document.body.appendChild(el); el.select(); document.execCommand('copy');
+    document.body.removeChild(el);
+    showToast('✅ JSON 已复制！粘贴给 AI 深度分析', 'ok');
+  }
+}
+
+// ── Toast (upgraded) ──
+function showToast(msg, type='ok') {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = type;
+  requestAnimationFrame(() => requestAnimationFrame(() => t.classList.add('show')));
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ── User Highlight & Annotation (UNCHANGED) ──
+let userHighlights = [];
+try { userHighlights = JSON.parse(localStorage.getItem(STORAGE_KEY+'_hl') || '[]'); } catch(e) {}
+let pendingRange = null;
+const hlToolbar = document.getElementById('hl-toolbar');
+const hlTooltip = document.getElementById('hl-tooltip');
+
+function persistHL() { try { localStorage.setItem(STORAGE_KEY+'_hl', JSON.stringify(userHighlights)); } catch(e) {} }
+function applyStoredHighlights() { userHighlights.forEach(h => applyHighlight(h.id, h.text, h.note, false)); }
+let hlIdCounter = Date.now();
+function applyHighlight(id, text, note, save) {
+  if (document.getElementById('uhl-'+id)) return;
+  const walker = document.createTreeWalker(document.getElementById('main'), NodeFilter.SHOW_TEXT);
+  let node;
+  while ((node = walker.nextNode())) {
+    const idx = node.textContent.indexOf(text);
+    if (idx === -1) continue;
+    const span = document.createElement('span');
+    span.className = 'user-hl'; span.id = 'uhl-'+id;
+    span.dataset.note = note || ''; span.dataset.hlId = id;
+    span.addEventListener('mouseenter', e => showHLTooltip(e, note, id));
+    span.addEventListener('mouseleave', () => { hlTooltip.style.display='none'; });
+    span.addEventListener('click', e => { e.stopPropagation(); promptEditNote(id); });
+    const frag = document.createDocumentFragment();
+    if (idx > 0) frag.appendChild(document.createTextNode(node.textContent.slice(0, idx)));
+    span.textContent = text; frag.appendChild(span);
+    const after = node.textContent.slice(idx + text.length);
+    if (after) frag.appendChild(document.createTextNode(after));
+    node.parentNode.replaceChild(frag, node); break;
+  }
+  if (save) { userHighlights.push({ id, text, note: note||'' }); persistHL(); }
+}
+function showHLTooltip(e, note, id) {
+  if (!note) { hlTooltip.style.display='none'; return; }
+  hlTooltip.textContent = note; hlTooltip.style.display = 'block';
+  hlTooltip.style.left = Math.min(e.clientX+10, window.innerWidth-260)+'px';
+  hlTooltip.style.top = (e.clientY-40+window.scrollY)+'px';
+}
+function promptEditNote(id) {
+  const entry = userHighlights.find(h => h.id === id); if (!entry) return;
+  const note = prompt('编辑注释（留空则删除注释）：', entry.note || '');
+  if (note === null) return;
+  entry.note = note;
+  const span = document.getElementById('uhl-'+id);
+  if (span) span.dataset.note = note;
+  persistHL();
+}
+function removeHighlight(id) {
+  const span = document.getElementById('uhl-'+id);
+  if (span) span.replaceWith(document.createTextNode(span.textContent));
+  userHighlights = userHighlights.filter(h => h.id !== id); persistHL();
+}
+function clearAllHighlights() {
+  document.querySelectorAll('.user-hl').forEach(s => s.replaceWith(document.createTextNode(s.textContent)));
+  userHighlights = []; persistHL();
+  showToast('🗑 所有手动标注已清除', 'ok');
+}
+document.addEventListener('mouseup', e => {
+  if (hlToolbar.contains(e.target)) return;
+  const sel = window.getSelection();
+  if (!sel || sel.isCollapsed || !sel.toString().trim()) { hlToolbar.style.display='none'; pendingRange=null; return; }
+  const anchor = sel.anchorNode;
+  if (!document.getElementById('main').contains(anchor)) { hlToolbar.style.display='none'; return; }
+  pendingRange = { text: sel.toString().trim(), range: sel.getRangeAt(0).cloneRange() };
+  const rect = sel.getRangeAt(0).getBoundingClientRect();
+  hlToolbar.style.display = 'flex';
+  hlToolbar.style.left = Math.min(rect.left+rect.width/2-60, window.innerWidth-200)+'px';
+  hlToolbar.style.top = (rect.top-44+window.scrollY)+'px';
+});
+document.getElementById('hl-do-btn').addEventListener('click', () => {
+  if (!pendingRange) return;
+  const id = ++hlIdCounter;
+  applyHighlight(id, pendingRange.text, '', true);
+  window.getSelection().removeAllRanges(); hlToolbar.style.display='none'; pendingRange=null;
+  showToast('✅ 已高亮标注，点击可添加注释', 'ok');
+});
+document.getElementById('hl-note-btn').addEventListener('click', () => {
+  if (!pendingRange) return;
+  const note = prompt('为选中短语添加注释：'); if (note === null) return;
+  const id = ++hlIdCounter;
+  applyHighlight(id, pendingRange.text, note, true);
+  window.getSelection().removeAllRanges(); hlToolbar.style.display='none'; pendingRange=null;
+  showToast('💬 已添加注释标注', 'ok');
+});
+document.getElementById('hl-cancel-btn').addEventListener('click', () => {
+  window.getSelection().removeAllRanges(); hlToolbar.style.display='none'; pendingRange=null;
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { hlToolbar.style.display='none'; window.getSelection().removeAllRanges(); pendingRange=null; }
+});
+
+function toggleHL(cls) {
+  document.querySelectorAll('.hl-'+cls).forEach(el => {
+    el.style.visibility = el.style.visibility === 'hidden' ? '' : 'hidden';
+  });
+}
+
+// ── Init ──
+restoreAnswers();
+applyStoredHighlights();
+</script>
+</body>
+</html>

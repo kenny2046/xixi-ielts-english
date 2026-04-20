@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>IAGS 听力工厂 v1.0</title>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0b1220;--surface:#131e30;--card:#1a2740;--border:#253550;--blue:#3b82f6;--blue-light:#60a5fa;--green:#10b981;--amber:#f59e0b;--text:#e2e8f0;--muted:#64748b;--purple:#a78bfa;--cyan:#22d3ee;--gold:#f59e0b;--gold-light:#fcd34d;--gold-dark:#b45309;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Quicksand','Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
+  body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(245,158,11,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(245,158,11,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;}
+  .factory{width:100%;max-width:560px;position:relative;}
+  .header{text-align:center;margin-bottom:28px;}
+  .header-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.3);border-radius:99px;padding:4px 14px;font-size:0.7rem;font-weight:700;color:var(--gold-light);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px;}
+  .header h1{font-size:1.8rem;font-weight:700;background:linear-gradient(135deg,#fcd34d,#fb923c,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .header p{color:var(--muted);font-size:0.8rem;margin-top:6px;}
+  .steps{display:flex;flex-direction:column;gap:12px;}
+  .step{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:18px 20px;transition:border-color 0.3s,box-shadow 0.3s;position:relative;overflow:hidden;}
+  .step::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--gold);opacity:0;transition:opacity 0.3s;}
+  .step:hover{border-color:rgba(245,158,11,0.4);box-shadow:0 4px 24px rgba(245,158,11,0.08);}
+  .step:hover::before{opacity:1;}
+  .step-header{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+  .step-num{width:28px;height:28px;border-radius:50%;background:rgba(245,158,11,0.15);border:1.5px solid rgba(245,158,11,0.4);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;color:var(--gold-light);flex-shrink:0;}
+  .step-title{font-weight:700;font-size:0.9rem;color:var(--text);}
+  .step-desc{font-size:0.72rem;color:var(--muted);margin-top:1px;}
+  .btn{width:100%;padding:13px 18px;border-radius:14px;font-weight:700;font-size:0.9rem;font-family:inherit;cursor:pointer;border:none;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px;}
+  .btn:active{transform:scale(0.97);}
+  .btn-gold{background:linear-gradient(135deg,#f59e0b,#d97706);color:white;box-shadow:0 4px 15px rgba(245,158,11,0.3);}
+  .btn-gold:hover{box-shadow:0 6px 20px rgba(245,158,11,0.45);}
+  .btn-green{background:linear-gradient(135deg,#10b981,#059669);color:white;box-shadow:0 4px 15px rgba(16,185,129,0.3);}
+  .btn-green:hover{box-shadow:0 6px 20px rgba(16,185,129,0.45);}
+  .toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-80px);background:#10b981;color:white;padding:10px 20px;border-radius:99px;font-size:0.85rem;font-weight:700;transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);z-index:9999;white-space:nowrap;box-shadow:0 4px 20px rgba(16,185,129,0.4);}
+  .toast.show{transform:translateX(-50%) translateY(0);}
+  .toast.error{background:#ef4444;box-shadow:0 4px 20px rgba(239,68,68,0.4);}
+  textarea,input[type="text"]{width:100%;background:var(--surface);border:1.5px solid var(--border);color:#fcd34d;padding:12px 14px;border-radius:14px;font-family:'Courier New',monospace;font-size:0.8rem;resize:vertical;transition:border-color 0.2s;outline:none;}
+  textarea:focus,input[type="text"]:focus{border-color:rgba(245,158,11,0.5);box-shadow:0 0 0 3px rgba(245,158,11,0.1);}
+  textarea::placeholder,input::placeholder{color:#3a5170;}
+  .filename-row{display:flex;align-items:center;background:var(--surface);border:1.5px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color 0.2s,box-shadow 0.2s;}
+  .filename-row:focus-within{border-color:rgba(245,158,11,0.5);box-shadow:0 0 0 3px rgba(245,158,11,0.1);}
+  .filename-prefix{padding:12px 14px;font-family:'Courier New',monospace;font-size:0.8rem;font-weight:700;color:var(--gold-light);background:rgba(245,158,11,0.1);border-right:1.5px solid var(--border);white-space:nowrap;user-select:none;flex-shrink:0;}
+  .filename-row input{border:none;border-radius:0;background:transparent;padding:12px 14px;flex:1;}
+  .filename-row input:focus{box-shadow:none;}
+  .json-status{display:flex;align-items:center;gap:6px;font-size:0.7rem;margin-top:6px;color:var(--muted);}
+  .json-dot{width:6px;height:6px;border-radius:50%;background:var(--muted);flex-shrink:0;}
+  .json-dot.valid{background:var(--green);box-shadow:0 0 6px var(--green);}
+  .json-dot.invalid{background:#ef4444;box-shadow:0 0 6px #ef4444;}
+  .arrow-divider{text-align:center;color:var(--border);font-size:1rem;margin:-2px 0;}
+  .upgrade-list{list-style:none;display:flex;flex-direction:column;gap:7px;margin-top:2px;}
+  .upgrade-list li{display:flex;align-items:flex-start;gap:8px;font-size:0.72rem;color:var(--muted);line-height:1.5;}
+  .upgrade-list li .dot{width:6px;height:6px;border-radius:50%;margin-top:5px;flex-shrink:0;}
+  .dot-a{background:#f59e0b;}.dot-g{background:#10b981;}.dot-b{background:#3b82f6;}.dot-c{background:#22d3ee;}.dot-p{background:#a78bfa;}.dot-r{background:#ef4444;}
+  .upgrade-list li strong{color:var(--text);}
+  .callout{background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.22);border-radius:14px;padding:12px 14px;font-size:0.72rem;color:#fde68a;line-height:1.7;margin-top:12px;}
+  .callout-title{font-weight:700;color:var(--gold-light);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;}
+  .prompt-preview{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:12px 14px;font-size:0.7rem;color:#64748b;line-height:1.6;margin-top:10px;display:none;}
+  .prompt-preview.show{display:block;}
+  .prompt-preview strong{color:#94a3b8;}
+  .band-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.3);border-radius:99px;padding:3px 10px;font-size:0.65rem;font-weight:700;color:var(--gold-light);margin-left:8px;}
+  .type-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;}
+  .type-card{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:10px 12px;cursor:pointer;transition:0.2s;display:flex;align-items:center;gap:8px;}
+  .type-card:hover{border-color:rgba(245,158,11,0.4);}
+  .type-card.active{border-color:var(--gold);background:rgba(245,158,11,0.08);}
+  .type-card-icon{font-size:1rem;flex-shrink:0;}
+  .type-card-label{font-size:0.72rem;font-weight:700;color:var(--text);}
+  .type-card-desc{font-size:0.62rem;color:var(--muted);margin-top:1px;}
+</style>
+</head>
+<body>
+<div class="factory">
+  <div class="header">
+    <div class="header-badge">📻 IAGS Listening Factory v1.0</div>
+    <h1>雅思听力生成工厂</h1>
+    <p>四大 Section · 五种题型 · 原文解析 · Study Mode · AI 引导分析</p>
+  </div>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">📻</div>
+        <div>
+          <div class="step-title">听力工厂能做什么 <span class="band-badge">🎯 Band 7+</span></div>
+          <div class="step-desc">覆盖雅思听力全部 Section 和题型，精准还原 + AI 深度解析</div>
+        </div>
+      </div>
+      <ul class="upgrade-list">
+        <li><span class="dot dot-a"></span><div><strong>五种题型全覆盖</strong> — 选择题 / 填空题 / 匹配题 / 地图题 / 表格题，智能识别自动渲染</div></li>
+        <li><span class="dot dot-g"></span><div><strong>Study Mode 双栏</strong> — 题目 + 原文并列，关键词高亮，答案绿色下划线标注</div></li>
+        <li><span class="dot dot-b"></span><div><strong>中文翻译切换</strong> — 题目、选项、原文三层翻译一键开关</div></li>
+        <li><span class="dot dot-c"></span><div><strong>答题次数追踪</strong> — 1/2/3/4+ 次，AI 引导策略随次数自动升级</div></li>
+        <li><span class="dot dot-p"></span><div><strong>成绩即时分析</strong> — 错题 paraphrase 陷阱识别 + Band 估算 + 原文双向跳转</div></li>
+        <li><span class="dot dot-r"></span><div><strong>导出 AI 分析 JSON</strong> — 答题数据一键打包，粘贴给 AI 获取深度批改</div></li>
+      </ul>
+    </div>
+
+    <div class="arrow-divider">↓</div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-title">复制听力专用 Prompt</div>
+          <div class="step-desc">粘贴给 Claude / Gemini / GPT-4o，上传真题截图或输入题目</div>
+        </div>
+      </div>
+      <div style="font-size:0.68rem;font-weight:700;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em;">选择 Section 类型：</div>
+      <div class="type-grid" id="typeGrid">
+        <div class="type-card active" onclick="selectType('s1')" id="type-s1"><span class="type-card-icon">👥</span><div><div class="type-card-label">Section 1</div><div class="type-card-desc">日常对话 · 填空为主</div></div></div>
+        <div class="type-card" onclick="selectType('s2')" id="type-s2"><span class="type-card-icon">🏛️</span><div><div class="type-card-label">Section 2</div><div class="type-card-desc">独白讲解 · 地图/表格</div></div></div>
+        <div class="type-card" onclick="selectType('s3')" id="type-s3"><span class="type-card-icon">🎓</span><div><div class="type-card-label">Section 3</div><div class="type-card-desc">学术讨论 · 选择题</div></div></div>
+        <div class="type-card" onclick="selectType('s4')" id="type-s4"><span class="type-card-icon">🔬</span><div><div class="type-card-label">Section 4</div><div class="type-card-desc">学术讲座 · 笔记填空</div></div></div>
+      </div>
+      <div style="margin-top:10px;">
+        <button class="btn btn-gold" onclick="copyPrompt()"><span>📋</span> 复制听力提取 Prompt</button>
+      </div>
+      <div class="prompt-preview" id="promptPreview">
+        <strong>Prompt 已复制 — 使用方法：</strong><br>
+        · 将 Prompt 粘贴给支持图片的 AI（推荐 Claude / Gemini）<br>
+        · 上传雅思听力真题截图，或直接输入题目文字<br>
+        · AI 自动识别题型，生成完整练习 JSON（含原文+翻译+答案）<br>
+        · 将 JSON 粘贴至下方，命名后一键导出
+      </div>
+    </div>
+
+    <div class="arrow-divider">↓</div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-title">粘贴 AI 生成的 JSON</div>
+          <div class="step-desc">自动检测 Section、题型、题目数量、是否含原文</div>
+        </div>
+      </div>
+      <textarea id="jsonBox" rows="7" placeholder='{"system_version":"IELTS_Listening_v1.0","test_id":"C4T3S3","section":3,"questions":[...],"script":[...],"answers":{"21":"A",...}}' oninput="validateJSON()"></textarea>
+      <div class="json-status">
+        <div class="json-dot" id="jsonDot"></div>
+        <span id="jsonStatus">等待粘贴 JSON...</span>
+      </div>
+    </div>
+
+    <div class="arrow-divider">↓</div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-title">输入题目编号</div>
+          <div class="step-desc">例如 C4T3S3，文件保存为 listening_C4T3S3.html</div>
+        </div>
+      </div>
+      <div class="filename-row">
+        <span class="filename-prefix">listening_</span>
+        <input type="text" id="fileName" placeholder="C4T3S3">
+      </div>
+    </div>
+
+    <div class="arrow-divider">↓</div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">4</div>
+        <div>
+          <div class="step-title">导出听力练习系统</div>
+          <div class="step-desc">生成完整单文件 HTML，答题 / 原文 / 成绩三大模块</div>
+        </div>
+      </div>
+      <button class="btn btn-green" onclick="doExport()"><span>🚀</span> 导出听力练习 HTML</button>
+      <div class="callout">
+        <div class="callout-title">✦ 导出包含三大模块</div>
+        📝 <strong>答题</strong> — 选择/填空/匹配/地图/表格题智能渲染，进度条追踪<br>
+        📄 <strong>原文</strong> — 完整对话/讲座，答案高亮，Q-tag 点击双向跳转<br>
+        📊 <strong>成绩</strong> — 即时批改，paraphrase 陷阱分析，Band 估算，AI JSON 导出
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let selectedType = 's1';
+
+function buildPrompt(sectionNum, context, qTypes, extraNotes) {
+  return `你是一名专业的雅思听力题目提取专家。请分析我提供的雅思听力真题内容，严格按以下规范输出，仅输出纯 JSON，不得添加任何 markdown 代码块、前缀或说明文字。第一个字符必须是 {。
+
+【本次提取】
+Section ${sectionNum}：${context}
+主要题型：${qTypes}
+${extraNotes}
+
+【提取要求】
+1. 完整还原所有题目（题干、选项、空格位置、标签）
+2. 提取完整原文（逐句，标注说话人）
+3. 标注每道题对应原文答案和关键词
+4. 提供中文翻译（题干+选项+原文）
+5. 每题提供 paraphrase 陷阱分析（用初中生能懂的中文）
+
+【JSON 结构严格输出】
+{
+  "system_version": "IELTS_Listening_v1.0",
+  "test_id": "题目来源（如 C4T3S3）",
+  "section": ${sectionNum},
+  "section_context": "${context}",
+  "question_range": "题号范围（如 21-30）",
+  "q_start": 第一题题号,
+  "q_end": 最后题题号,
+  "instructions": "原题指令文字",
+  "instructions_zh": "指令中文翻译",
+  "questions": [
+    {
+      "number": 题号,
+      "type": "mcq 或 gap_fill 或 matching 或 map 或 table",
+      "stem": "题干文字（选择/匹配题必填，填空题可留空）",
+      "stem_zh": "题干中文翻译",
+      "keyword": "题干关键词（用于 Study Mode 高亮）",
+      "options": [
+        { "letter": "A", "text": "选项文字", "text_zh": "选项中文" }
+      ],
+      "blank_label": "填空题的字段标签（如 Name: / Date: / Room:）",
+      "blank_label_zh": "标签中文",
+      "answer": "正确答案（选择题填字母，填空题填具体词）",
+      "answer_phrase": "原文中的答案短语（用于高亮显示）",
+      "paraphrase_note": "说明原文如何 paraphrase 成题目（中文，初中生能懂）",
+      "script_ref": "对应原文行的 id（如 line_21）"
+    }
+  ],
+  "script": [
+    {
+      "id": "line_1",
+      "speaker": "说话人（OFFICER / STUDENT / NARRATOR / SPEAKER 等）",
+      "text": "原文文字",
+      "text_zh": "中文翻译",
+      "q_refs": [与本行相关的题号列表],
+      "answer_spans": [
+        { "q": 题号, "phrase": "原文中对应答案的短语" }
+      ]
+    }
+  ],
+  "answers": {
+    "题号字符串": "答案"
+  },
+  "section_tips": ["该 Section 的听力技巧1（中文）", "技巧2"],
+  "ui_compatibility_note": "此JSON专为IAGS听力工厂v1.0设计"
+}
+
+- 仅输出 JSON，第一个字符必须是 {
+- questions 必须包含该 section 的全部题目，不得遗漏
+- script 必须是完整原文，逐句输出，不得省略或合并
+- 填空题 options 字段留空数组 []
+- 中文翻译保持初中生能理解的程度`;
+}
+
+const PROMPTS = {
+  s1: buildPrompt(1, '日常生活场景的两人对话（如预约、查询、登记、电话沟通）', '填空题（Form/Note Completion）为主，可能有选择题', `
+特别注意：
+- 填空题的字段标签必须完整还原（如 Name / Phone / Date / Address）
+- 数字、日期、地址、姓名拼写务必准确
+- Section 1 答案通常是听到的原词，注意拼写和大小写`),
+
+  s2: buildPrompt(2, '社会生活场景的独白（如参观介绍、活动说明、设施介绍、旅游指南）', '地图/平面图题、表格题、选择题、匹配题', `
+特别注意：
+- 地图题需还原所有地点标签（A/B/C...）和方向词（north/left/opposite）
+- 表格题需完整还原表头和已填内容
+- Section 2 常见顺序陷阱和 paraphrase 替换`),
+
+  s3: buildPrompt(3, '学术场景多人对话（如学生讨论项目、师生交流、导师反馈）', '选择题（MCQ）为主，也有匹配题', `
+特别注意：
+- 选择题必须完整还原题干和全部选项（A/B/C）
+- 标注题干关键词（keyword）和原文答案短语（answer_phrase）
+- Section 3 是 paraphrase 陷阱最密集的 Section，每题必须注明`),
+
+  s4: buildPrompt(4, '学术讲座独白（如科学讲解、历史介绍、研究报告、地理环境）', '笔记/摘要填空题（Note/Summary Completion）为主', `
+特别注意：
+- 严格按讲座笔记的层级结构还原（标题/子标题/要点）
+- 每道空格标注题号、字段标签和填写类型（单词/数字/短语）
+- Section 4 词汇难度最高，paraphrase_note 需特别详细`)
+};
+
+function selectType(t) {
+  selectedType = t;
+  ['s1','s2','s3','s4'].forEach(id => {
+    document.getElementById('type-'+id).classList.toggle('active', id === t);
+  });
+}
+
+function showToast(msg, isError=false) {
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className='toast'+(isError?' error':'');
+  requestAnimationFrame(()=>{requestAnimationFrame(()=>{t.classList.add('show');});});
+  setTimeout(()=>{t.classList.remove('show');},2800);
+}
+
+function copyPrompt() {
+  const p = PROMPTS[selectedType];
+  const doFallback = () => {
+    const el=document.createElement('textarea');el.value=p;el.style.cssText='position:fixed;opacity:0;';
+    document.body.appendChild(el);el.select();document.execCommand('copy');document.body.removeChild(el);
+    showToast('✅ 听力 Prompt 已复制！');
+    document.getElementById('promptPreview').classList.add('show');
+  };
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(p).then(()=>{
+      showToast('✅ 听力 Prompt 已复制！');
+      document.getElementById('promptPreview').classList.add('show');
+    }).catch(doFallback);
+  } else doFallback();
+}
+
+function validateJSON() {
+  const val=document.getElementById('jsonBox').value.trim();
+  const dot=document.getElementById('jsonDot');
+  const status=document.getElementById('jsonStatus');
+  if(!val){dot.className='json-dot';status.textContent='等待粘贴 JSON...';return false;}
+  try {
+    const d=JSON.parse(val);
+    const hasQ=Array.isArray(d.questions)&&d.questions.length>0;
+    const hasScript=Array.isArray(d.script)&&d.script.length>0;
+    const hasAnswers=d.answers&&Object.keys(d.answers).length>0;
+    const sec=d.section||'?';
+    const qc=d.questions?.length||0;
+    const types=[...new Set((d.questions||[]).map(q=>q.type).filter(Boolean))].join('/');
+    const range=d.question_range||`${d.q_start||'?'}-${d.q_end||'?'}`;
+    if(hasQ){
+      dot.className='json-dot valid';
+      let info=`✓ 有效 · Section ${sec} · ${qc}题(${range})`;
+      if(types) info+=` · ${types}`;
+      if(hasScript) info+=` · ✦ 含原文`;
+      if(!hasAnswers) info+=` · ⚠ 缺 answers`;
+      status.textContent=info;return true;
+    } else {
+      dot.className='json-dot invalid';
+      status.textContent='⚠️ 缺少 questions 数组，请使用听力 Prompt 重新生成';return false;
+    }
+  } catch(e){
+    dot.className='json-dot invalid';
+    status.textContent='✗ JSON格式错误：'+e.message.substring(0,50);return false;
+  }
+}
+
+function doExport() {
+  const jsonStr=document.getElementById('jsonBox').value.trim();
+  const name=document.getElementById('fileName').value.trim()||'Section';
+  if(!jsonStr){showToast('⚠️ 请先粘贴 JSON',true);return;}
+  if(!validateJSON()){showToast('⚠️ JSON 格式有误',true);return;}
+  let parsed;
+  try{parsed=JSON.parse(jsonStr);}catch(e){showToast('JSON 解析失败',true);return;}
+  const safeName=name.replace(/^listening_/i,'');
+  const html=buildOutputHTML(safeName,jsonStr,parsed);
+  const blob=new Blob([html],{type:'text/html;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='listening_'+safeName+'.html';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  showToast(`🎉 listening_${safeName}.html 已导出！`);
+}
+
+function buildOutputHTML(name, jsonStr, parsed) {
+  const section=parsed.section||'?';
+  const qStart=parsed.q_start||(parsed.questions[0]?.number)||1;
+  const qEnd=parsed.q_end||(parsed.questions[parsed.questions.length-1]?.number)||10;
+  const qCount=parsed.questions.length;
+  const sectionCtx=parsed.section_context||'';
+  const hasScript=Array.isArray(parsed.script)&&parsed.script.length>0;
+  const tips=parsed.section_tips||[];
+
+  return `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>IAGS v16 | ${name} Listening</title>
+<script src="https://cdn.tailwindcss.com"><\/script>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body{font-family:'Quicksand','Noto Sans SC',sans-serif;background:#f1f5f9;color:#1e293b;touch-action:manipulation;overscroll-behavior:none;}
+  #app{display:flex;flex-direction:column;height:100dvh;}
+  #topbar,#tab-row{flex-shrink:0;}
+  #content-area{flex:1;overflow:hidden;display:flex;}
+  #topbar{background:white;border-bottom:1px solid #e2e8f0;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;box-shadow:0 1px 6px rgba(0,0,0,0.04);z-index:20;flex-wrap:wrap;}
+  .top-badge{display:inline-flex;align-items:center;gap:4px;background:#fffbeb;border:1px solid #fde68a;border-radius:99px;padding:3px 10px;font-size:0.62rem;font-weight:700;color:#b45309;}
+  #tab-row{background:#e2e8f0;padding:4px 12px;display:flex;gap:3px;}
+  .tab{flex:1;padding:8px 4px;text-align:center;cursor:pointer;border-radius:10px;font-size:0.68rem;font-weight:700;color:#64748b;transition:0.2s;white-space:nowrap;}
+  .tab.active{background:#fff;color:#f59e0b;box-shadow:0 2px 8px rgba(0,0,0,0.06);}
+  .prog-bar{height:3px;background:#e2e8f0;border-radius:99px;overflow:hidden;margin-bottom:12px;}
+  .prog-fill{height:100%;background:linear-gradient(90deg,#f59e0b,#a78bfa);border-radius:99px;transition:width 0.4s;}
+  .panel{display:none;flex:1;overflow-y:auto;padding:14px;}
+  .panel.active{display:block;}
+  .card{background:white;border-radius:24px;padding:1.25rem;box-shadow:0 6px 18px rgba(0,0,0,0.04);border:3px solid #e2e8f0;margin-bottom:14px;}
+  .q-block{margin-bottom:1.5rem;}
+  .q-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#fffbeb;border:1.5px solid #fde68a;font-size:0.72rem;font-weight:700;color:#b45309;flex-shrink:0;margin-right:8px;}
+  .q-stem{font-size:0.88rem;font-weight:700;color:#1e293b;line-height:1.5;}
+  .q-zh{font-size:0.72rem;color:#94a3b8;margin-top:2px;margin-left:34px;display:none;}
+  .trans-on .q-zh{display:block;}
+  .opt-row{display:flex;align-items:flex-start;gap:8px;margin-top:6px;padding:9px 12px;border-radius:12px;border:1.5px solid #f1f5f9;cursor:pointer;transition:0.15s;background:white;}
+  .opt-row:hover{border-color:#fde68a;background:#fffbeb;}
+  .opt-row.selected{border-color:#f59e0b;background:#fffbeb;}
+  .opt-row.correct{border-color:#10b981;background:#ecfdf5;}
+  .opt-row.wrong{border-color:#ef4444;background:#fef2f2;}
+  .opt-letter{width:22px;height:22px;border-radius:50%;background:#f1f5f9;border:1.5px solid #e2e8f0;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:700;color:#64748b;flex-shrink:0;transition:0.15s;}
+  .opt-row.selected .opt-letter{background:#f59e0b;color:white;border-color:#f59e0b;}
+  .opt-row.correct .opt-letter{background:#10b981;color:white;border-color:#10b981;}
+  .opt-row.wrong .opt-letter{background:#ef4444;color:white;border-color:#ef4444;}
+  .opt-text{font-size:0.85rem;font-weight:600;color:#1e293b;line-height:1.4;}
+  .opt-zh{font-size:0.7rem;color:#94a3b8;margin-top:1px;display:none;}
+  .trans-on .opt-zh{display:block;}
+  .gap-row{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;border:1.5px solid #f1f5f9;margin-top:6px;background:white;flex-wrap:wrap;}
+  .gap-label{font-size:0.82rem;font-weight:600;color:#475569;}
+  .gap-label-zh{font-size:0.68rem;color:#94a3b8;display:none;}
+  .trans-on .gap-label-zh{display:block;}
+  .gap-input{border:none;border-bottom:2px solid #e2e8f0;background:transparent;font-family:inherit;font-size:0.85rem;font-weight:700;color:#1e293b;outline:none;padding:4px 6px;min-width:100px;flex:1;transition:border-color 0.2s;}
+  .gap-input:focus{border-color:#f59e0b;}
+  .gap-input.correct-fill{border-color:#10b981;color:#059669;}
+  .gap-input.wrong-fill{border-color:#ef4444;color:#ef4444;}
+  .kw{color:inherit;font-weight:inherit;}
+  .study-on .kw{color:#6366f1;font-weight:700;border-bottom:1px dashed #6366f1;}
+  .script-line{padding:10px 0;border-bottom:1px solid #f1f5f9;font-size:0.82rem;color:#475569;line-height:1.6;position:relative;}
+  .script-line:last-child{border-bottom:none;}
+  .script-speaker{font-weight:700;color:#1e293b;margin-right:4px;}
+  .script-answer{color:#059669;font-weight:700;border-bottom:2px solid #6ee7b7;}
+  .script-zh{font-size:0.7rem;color:#94a3b8;margin-top:3px;display:none;}
+  .trans-on .script-zh{display:block;}
+  .q-tag{display:inline-flex;align-items:center;gap:3px;background:#fffbeb;border:1px solid #fde68a;border-radius:6px;padding:2px 7px;font-size:0.6rem;font-weight:700;color:#b45309;cursor:pointer;margin-bottom:4px;transition:0.15s;}
+  .q-tag:hover{background:#fde68a;}
+  #content-area.split{flex-direction:row;}
+  #content-area.split .panel-questions{flex:55%;border-right:1px solid #e2e8f0;}
+  #content-area.split .panel-script{flex:45%;display:block!important;}
+  .tb-btn{padding:6px 12px;border-radius:10px;font-size:0.68rem;font-weight:700;border:1.5px solid #e2e8f0;background:white;color:#475569;cursor:pointer;transition:0.2s;display:flex;align-items:center;gap:4px;}
+  .tb-btn:hover{border-color:#fde68a;color:#b45309;}
+  .tb-btn.on{background:#1e293b;color:white;border-color:#1e293b;}
+  .tb-btn.export-btn{background:linear-gradient(135deg,#f59e0b,#d97706);color:white;border:none;box-shadow:0 3px 10px rgba(245,158,11,0.3);}
+  .tb-btn.export-btn:hover{box-shadow:0 5px 14px rgba(245,158,11,0.45);}
+  .attempt-btn{width:28px;height:28px;border-radius:8px;font-size:0.7rem;font-weight:700;border:1.5px solid #e2e8f0;background:white;color:#64748b;cursor:pointer;transition:0.15s;}
+  .attempt-btn.active{background:#f59e0b;color:white;border-color:#f59e0b;}
+  .score-ring{width:80px;height:80px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;border:4px solid;}
+  .score-ring.good{border-color:#10b981;background:#ecfdf5;color:#059669;}
+  .score-ring.mid{border-color:#f59e0b;background:#fffbeb;color:#b45309;}
+  .score-ring.low{border-color:#ef4444;background:#fef2f2;color:#dc2626;}
+  @keyframes flash-hl{0%,100%{background:transparent}30%{background:#fef3c7}}
+  .flash{animation:flash-hl 1.8s ease;}
+  .tip-item{background:#fffbeb;border-left:3px solid #f59e0b;border-radius:0 12px 12px 0;padding:8px 12px;margin-bottom:6px;font-size:0.78rem;color:#92400e;}
+  .para-box{background:linear-gradient(135deg,#fffbeb,#fdf4ff);border:1px solid #fde68a;border-radius:12px;padding:8px 12px;font-size:0.72rem;color:#78350f;margin-top:6px;}
+  .para-box::before{content:'⚡ Paraphrase  ';font-weight:700;color:#b45309;}
+  #toast{position:fixed;top:16px;left:50%;transform:translateX(-50%) translateY(-80px);background:#10b981;color:white;padding:9px 18px;border-radius:99px;font-size:0.8rem;font-weight:700;transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);z-index:9999;white-space:nowrap;box-shadow:0 4px 16px rgba(16,185,129,0.35);}
+  #toast.show{transform:translateX(-50%) translateY(0);}
+  #toast.err{background:#ef4444;}
+<\/style>
+<\/head>
+<body>
+<div id="app">
+  <div id="topbar">
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+      <div>
+        <div style="font-size:0.65rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.1em;">IAGS v16 · Listening</div>
+        <div style="font-size:0.78rem;font-weight:700;color:#1e293b;margin-top:1px;">${name} · Section ${section} · Q${qStart}–${qEnd}</div>
+      </div>
+      <span class="top-badge">📻 ${sectionCtx||'Listening'}</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end;">
+      <div style="display:flex;align-items:center;gap:4px;">
+        <span style="font-size:0.6rem;font-weight:700;color:#94a3b8;">ATTEMPT</span>
+        <div style="display:flex;gap:3px;">
+          <button class="attempt-btn active" onclick="setAttempt(1)">1</button>
+          <button class="attempt-btn" onclick="setAttempt(2)">2</button>
+          <button class="attempt-btn" onclick="setAttempt(3)">3</button>
+          <button class="attempt-btn" onclick="setAttempt(4)">4+</button>
+        </div>
+      </div>
+      <button id="studyBtn" class="tb-btn" onclick="toggleStudy()">📖 STUDY</button>
+      <button id="transBtn" class="tb-btn" onclick="toggleTrans()">🌐 中文</button>
+      <button class="tb-btn" onclick="document.getElementById('audioFile').click()">📁 音频</button>
+      <input type="file" id="audioFile" hidden accept="audio/*">
+      <button class="tb-btn export-btn" onclick="doExport()">🚀 导出 JSON</button>
+    </div>
+  </div>
+
+  <div style="background:white;border-bottom:1px solid #e2e8f0;padding:6px 16px;display:flex;align-items:center;gap:10px;">
+    <span style="font-size:0.65rem;font-weight:700;color:#94a3b8;white-space:nowrap;">${name}</span>
+    <audio id="audio-player" controls style="height:30px;flex:1;border-radius:8px;"></audio>
+  </div>
+
+  <div id="tab-row">
+    <div class="tab active" onclick="switchTab('questions')">📝 答题</div>
+    <div class="tab" onclick="switchTab('script')">📄 原文</div>
+    <div class="tab" onclick="switchTab('results')">📊 成绩</div>
+  </div>
+
+  <div id="content-area">
+
+    <div id="panel-questions" class="panel panel-questions active">
+      <div style="max-width:600px;margin:0 auto;">
+        <div class="card" style="padding:1rem 1.25rem;">
+          <div style="font-size:0.6rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">Section ${section} · Questions ${qStart}–${qEnd}</div>
+          <div style="font-size:0.82rem;color:#475569;">${parsed.instructions||'Complete the questions below.'}</div>
+          ${parsed.instructions_zh?`<div class="q-zh" style="margin-left:0;margin-top:4px;">${parsed.instructions_zh}</div>`:''}
+        </div>
+        <div class="prog-bar"><div class="prog-fill" id="answerProg" style="width:0%"></div></div>
+        <div class="card"><div id="questions-render"></div></div>
+        <button onclick="checkAnswers()" style="width:100%;padding:14px;background:linear-gradient(135deg,#f59e0b,#d97706);color:white;border:none;border-radius:16px;font-size:0.9rem;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(245,158,11,0.3);margin-bottom:14px;font-family:inherit;">✓ 提交答案 · 查看成绩</button>
+        ${tips.length?`<div class="card" style="padding:1rem;"><div style="font-size:0.6rem;font-weight:700;color:#f59e0b;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">💡 Section ${section} 听力技巧</div>${tips.map(t=>`<div class="tip-item">${t}</div>`).join('')}</div>`:''}
+      </div>
+    </div>
+
+    <div id="panel-script" class="panel panel-script">
+      <div style="max-width:620px;margin:0 auto;">
+        <div class="card" style="padding:1.5rem;">
+          <div style="font-size:0.6rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px;">📄 Section ${section} · 完整原文</div>
+          <div id="script-render">${!hasScript?'<div style="text-align:center;padding:40px;color:#94a3b8;">原文将在生成时自动填入</div>':''}</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="panel-results" class="panel">
+      <div style="max-width:560px;margin:0 auto;" id="results-content">
+        <div class="card" style="text-align:center;padding:2rem;">
+          <div style="font-size:2rem;margin-bottom:8px;">📊</div>
+          <div style="font-size:1rem;font-weight:700;color:#94a3b8;">先完成答题，再查看成绩</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div id="toast"></div>
+
+<script>
+const RAW=${jsonStr};
+const QUESTIONS=RAW.questions||[];
+const SCRIPT=RAW.script||[];
+const ANSWERS=RAW.answers||{};
+const qCount=QUESTIONS.length;
+const userAnswers={};
+let attempt=1,studyOn=false,transOn=false,submitted=false;
+
+function switchTab(id){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>{if(t.getAttribute('onclick')&&t.getAttribute('onclick').includes("'"+id+"'"))t.classList.add('active');});
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  const ca=document.getElementById('content-area');
+  if(id==='questions'&&studyOn){ca.classList.add('split');document.getElementById('panel-script').style.display='block';}
+  else if(id!=='questions'){ca.classList.remove('split');document.getElementById('panel-script').style.display='';}
+}
+
+function setAttempt(n){attempt=n;document.querySelectorAll('.attempt-btn').forEach((b,i)=>b.classList.toggle('active',i+1===n));}
+
+function toggleStudy(){
+  studyOn=!studyOn;
+  document.getElementById('studyBtn').classList.toggle('on',studyOn);
+  document.body.classList.toggle('study-on',studyOn);
+  const ca=document.getElementById('content-area');
+  const ap=document.querySelector('.panel.active')?.id;
+  if(studyOn&&ap==='panel-questions'){ca.classList.add('split');document.getElementById('panel-script').style.display='block';}
+  else{ca.classList.remove('split');document.getElementById('panel-script').style.display='';}
+}
+
+function toggleTrans(){
+  transOn=!transOn;
+  document.getElementById('transBtn').classList.toggle('on',transOn);
+  document.body.classList.toggle('trans-on',transOn);
+}
+
+document.getElementById('audioFile').addEventListener('change',e=>{
+  const f=e.target.files[0];
+  if(f){document.getElementById('audio-player').src=URL.createObjectURL(f);showToast('✅ 音频已加载');}
+});
+
+function escQ(s){return(s||'').replace(/\\\\/g,'\\\\\\\\').replace(/'/g,"\\\\'")}
+
+function kwWrap(text,kw){
+  if(!kw||!text)return text||'';
+  const esc=kw.replace(/[.*+?^${}()|[\\]\\\\]/g,'\\\\$&');
+  return text.replace(new RegExp('('+esc+')','gi'),'<span class="kw">$1</span>');
+}
+
+function renderQuestions(){
+  const c=document.getElementById('questions-render');
+  let html='';
+  QUESTIONS.forEach(q=>{
+    const qn=q.number,type=q.type||'mcq';
+    if(type==='mcq'||type==='matching'){
+      html+=\`<div class="q-block" id="q-block-\${qn}">
+        <div style="display:flex;align-items:flex-start;">
+          <span class="q-num">\${qn}</span>
+          <div><div class="q-stem">\${kwWrap(q.stem||'',q.keyword)}</div>\${q.stem_zh?\`<div class="q-zh">\${q.stem_zh}</div>\`:''}</div>
+        </div>
+        <div style="margin-top:8px;display:flex;flex-direction:column;gap:6px;" id="opts-\${qn}">\`;
+      (q.options||[]).forEach(opt=>{
+        html+=\`<div class="opt-row" onclick="pickMCQ(\${qn},'\${escQ(opt.letter)}',this)">
+          <span class="opt-letter">\${opt.letter}</span>
+          <div><div class="opt-text">\${opt.text||''}</div>\${opt.text_zh?\`<div class="opt-zh">\${opt.text_zh}</div>\`:''}</div>
+        </div>\`;
+      });
+      html+=\`</div></div>\`;
+    } else {
+      const lbl=q.blank_label||q.stem||'';
+      const lblZh=q.blank_label_zh||q.stem_zh||'';
+      html+=\`<div class="q-block" id="q-block-\${qn}">
+        <div class="gap-row">
+          <span class="q-num" style="flex-shrink:0;">\${qn}</span>
+          \${lbl?\`<span class="gap-label">\${lbl}</span>\`:''}
+          \${lblZh?\`<span class="gap-label-zh">(\${lblZh})</span>\`:''}
+          <input class="gap-input" id="gap-\${qn}" type="text" placeholder="___" oninput="pickGap(\${qn},this.value)" autocomplete="off" autocorrect="off" spellcheck="false">
+        </div>
+      </div>\`;
+    }
+  });
+  c.innerHTML=html;
+}
+
+function pickMCQ(qn,letter,el){
+  if(submitted)return;
+  document.querySelectorAll('#opts-'+qn+' .opt-row').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');userAnswers[qn]=letter;updateProgress();
+}
+function pickGap(qn,val){if(submitted)return;userAnswers[qn]=val.trim();updateProgress();}
+function updateProgress(){
+  const answered=Object.keys(userAnswers).filter(k=>userAnswers[k]&&userAnswers[k]!=='').length;
+  document.getElementById('answerProg').style.width=Math.round((answered/qCount)*100)+'%';
+}
+
+function renderScript(){
+  if(!SCRIPT.length)return;
+  let html='';
+  SCRIPT.forEach(line=>{
+    const tags=(line.q_refs||[]).map(q=>\`<span class="q-tag" onclick="syncQ(\${q})">⬆ Q\${q}</span>\`).join(' ');
+    let text=line.text||'';
+    (line.answer_spans||[]).forEach(span=>{
+      if(span.phrase){const esc=span.phrase.replace(/[.*+?^${}()|[\\]\\\\]/g,'\\\\$&');text=text.replace(new RegExp('('+esc+')','i'),'<span class="script-answer">$1</span>');}
+    });
+    html+=\`<div class="script-line" id="script-line-\${line.id||''}">\${tags?\`<div style="margin-bottom:4px;">\${tags}</div>\`:''}
+      \${line.speaker?\`<span class="script-speaker">\${line.speaker}:</span>\`:''}
+      \${text}
+      \${line.text_zh?\`<div class="script-zh">\${line.text_zh}</div>\`:''}
+    </div>\`;
+  });
+  document.getElementById('script-render').innerHTML=html;
+}
+
+function syncQ(qn){
+  const block=document.getElementById('q-block-'+qn);
+  if(block){block.scrollIntoView({behavior:'smooth',block:'center'});block.classList.add('flash');setTimeout(()=>block.classList.remove('flash'),1800);switchTab('questions');}
+}
+
+function goToScript(lineId){
+  switchTab('script');
+  setTimeout(()=>{
+    const el=document.getElementById('script-line-'+lineId);
+    if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),1800);}
+  },150);
+}
+
+function checkAnswers(){
+  const answered=Object.keys(userAnswers).filter(k=>userAnswers[k]&&userAnswers[k]!=='').length;
+  if(answered<qCount){showToast(\`⚠️ 还有 \${qCount-answered} 题未作答\`,true);return;}
+  submitted=true;
+  let correct=0;
+  QUESTIONS.forEach(q=>{
+    const qn=q.number;
+    const ua=(userAnswers[qn]||'').toString().trim().toUpperCase();
+    const ca=(ANSWERS[qn]||'').toString().trim().toUpperCase();
+    const ok=ua===ca;
+    if(ok)correct++;
+    if(q.type==='mcq'||q.type==='matching'){
+      document.querySelectorAll('#opts-'+qn+' .opt-row').forEach(opt=>{
+        const l=opt.querySelector('.opt-letter').textContent.trim();
+        if(l===ua&&l===ca){opt.classList.add('correct');opt.classList.remove('selected');}
+        else if(l===ua&&l!==ca)opt.classList.add('wrong');
+        else if(l===ca)opt.classList.add('correct');
+      });
+    } else {
+      const inp=document.getElementById('gap-'+qn);
+      if(inp){inp.disabled=true;inp.classList.add(ok?'correct-fill':'wrong-fill');if(!ok)inp.value=inp.value+' → '+(ANSWERS[qn]||'');}
+    }
+  });
+  buildResults(correct);
+  switchTab('results');
+  showToast(\`🎯 \${correct}/\${qCount} · \${correct/qCount>=0.9?'优秀':correct/qCount>=0.7?'良好':correct/qCount>=0.5?'及格':'需加强'}\`);
+}
+
+function buildResults(correct){
+  const wrong=qCount-correct,pct=correct/qCount;
+  const cls=pct>=0.9?'good':pct>=0.6?'mid':'low';
+  const band=pct>=0.9?'8.0–9.0':pct>=0.7?'7.0–8.0':pct>=0.5?'5.5–6.5':'4.0–5.0';
+  let wrongHTML='',correctHTML='';
+  QUESTIONS.forEach(q=>{
+    const qn=q.number;
+    const ua=(userAnswers[qn]||'').toString().trim();
+    const ca=(ANSWERS[qn]||'').toString().trim();
+    const ok=ua.toUpperCase()===ca.toUpperCase();
+    if(!ok){
+      wrongHTML+=\`<div style="background:white;border-radius:16px;padding:14px;margin-bottom:10px;border:2px solid #fecaca;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><span class="q-num">\${qn}</span><span style="font-size:0.8rem;font-weight:700;color:#ef4444;">✗ 你答了 \${ua||'（未填）'} · 正确 \${ca}</span></div>
+        \${q.stem?\`<div style="font-size:0.78rem;color:#475569;margin-bottom:4px;">\${q.stem}</div>\`:''}
+        \${q.paraphrase_note?\`<div class="para-box">\${q.paraphrase_note}</div>\`:''}
+        <div style="margin-top:6px;font-size:0.72rem;color:#64748b;">\${getHint(qn,attempt)}</div>
+        \${q.script_ref?\`<button onclick="goToScript('\${q.script_ref}')" style="margin-top:8px;padding:5px 12px;background:#fffbeb;border:1.5px solid #fde68a;border-radius:8px;font-size:0.7rem;font-weight:700;color:#b45309;cursor:pointer;">📄 查看原文</button>\`:''}
+      </div>\`;
+    } else {
+      correctHTML+=\`<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#ecfdf5;border-radius:12px;margin-bottom:6px;">
+        <span class="q-num" style="background:#d1fae5;border-color:#6ee7b7;color:#059669;">Q\${qn}</span>
+        <span style="font-size:0.8rem;font-weight:700;color:#059669;">✓ \${ca}</span>
+        \${q.stem?\`<span style="font-size:0.75rem;color:#64748b;"> — \${q.stem.substring(0,40)}\${q.stem.length>40?'...':''}</span>\`:''}
+      </div>\`;
+    }
+  });
+  document.getElementById('results-content').innerHTML=\`
+    <div class="card" style="text-align:center;padding:1.5rem;margin-bottom:14px;">
+      <div style="display:flex;align-items:center;justify-content:center;gap:20px;">
+        <div class="score-ring \${cls}"><div style="font-size:1.5rem;font-weight:700;line-height:1;">\${correct}</div><div style="font-size:0.6rem;font-weight:700;">/ \${qCount}</div></div>
+        <div style="text-align:left;">
+          <div style="font-size:1.2rem;font-weight:700;color:#1e293b;">\${pct>=0.9?'优秀 🎉':pct>=0.7?'良好 👍':pct>=0.5?'及格 📚':'需加强 💪'}</div>
+          <div style="font-size:0.8rem;color:#64748b;margin-top:2px;">正确 \${correct} · 错误 \${wrong}</div>
+          <div style="font-size:0.75rem;color:#94a3b8;margin-top:2px;">推测 Band: <strong style="color:#f59e0b;">\${band}</strong></div>
+        </div>
+      </div>
+    </div>
+    \${wrong>0?\`<div style="font-size:0.72rem;font-weight:700;color:#ef4444;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">✗ 错误题目 (\${wrong}题)</div>\${wrongHTML}\`:'<div class="card" style="text-align:center;padding:1.5rem;"><div style="font-size:2rem;margin-bottom:8px;">🎊</div><div style="font-weight:700;color:#059669;">全部正确！</div></div>'}
+    \${correct>0?\`<div style="font-size:0.72rem;font-weight:700;color:#059669;text-transform:uppercase;letter-spacing:0.08em;margin:14px 0 8px;">✓ 正确题目 (\${correct}题)</div>\${correctHTML}\`:''}
+    <button onclick="resetAll()" style="width:100%;margin-top:14px;padding:13px;background:white;border:2px solid #e2e8f0;border-radius:16px;font-size:0.88rem;font-weight:700;color:#64748b;cursor:pointer;font-family:inherit;">🔄 重新作答</button>
+    <button onclick="doExport()" style="width:100%;margin-top:8px;padding:13px;background:linear-gradient(135deg,#f59e0b,#d97706);color:white;border:none;border-radius:16px;font-size:0.88rem;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 4px 14px rgba(245,158,11,0.3);">🚀 导出 JSON · 给 AI 深度分析</button>
+  \`;
+}
+
+function getHint(qn,attempt){
+  const pfx=attempt===1?'💡 引导（不含答案）：':attempt<=3?\`📍 第\${attempt}次分析：\`:'🔍 深度解析：';
+  const msgs=[
+    '请重听该题对应片段，注意语气变化和关键词，尝试在听到答案前停顿预判。',
+    '常见陷阱：题目选项用 paraphrase 替换原文词汇，注意同义词和反义表达。',
+    '建议：先在题干中圈出关键词，再精听对应片段，在原文定位后逐项排除。',
+    '建议精听 + 阅读原文，逐句对照，找到你漏听或误判的具体位置。'
+  ];
+  return pfx+(msgs[attempt-1]||msgs[3]);
+}
+
+function resetAll(){
+  submitted=false;
+  QUESTIONS.forEach(q=>{
+    const qn=q.number;delete userAnswers[qn];
+    if(q.type==='mcq'||q.type==='matching'){document.querySelectorAll('#opts-'+qn+' .opt-row').forEach(o=>o.classList.remove('selected','correct','wrong'));}
+    else{const inp=document.getElementById('gap-'+qn);if(inp){inp.disabled=false;inp.value='';inp.classList.remove('correct-fill','wrong-fill');}}
+  });
+  document.getElementById('answerProg').style.width='0%';
+  document.getElementById('results-content').innerHTML='<div class="card" style="text-align:center;padding:2rem;"><div style="font-size:2rem;margin-bottom:8px;">📊</div><div style="font-size:1rem;font-weight:700;color:#94a3b8;">先完成答题，再查看成绩</div></div>';
+  switchTab('questions');
+}
+
+function doExport(){
+  const answers=QUESTIONS.map(q=>({question:q.number,type:q.type,user_answer:userAnswers[q.number]||'N/A',correct_answer:ANSWERS[q.number]||'',is_correct:(userAnswers[q.number]||'').toString().trim().toUpperCase()===(ANSWERS[q.number]||'').toString().trim().toUpperCase()}));
+  const correct=answers.filter(a=>a.is_correct).length;
+  const instr=attempt===1?'第一次作答，请根据错题给关键词引导和 paraphrase 提示，不要直接给答案。':attempt<=3?\`第\${attempt}次作答，请分析错误原因，指出 paraphrase 陷阱和干扰项逻辑。\`:'超过3次，请给完整解析、错题模式分析和听力提升策略。';
+  const payload={test_id:'${name}',section:${section},question_range:'${qStart}-${qEnd}',attempt,score:\`\${correct}/\${qCount}\`,answers,wrong_questions:answers.filter(a=>!a.is_correct).map(a=>a.question),ai_instruction:instr,request:'请根据以上答题数据，分析错题原因（关注 paraphrase 陷阱、数字日期题、顺序陷阱），给出具体改进建议，并估算当前 Band 分。'};
+  const text=JSON.stringify(payload,null,2);
+  if(navigator.clipboard){navigator.clipboard.writeText(text).then(()=>showToast('✅ JSON 已复制！粘贴给 AI 分析')).catch(()=>fallbackCopy(text));}else fallbackCopy(text);
+}
+
+function fallbackCopy(text){const el=document.createElement('textarea');el.value=text;el.style.cssText='position:fixed;opacity:0;';document.body.appendChild(el);el.select();document.execCommand('copy');document.body.removeChild(el);showToast('✅ JSON 已复制！粘贴给 AI 分析');}
+
+function showToast(msg,isErr=false){const t=document.getElementById('toast');t.textContent=msg;t.className=isErr?'err':'';requestAnimationFrame(()=>{requestAnimationFrame(()=>{t.classList.add('show');});});setTimeout(()=>t.classList.remove('show'),2800);}
+
+renderQuestions();
+renderScript();
+<\/script>
+<\/body>
+<\/html>`;
+}
+</script>
+</body>
+</html>

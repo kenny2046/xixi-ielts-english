@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>IELTS 词汇系统 v16 — C4T2R2</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Quicksand','Noto Sans SC',sans-serif; background:#f1f5f9; color:#1e293b; touch-action:manipulation; }
+  .container { max-width:500px; margin:0 auto; padding:12px; }
+  .tab-bar { display:flex; gap:3px; background:#e2e8f0; padding:4px; border-radius:16px; margin-bottom:12px; overflow-x:auto; }
+  .tab { flex:1; min-width:56px; padding:9px 3px; text-align:center; cursor:pointer; border-radius:12px; font-size:0.72rem; font-weight:700; color:#64748b; transition:0.2s; white-space:nowrap; }
+  .tab.active { background:#fff; color:#3b82f6; box-shadow:0 2px 8px rgba(0,0,0,0.05); }
+  .card { background:white; border-radius:24px; padding:1.25rem; box-shadow:0 8px 20px rgba(0,0,0,0.04); min-height:580px; display:flex; flex-direction:column; border:3px solid #e2e8f0; position:relative; }
+  .ex-box { background:#eff6ff; border-radius:16px; border-left:4px solid #3b82f6; padding:1rem; margin:0.75rem 0; }
+  .detail-box { background:#f8fafc; border-radius:16px; border:1px solid #edf2f7; padding:0.85rem; font-size:0.85rem; }
+  .root-box { background:#fff7ed; border-radius:16px; border:1px solid #ffedd5; padding:0.85rem; margin-top:0.75rem; font-size:0.85rem; }
+  .trap-box { background:linear-gradient(135deg,#fdf4ff,#eff6ff); border-radius:16px; border:1px solid #e9d5ff; padding:0.85rem; margin-top:0.75rem; font-size:0.85rem; }
+  .trap-title { font-size:0.6rem; font-weight:800; text-transform:uppercase; letter-spacing:0.1em; color:#9333ea; margin-bottom:6px; }
+  .trap-row { display:flex; align-items:flex-start; gap:8px; margin-bottom:4px; }
+  .trap-lbl { font-size:0.58rem; font-weight:700; background:#ede9fe; color:#7c3aed; padding:2px 7px; border-radius:99px; white-space:nowrap; flex-shrink:0; margin-top:1px; }
+  .trap-val { color:#4c1d95; font-size:0.8rem; line-height:1.4; }
+  .lbl { font-weight:800; color:#3b82f6; font-size:0.65rem; text-transform:uppercase; margin-right:8px; display:inline-block; width:65px; flex-shrink:0; }
+  .lbl-r { color:#f59e0b; }
+  .btn-mark { padding:1rem 0.5rem; border-radius:16px; font-size:0.85rem; font-weight:700; color:white; transition:0.2s; cursor:pointer; border:none; font-family:inherit; }
+  .btn-mark:active { transform:scale(0.95); }
+  .opt-btn { width:100%; padding:1rem; margin-bottom:0.75rem; border:2px solid #f1f5f9; border-radius:16px; text-align:left; font-size:0.95rem; background:#fff; font-family:inherit; cursor:pointer; transition:0.15s; }
+  .opt-btn:hover { background:#f8fafc; }
+  .section { display:none; } .section.active { display:block; }
+  .flash-green { animation:flash 0.8s; --c:#10b981; }
+  .flash-amber { animation:flash 0.8s; --c:#f59e0b; }
+  .flash-rose  { animation:flash 0.8s; --c:#ef4444; }
+  @keyframes flash { 0%,100%{border-color:#e2e8f0} 50%{border-color:var(--c);box-shadow:0 0 15px var(--c)} }
+  .prog-bar { height:3px; background:#e2e8f0; border-radius:99px; overflow:hidden; margin-bottom:12px; }
+  .prog-fill { height:100%; background:linear-gradient(90deg,#3b82f6,#a78bfa); border-radius:99px; transition:width 0.4s; }
+  .lv-nav { display:flex; gap:6px; margin-bottom:10px; }
+  .lv-btn { flex:1; padding:7px 4px; border-radius:10px; font-size:0.68rem; font-weight:700; text-align:center; cursor:pointer; border:1.5px solid #e2e8f0; background:white; color:#64748b; transition:0.2s; }
+  .lv-btn.active { border-color:#3b82f6; background:#eff6ff; color:#2563eb; }
+  .mode-toggle { display:flex; gap:6px; margin-bottom:12px; }
+  .mode-btn { flex:1; padding:8px; border-radius:10px; font-size:0.7rem; font-weight:700; text-align:center; cursor:pointer; border:1.5px solid #e2e8f0; background:white; color:#64748b; transition:0.2s; }
+  .mode-btn.active { border-color:#7c3aed; background:#faf5ff; color:#7c3aed; }
+  .ctx-blank { display:inline-block; background:#cbd5e1; color:transparent; border-radius:6px; cursor:pointer; user-select:none; padding:0 6px; min-width:60px; transition:all 0.3s; }
+  .ctx-blank.revealed { background:transparent; color:#2563eb; font-weight:700; }
+  .reinforce-badge { display:inline-flex; align-items:center; gap:4px; background:#fef3c7; border:1px solid #fde68a; border-radius:99px; padding:3px 10px; font-size:0.65rem; font-weight:700; color:#92400e; margin-bottom:10px; }
+  #mk-empty { color:#94a3b8; text-align:center; padding:40px 20px; }
+  .mk-item { background:white; border-radius:16px; padding:14px; margin-bottom:10px; border:2px solid #fecaca; }
+  .mk-word { font-size:1.1rem; font-weight:700; color:#ef4444; }
+  .mk-meaning { color:#64748b; font-size:0.85rem; margin-top:2px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div style="text-align:center;margin-bottom:12px;">
+    <span style="font-size:0.6rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.1em;">IELTS · C4T2R2 · v16</span>
+  </div>
+  <div class="tab-bar">
+    <div class="tab active" onclick="switchTab('vocab')">语境识词</div>
+    <div class="tab" onclick="switchTab('trap')">题眼训练</div>
+    <div class="tab" onclick="switchTab('sim')">做题模拟</div>
+    <div class="tab" onclick="switchTab('phrases')">真题短语</div>
+    <div class="tab" onclick="switchTab('mistakes')">强化复习</div>
+  </div>
+
+  <!-- ① 语境识词 -->
+  <div id="vocab" class="section active">
+    <div class="lv-nav">
+      <div class="lv-btn active" id="lv1btn" onclick="jumpLevel('level1')">LV1 基础(15)</div>
+      <div class="lv-btn" id="lv2btn" onclick="jumpLevel('level2')">LV2 中阶(20)</div>
+      <div class="lv-btn" id="lv3btn" onclick="jumpLevel('level3')">LV3 高阶(15)</div>
+    </div>
+    <div class="mode-toggle">
+      <div class="mode-btn active" id="modeCtx" onclick="setMode('ctx')">🕵️ 语境猜词</div>
+      <div class="mode-btn" id="modeDir" onclick="setMode('dir')">📖 直接学词</div>
+    </div>
+    <div class="prog-bar"><div class="prog-fill" id="vocabProg" style="width:0%"></div></div>
+    <div id="reinforce-notice" style="display:none;"><div class="reinforce-badge">🔄 强化复习中 — 标记过的词再过一遍</div></div>
+    <div class="card" id="vocab-card"></div>
+  </div>
+
+  <!-- ② 题眼训练 -->
+  <div id="trap" class="section">
+    <div class="prog-bar"><div class="prog-fill" id="trapProg" style="width:0%"></div></div>
+    <div class="card" id="trap-card"></div>
+  </div>
+
+  <!-- ③ 做题模拟 -->
+  <div id="sim" class="section">
+    <div class="prog-bar"><div class="prog-fill" id="simProg" style="width:0%"></div></div>
+    <div class="card" id="sim-card"></div>
+  </div>
+
+  <!-- ④ 真题短语 -->
+  <div id="phrases" class="section">
+    <div class="prog-bar"><div class="prog-fill" id="phraseProg" style="width:0%"></div></div>
+    <div class="card" id="phrase-card"></div>
+  </div>
+
+  <!-- ⑤ 强化复习 -->
+  <div id="mistakes" class="section">
+    <div style="font-size:0.75rem;color:#64748b;margin-bottom:10px;">标「不识」或「模糊」的词在此强化</div>
+    <div id="mk-list"></div>
+  </div>
+</div>
+
+<script>
+const rawData = {
+  "vocabulary": {
+    "level1": [
+      {
+        "word": "alternative",
+        "phonetic": "/ɔːlˈtɜːrnətɪv/",
+        "meaning": "替代的；备选的",
+        "root": "alter",
+        "rootExt": "alter - 改变",
+        "derive": "alternatively",
+        "syn": "different, substitute",
+        "trap": "different, substitute, non-traditional",
+        "paraphrase": "原文: alternative therapies → 题目: complementary medicine",
+        "questionStem": "Traditionally, how have Australian doctors differed from doctors in many Western countries?",
+        "example": "The first students to study alternative medicine at university level in Australia",
+        "translation": "澳大利亚第一批在大学层面学习替代医学的学生"
+      },
+      {
+        "word": "medicine",
+        "phonetic": "/ˈmedɪsɪn/",
+        "meaning": "医学；药物",
+        "root": "medi",
+        "rootExt": "medi - 中间，治愈",
+        "derive": "medical, medication",
+        "syn": "treatment, remedy",
+        "trap": "treatment, remedy, therapy",
+        "paraphrase": "原文: alternative medicine → 题目: alternative therapies",
+        "questionStem": "Do the following statements agree with the views of the writer",
+        "example": "alternative medicine at university level in Australia",
+        "translation": "澳大利亚大学层面的替代医学"
+      },
+      {
+        "word": "therapy",
+        "phonetic": "/ˈθerəpi/",
+        "meaning": "疗法；治疗",
+        "root": "therap",
+        "rootExt": "therap - 治愈",
+        "derive": "therapist, therapeutic",
+        "syn": "treatment, cure",
+        "trap": "treatment, cure, remedy",
+        "paraphrase": "原文: alternative therapies → 题目: natural therapies",
+        "questionStem": "Choose the correct letter, A, B, C or D.",
+        "example": "among other therapies, acupuncture",
+        "translation": "除其他疗法外，还有针灸"
+      },
+      {
+        "word": "doctor",
+        "phonetic": "/ˈdɒktə/",
+        "meaning": "医生",
+        "root": "doc",
+        "rootExt": "doc - 教导",
+        "derive": "doctoral",
+        "syn": "physician, practitioner",
+        "trap": "physician, practitioner, expert",
+        "paraphrase": "原文: orthodox doctors → 题目: doctors in many Western countries",
+        "questionStem": "Traditionally, how have Australian doctors differed",
+        "example": "doctors being fairly powerful",
+        "translation": "医生拥有相当大的权力"
+      },
+      {
+        "word": "survey",
+        "phonetic": "/ˈsɜːveɪ/",
+        "meaning": "调查",
+        "root": "serv",
+        "rootExt": "serv - 查看",
+        "derive": "surveyor",
+        "syn": "study, poll",
+        "trap": "study, poll, investigation",
+        "paraphrase": "原文: 1983 national health survey → 题目: the 1990 survey",
+        "questionStem": "Do the following statements agree with the views of the writer",
+        "example": "In a 1983 national health survey",
+        "translation": "在1983年的一项全国健康调查中"
+      },
+      {
+        "word": "consultation",
+        "phonetic": "/ˌkɒnsəlˈteɪʃən/",
+        "meaning": "咨询；就诊",
+        "root": "consult",
+        "rootExt": "consult - 征求建议",
+        "derive": "consultant",
+        "syn": "visit, appointment",
+        "trap": "visit, appointment, meeting",
+        "paraphrase": "原文: 550,000 consultations → 题目: patients visiting alternative therapists",
+        "questionStem": "The 1990 survey related to 550,000 consultations",
+        "example": "The 550,000 consultations with alternative therapists",
+        "translation": "1990年调查中报告的55万次替代治疗师咨询"
+      },
+      {
+        "word": "population",
+        "phonetic": "/ˌpɒpjuˈleɪʃən/",
+        "meaning": "人口",
+        "root": "popul",
+        "rootExt": "popul - 人民",
+        "derive": "populate",
+        "syn": "people, inhabitants",
+        "trap": "people, inhabitants, public",
+        "paraphrase": "原文: 2.6% of the population → 题目: include a further 8% of the population",
+        "questionStem": "Between 1983 and 1990 the numbers of patients visiting alternative therapists",
+        "example": "this figure had risen to 2.6% of the population",
+        "translation": "这一数字已上升到人口的2.6%"
+      },
+      {
+        "word": "public",
+        "phonetic": "/ˈpʌblɪk/",
+        "meaning": "公众",
+        "root": "public",
+        "rootExt": "public - 人民的",
+        "derive": "publicly",
+        "syn": "people, society",
+        "trap": "people, society, community",
+        "paraphrase": "原文: a better educated and less accepting public → 题目: Australians",
+        "questionStem": "Australians have been turning to alternative therapies",
+        "example": "A better educated and less accepting public",
+        "translation": "受教育程度更高、更不盲从的公众"
+      },
+      {
+        "word": "spend",
+        "phonetic": "/spend/",
+        "meaning": "花费",
+        "root": "spend",
+        "rootExt": "spend - 支付",
+        "derive": "spending",
+        "syn": "expend, pay",
+        "trap": "expend, pay, cost",
+        "paraphrase": "原文: spend about $US12 billion → 题目: spent more on natural therapies",
+        "questionStem": "In 1990, Americans",
+        "example": "each year they spend about $US12 billion",
+        "translation": "每年他们花费约120亿美元"
+      },
+      {
+        "word": "visit",
+        "phonetic": "/ˈvɪzɪt/",
+        "meaning": "就诊；拜访",
+        "root": "vis",
+        "rootExt": "vis - 看",
+        "derive": "visitor",
+        "syn": "consult, attend",
+        "trap": "consult, attend, see",
+        "paraphrase": "原文: made more visits to alternative therapists → 题目: consulted alternative therapists",
+        "questionStem": "In 1990, Americans",
+        "example": "Americans made more visits to alternative therapists",
+        "translation": "1990年，美国人访问替代治疗师的次数多于访问正统医生的次数"
+      },
+      {
+        "word": "prescribe",
+        "phonetic": "/prɪˈskraɪb/",
+        "meaning": "开处方",
+        "root": "scrib",
+        "rootExt": "scrib - 写",
+        "derive": "prescription",
+        "syn": "recommend, order",
+        "trap": "recommend, order, advise",
+        "paraphrase": "原文: only orthodox doctors can prescribe herbal medicine → 题目: prescribed more herbal medicines",
+        "questionStem": "In 1990, Americans",
+        "example": "only orthodox doctors can prescribe herbal medicine",
+        "translation": "在欧洲，只有正统医生才能开具草药处方"
+      },
+      {
+        "word": "herbal",
+        "phonetic": "/ˈhɜːbəl/",
+        "meaning": "草药的",
+        "root": "herb",
+        "rootExt": "herb - 植物",
+        "derive": "herbalist",
+        "syn": "plant-based",
+        "trap": "plant-based, natural",
+        "paraphrase": "原文: herbal medicine → 题目: herbal medicines",
+        "questionStem": "In 1990, Americans",
+        "example": "only orthodox doctors can prescribe herbal medicine",
+        "translation": "只有正统医生才能开具草药处方"
+      },
+      {
+        "word": "course",
+        "phonetic": "/kɔːs/",
+        "meaning": "课程",
+        "root": "cours",
+        "rootExt": "cours - 运行",
+        "derive": "coursework",
+        "syn": "program, class",
+        "trap": "program, class, study",
+        "paraphrase": "原文: four-year, full-time course → 题目: retraining in alternative therapies",
+        "questionStem": "Some Australian doctors are retraining",
+        "example": "began their four-year, full-time course",
+        "translation": "开始了他们的四年全日制课程"
+      },
+      {
+        "word": "attitude",
+        "phonetic": "/ˈætɪtjuːd/",
+        "meaning": "态度",
+        "root": "apt",
+        "rootExt": "apt - 适合",
+        "derive": "attitudinal",
+        "syn": "view, opinion",
+        "trap": "view, opinion, approach",
+        "paraphrase": "原文: conservative attitude → 题目: reluctant to accept",
+        "questionStem": "Traditionally, how have Australian doctors differed",
+        "example": "having a very conservative attitude to natural or alternative therapies",
+        "translation": "对自然或替代疗法持有非常保守的态度"
+      },
+      {
+        "word": "natural",
+        "phonetic": "/ˈnætʃrəl/",
+        "meaning": "自然的",
+        "root": "natur",
+        "rootExt": "natur - 出生",
+        "derive": "naturally",
+        "syn": "organic",
+        "trap": "organic, traditional",
+        "paraphrase": "原文: natural or alternative therapies → 题目: natural therapies",
+        "questionStem": "In 1990, Americans",
+        "example": "conservative attitude to natural or alternative therapies",
+        "translation": "对自然或替代疗法持非常保守的态度"
+      }
+    ],
+    "level2": [
+      {
+        "word": "orthodox",
+        "phonetic": "/ˈɔːθədɒks/",
+        "meaning": "正统的；传统的",
+        "root": "ortho",
+        "rootExt": "ortho - 直的，正确的",
+        "derive": "orthodoxy",
+        "syn": "conventional, traditional",
+        "trap": "conventional, traditional, mainstream",
+        "paraphrase": "原文: orthodox medicine → 题目: conventional medicine",
+        "questionStem": "Do the following statements agree with the views of the writer",
+        "example": "Disenchantment with orthodox medicine",
+        "translation": "对正统医学的幻灭"
+      },
+      {
+        "word": "conservative",
+        "phonetic": "/kənˈsɜːvətɪv/",
+        "meaning": "保守的",
+        "root": "serv",
+        "rootExt": "serv - 保存",
+        "derive": "conservatism",
+        "syn": "cautious, traditional",
+        "trap": "cautious, traditional, reluctant",
+        "paraphrase": "原文: very conservative attitude → 题目: reluctant to accept alternative therapists",
+        "questionStem": "Traditionally, how have Australian doctors differed",
+        "example": "having a very conservative attitude",
+        "translation": "持有非常保守的态度"
+      },
+      {
+        "word": "reluctant",
+        "phonetic": "/rɪˈlʌktənt/",
+        "meaning": "不情愿的",
+        "root": "luct",
+        "rootExt": "luct - 挣扎",
+        "derive": "reluctance",
+        "syn": "hesitant, unwilling",
+        "trap": "hesitant, unwilling, loath",
+        "paraphrase": "原文: pretty loath → 题目: reluctant to accept",
+        "questionStem": "Traditionally, how have Australian doctors differed",
+        "example": "they are pretty loath to allow any pretenders",
+        "translation": "他们非常不愿意让任何冒充者进入他们的位置"
+      },
+      {
+        "word": "disenchantment",
+        "phonetic": "/ˌdɪsɪnˈtʃɑːntmənt/",
+        "meaning": "幻灭；失望",
+        "root": "enchant",
+        "rootExt": "enchant - 迷住",
+        "derive": "disenchanted",
+        "syn": "disillusionment, dissatisfaction",
+        "trap": "disillusionment, dissatisfaction, scepticism",
+        "paraphrase": "原文: Disenchantment with orthodox medicine → 题目: disillusioned with the experts",
+        "questionStem": "Do the following statements agree with the views of the writer",
+        "example": "Disenchantment with orthodox medicine has seen the popularity",
+        "translation": "对正统医学的幻灭使替代疗法的受欢迎程度稳步上升"
+      },
+      {
+        "word": "popularity",
+        "phonetic": "/ˌpɒpjʊˈlærəti/",
+        "meaning": "受欢迎程度",
+        "root": "popul",
+        "rootExt": "popul - 人民",
+        "derive": "popular",
+        "syn": "acceptance, rise",
+        "trap": "acceptance, rise, increase",
+        "paraphrase": "原文: popularity of alternative therapies → 题目: turning to alternative therapies in increasing numbers",
+        "questionStem": "Australians have been turning to alternative therapies",
+        "example": "the popularity of alternative therapies in Australia climb steadily",
+        "translation": "替代疗法在澳大利亚的受欢迎程度稳步上升"
+      },
+      {
+        "word": "steadily",
+        "phonetic": "/ˈstedɪli/",
+        "meaning": "稳步地",
+        "root": "stead",
+        "rootExt": "stead - 位置，坚定",
+        "derive": "steady",
+        "syn": "gradually, consistently",
+        "trap": "gradually, consistently, slowly",
+        "paraphrase": "原文: climb steadily → 题目: in increasing numbers",
+        "questionStem": "Australians have been turning to alternative therapies",
+        "example": "climb steadily during the past 20 years",
+        "translation": "在过去20年中稳步上升"
+      },
+      {
+        "word": "sceptical",
+        "phonetic": "/ˈskeptɪkəl/",
+        "meaning": "怀疑的",
+        "root": "skept",
+        "rootExt": "skept - 观察",
+        "derive": "scepticism",
+        "syn": "doubtful, questioning",
+        "trap": "doubtful, questioning, cynical",
+        "paraphrase": "原文: increasingly sceptical about science → 题目: less accepting public",
+        "questionStem": "Do the following statements agree with the views of the writer",
+        "example": "increasingly sceptical about science and empirically based knowledge",
+        "translation": "对科学和基于经验的知识越来越持怀疑态度"
+      },
+      {
+        "word": "eroded",
+        "phonetic": "/ɪˈrəʊdɪd/",
+        "meaning": "被削弱的",
+        "root": "rod",
+        "rootExt": "rod - 啃咬",
+        "derive": "erosion",
+        "syn": "weakened, diminished",
+        "trap": "weakened, diminished, reduced",
+        "paraphrase": "原文: has been eroded → 题目: had a higher opinion of doctors than they do today",
+        "questionStem": "In the past, Australians had a higher opinion of doctors",
+        "example": "The high standing of professionals... has been eroded",
+        "translation": "专业人士包括医生的崇高地位已被削弱"
+      },
+      {
+        "word": "incentive",
+        "phonetic": "/ɪnˈsentɪv/",
+        "meaning": "激励；动机",
+        "root": "cent",
+        "rootExt": "cent - 唱歌，敦促",
+        "derive": "incentivize",
+        "syn": "motivation, reason",
+        "trap": "motivation, reason, financial",
+        "paraphrase": "原文: Part of the incentive was financial → 题目: earn higher salaries",
+        "questionStem": "Alternative therapists earn higher salaries than doctors",
+        "example": "Part of the incentive was financial",
+        "translation": "部分动机是财务方面的"
+      },
+      {
+        "word": "financial",
+        "phonetic": "/faɪˈnænʃəl/",
+        "meaning": "财务的",
+        "root": "fin",
+        "rootExt": "fin - 结束，金钱",
+        "derive": "finance",
+        "syn": "monetary, economic",
+        "trap": "monetary, economic, money-related",
+        "paraphrase": "原文: incentive was financial → 题目: earn higher salaries",
+        "questionStem": "Alternative therapists earn higher salaries than doctors",
+        "example": "Part of the incentive was financial",
+        "translation": "部分动机是财务方面的"
+      },
+      {
+        "word": "clientele",
+        "phonetic": "/ˌkliːənˈtel/",
+        "meaning": "客户群",
+        "root": "client",
+        "rootExt": "client - 依赖的人",
+        "derive": "client",
+        "syn": "customers, patients",
+        "trap": "customers, patients, potential clients",
+        "paraphrase": "原文: potential clientele → 题目: patients visiting",
+        "questionStem": "Some Australian doctors are retraining",
+        "example": "If they see potential clientele going elsewhere",
+        "translation": "如果他们看到潜在客户转向别处"
+      },
+      {
+        "word": "chronic",
+        "phonetic": "/ˈkrɒnɪk/",
+        "meaning": "慢性的",
+        "root": "chron",
+        "rootExt": "chron - 时间",
+        "derive": "chronically",
+        "syn": "persistent, long-term",
+        "trap": "persistent, long-term, ongoing",
+        "paraphrase": "原文: experienced chronic illnesses → 题目: long-term medical complaints",
+        "questionStem": "All the patients in the 1993 Sydney survey had long-term medical complaints",
+        "example": "Those surveyed had experienced chronic illnesses",
+        "translation": "受调查者都经历过慢性疾病"
+      },
+      {
+        "word": "impersonal",
+        "phonetic": "/ɪmˈpɜːsənl/",
+        "meaning": "非人性化的",
+        "root": "person",
+        "rootExt": "person - 个体",
+        "derive": "impersonally",
+        "syn": "cold, detached",
+        "trap": "cold, detached, unfriendly",
+        "paraphrase": "原文: cold, impersonal manner → 题目: bedside manner",
+        "questionStem": "Some Australian doctors are retraining",
+        "example": "The cold, impersonal manner of orthodox doctors",
+        "translation": "正统医生的冷漠、非人性化态度"
+      },
+      {
+        "word": "holistic",
+        "phonetic": "/həˈlɪstɪk/",
+        "meaning": "整体的",
+        "root": "hol",
+        "rootExt": "hol - 整体",
+        "derive": "holism",
+        "syn": "whole-person, comprehensive",
+        "trap": "whole-person, comprehensive, integrated",
+        "paraphrase": "原文: holistic approach → 题目: personal style",
+        "questionStem": "Some Australian doctors are retraining",
+        "example": "they liked the holistic approach of their alternative therapists",
+        "translation": "他们喜欢替代治疗师的整体方法"
+      },
+      {
+        "word": "inadequacies",
+        "phonetic": "/ɪnˈædɪkwəsiz/",
+        "meaning": "不足之处",
+        "root": "adequ",
+        "rootExt": "adequ - 相等",
+        "derive": "inadequate",
+        "syn": "shortcomings, weaknesses",
+        "trap": "shortcomings, weaknesses, failures",
+        "paraphrase": "原文: orthodox doctors' inadequacies → 题目: could learn from",
+        "questionStem": "Some Australian doctors are retraining",
+        "example": "all pointing to orthodox doctors' inadequacies",
+        "translation": "都指出正统医生的不足"
+      },
+      {
+        "word": "preventative",
+        "phonetic": "/prɪˈventətɪv/",
+        "meaning": "预防性的",
+        "root": "vent",
+        "rootExt": "vent - 来",
+        "derive": "prevent",
+        "syn": "preventive",
+        "trap": "preventive, protective",
+        "paraphrase": "原文: advising patients on preventative health → 题目: general health maintenance",
+        "questionStem": "Medical complaints of patients visiting therapists",
+        "example": "advising patients on preventative health",
+        "translation": "为患者提供预防保健建议"
+      },
+      {
+        "word": "respiratory",
+        "phonetic": "/rɪˈspɪrətri/",
+        "meaning": "呼吸的",
+        "root": "spir",
+        "rootExt": "spir - 呼吸",
+        "derive": "respiration",
+        "syn": "breathing-related",
+        "trap": "breathing-related, lung",
+        "paraphrase": "原文: respiratory complaints → 题目: approx 7%",
+        "questionStem": "Complete the vertical axis on the graph below",
+        "example": "Those suffering from respiratory complaints represent 7%",
+        "translation": "患有呼吸道问题的患者占其患者的7%"
+      },
+      {
+        "word": "digestive",
+        "phonetic": "/daɪˈdʒestɪv/",
+        "meaning": "消化的",
+        "root": "digest",
+        "rootExt": "digest - 分离",
+        "derive": "digestion",
+        "syn": "stomach-related",
+        "trap": "stomach-related, gut",
+        "paraphrase": "原文: digestive problems → 题目: approx 11%",
+        "questionStem": "Complete the vertical axis on the graph below",
+        "example": "12% suffer from digestive problems",
+        "translation": "12%患有消化问题"
+      },
+      {
+        "word": "musculo-skeletal",
+        "phonetic": "/ˌmʌskjʊləʊˈskelɪtl/",
+        "meaning": "肌肉骨骼的",
+        "root": "muscul + skelet",
+        "rootExt": "muscul - 肌肉；skelet - 骨骼",
+        "derive": "musculoskeletal",
+        "syn": "muscle and bone",
+        "trap": "muscle and bone, physical",
+        "paraphrase": "原文: musculo-skeletal complaints → 题目: approx 18%",
+        "questionStem": "Complete the vertical axis on the graph below",
+        "example": "18% of patients... suffer from musculo-skeletal complaints",
+        "translation": "18%的患者是因为患有肌肉骨骼问题"
+      },
+      {
+        "word": "complementary",
+        "phonetic": "/ˌkɒmplɪˈmentri/",
+        "meaning": "补充的",
+        "root": "complet",
+        "rootExt": "complet - 填充",
+        "derive": "complement",
+        "syn": "supplementary",
+        "trap": "supplementary, additional",
+        "paraphrase": "原文: complementary medicine → 题目: alternative medicine",
+        "questionStem": "The survey suggested that complementary medicine",
+        "example": "complementary medicine is probably a better term than alternative medicine",
+        "translation": "补充医学可能是比替代医学更好的术语"
+      }
+    ],
+    "level3": [
+      {
+        "word": "empirically",
+        "phonetic": "/ɪmˈpɪrɪkli/",
+        "meaning": "经验地；实证地",
+        "root": "empir",
+        "rootExt": "empir - 经验",
+        "derive": "empirical",
+        "syn": "experimentally, observationally",
+        "trap": "experimentally, observationally, evidence-based",
+        "paraphrase": "原文: empirically based knowledge → 题目: science and empirically based knowledge",
+        "questionStem": "Do the following statements agree with the views of the writer",
+        "example": "increasingly sceptical about science and empirically based knowledge",
+        "translation": "对科学和基于经验的知识越来越持怀疑态度"
+      },
+      {
+        "word": "adjunct",
+        "phonetic": "/ˈædʒʌŋkt/",
+        "meaning": "辅助物；附加物",
+        "root": "junct",
+        "rootExt": "junct - 连接",
+        "derive": "adjunctive",
+        "syn": "supplement, add-on",
+        "trap": "supplement, add-on, auxiliary",
+        "paraphrase": "原文: appears to be an adjunct → 题目: better term than alternative medicine",
+        "questionStem": "The survey suggested that complementary medicine",
+        "example": "Alternative medicine appears to be an adjunct",
+        "translation": "替代医学似乎是一种辅助"
+      },
+      {
+        "word": "bedside manner",
+        "phonetic": "/ˈbedsaɪd ˈmænə/",
+        "meaning": "床边态度；医患沟通方式",
+        "root": "bed + manner",
+        "rootExt": "bed - 患者旁边；manner - 行为",
+        "derive": "bedside",
+        "syn": "personal style, approach",
+        "trap": "personal style, approach, attitude",
+        "paraphrase": "原文: bedside manner → 题目: personal style of alternative therapists",
+        "questionStem": "Some Australian doctors are retraining",
+        "example": "learn a lot about bedside manner and advising patients",
+        "translation": "正统医生可以从替代治疗师那里学到很多关于床边态度和为患者提供预防保健建议的知识"
+      },
+      {
+        "word": "headache sufferers",
+        "phonetic": "/ˈhedeɪk ˈsʌfərəz/",
+        "meaning": "头痛患者",
+        "root": "suffer",
+        "rootExt": "suffer - 承受",
+        "derive": "suffering",
+        "syn": "people with headaches",
+        "trap": "people with headaches, headache patients",
+        "paraphrase": "原文: Headache sufferers → 题目: approx 6%",
+        "questionStem": "Complete the vertical axis on the graph below",
+        "example": "Headache sufferers and those complaining of general ill health",
+        "translation": "头痛患者和抱怨一般健康不佳的人分别占患者的6%和5%"
+      },
+      {
+        "word": "general ill health",
+        "phonetic": "/ˈdʒenrəl ɪl helθ/",
+        "meaning": "一般健康不佳",
+        "root": "ill + health",
+        "rootExt": "ill - 生病的；health - 健康",
+        "derive": "ill-health",
+        "syn": "general ill health",
+        "trap": "general ill health, poor health",
+        "paraphrase": "原文: general ill health → 题目: approx 6%",
+        "questionStem": "Complete the vertical axis on the graph below",
+        "example": "those complaining of general ill health represent 6%",
+        "translation": "抱怨一般健康不佳的人占患者的6%"
+      },
+      {
+        "word": "general health maintenance",
+        "phonetic": "/ˈdʒenrəl helθ ˌmeɪnˈteɪnəns/",
+        "meaning": "一般健康维护",
+        "root": "maintain",
+        "rootExt": "maintain - 保持",
+        "derive": "maintenance",
+        "syn": "health upkeep",
+        "trap": "health upkeep, wellness care",
+        "paraphrase": "原文: general health maintenance → 题目: approx 4%",
+        "questionStem": "Complete the vertical axis on the graph below",
+        "example": "a further 4% see therapists for general health maintenance",
+        "translation": "另有4%的人看治疗师是为了维持一般健康"
+      },
+      {
+        "word": "candida",
+        "phonetic": "/ˈkændɪdə/",
+        "meaning": "念珠菌病",
+        "root": "candid",
+        "rootExt": "candid - 白色的",
+        "derive": "candidiasis",
+        "syn": "yeast infection",
+        "trap": "yeast infection, fungal",
+        "paraphrase": "原文: candida sufferers → 题目: Medical complaints",
+        "questionStem": "Complete the vertical axis on the graph below",
+        "example": "candida sufferers represent an equal percentage",
+        "translation": "念珠菌病患者占同等百分比"
+      },
+      {
+        "word": "pretenders",
+        "phonetic": "/prɪˈtendəz/",
+        "meaning": "冒充者",
+        "root": "tend",
+        "rootExt": "tend - 伸展",
+        "derive": "pretend",
+        "syn": "impostors, claimants",
+        "trap": "impostors, claimants, unqualified",
+        "paraphrase": "原文: any pretenders to their position → 题目: alternative therapists",
+        "questionStem": "Traditionally, how have Australian doctors differed",
+        "example": "allow any pretenders to their position to come into it",
+        "translation": "不愿意让任何冒充者进入他们的位置"
+      },
+      {
+        "word": "hand in glove",
+        "phonetic": "/hænd ɪn ɡlʌv/",
+        "meaning": "密切合作",
+        "root": "idiom",
+        "rootExt": "习语表达",
+        "derive": "N/A",
+        "syn": "closely cooperating",
+        "trap": "closely cooperating, working together",
+        "paraphrase": "原文: worked 'hand in glove' → 题目: worked alongside other therapists",
+        "questionStem": "Traditionally, how have Australian doctors differed",
+        "example": "orthodox and alternative medicine have worked 'hand in glove'",
+        "translation": "正统医学和替代医学多年来一直密切合作"
+      },
+      {
+        "word": "climb steadily",
+        "phonetic": "/klaɪm ˈstedɪli/",
+        "meaning": "稳步上升",
+        "root": "climb + steady",
+        "rootExt": "climb - 上升；steady - 坚定",
+        "derive": "N/A",
+        "syn": "rise gradually",
+        "trap": "rise gradually, increase steadily",
+        "paraphrase": "原文: climb steadily → 题目: turning to alternative therapies in increasing numbers",
+        "questionStem": "Australians have been turning to alternative therapies",
+        "example": "the popularity of alternative therapies in Australia climb steadily",
+        "translation": "替代疗法在澳大利亚的受欢迎程度稳步上升"
+      },
+      {
+        "word": "forming group practices",
+        "phonetic": "/ˈfɔːmɪŋ ɡruːp ˈpræktɪsɪz/",
+        "meaning": "组建联合诊所",
+        "root": "form + group + practice",
+        "rootExt": "form - 形成；practice - 工作",
+        "derive": "N/A",
+        "syn": "group clinics",
+        "trap": "group clinics, joint practices",
+        "paraphrase": "原文: forming group practices → 题目: retraining in alternative therapies",
+        "questionStem": "Some Australian doctors are retraining",
+        "example": "are forming group practices with alternative therapists",
+        "translation": "越来越多的澳大利亚医生正在与替代治疗师组建团体诊所"
+      },
+      {
+        "word": "taking courses themselves",
+        "phonetic": "/ˈteɪkɪŋ ˈkɔːsɪz ðəmˈselvz/",
+        "meaning": "亲自参加课程",
+        "root": "take + course",
+        "rootExt": "take - 承担；course - 学习",
+        "derive": "N/A",
+        "syn": "studying themselves",
+        "trap": "studying themselves, retraining",
+        "paraphrase": "原文: taking courses themselves → 题目: retraining in alternative therapies",
+        "questionStem": "Some Australian doctors are retraining",
+        "example": "or taking courses themselves, particularly in acupuncture and herbalism",
+        "translation": "或自己参加课程，特别是针灸和草药学课程"
+      },
+      {
+        "word": "bottom line",
+        "phonetic": "/ˈbɒtəm laɪn/",
+        "meaning": "底线；最重要的事实",
+        "root": "idiom",
+        "rootExt": "商业习语",
+        "derive": "N/A",
+        "syn": "key point, reality",
+        "trap": "key point, reality, financial",
+        "paraphrase": "原文: The bottom line is → 题目: incentive was financial",
+        "questionStem": "Some Australian doctors are retraining",
+        "example": "'The bottom line is that most general practitioners are business people'",
+        "translation": "底线是大多数全科医生都是商人"
+      },
+      {
+        "word": "general practitioners",
+        "phonetic": "/ˈdʒenrəl prækˈtɪʃənəz/",
+        "meaning": "全科医生",
+        "root": "general + practice",
+        "rootExt": "general - 整体；practice - 医疗工作",
+        "derive": "N/A",
+        "syn": "GPs, family doctors",
+        "trap": "GPs, family doctors, mainstream doctors",
+        "paraphrase": "原文: most general practitioners → 题目: Australian doctors",
+        "questionStem": "Some Australian doctors are retraining",
+        "example": "most general practitioners are business people",
+        "translation": "大多数全科医生都是商人"
+      },
+      {
+        "word": "high standing",
+        "phonetic": "/haɪ ˈstændɪŋ/",
+        "meaning": "崇高地位",
+        "root": "stand",
+        "rootExt": "stand - 位置",
+        "derive": "N/A",
+        "syn": "high reputation",
+        "trap": "high reputation, status",
+        "paraphrase": "原文: The high standing of professionals → 题目: higher opinion of doctors",
+        "questionStem": "In the past, Australians had a higher opinion of doctors",
+        "example": "The high standing of professionals, including doctors, has been eroded",
+        "translation": "专业人士包括医生的崇高地位已被削弱"
+      }
+    ]
+  },
+  "phrases": [
+    {
+      "word": "hand in glove",
+      "meaning": "密切合作",
+      "syn": "closely cooperating",
+      "trap": "closely cooperating, working together",
+      "example": "orthodox and alternative medicine have worked 'hand in glove' for years",
+      "translation": "正统医学和替代医学多年来一直密切合作"
+    },
+    {
+      "word": "climb steadily",
+      "meaning": "稳步上升",
+      "syn": "rise gradually",
+      "trap": "rise gradually, increase steadily",
+      "example": "the popularity of alternative therapies in Australia climb steadily",
+      "translation": "替代疗法在澳大利亚的受欢迎程度稳步上升"
+    },
+    {
+      "word": "better educated and less accepting public",
+      "meaning": "受教育程度更高、更不盲从的公众",
+      "syn": "better educated public",
+      "trap": "better educated public, less accepting",
+      "example": "A better educated and less accepting public has become disillusioned",
+      "translation": "受教育程度更高、更不盲从的公众对专家普遍感到幻灭"
+    },
+    {
+      "word": "forming group practices",
+      "meaning": "组建联合诊所",
+      "syn": "group clinics",
+      "trap": "group clinics, joint practices",
+      "example": "are forming group practices with alternative therapists",
+      "translation": "越来越多的澳大利亚医生正在与替代治疗师组建团体诊所"
+    },
+    {
+      "word": "taking courses themselves",
+      "meaning": "亲自参加课程",
+      "syn": "studying themselves",
+      "trap": "studying themselves, retraining",
+      "example": "or taking courses themselves, particularly in acupuncture and herbalism",
+      "translation": "或自己参加课程，特别是针灸和草药学课程"
+    },
+    {
+      "word": "bottom line",
+      "meaning": "底线；最重要的事实",
+      "syn": "key point",
+      "trap": "key point, financial reality",
+      "example": "The bottom line is that most general practitioners are business people",
+      "translation": "底线是大多数全科医生都是商人"
+    },
+    {
+      "word": "general practitioners",
+      "meaning": "全科医生",
+      "syn": "GPs",
+      "trap": "GPs, family doctors",
+      "example": "most general practitioners are business people",
+      "translation": "大多数全科医生都是商人"
+    },
+    {
+      "word": "chronic illnesses",
+      "meaning": "慢性疾病",
+      "syn": "long-term illnesses",
+      "trap": "long-term illnesses, persistent complaints",
+      "example": "Those surveyed had experienced chronic illnesses",
+      "translation": "受调查者都经历过慢性疾病"
+    },
+    {
+      "word": "holistic approach",
+      "meaning": "整体疗法",
+      "syn": "whole-person approach",
+      "trap": "whole-person approach, personal style",
+      "example": "they liked the holistic approach of their alternative therapists",
+      "translation": "他们喜欢替代治疗师的整体方法"
+    },
+    {
+      "word": "bedside manner",
+      "meaning": "床边态度",
+      "syn": "personal style",
+      "trap": "personal style, attitude",
+      "example": "learn a lot about bedside manner and advising patients on preventative health",
+      "translation": "正统医生可以从替代治疗师那里学到很多关于床边态度和为患者提供预防保健建议的知识"
+    },
+    {
+      "word": "preventative health",
+      "meaning": "预防保健",
+      "syn": "preventive health",
+      "trap": "preventive health, general health maintenance",
+      "example": "advising patients on preventative health from alternative therapists",
+      "translation": "为患者提供预防保健建议"
+    },
+    {
+      "word": "musculo-skeletal complaints",
+      "meaning": "肌肉骨骼问题",
+      "syn": "muscle and bone issues",
+      "trap": "muscle and bone issues, physical complaints",
+      "example": "18% of patients visiting alternative therapists do so because they suffer from musculo-skeletal complaints",
+      "translation": "18%的患者是因为患有肌肉骨骼问题"
+    },
+    {
+      "word": "general ill health",
+      "meaning": "一般健康不佳",
+      "syn": "general poor health",
+      "trap": "general poor health, ill health",
+      "example": "Headache sufferers and those complaining of general ill health represent 6% and 5% of patients respectively",
+      "translation": "头痛患者和抱怨一般健康不佳的人分别占患者的6%和5%"
+    },
+    {
+      "word": "general health maintenance",
+      "meaning": "一般健康维护",
+      "syn": "health upkeep",
+      "trap": "health upkeep, wellness",
+      "example": "a further 4% see therapists for general health maintenance",
+      "translation": "另有4%的人看治疗师是为了维持一般健康"
+    },
+    {
+      "word": "complementary medicine",
+      "meaning": "补充医学",
+      "syn": "supplementary medicine",
+      "trap": "supplementary medicine, adjunct",
+      "example": "complementary medicine is probably a better term than alternative medicine",
+      "translation": "补充医学可能是比替代医学更好的术语"
+    }
+  ]
+};
+const vocabulary = rawData.vocabulary || {};
+const phrasesData = rawData.phrases || [];
+
+// State
+let curLv = 'level1', curWIdx = 0, curPIdx = 0;
+let vocabMode = 'ctx'; // 'ctx' | 'dir'
+let reinforceQueue = [], reinforcing = false;
+const mistakeMap = new Map(); // word -> {data, count}
+
+// Trap quiz
+let trapSet = [], curTrapIdx = 0;
+// Sim quiz
+let simSet = [], curSimIdx = 0;
+
+// ── Tab switch ──
+function switchTab(id) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => {
+    if (t.getAttribute('onclick') && t.getAttribute('onclick').includes("'" + id + "'")) t.classList.add('active');
+  });
+  document.querySelectorAll('.section').forEach(s => s.classList.toggle('active', s.id === id));
+  if (id === 'trap') initTrap();
+  if (id === 'sim') initSim();
+  if (id === 'mistakes') renderMistakes();
+  if (id === 'phrases') renderPhrase();
+}
+
+function speak(text) {
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-GB';
+  window.speechSynthesis.speak(u);
+}
+
+function escQ(s) { return (s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
+
+function setMode(m) {
+  vocabMode = m;
+  document.getElementById('modeCtx').classList.toggle('active', m === 'ctx');
+  document.getElementById('modeDir').classList.toggle('active', m === 'dir');
+  renderVocab();
+}
+
+function jumpLevel(lv) {
+  curLv = lv; curWIdx = 0;
+  ['lv1btn','lv2btn','lv3btn'].forEach((id, i) => {
+    document.getElementById(id).classList.toggle('active', lv === 'level' + (i+1));
+  });
+  renderVocab();
+}
+
+// ── Trap-box HTML helper ──
+function trapBlockHTML(d) {
+  if (!d.trap && !d.paraphrase && !d.questionStem) return '';
+  let s = '<div class="trap-box"><div class="trap-title">⚡ 题眼信息 — 雅思考点<\/div>';
+  if (d.trap) s += '<div class="trap-row"><span class="trap-lbl">陷阱替换<\/span><span class="trap-val">' + (d.trap||'') + '<\/span><\/div>';
+  if (d.paraphrase) s += '<div class="trap-row"><span class="trap-lbl">Paraphrase<\/span><span class="trap-val">' + (d.paraphrase||'') + '<\/span><\/div>';
+  if (d.questionStem) s += '<div class="trap-row"><span class="trap-lbl">题型提示<\/span><span class="trap-val">' + (d.questionStem||'') + '<\/span><\/div>';
+  return s + '<\/div>';
+}
+
+// ── ① Vocab ──
+function renderVocab() {
+  const list = reinforcing ? reinforceQueue : (vocabulary[curLv] || []);
+  if (!list.length) {
+    document.getElementById('vocab-card').innerHTML = '<div class="text-center p-10 text-slate-400">该等级暂无词汇<\/div>';
+    return;
+  }
+  const idx = reinforcing ? 0 : curWIdx;
+  const data = list[idx];
+  if (!data) return;
+  document.getElementById('reinforce-notice').style.display = reinforcing ? 'block' : 'none';
+  document.getElementById('vocabProg').style.width = Math.round((idx / list.length) * 100) + '%';
+  speak(data.word);
+  if (vocabMode === 'ctx') renderVocabCtx(data, list.length, idx);
+  else renderVocabDir(data, list.length, idx);
+}
+
+function renderVocabCtx(data, total, idx) {
+  // Blank out the word in the example sentence
+  const ex = data.example || '';
+  const _wi = ex.toLowerCase().indexOf(data.word.toLowerCase());
+  const blanked = _wi >= 0 ? ex.slice(0,_wi)+'<span class=\'ctx-blank\' id=\'ctx-hw\' onclick=\'revealWord()\'>'+'_'.repeat(Math.min(data.word.length,8))+'<\/span>'+ex.slice(_wi+data.word.length) : ex;
+  const hasBlanked = blanked !== ex;
+
+  document.getElementById('vocab-card').innerHTML = `
+    <div class="flex justify-between items-start mb-1">
+      <div class="text-[0.58rem] font-bold text-blue-500 uppercase tracking-widest">${curLv} · 语境猜词</div>
+      <div class="text-[0.6rem] text-slate-300 font-bold">${idx+1} / ${total}</div>
+    </div>
+    <div class="ex-box">
+      <div class="text-[0.6rem] font-bold text-blue-500 mb-1">📖 真题原句 — ${hasBlanked ? '点击空格揭开单词' : '阅读并尝试理解'}</div>
+      <p class="text-sm font-bold text-blue-900 leading-snug">${hasBlanked ? blanked : ex}</p>
+      <p class="text-[0.72rem] text-blue-700/70 mt-1">${data.translation || ''}</p>
+    </div>
+    <div class="text-[0.68rem] text-slate-400 text-center mb-2">👆 先读句子猜意思，再点击揭开单词</div>
+    <div id="word-reveal" style="display:none">
+      <div class="flex justify-between items-start mb-2">
+        <div>
+          <h1 class="text-3xl font-bold text-slate-800">${data.word}</h1>
+          <div class="text-slate-400 text-sm mt-1">${data.phonetic || ''} <span onclick="speak('${data.word.replace(/'/g,"\\'")}'')" class="cursor-pointer">🔊</span></div>
+        </div>
+        <div class="text-blue-600 font-bold text-xl text-right">${data.meaning}</div>
+      </div>
+      <div class="detail-box space-y-2">
+        <div class="flex"><span class="lbl">同义替换</span><span class="text-slate-600 font-bold">${data.syn||'—'}</span></div>
+        <div class="flex"><span class="lbl">派生词</span><span class="text-slate-600">${data.derive||'—'}</span></div>
+      </div>
+      <div class="root-box">
+        <div class="flex items-center mb-1"><span class="lbl lbl-r">词根词缀</span><span class="font-bold text-orange-800">${data.root||'—'}</span></div>
+        <div class="text-xs text-orange-600/80 italic pl-[73px]">同根: ${data.rootExt||'—'}</div>
+      </div>
+      ${trapBlockHTML(data)}
+    </div>
+    <div class="grid grid-cols-3 gap-3 mt-auto pt-4" id="mark-btns" style="${hasBlanked ? 'display:none' : ''}">
+      <button class="btn-mark bg-emerald-500" onclick="handleMark('known','v')">掌握 ✓</button>
+      <button class="btn-mark bg-amber-500" onclick="handleMark('unsure','v')">模糊 ~</button>
+      <button class="btn-mark bg-rose-500" onclick="handleMark('unknown','v')">不识 ✗</button>
+    </div>
+  `;
+
+  // If the word wasn't found in sentence, auto-show reveal
+  if (!hasBlanked) {
+    document.getElementById('word-reveal').style.display = 'block';
+  }
+}
+
+function revealWord() {
+  const hw = document.getElementById('ctx-hw');
+  const list = reinforcing ? reinforceQueue : (vocabulary[curLv] || []);
+  const data = list[reinforcing ? 0 : curWIdx];
+  if (hw && data) { hw.classList.add('revealed'); hw.textContent = data.word; }
+  document.getElementById('word-reveal').style.display = 'block';
+  const mb = document.getElementById('mark-btns');
+  if (mb) mb.style.display = 'grid';
+}
+
+function renderVocabDir(data, total, idx) {
+  document.getElementById('vocab-card').innerHTML = `
+    <div class="flex justify-between items-start">
+      <div class="flex-1">
+        <div class="text-[0.58rem] font-bold text-blue-500 uppercase tracking-widest mb-1">${curLv}</div>
+        <h1 class="text-3xl font-bold text-slate-800">${data.word}</h1>
+        <div class="text-slate-400 text-sm mt-1">${data.phonetic || ''} <span onclick="speak('${data.word.replace(/'/g,"\\'")}'')" class="cursor-pointer ml-2">🔊</span></div>
+      </div>
+      <div class="text-right">
+        <div class="text-slate-300 text-[0.6rem] font-bold mb-2">${idx+1} / ${total}</div>
+        <div class="text-blue-600 font-bold text-xl">${data.meaning}</div>
+      </div>
+    </div>
+    <div class="ex-box">
+      <p class="text-sm font-bold text-blue-900 mb-1 leading-snug">"${data.example||''}"</p>
+      <p class="text-[0.75rem] text-blue-700/70">${data.translation||''}</p>
+    </div>
+    <div class="detail-box space-y-2">
+      <div class="flex"><span class="lbl">同义替换</span><span class="text-slate-600 font-bold">${data.syn||'—'}</span></div>
+      <div class="flex"><span class="lbl">派生词</span><span class="text-slate-600">${data.derive||'—'}</span></div>
+    </div>
+    <div class="root-box">
+      <div class="flex items-center mb-1"><span class="lbl lbl-r">词根词缀</span><span class="font-bold text-orange-800">${data.root||'—'}</span></div>
+      <div class="text-xs text-orange-600/80 italic pl-[73px]">同根: ${data.rootExt||'—'}</div>
+    </div>
+    ${trapBlockHTML(data)}
+    <div class="grid grid-cols-3 gap-3 mt-auto pt-4">
+      <button class="btn-mark bg-emerald-500" onclick="handleMark('known','v')">掌握 ✓</button>
+      <button class="btn-mark bg-amber-500" onclick="handleMark('unsure','v')">模糊 ~</button>
+      <button class="btn-mark bg-rose-500" onclick="handleMark('unknown','v')">不识 ✗</button>
+    </div>
+  `;
+}
+
+function handleMark(status, type) {
+  const cardId = type === 'v' ? 'vocab-card' : 'phrase-card';
+  const card = document.getElementById(cardId);
+  const cls = status === 'known' ? 'flash-green' : (status === 'unsure' ? 'flash-amber' : 'flash-rose');
+  card.classList.add(cls);
+
+  // Add to mistake/reinforce tracking
+  if (status === 'unknown' || status === 'unsure') {
+    const item = type === 'v'
+      ? (reinforcing ? reinforceQueue[0] : (vocabulary[curLv]||[])[curWIdx])
+      : phrasesData[curPIdx];
+    if (item) {
+      const key = item.word;
+      if (!mistakeMap.has(key)) mistakeMap.set(key, { data: item, count: 1 });
+      else mistakeMap.get(key).count++;
+      if (!reinforceQueue.find(x => x.word === key)) reinforceQueue.push(item);
+    }
+  }
+
+  setTimeout(() => {
+    card.classList.remove(cls);
+    if (type === 'v') advanceVocab();
+    else advancePhrase();
+  }, 800);
+}
+
+function advanceVocab() {
+  if (reinforcing) {
+    reinforceQueue.shift();
+    if (reinforceQueue.length === 0) {
+      reinforcing = false;
+      document.getElementById('reinforce-notice').style.display = 'none';
+      document.getElementById('vocab-card').innerHTML = '<div class="text-center p-10"><div class="text-5xl mb-4">🎯<\/div><div class="text-xl font-bold text-emerald-600">强化轮完成！<\/div><div class="text-sm text-slate-400 mt-2">切换「题眼训练」或「做题模拟」检验效果<\/div><\/div>';
+    } else { renderVocab(); }
+    return;
+  }
+  const list = vocabulary[curLv] || [];
+  if (curWIdx < list.length - 1) { curWIdx++; renderVocab(); }
+  else if (reinforceQueue.length > 0) {
+    reinforcing = true;
+    renderVocab();
+  } else {
+    const nextLv = { level1: 'level2', level2: 'level3' }[curLv];
+    document.getElementById('vocab-card').innerHTML = `
+      <div class="text-center p-10">
+        <div class="text-5xl mb-4">✅</div>
+        <div class="text-xl font-bold text-emerald-600">本级完成！无生词 🎉</div>
+        ${nextLv ? `<button class="mt-6 px-6 py-3 bg-blue-500 text-white rounded-2xl font-bold" onclick="jumpLevel('${nextLv}')">继续下一级 →</button>` : ''}
+      </div>
+    `;
+  }
+}
+
+// ── ④ Phrase ──
+function renderPhrase() {
+  if (!phrasesData.length) {
+    document.getElementById('phrase-card').innerHTML = '<div class="text-center p-10 text-slate-400">暂无短语数据<\/div>';
+    return;
+  }
+  const data = phrasesData[curPIdx];
+  const total = phrasesData.length;
+  document.getElementById('phraseProg').style.width = Math.round((curPIdx / total) * 100) + '%';
+  document.getElementById('phrase-card').innerHTML = `
+    <div class="flex justify-between items-start">
+      <div class="flex-1">
+        <div class="text-[0.6rem] font-bold text-emerald-500 uppercase tracking-widest mb-1">真题短语</div>
+        <h1 class="text-2xl font-bold text-slate-800">${data.word}</h1>
+      </div>
+      <div class="text-right">
+        <div class="text-slate-300 text-[0.6rem] font-bold mb-2">${curPIdx+1} / ${total}</div>
+        <div class="text-emerald-600 font-bold text-lg">${data.meaning}</div>
+      </div>
+    </div>
+    <div class="ex-box" style="border-left-color:#10b981;background:#ecfdf5;">
+      <p class="text-sm font-bold text-emerald-900 mb-1 leading-snug">"${data.example||''}"</p>
+      <p class="text-[0.75rem] text-emerald-700/70">${data.translation||''}</p>
+    </div>
+    <div class="detail-box">
+      <div class="flex"><span class="lbl" style="color:#10b981">同义替换</span><span class="text-slate-600 font-bold">${data.syn||'—'}</span></div>
+    </div>
+    ${data.trap ? `<div class="trap-box"><div class="trap-title">⚡ 短语陷阱词<\/div><div class="trap-row"><span class="trap-lbl">陷阱替换<\/span><span class="trap-val">${data.trap}<\/span><\/div><\/div>` : ''}
+    <div class="grid grid-cols-3 gap-3 mt-auto pt-4">
+      <button class="btn-mark bg-emerald-500" onclick="handleMark('known','p')">掌握 ✓</button>
+      <button class="btn-mark bg-amber-500" onclick="handleMark('unsure','p')">模糊 ~</button>
+      <button class="btn-mark bg-rose-500" onclick="handleMark('unknown','p')">不识 ✗</button>
+    </div>
+  `;
+}
+
+function advancePhrase() {
+  if (curPIdx < phrasesData.length - 1) { curPIdx++; renderPhrase(); }
+  else {
+    document.getElementById('phrase-card').innerHTML = '<div class="text-center p-10"><div class="text-5xl mb-4">🏁<\/div><div class="text-xl font-bold text-emerald-600">短语已全部复习！<\/div><button class="mt-6 px-6 py-3 bg-emerald-500 text-white rounded-2xl font-bold" onclick="curPIdx=0;renderPhrase()">再练一遍<\/button><\/div>';
+  }
+}
+
+// ── ② Trap Quiz ──
+function initTrap() {
+  const all = [...(vocabulary.level1||[]), ...(vocabulary.level2||[]), ...(vocabulary.level3||[])];
+  const withTrap = all.filter(w => w.trap || w.paraphrase || w.syn);
+  if (!withTrap.length) {
+    document.getElementById('trap-card').innerHTML = '<div class="text-center p-10 text-slate-400"><div class="text-4xl mb-4">⚠️<\/div><div class="font-bold mb-2">暂无题眼数据<\/div><div class="text-sm">请用 v16 Prompt 重新生成 JSON，即可解锁此模块</div><\/div>';
+    return;
+  }
+  trapSet = [...withTrap].sort(() => Math.random() - 0.5).slice(0, Math.min(20, withTrap.length));
+  curTrapIdx = 0;
+  renderTrap();
+}
+
+function renderTrap() {
+  const q = trapSet[curTrapIdx];
+  const total = trapSet.length;
+  document.getElementById('trapProg').style.width = Math.round((curTrapIdx / total) * 100) + '%';
+  const all = [...(vocabulary.level1||[]), ...(vocabulary.level2||[]), ...(vocabulary.level3||[])];
+
+  // Alternate between paraphrase-display mode and MCQ mode
+  if (q.paraphrase && Math.random() > 0.4) {
+    document.getElementById('trap-card').innerHTML = `
+      <div class="text-[0.6rem] font-bold text-purple-600 uppercase tracking-widest mb-3">题眼训练 ${curTrapIdx+1}/${total} · Paraphrase 配对</div>
+      <div class="trap-box mb-3">
+        <div class="trap-title">Paraphrase 配对</div>
+        <div class="text-base font-bold text-purple-900 leading-relaxed">${q.paraphrase}</div>
+      </div>
+      <div class="detail-box mb-3">
+        原词 <strong class="text-blue-600">${q.word}</strong> 在题目中被替换为 <strong class="text-purple-600">${q.trap || q.syn || '?'}</strong>
+      </div>
+      <div class="text-xs text-slate-400 mb-4">记住：题目出现 <strong>${q.trap || q.syn || ''}</strong> → 对应原文的 <strong>${q.word}</strong></div>
+      <div class="mt-auto">
+        <button class="w-full py-4 bg-purple-600 text-white rounded-2xl font-bold text-base" onclick="advanceTrap()">已理解，下一题 →</button>
+      </div>
+    `;
+    return;
+  }
+
+  // MCQ: given original word, pick the paraphrase
+  const correct = q.trap || q.syn || q.word;
+  const decoys = all.filter(x => x.word !== q.word).sort(() => Math.random() - 0.5).slice(0, 3)
+    .map(x => x.trap || x.syn || x.word).filter(Boolean);
+  const opts = [correct, ...decoys].sort(() => Math.random() - 0.5);
+
+  document.getElementById('trap-card').innerHTML = `
+    <div class="text-[0.6rem] font-bold text-purple-600 uppercase tracking-widest mb-4">题眼训练 ${curTrapIdx+1}/${total} · 同义替换识别</div>
+    <div class="text-sm text-slate-500 mb-1">原文出现了：</div>
+    <div class="text-4xl font-bold text-slate-800 mb-2 cursor-pointer" onclick="speak('${q.word.replace(/'/g,"\\'")}'')">${q.word} 🔊</div>
+    <div class="text-slate-400 text-sm mb-4">${q.meaning || ''}</div>
+    <div class="text-sm font-bold text-slate-600 mb-3">题目中最可能用哪个词替换它？</div>
+    <div class="space-y-2">${opts.map(o => `<button class="opt-btn" onclick="checkTrap(this,'${escQ(o)}','${escQ(correct)}')">${o}</button>`).join('')}</div>
+    ${q.example ? `<div class="text-xs text-slate-300 mt-3 pt-3 border-t border-slate-100">例句: ${q.example}<\/div>` : ''}
+  `;
+}
+
+function checkTrap(el, sel, cor) {
+  document.querySelectorAll('#trap-card .opt-btn').forEach(b => b.disabled = true);
+  if (sel === cor) {
+    el.style.borderColor = '#10b981'; el.style.background = '#ecfdf5';
+    setTimeout(advanceTrap, 600);
+  } else {
+    el.style.borderColor = '#ef4444'; el.style.background = '#fef2f2';
+    document.querySelectorAll('#trap-card .opt-btn').forEach(b => { if (b.textContent.trim() === cor) { b.style.borderColor = '#10b981'; b.style.background = '#ecfdf5'; } });
+    setTimeout(advanceTrap, 1400);
+  }
+}
+
+function advanceTrap() {
+  if (curTrapIdx < trapSet.length - 1) { curTrapIdx++; renderTrap(); }
+  else {
+    document.getElementById('trapProg').style.width = '100%';
+    document.getElementById('trap-card').innerHTML = '<div class="text-center p-10"><div class="text-5xl mb-4">🏆<\/div><div class="text-xl font-bold text-purple-600">题眼训练完成！<\/div><div class="text-sm text-slate-400 mt-2">去「做题模拟」实战检验吧</div><button class="mt-6 px-6 py-3 bg-purple-500 text-white rounded-2xl font-bold" onclick="initTrap()">再练一遍<\/button><\/div>';
+  }
+}
+
+// ── ③ Sim Quiz ──
+function initSim() {
+  const all = [...(vocabulary.level1||[]), ...(vocabulary.level2||[]), ...(vocabulary.level3||[]), ...phrasesData];
+  if (!all.length) return;
+  simSet = [...all].sort(() => Math.random() - 0.5).slice(0, Math.min(20, all.length));
+  curSimIdx = 0;
+  renderSim();
+}
+
+function renderSim() {
+  const total = simSet.length;
+  document.getElementById('simProg').style.width = Math.round((curSimIdx / total) * 100) + '%';
+  const q = simSet[curSimIdx];
+  const all = [...(vocabulary.level1||[]), ...(vocabulary.level2||[]), ...(vocabulary.level3||[]), ...phrasesData];
+
+  // Try fill-in-blank mode
+  if (q.example) {
+    const _qi = q.example.toLowerCase().indexOf(q.word.toLowerCase());
+    const blanked = _qi >= 0 && !/[a-zA-Z]/.test(q.example[_qi-1]||'') && !/[a-zA-Z]/.test(q.example[_qi+q.word.length]||'') ? q.example.slice(0,_qi)+'______'+q.example.slice(_qi+q.word.length) : q.example;
+    if (blanked !== q.example) {
+      const decoys = all.filter(x => x.word !== q.word).sort(() => Math.random() - 0.5).slice(0, 3).map(x => x.word);
+      const opts = [q.word, ...decoys].sort(() => Math.random() - 0.5);
+      document.getElementById('sim-card').innerHTML = `
+        <div class="text-[0.6rem] font-bold text-cyan-600 uppercase tracking-widest mb-3">做题模拟 ${curSimIdx+1}/${total} · 真题填空</div>
+        <div class="text-xs text-slate-400 mb-2 font-bold">选出填入空格的正确词：</div>
+        <div class="ex-box" style="border-left-color:#0ea5e9;background:#f0f9ff;">
+          <p class="text-base font-bold text-slate-700 leading-relaxed">${blanked}</p>
+        </div>
+        <div class="text-xs text-slate-400 mb-3">译: ${q.translation||''}</div>
+        ${q.trap ? `<div class="text-xs text-purple-500 mb-3">⚡ 注意：可能被替换为 <strong>${q.trap}<\/strong><\/div>` : ''}
+        <div class="space-y-2">${opts.map(o => `<button class="opt-btn" onclick="checkSim(this,'${escQ(o)}','${escQ(q.word)}')">${o}</button>`).join('')}</div>
+      `;
+      return;
+    }
+  }
+
+  // Fallback: meaning → word MCQ
+  const decoys = all.filter(x => x.word !== q.word).sort(() => Math.random() - 0.5).slice(0, 3).map(x => x.word);
+  const opts = [q.word, ...decoys].sort(() => Math.random() - 0.5);
+  document.getElementById('sim-card').innerHTML = `
+    <div class="text-[0.6rem] font-bold text-cyan-600 uppercase tracking-widest mb-3">做题模拟 ${curSimIdx+1}/${total} · 词义配对</div>
+    <div class="text-xl font-bold text-slate-800 p-4 bg-sky-50 rounded-2xl mb-3">${q.meaning||''}</div>
+    ${q.trap ? `<div class="text-xs text-purple-500 mb-3">⚡ 注意：可能被替换为 <strong>${q.trap}<\/strong><\/div>` : ''}
+    <div class="space-y-2">${opts.map(o => `<button class="opt-btn" onclick="checkSim(this,'${escQ(o)}','${escQ(q.word)}')">${o}</button>`).join('')}</div>
+  `;
+}
+
+function checkSim(el, sel, cor) {
+  document.querySelectorAll('#sim-card .opt-btn').forEach(b => b.disabled = true);
+  const advance = () => {
+    if (curSimIdx < simSet.length - 1) { curSimIdx++; renderSim(); }
+    else {
+      document.getElementById('simProg').style.width = '100%';
+      document.getElementById('sim-card').innerHTML = '<div class="text-center p-10"><div class="text-5xl mb-4">🎯<\/div><div class="text-xl font-bold text-cyan-600">模拟完成！<\/div><button class="mt-6 px-6 py-3 bg-cyan-500 text-white rounded-2xl font-bold" onclick="initSim()">再来一轮<\/button><\/div>';
+    }
+  };
+  if (sel === cor) {
+    el.style.borderColor = '#10b981'; el.style.background = '#ecfdf5';
+    setTimeout(advance, 500);
+  } else {
+    el.style.borderColor = '#ef4444'; el.style.background = '#fef2f2';
+    document.querySelectorAll('#sim-card .opt-btn').forEach(b => { if (b.textContent.trim() === cor) { b.style.borderColor = '#10b981'; b.style.background = '#ecfdf5'; } });
+    setTimeout(advance, 1400);
+  }
+}
+
+// ── ⑤ Mistakes ──
+function renderMistakes() {
+  const list = document.getElementById('mk-list');
+  if (!mistakeMap.size) {
+    list.innerHTML = '<div id="mk-empty">🎉 暂无生词<br><small>学习时标记「不识」或「模糊」的词会出现在这里</small><\/div>';
+    return;
+  }
+  list.innerHTML = [...mistakeMap.values()].map(({ data: w, count }) => `
+    <div class="mk-item">
+      <div class="flex justify-between items-start">
+        <div>
+          <div class="mk-word">${w.word}</div>
+          <div class="mk-meaning">${w.meaning}</div>
+        </div>
+        <div class="text-[0.65rem] bg-red-50 border border-red-200 text-red-500 rounded-full px-2 py-0.5 font-bold">错${count}次</div>
+      </div>
+      ${w.trap ? `<div class="text-xs text-purple-500 mt-2">⚡ 陷阱替换: ${w.trap}<\/div>` : ''}
+      ${w.example ? `<div class="text-xs text-slate-400 mt-1 italic">${w.example}<\/div>` : ''}
+    </div>
+  `).join('');
+}
+
+renderVocab();
+renderPhrase();
+</script>
+</body>
+</html>

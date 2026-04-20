@@ -1,0 +1,26 @@
+# 敏感文件
+.env
+*.tar.gz
+*.sql
+full-system-backup.tar.gz
+
+# 日志和访问记录
+website/visits*.txt
+website/visit_log.json
+website/visits_today_*.txt
+website/library/*.bak*
+*.log
+
+# 大媒体文件（只保留结构）
+website/audios/*
+website/tools/listening_materials/*
+website/library/**/*.mp3
+!**/.gitkeep
+
+# Docker 数据卷
+data/pdfding_media/*
+data/pdfding_sqlite_data/*
+!data/**/.gitkeep
+
+# Nginx 日志
+nginx-config/logs/

@@ -1,0 +1,1065 @@
+[
+  
+  {
+    "q":"Can you tell me a little about your hometown?",
+    "qcn":"请告诉我一些关于你家乡的情况？",
+    "p":"That___APOS___s a great question. I___APOS___d say...",
+    "pcn":"这是个好问题。我认为……",
+    "ex":[
+      {"t":"Hometown","en":"That___APOS___s a great question. I___APOS___d say my hometown is a small but charming city nestled in the mountains of southern China.","cn":"这是个好问题。我认为我的家乡是中国南部山区中一座小巧而迷人的城市。"},
+      {"t":"Hobbies","en":"That___APOS___s a great question. I___APOS___d say reading is my all-time favourite hobby because it lets me explore entirely different worlds.","cn":"这是个好问题。我认为阅读是我最喜欢的爱好，因为它让我探索完全不同的世界。"},
+      {"t":"Food","en":"That___APOS___s a great question. I___APOS___d say I genuinely prefer home-cooked meals over restaurant food most of the time.","cn":"这是个好问题。我认为大多数情况下我更喜欢家常菜而不是餐厅食物。"}
+    ]
+  },
+  {
+    "q":"Are you a student or do you work?",
+    "qcn":"你是学生还是在工作？",
+    "p":"Well, to be honest with you,...",
+    "pcn":"说实话……",
+    "ex":[
+      {"t":"Study","en":"Well, to be honest with you, I find studying online far more flexible than attending traditional in-person classes.","cn":"说实话，我觉得网上学习比参加传统的面对面课程灵活得多。"},
+      {"t":"Travel","en":"Well, to be honest with you, I___APOS___m not a huge fan of flying — I much prefer the experience of taking a train.","cn":"说实话，我不太喜欢坐飞机——我更喜欢乘火车的体验。"},
+      {"t":"Technology","en":"Well, to be honest with you, I spend way more time on my smartphone every day than I really should.","cn":"说实话，我每天花在智能手机上的时间远比应该的要多。"}
+    ]
+  },
+  {
+    "q":"How do you usually spend your free time?",
+    "qcn":"你通常如何打发空闲时间？",
+    "p":"Off the top of my head, I___APOS___d say...",
+    "pcn":"我随即想到的是……",
+    "ex":[
+      {"t":"Hobbies","en":"Off the top of my head, I___APOS___d say I spend around two hours a day on personal hobbies like sketching or cycling.","cn":"我随即想到的是，我每天大约花两个小时在素描或骑行等个人爱好上。"},
+      {"t":"Food","en":"Off the top of my head, I___APOS___d say pasta is the dish I cook most often during a typical week.","cn":"我随即想到的是，意大利面是我在典型的一周内最常烹饪的菜肴。"},
+      {"t":"Family","en":"Off the top of my head, I___APOS___d say my mother has had the single biggest influence on my character and values.","cn":"我随即想到的是，我母亲对我的性格和价值观影响最大。"}
+    ]
+  },
+  {
+    "q":"Do you think you will stay in your hometown in the future?",
+    "qcn":"你认为将来你会留在家乡吗？",
+    "p":"Now that you mention it,...",
+    "pcn":"你这么一提，……",
+    "ex":[
+      {"t":"Hometown","en":"Now that you mention it, I___APOS___ve realised I haven___APOS___t actually been back to my hometown in nearly three years.","cn":"你这么一提，我意识到我差不多三年没回家乡了。"},
+      {"t":"Technology","en":"Now that you mention it, I do rely on GPS navigation apps far more than I used to — it___APOS___s become a real habit.","cn":"你这么一提，我确实比以前更依赖GPS导航应用——这已经成了一个习惯。"},
+      {"t":"Environment","en":"Now that you mention it, I___APOS___ve become noticeably more conscious about recycling and waste reduction over the past year.","cn":"你这么一提，我发现在过去一年里我对回收和减少浪费的意识明显增强了。"}
+    ]
+  },
+  {
+    "q":"Do you think it___APOS___s important to protect the environment?",
+    "qcn":"你认为保护环境重要吗？",
+    "p":"That___APOS___s something I feel quite strongly about...",
+    "pcn":"这是我非常坚持的一个观点……",
+    "ex":[
+      {"t":"Environment","en":"That___APOS___s something I feel quite strongly about — I believe every individual has a real responsibility to reduce their carbon footprint.","cn":"这是我非常坚持的一个观点——我认为每个人都有真正减少碳足迹的责任。"},
+      {"t":"Study","en":"That___APOS___s something I feel quite strongly "about": quality education should be accessible and affordable for all young people.","cn":"这是我非常坚持的一个观点：优质教育应该对所有年轻人都可及且负担得起。"},
+      {"t":"Food","en":"That___APOS___s something I feel quite strongly about — eating locally sourced food benefits both personal health and the wider environment.","cn":"这是我非常坚持的一个观点——食用本地食材对个人健康和大环境都有益。"}
+    ]
+  },
+  {
+    "q":"What kind of food do you enjoy most?",
+    "qcn":"你最喜欢哪种食物？",
+    "p":"I___APOS___m particularly fond of... because...",
+    "pcn":"我特别喜欢……因为……",
+    "ex":[
+      {"t":"Food","en":"I___APOS___m particularly fond of Japanese cuisine because of its extraordinary balance between simplicity and depth of flavour.","cn":"我特别喜欢日本料理，因为它在简约与风味深度之间达到了非凡的平衡。"},
+      {"t":"Hobbies","en":"I___APOS___m particularly fond of photography because it allows me to capture fleeting moments that would otherwise be completely forgotten.","cn":"我特别喜欢摄影，因为它让我能够捕捉那些转瞬即逝、否则会被遗忘的时刻。"},
+      {"t":"Travel","en":"I___APOS___m particularly fond of coastal towns because the combination of sea air and relaxed atmosphere is simply unbeatable.","cn":"我特别喜欢沿海小镇，因为海风与悠闲氛围的结合无与伦比。"}
+    ]
+  },
+  {
+    "q":"If you could choose any job, what would it be?",
+    "qcn":"如果你可以选择任何工作，你会选什么？",
+    "p":"If I had to choose, I___APOS___d definitely go for...",
+    "pcn":"如果必须选择，我肯定会选……",
+    "ex":[
+      {"t":"Work","en":"If I had to choose, I___APOS___d definitely go for a career in documentary filmmaking — I love storytelling with a social purpose.","cn":"如果必须选择，我肯定会选纪录片制作行业——我喜欢具有社会意义的故事叙述。"},
+      {"t":"Food","en":"If I had to choose, I___APOS___d definitely go for spicy food every time — I genuinely love the kick it adds to every meal.","cn":"如果必须选择，我每次肯定会选辣食——我真的很喜欢它给每道菜增添的刺激感。"},
+      {"t":"Travel","en":"If I had to choose, I___APOS___d definitely go for solo travel rather than group tours — the freedom is absolutely priceless.","cn":"如果必须选择，我肯定会选独自旅行而不是跟团游——那种自由感是无价的。"}
+    ]
+  },
+  {
+    "q":"Do you prefer studying in the morning or at night?",
+    "qcn":"你更喜欢早上还是晚上学习？",
+    "p":"My personal preference would be... mainly because...",
+    "pcn":"我个人更倾向于……主要是因为……",
+    "ex":[
+      {"t":"Study","en":"My personal preference would be studying in the morning, mainly because my concentration is at its absolute sharpest then.","cn":"我个人更倾向于早上学习，主要是因为那时我的注意力最集中。"},
+      {"t":"Environment","en":"My personal preference would be living in a rural area, mainly because of the clean air and genuine sense of calm.","cn":"我个人更倾向于住在农村地区，主要是因为那里空气清新，真正让人感到平静。"},
+      {"t":"Hobbies","en":"My personal preference would be outdoor activities, mainly because being in nature truly recharges my mental and physical energy.","cn":"我个人更倾向于户外活动，主要是因为置身自然界真的能补充我的身心能量。"}
+    ]
+  },
+  {
+    "q":"Do you prefer eating at home or dining out?",
+    "qcn":"你更喜欢在家吃饭还是外出就餐？",
+    "p":"I tend to lean towards... rather than...",
+    "pcn":"我倾向于……而不是……",
+    "ex":[
+      {"t":"Food","en":"I tend to lean towards home cooking rather than eating out, as I can control the quality and nutrition of every ingredient.","cn":"我倾向于在家做饭而不是外出就餐，因为我可以控制每种食材的质量和营养。"},
+      {"t":"Travel","en":"I tend to lean towards budget travel rather than luxury trips, as I find the unpredictability far more exciting.","cn":"我倾向于穷游而不是豪华旅行，因为我觉得不确定性更令人兴奋。"},
+      {"t":"Technology","en":"I tend to lean towards messaging apps for communication rather than making traditional phone calls — it just feels more efficient.","cn":"我倾向于使用即时通讯应用沟通而不是打传统电话——感觉效率更高。"}
+    ]
+  },
+  {
+    "q":"Is there any food or place that brings back special memories?",
+    "qcn":"有什么食物或地方能唤起你特别的记忆吗？",
+    "p":"I have a soft spot for...",
+    "pcn":"我对……有一种特别的情感……",
+    "ex":[
+      {"t":"Food","en":"I have a soft spot for street food — there___APOS___s something wonderfully authentic about eating exactly what the locals eat.","cn":"我对街头食物有一种特别的情感——吃当地人吃的东西有一种美妙的真实感。"},
+      {"t":"Hobbies","en":"I have a soft spot for classic black-and-white films from the 1950s — they have an elegance that modern cinema rarely achieves.","cn":"我对1950年代的经典黑白电影有特别的情感——它们有一种现代电影很少能达到的优雅。"},
+      {"t":"Family","en":"I have a soft spot for noisy family gatherings — even when they get chaotic, there___APOS___s a warmth I genuinely treasure.","cn":"我对嘈杂的家庭聚会有特别的情感——即使一团糟，也有一种我真心珍惜的温暖。"}
+    ]
+  },
+  
+  {
+    "q":"Do you have any daily routines you stick to?",
+    "qcn":"你有什么坚持的日常习惯吗？",
+    "p":"I make it a point to... every day.",
+    "pcn":"我每天都会坚持……",
+    "ex":[
+      {"t":"Study","en":"I make it a point to review my notes for at least thirty minutes every day, without exception.","cn":"我每天都会坚持复习笔记至少三十分钟，没有例外。"},
+      {"t":"Health","en":"I make it a point to drink at least eight glasses of water every day — it genuinely improves my energy levels.","cn":"我每天都会坚持喝至少八杯水——这确实能提升我的精力水平。"},
+      {"t":"Technology","en":"I make it a point to put my phone away at least an hour before bed to ensure a good night___APOS___s sleep.","cn":"我每天都坚持在睡前至少一小时把手机放下，以确保良好的睡眠质量。"}
+    ]
+  },
+  {
+    "q":"Do you have any habits you___APOS___d like to change?",
+    "qcn":"你有什么想改变的习惯吗？",
+    "p":"It___APOS___s become something of a routine for me to...",
+    "pcn":"这已经成为我的一种常规习惯……",
+    "ex":[
+      {"t":"Hobbies","en":"It___APOS___s become something of a routine for me to go for a morning jog before checking any messages or notifications.","cn":"在查看任何消息或通知之前晨跑已成为我的一种常规习惯。"},
+      {"t":"Food","en":"It___APOS___s become something of a routine for me to meal-prep on Sunday evenings so the whole week feels more manageable.","cn":"周日晚上备餐已成为我的常规习惯，这样整周会感觉更有条理。"},
+      {"t":"Study","en":"It___APOS___s become something of a routine for me to listen to educational podcasts while commuting — it turns dead time into learning time.","cn":"通勤时听教育类播客已成为我的常规习惯——它把碎片时间变成了学习时间。"}
+    ]
+  },
+  {
+    "q":"Do you use your phone a lot?",
+    "qcn":"你手机用得多吗？",
+    "p":"I find myself... almost without thinking about it.",
+    "pcn":"我发现自己几乎不假思索就会……",
+    "ex":[
+      {"t":"Technology","en":"I find myself scrolling through social media almost without thinking about it — it___APOS___s become a deeply automatic habit.","cn":"我发现自己几乎不假思索就刷社交媒体——这已经成为一种根深蒂固的自动习惯。"},
+      {"t":"Environment","en":"I find myself switching off lights when I leave a room almost without thinking — it___APOS___s just second nature now.","cn":"我发现离开房间时几乎不假思索就会关灯——现在已经成了本能。"},
+      {"t":"Food","en":"I find myself reaching for a cup of tea almost without thinking whenever I feel any kind of stress or pressure.","cn":"我发现只要感到任何压力，几乎不假思索就会去泡一杯茶。"}
+    ]
+  },
+  {
+    "q":"Have you always enjoyed your current hobby?",
+    "qcn":"你一直都喜欢你现在的爱好吗？",
+    "p":"I___APOS___ve always had a habit of...",
+    "pcn":"我一直有……的习惯",
+    "ex":[
+      {"t":"Hobbies","en":"I___APOS___ve always had a habit of keeping a journal — I started when I was around twelve and haven___APOS___t stopped since.","cn":"我一直有写日记的习惯——大约从十二岁开始，一直没有停止。"},
+      {"t":"Study","en":"I___APOS___ve always had a habit of underlining key phrases while reading, which genuinely helps me retain information much better.","cn":"我一直有阅读时在关键短语下划线的习惯，这确实帮助我更好地记住信息。"},
+      {"t":"Travel","en":"I___APOS___ve always had a habit of collecting small souvenirs from each new city I visit — my shelves are completely full now.","cn":"我一直有从每个新城市收集小纪念品的习惯——现在我的架子已经全满了。"}
+    ]
+  },
+  {
+    "q":"Can you describe a typical day in your life?",
+    "qcn":"你能描述一下你典型的一天吗？",
+    "p":"On a typical day, I usually...",
+    "pcn":"在典型的一天里，我通常……",
+    "ex":[
+      {"t":"Study","en":"On a typical day, I usually spend my mornings attending lectures and my afternoons doing independent reading and research.","cn":"在典型的一天里，我通常早上参加课程，下午进行独立阅读和研究。"},
+      {"t":"Hobbies","en":"On a typical day, I usually squeeze in at least twenty minutes of guitar practice right after dinner.","cn":"在典型的一天里，我通常在晚饭后挤出至少二十分钟练习吉他。"},
+      {"t":"Work","en":"On a typical day, I usually tackle the most demanding task first while my focus and energy are at their peak.","cn":"在典型的一天里，我通常在注意力和精力最旺盛时先处理最具挑战性的任务。"}
+    ]
+  },
+  
+  {
+    "q":"What do you think is the most important skill for young people today?",
+    "qcn":"你认为当今年轻人最重要的技能是什么？",
+    "p":"In my view, the most important thing is...",
+    "pcn":"在我看来，最重要的是……",
+    "ex":[
+      {"t":"Study","en":"In my view, the most important thing is developing genuine critical thinking skills, not simply memorising information for exams.","cn":"在我看来，最重要的是培养真正的批判性思维能力，而不仅仅是为了考试而死记硬背。"},
+      {"t":"Environment","en":"In my view, the most important thing is drastically reducing single-use plastic before tackling any other environmental issue.","cn":"在我看来，最重要的是在解决其他环境问题之前大幅减少一次性塑料的使用。"},
+      {"t":"Work","en":"In my view, the most important thing is cultivating a healthy workplace culture — money alone will never sustain anyone long-term.","cn":"在我看来，最重要的是培养健康的工作环境——仅靠金钱永远无法让人长期坚持。"}
+    ]
+  },
+  {
+    "q":"Do you think travel is educational?",
+    "qcn":"你认为旅行有教育意义吗？",
+    "p":"As far as I___APOS___m concerned,...",
+    "pcn":"在我看来……",
+    "ex":[
+      {"t":"Travel","en":"As far as I___APOS___m concerned, travelling is one of the most effective and transformative forms of self-education available to anyone.","cn":"在我看来，旅行是任何人都可以获得的最有效、最具变革性的自我教育形式之一。"},
+      {"t":"Technology","en":"As far as I___APOS___m concerned, smartphones have made our lives immeasurably more convenient, despite their well-documented downsides.","cn":"在我看来，尽管有众所周知的缺点，智能手机还是让我们的生活变得无比便利。"},
+      {"t":"Food","en":"As far as I___APOS___m concerned, sharing a meal with people you care about is one of the most meaningful social activities there is.","cn":"在我看来，与你关心的人共享一顿饭是最有意义的社交活动之一。"}
+    ]
+  },
+  {
+    "q":"Do you think online learning is as effective as classroom learning?",
+    "qcn":"你认为网络学习和课堂学习一样有效吗？",
+    "p":"It seems to me that...",
+    "pcn":"在我看来……",
+    "ex":[
+      {"t":"Study","en":"It seems to me that online learning suits highly self-motivated students far better than those who thrive on external structure.","cn":"在我看来，网络学习更适合高度自我激励的学生，而不是那些在外部结构中成长的学生。"},
+      {"t":"Environment","en":"It seems to me that governments need to do considerably more to tackle air pollution in densely populated cities.","cn":"在我看来，政府需要做更多工作来解决人口密集城市的空气污染问题。"},
+      {"t":"Family","en":"It seems to me that maintaining close family bonds becomes increasingly challenging as people grow busier with their careers.","cn":"在我看来，随着人们在职业上越来越忙碌，维持紧密的家庭纽带变得越来越具挑战性。"}
+    ]
+  },
+  {
+    "q":"What___APOS___s your opinion on social media?",
+    "qcn":"你对社交媒体有什么看法？",
+    "p":"I___APOS___m of the opinion that...",
+    "pcn":"我认为……",
+    "ex":[
+      {"t":"Technology","en":"I___APOS___m of the opinion that social media can be either a powerful tool or a destructive distraction, depending entirely on how you use it.","cn":"我认为社交媒体可以是一种强大的工具，也可以是一种破坏性的干扰，这完全取决于你如何使用它。"},
+      {"t":"Hobbies","en":"I___APOS___m of the opinion that creative hobbies like painting or music provide genuine therapeutic benefits for one___APOS___s mental health.","cn":"我认为绘画或音乐等创意爱好能为心理健康提供真正的治疗性益处。"},
+      {"t":"Travel","en":"I___APOS___m of the opinion that every young person should experience living abroad at least once to gain a truly global perspective.","cn":"我认为每个年轻人都应该至少有一次在海外生活的经历，以获得真正的全球视野。"}
+    ]
+  },
+  {
+    "q":"Is there anything you think is truly irreplaceable in life?",
+    "qcn":"你认为生活中有什么是真正无可替代的吗？",
+    "p":"To my mind, nothing beats...",
+    "pcn":"在我看来，没有什么比得上……",
+    "ex":[
+      {"t":"Food","en":"To my mind, nothing beats a home-cooked meal made with fresh, seasonal, locally sourced ingredients.","cn":"在我看来，没有什么比用新鲜、应季、本地食材烹制的家常菜更好的了。"},
+      {"t":"Hobbies","en":"To my mind, nothing beats the genuine sense of accomplishment you feel after mastering a completely new skill.","cn":"在我看来，没有什么比掌握一项全新技能后那种真实的成就感更棒的了。"},
+      {"t":"Travel","en":"To my mind, nothing beats exploring a brand-new city entirely on foot with no fixed plan or agenda whatsoever.","cn":"在我看来，没有什么比完全徒步探索一座全新城市、没有任何固定计划更美妙的了。"}
+    ]
+  },
+  
+  {
+    "q":"What___APOS___s the most memorable place you___APOS___ve ever visited?",
+    "qcn":"你去过的最难忘的地方是哪里？",
+    "p":"The thing that strikes you immediately about... is...",
+    "pcn":"让你对……立刻印象深刻的是……",
+    "ex":[
+      {"t":"Hometown","en":"The thing that strikes you immediately about my hometown is its incredible blend of ancient temples and trendy modern cafés.","cn":"让你对我家乡立刻印象深刻的是古老寺庙与时髦现代咖啡馆的神奇融合。"},
+      {"t":"Travel","en":"The thing that strikes you immediately about Vienna is the sheer grandeur of its baroque architecture around every single corner.","cn":"让你对维也纳立刻印象深刻的是每个街角都有的巴洛克式建筑的宏伟气势。"},
+      {"t":"Work","en":"The thing that strikes you immediately about my workplace is how genuinely open and collaborative the whole office atmosphere feels.","cn":"让你对我工作场所立刻印象深刻的是整个办公室氛围真实的开放性和协作性。"}
+    ]
+  },
+  {
+    "q":"How would you describe your neighbourhood?",
+    "qcn":"你怎么描述你的社区？",
+    "p":"It___APOS___s the kind of place where...",
+    "pcn":"这是那种……的地方",
+    "ex":[
+      {"t":"Hometown","en":"It___APOS___s the kind of place where everyone greets each other on the street, which creates an incredibly warm community spirit.","cn":"这是那种每个人在街上互相问候的地方，这营造了一种令人难以置信的温暖社区氛围。"},
+      {"t":"Travel","en":"It___APOS___s the kind of place where you can get completely lost for hours on end and never once feel bored or anxious.","cn":"这是那种你可以迷路好几个小时却从不感到无聊或焦虑的地方。"},
+      {"t":"Study","en":"It___APOS___s the kind of place where students genuinely encourage and support one another rather than competing aggressively.","cn":"这是那种学生真正互相鼓励和支持而不是激烈竞争的地方。"}
+    ]
+  },
+  {
+    "q":"What makes your city special compared to others?",
+    "qcn":"与其他城市相比，你的城市有什么特别之处？",
+    "p":"What really sets... apart from other places is...",
+    "pcn":"……真正区别于其他地方的是……",
+    "ex":[
+      {"t":"Hometown","en":"What really sets my hometown apart from other cities is its vibrant year-round outdoor market selling exclusively local produce.","cn":"真正区别于其他城市的是我家乡全年都有活跃的户外市场，专门销售本地农产品。"},
+      {"t":"Travel","en":"What really sets Kyoto apart from other tourist destinations is its extraordinary and meticulous preservation of traditional Japanese culture.","cn":"真正区别于其他旅游目的地的是京都对日本传统文化非凡而细致的保护。"},
+      {"t":"Work","en":"What really sets my workplace apart from others is the remarkable degree of flexibility it offers every single employee.","cn":"真正区别于其他工作场所的是它给每位员工提供的非凡程度的灵活性。"}
+    ]
+  },
+  {
+    "q":"Would you say your hometown has any disadvantages?",
+    "qcn":"你会说你的家乡有什么缺点吗？",
+    "p":"It___APOS___s not the most... place in the world, but...",
+    "pcn":"这不是世界上最……的地方，但……",
+    "ex":[
+      {"t":"Hometown","en":"It___APOS___s not the most glamorous place in the world, but my hometown has a warmth and authenticity you simply cannot find elsewhere.","cn":"这不是世界上最迷人的地方，但我的家乡有一种你在其他地方根本找不到的温暖和真实。"},
+      {"t":"Study","en":"It___APOS___s not the most prestigious university in the world, but the quality of teaching and student support here is genuinely outstanding.","cn":"这不是世界上最负盛名的大学，但这里的教学质量和学生支持确实非常出色。"},
+      {"t":"Work","en":"It___APOS___s not the most spacious office in the world, but the incredible team atmosphere more than compensates for the limited space.","cn":"这不是世界上最宽敞的办公室，但出色的团队氛围完全弥补了空间的局限。"}
+    ]
+  },
+  {
+    "q":"Can you describe the atmosphere of a place that means a lot to you?",
+    "qcn":"你能描述一个对你意义重大的地方的氛围吗？",
+    "p":"There___APOS___s an unmistakable sense of... when you___APOS___re in...",
+    "pcn":"当你在……的时候，有一种无可置疑的……感",
+    "ex":[
+      {"t":"Hometown","en":"There___APOS___s an unmistakable sense of community when you___APOS___re in my neighbourhood during the annual lantern festival each winter.","cn":"每年冬天灯笼节期间，当你在我的社区时，有一种无可置疑的社区归属感。"},
+      {"t":"Travel","en":"There___APOS___s an unmistakable sense of history when you___APOS___re walking along the ancient city walls of Xi___APOS___an at sunset.","cn":"日落时分漫步西安古城墙时，有一种无可置疑的历史感。"},
+      {"t":"Study","en":"There___APOS___s an unmistakable sense of intellectual energy when you___APOS___re wandering around campus during the lead-up to final exams.","cn":"在期末考试前夕漫步校园时，有一种无可置疑的学术能量感。"}
+    ]
+  },
+  
+  {
+    "q":"How has your hometown changed in recent years?",
+    "qcn":"近年来你的家乡发生了哪些变化？",
+    "p":"Compared to... , ... is significantly more...",
+    "pcn":"与……相比，……明显更……",
+    "ex":[
+      {"t":"Hometown","en":"Compared to ten years ago, my city is significantly more developed, with new metro lines, shopping centres and business districts.","cn":"与十年前相比，我的城市明显更发达了，建有新的地铁线路、购物中心和商业区。"},
+      {"t":"Technology","en":"Compared to five years ago, today___APOS___s smartphones are significantly more powerful and deeply embedded in every aspect of our daily lives.","cn":"与五年前相比，今天的智能手机明显更强大，并深深嵌入我们日常生活的各个方面。"},
+      {"t":"Food","en":"Compared to fast food chains, home cooking is significantly more nutritious, more satisfying, and far more economical in the long run.","cn":"与快餐连锁店相比，家常烹饪明显更营养、更令人满足，从长远来看也更经济实惠。"}
+    ]
+  },
+  {
+    "q":"Is there a big difference between city and rural life in your country?",
+    "qcn":"在你的国家，城市和农村生活有很大差异吗？",
+    "p":"There___APOS___s quite a contrast between... and...",
+    "pcn":"……和……之间有很大的对比",
+    "ex":[
+      {"t":"Hometown","en":"There___APOS___s quite a contrast between the hectic city centre of my hometown and its tranquil, almost village-like outskirts.","cn":"我家乡繁忙的市中心和宁静的、几乎像村庄一样的郊区之间有很大的对比。"},
+      {"t":"Study","en":"There___APOS___s quite a contrast between my first year of university — when I struggled constantly — and where I am academically now.","cn":"我大学第一年——那时我一直很挣扎——和我现在的学业状态之间有很大的对比。"},
+      {"t":"Travel","en":"There___APOS___s quite a contrast between travelling in the peak summer season and visiting the same destinations in quiet winter months.","cn":"旺季夏天旅行和在安静的冬季访问同样的目的地之间有很大的对比。"}
+    ]
+  },
+  {
+    "q":"Do you prefer watching films at home or in the cinema?",
+    "qcn":"你喜欢在家看电影还是在电影院看？",
+    "p":"While both... and... have their merits,...",
+    "pcn":"虽然……和……都有其优点，但……",
+    "ex":[
+      {"t":"Hobbies","en":"While both home streaming and the cinema have their merits, I find the big-screen experience genuinely incomparable for action films.","cn":"虽然在家串流和去电影院都有其优点，但我觉得对于动作片来说大银幕体验真的无可比拟。"},
+      {"t":"Food","en":"While both cooking at home and dining out have their merits, the social and relaxed atmosphere of restaurants is hard to replicate.","cn":"虽然在家做饭和外出就餐都有其优点，但餐厅的社交和轻松氛围很难复制。"},
+      {"t":"Study","en":"While both individual study and group learning have their merits, I personally find solo sessions more productive for focused tasks.","cn":"虽然个人学习和小组学习都有其优点，但我个人发现独自学习对专注任务更有成效。"}
+    ]
+  },
+  {
+    "q":"Do you think public transport or private cars are better for cities?",
+    "qcn":"你认为公共交通还是私家车对城市更好？",
+    "p":"In terms of..., ... clearly outperforms...",
+    "pcn":"就……而言，……明显优于……",
+    "ex":[
+      {"t":"Environment","en":"In terms of environmental impact, public transportation clearly outperforms private car usage by reducing emissions significantly.","cn":"就环境影响而言，公共交通明显优于私家车使用，因为它能显著减少排放。"},
+      {"t":"Technology","en":"In terms of battery life, the latest electric vehicle models clearly outperform their predecessors by an impressive margin.","cn":"就电池续航能力而言，最新的电动车型明显优于其前辈，差距令人印象深刻。"},
+      {"t":"Study","en":"In terms of knowledge retention, spaced repetition techniques clearly outperform last-minute cramming before any major exam.","cn":"就知识保留而言，间隔重复技术明显优于任何重大考试前的临时死记硬背。"}
+    ]
+  },
+  {
+    "q":"What are the differences between your generation and your parents___APOS___ generation?",
+    "qcn":"你这一代和你父母那一代有什么不同？",
+    "p":"The two are quite different in the sense that...",
+    "pcn":"两者在……这一点上相当不同",
+    "ex":[
+      {"t":"Technology","en":"The two generations are quite different in the sense that ours grew up immersed in digital technology from a very early age.","cn":"两代人在这一点上相当不同：我们这一代从很小的年纪就沉浸在数字技术中。"},
+      {"t":"Family","en":"The two are quite different in the sense that my parents prioritised stability, while my generation tends to value flexibility and experience.","cn":"两者在这一点上相当不同：我父母优先考虑稳定性，而我这一代人更看重灵活性和体验。"},
+      {"t":"Food","en":"The two are quite different in the sense that my parents cooked everything from scratch, while my generation often relies on convenience food.","cn":"两者在这一点上相当不同：我父母从零开始烹饪一切，而我这一代人经常依赖便利食品。"}
+    ]
+  },
+  
+  {
+    "q":"Can you explain why you feel that way?",
+    "qcn":"你能解释一下为什么会有这种感觉吗？",
+    "p":"What I mean by that is...",
+    "pcn":"我的意思是……",
+    "ex":[
+      {"t":"Study","en":"What I mean by that is that effective studying isn___APOS___t about the number of hours you put in, but about the quality of your focus.","cn":"我的意思是有效学习不在于你投入的小时数，而在于你专注的质量。"},
+      {"t":"Environment","en":"What I mean by that is that living sustainably doesn___APOS___t require dramatic lifestyle sacrifices — small, consistent changes are truly powerful.","cn":"我的意思是可持续生活不需要巨大的生活方式牺牲——小而持续的改变是真正有力量的。"},
+      {"t":"Family","en":"What I mean by that is that quality time with family matters far more than simply the quantity of time you spend together.","cn":"我的意思是与家人的高质量时间远比你们共处的时间数量重要得多。"}
+    ]
+  },
+  {
+    "q":"Could you put that in simpler terms?",
+    "qcn":"你能用更简单的语言表达吗？",
+    "p":"To put it another way,...",
+    "pcn":"换句话说……",
+    "ex":[
+      {"t":"Technology","en":"To put it another way, I don___APOS___t just use my phone as a tool — it___APOS___s become an almost inseparable extension of who I am.","cn":"换句话说，我不只是把手机当工具用——它已经成为我个人几乎不可分割的延伸。"},
+      {"t":"Hobbies","en":"To put it another way, I don___APOS___t just enjoy painting — for me, it___APOS___s a genuine form of emotional release and self-expression.","cn":"换句话说，我不只是喜欢绘画——对我来说，它是真正的情感释放和自我表达方式。"},
+      {"t":"Food","en":"To put it another way, eating well isn___APOS___t about following strict diets — it___APOS___s about developing consistently mindful habits.","cn":"换句话说，健康饮食不是遵循严格的饮食计划——而是培养持续的正念习惯。"}
+    ]
+  },
+  {
+    "q":"Can you give me an example of what you mean?",
+    "qcn":"你能给我举个例子说明你的意思吗？",
+    "p":"Let me give you an example of what I mean...",
+    "pcn":"让我举个例子来说明我的意思……",
+    "ex":[
+      {"t":"Study","en":"Let me give you an example of what I mean — last month I revised an entire chapter using mind maps and retained far more than I expected.","cn":"让我举个例子来说明我的意思——上个月我用思维导图复习了整整一章，记忆效果远超我的预期。"},
+      {"t":"Travel","en":"Let me give you an example of what I mean — on my last trip, I stayed with a local family and learned more than any guidebook could offer.","cn":"让我举个例子来说明我的意思——上次旅行，我住在当地家庭，学到的比任何旅行指南都多。"},
+      {"t":"Environment","en":"Let me give you an example of what I mean — the park near my childhood home was once a rubbish dump and is now a thriving green space.","cn":"让我举个例子来说明我的意思——我童年家附近的公园曾经是垃圾场，现在是一片繁荣的绿地。"}
+    ]
+  },
+  {
+    "q":"Is there anything surprising about the topic you just mentioned?",
+    "qcn":"你刚才提到的话题有什么令人惊讶的地方吗？",
+    "p":"What___APOS___s particularly interesting is that...",
+    "pcn":"特别有趣的是……",
+    "ex":[
+      {"t":"Technology","en":"What___APOS___s particularly interesting is that despite owning more devices than ever, people consistently report feeling more isolated and disconnected.","cn":"特别有趣的是，尽管拥有的设备比以往任何时候都多，人们却一致报告感到更加孤立和脱离联系。"},
+      {"t":"Food","en":"What___APOS___s particularly interesting is that many humble street foods are now celebrated in Michelin-starred restaurants around the world.","cn":"特别有趣的是，许多平凡的街头食品现在在世界各地的米其林星级餐厅中备受推崇。"},
+      {"t":"Hometown","en":"What___APOS___s particularly interesting is that my small hometown has produced a disproportionately large number of successful artists and musicians.","cn":"特别有趣的是，我的小家乡培养出了数量惊人的成功艺术家和音乐家。"}
+    ]
+  },
+  {
+    "q":"What___APOS___s something that makes your experience stand out?",
+    "qcn":"有什么让你的经历特别突出的吗？",
+    "p":"And what makes it even more... is...",
+    "pcn":"更……的是……",
+    "ex":[
+      {"t":"Hobbies","en":"And what makes it even more satisfying is that I taught myself to play guitar entirely using free online resources and tutorials.","cn":"更令人满足的是，我完全通过免费的网络资源和教程自学了吉他。"},
+      {"t":"Travel","en":"And what makes it even more memorable is that we arrived in that city completely by chance during a vibrant local festival.","cn":"更令人难忘的是，我们完全偶然地在一个充满活力的当地节日期间抵达了那座城市。"},
+      {"t":"Study","en":"And what makes it even more rewarding is that our study group has evolved into a genuinely supportive circle of close friends.","cn":"更令人欣慰的是，我们的学习小组已经发展成为一个真正互相支持的亲密朋友圈。"}
+    ]
+  },
+  
+  {
+    "q":"Do you have any childhood memories that stand out to you?",
+    "qcn":"你有什么印象深刻的童年记忆吗？",
+    "p":"I remember distinctly when...",
+    "pcn":"我清楚地记得……",
+    "ex":[
+      {"t":"Childhood","en":"I remember distinctly when I first saw the ocean — I must have been about six years old, and I was completely overwhelmed by it.","cn":"我清楚地记得第一次看到大海的时候——我那时大概六岁，完全被它震撼了。"},
+      {"t":"Study","en":"I remember distinctly when I passed my first major university exam — the rush of relief was absolutely indescribable.","cn":"我清楚地记得通过第一次重大大学考试的时候——那种如释重负的感觉真是无法形容。"},
+      {"t":"Travel","en":"I remember distinctly getting completely lost in Tokyo on my own — terrifying at first, but ultimately an exhilarating adventure.","cn":"我清楚地记得独自在东京完全迷路——起初很恐怖，但最终是一次令人振奋的冒险。"}
+    ]
+  },
+  {
+    "q":"Looking back, what would you have done differently?",
+    "qcn":"回头来看，你会有什么不同的做法吗？",
+    "p":"Looking back on it now,...",
+    "pcn":"现在回顾起来……",
+    "ex":[
+      {"t":"Study","en":"Looking back on it now, I realise those particularly challenging university years genuinely shaped who I am as a person today.","cn":"现在回顾起来，我意识到那些特别艰难的大学岁月真正塑造了今天的我。"},
+      {"t":"Childhood","en":"Looking back on it now, my childhood was remarkably simple, and I think that very simplicity was an incredible gift.","cn":"现在回顾起来，我的童年非常简单，我认为这种简单本身就是一份难以置信的礼物。"},
+      {"t":"Work","en":"Looking back on it now, my first job taught me lessons about resilience and perseverance that no academic course ever could.","cn":"现在回顾起来，我的第一份工作教会了我关于韧性和毅力的经验，这是任何学术课程都无法教给我的。"}
+    ]
+  },
+  {
+    "q":"Has there been a turning point in your life?",
+    "qcn":"你的生活中有过转折点吗？",
+    "p":"That was a real turning point for me when...",
+    "pcn":"当……时，那对我来说是一个真正的转折点",
+    "ex":[
+      {"t":"Hobbies","en":"That was a real turning point for me when I first discovered yoga — it completely transformed how I manage daily stress.","cn":"当我第一次发现瑜伽时，那对我来说是一个真正的转折点——它彻底改变了我处理日常压力的方式。"},
+      {"t":"Study","en":"That was a real turning point for me when my professor encouraged me to present my work at an international research conference.","cn":"当我的教授鼓励我在国际学术会议上展示我的工作时，那对我来说是一个真正的转折点。"},
+      {"t":"Family","en":"That was a real turning point for me when my parents relocated abroad and I was forced to become truly independent for the first time.","cn":"当我父母移居海外，我第一次被迫真正独立时，那对我来说是一个真正的转折点。"}
+    ]
+  },
+  {
+    "q":"Has living away from home changed you in any way?",
+    "qcn":"离家生活在某种程度上改变了你吗？",
+    "p":"It wasn___APOS___t until... that I truly realised...",
+    "pcn":"直到……我才真正意识到……",
+    "ex":[
+      {"t":"Travel","en":"It wasn___APOS___t until I lived in a developing country that I truly realised just how privileged and sheltered my upbringing had been.","cn":"直到我在发展中国家生活，我才真正意识到我的成长环境有多么优越和受保护。"},
+      {"t":"Environment","en":"It wasn___APOS___t until I watched a documentary about ocean plastic that I truly realised the catastrophic scale of the pollution crisis.","cn":"直到我看了一部关于海洋塑料的纪录片，我才真正意识到污染危机的灾难性规模。"},
+      {"t":"Study","en":"It wasn___APOS___t until I failed an important examination that I truly realised I needed to completely overhaul my approach to studying.","cn":"直到我在一次重要考试中失败，我才真正意识到我需要彻底改革我的学习方法。"}
+    ]
+  },
+  {
+    "q":"Were you interested in the same things when you were younger?",
+    "qcn":"你年轻时对同样的事情感兴趣吗？",
+    "p":"There was a period in my life when...",
+    "pcn":"在我生命中有一段时期……",
+    "ex":[
+      {"t":"Hobbies","en":"There was a period in my life when I was absolutely obsessed with chess and played almost every single evening without fail.","cn":"在我生命中有一段时期，我完全迷上了国际象棋，几乎每天晚上都会下棋。"},
+      {"t":"Technology","en":"There was a period in my life when I deleted every social media app from my phone and genuinely felt far better for it.","cn":"在我生命中有一段时期，我删除了手机上的所有社交媒体应用，并真的感觉好多了。"},
+      {"t":"Food","en":"There was a period in my life when I challenged myself to cook a completely new cuisine every single week — it was remarkable fun.","cn":"在我生命中有一段时期，我每周都挑战自己烹饪一种全新的菜系——非常有趣。"}
+    ]
+  },
+  
+  {
+    "q":"Why do you enjoy that particular hobby?",
+    "qcn":"为什么你喜欢那个特定的爱好？",
+    "p":"The main reason I... is because...",
+    "pcn":"我……的主要原因是……",
+    "ex":[
+      {"t":"Hobbies","en":"The main reason I enjoy hiking is because it completely clears my head and gives me a profound sense of freedom.","cn":"我喜欢徒步的主要原因是它能彻底清空我的思绪，给我一种深刻的自由感。"},
+      {"t":"Study","en":"The main reason I chose this particular degree is because I___APOS___ve always been deeply passionate about understanding human psychology.","cn":"我选择这个特定学位的主要原因是我一直对理解人类心理学充满热情。"},
+      {"t":"Technology","en":"The main reason I avoid screens late at night is because they consistently and significantly disrupt the quality of my sleep.","cn":"我晚上避免使用屏幕的主要原因是它们会持续且显著地影响我的睡眠质量。"}
+    ]
+  },
+  {
+    "q":"What motivates you to do well in your studies?",
+    "qcn":"是什么激励你在学习上表现出色？",
+    "p":"Part of the reason is that...",
+    "pcn":"部分原因是……",
+    "ex":[
+      {"t":"Study","en":"Part of the reason I study so diligently is that I genuinely find my subject fascinating and want to master it completely.","cn":"我如此勤奋学习的部分原因是我真的觉得我的专业很迷人，想要完全掌握它。"},
+      {"t":"Travel","en":"Part of the reason I travel alone sometimes is that it forces me to step entirely outside my comfort zone and grow.","cn":"我有时独自旅行的部分原因是它迫使我完全走出舒适区并成长。"},
+      {"t":"Environment","en":"Part of the reason I cycle to work is that it simultaneously reduces my carbon footprint and keeps me physically healthy.","cn":"我骑车上班的部分原因是它同时减少了我的碳足迹并保持了我的身体健康。"}
+    ]
+  },
+  {
+    "q":"Where does your interest in that topic come from?",
+    "qcn":"你对那个话题的兴趣从何而来？",
+    "p":"It stems from the fact that...",
+    "pcn":"这源于这样一个事实……",
+    "ex":[
+      {"t":"Hobbies","en":"My love of music stems from the fact that my family always had instruments around the house when I was growing up.","cn":"我对音乐的热爱源于这样一个事实：我成长过程中家里总是有乐器。"},
+      {"t":"Study","en":"My passion for languages stems from the fact that I grew up in a truly multilingual and multicultural household.","cn":"我对语言的热情源于这样一个事实：我在一个真正多语言和多元文化的家庭中长大。"},
+      {"t":"Technology","en":"My scepticism about AI stems from the fact that I___APOS___ve witnessed firsthand how it can be exploited to spread misinformation rapidly.","cn":"我对人工智能的怀疑态度源于这样一个事实：我亲眼目睹了它是如何被利用来快速传播错误信息的。"}
+    ]
+  },
+  {
+    "q":"Do you think modern lifestyles are healthy?",
+    "qcn":"你认为现代生活方式健康吗？",
+    "p":"Having said that,...",
+    "pcn":"话虽如此……",
+    "ex":[
+      {"t":"Technology","en":"I love how interconnected the internet keeps us globally. Having said that, the constant notifications genuinely take a toll on mental focus.","cn":"我喜欢互联网让我们全球互联的方式。话虽如此，持续的通知确实对精神专注力造成了影响。"},
+      {"t":"Food","en":"I enjoy eating out at restaurants quite often. Having said that, nothing truly compares to a lovingly prepared home-cooked meal.","cn":"我很喜欢经常在餐厅吃饭。话虽如此，没有什么能真正与精心准备的家常菜相比。"},
+      {"t":"Travel","en":"Budget travel is wonderfully liberating. Having said that, some degree of comfort does make very long journeys far more sustainable.","cn":"穷游真的很令人解放。话虽如此，一定程度的舒适确实使非常长的旅程更加可持续。"}
+    ]
+  },
+  {
+    "q":"Are there any downsides to living in a city?",
+    "qcn":"住在城市有什么缺点吗？",
+    "p":"On the flip side,...",
+    "pcn":"另一方面……",
+    "ex":[
+      {"t":"Study","en":"Online learning is wonderfully flexible and accessible. On the flip side, the lack of face-to-face interaction can become quite isolating.","cn":"网络学习灵活且易于获取。另一方面，缺乏面对面互动可能会变得相当孤立。"},
+      {"t":"Environment","en":"Electric vehicles are genuinely a step in the right direction. On the flip side, manufacturing their batteries has serious environmental costs.","cn":"电动车确实是朝正确方向迈进了一步。另一方面，制造其电池有严重的环境代价。"},
+      {"t":"Hobbies","en":"Social hobbies are excellent for building meaningful connections. On the flip side, solo hobbies offer precious uninterrupted time for self-reflection.","cn":"社交爱好非常有助于建立有意义的联系。另一方面，独处爱好提供了宝贵的不被打扰的自我反思时间。"}
+    ]
+  },
+  
+  {
+    "q":"What do you think about the role of technology in education?",
+    "qcn":"你对技术在教育中的作用有什么看法？",
+    "p":"While I acknowledge that..., I still think...",
+    "pcn":"虽然我承认……，但我仍然认为……",
+    "ex":[
+      {"t":"Study","en":"While I acknowledge that exams create significant pressure, I still think they___APOS___re currently the most reliable way to assess knowledge.","cn":"虽然我承认考试会产生很大压力，但我仍然认为它们目前是评估知识最可靠的方式。"},
+      {"t":"Technology","en":"While I acknowledge that social media can foster genuine community, I still think in-person relationships are ultimately irreplaceable.","cn":"虽然我承认社交媒体可以培养真正的社区感，但我仍然认为面对面的关系最终是不可替代的。"},
+      {"t":"Travel","en":"While I acknowledge that mass tourism brings real economic benefits, I still think its environmental impact is far too high a price to pay.","cn":"虽然我承认大众旅游带来了真实的经济利益，但我仍然认为其环境影响的代价太高了。"}
+    ]
+  },
+  {
+    "q":"Is there anything you feel conflicted about?",
+    "qcn":"有什么让你感到矛盾的事情吗？",
+    "p":"It___APOS___s a double-edged sword, really, because...",
+    "pcn":"这真的是把双刃剑，因为……",
+    "ex":[
+      {"t":"Technology","en":"Social media is a double-edged sword, really, because it connects people globally yet simultaneously fuels anxiety and unhealthy comparison.","cn":"社交媒体真的是把双刃剑，因为它将人们全球连接，却同时助长了焦虑和不健康的比较。"},
+      {"t":"Work","en":"Working from home is a double-edged sword, really — you gain precious freedom but lose the energising social dynamic of an office.","cn":"在家工作真的是把双刃剑——你获得了宝贵的自由，但失去了办公室充满活力的社交动态。"},
+      {"t":"Study","en":"Academic competition is a double-edged sword — it can powerfully motivate some students while completely destroying the confidence of others.","cn":"学术竞争是把双刃剑——它可以有力地激励一些学生，同时完全摧毁其他人的信心。"}
+    ]
+  },
+  {
+    "q":"Do you have strong views about any current issues?",
+    "qcn":"你对当前的任何问题有强烈的看法吗？",
+    "p":"I___APOS___m not entirely sure, but I think...",
+    "pcn":"我不完全确定，但我认为……",
+    "ex":[
+      {"t":"Study","en":"I___APOS___m not entirely sure, but I think online education will eventually become the dominant model of learning in most countries.","cn":"我不完全确定，但我认为网络教育最终将成为大多数国家的主要学习模式。"},
+      {"t":"Technology","en":"I___APOS___m not entirely sure, but I think quantum computing will become commercially available to everyday consumers within about fifteen years.","cn":"我不完全确定，但我认为量子计算将在大约十五年内向普通消费者商业化。"},
+      {"t":"Environment","en":"I___APOS___m not entirely sure, but I think well-designed carbon taxes could genuinely accelerate changes in individual consumer behaviour.","cn":"我不完全确定，但我认为设计良好的碳税可以真正加速个人消费者行为的改变。"}
+    ]
+  },
+  {
+    "q":"What do you think life will be like in 20 years?",
+    "qcn":"你认为20年后的生活会是什么样？",
+    "p":"It___APOS___s hard to say for certain, but my gut feeling is...",
+    "pcn":"很难确定地说，但我的直觉是……",
+    "ex":[
+      {"t":"Technology","en":"It___APOS___s hard to say for certain, but my gut feeling is that AI will replace a significant number of white-collar administrative jobs.","cn":"很难确定地说，但我的直觉是人工智能将取代大量白领行政工作。"},
+      {"t":"Food","en":"It___APOS___s hard to say for certain, but my gut feeling is that plant-based diets will become the absolute mainstream within two decades.","cn":"很难确定地说，但我的直觉是植物性饮食将在二十年内成为绝对主流。"},
+      {"t":"Environment","en":"It___APOS___s hard to say for certain, but my gut feeling is that some low-lying coastal cities will face serious flooding challenges.","cn":"很难确定地说，但我的直觉是一些低洼沿海城市将面临严峻的洪水挑战。"}
+    ]
+  },
+  {
+    "q":"Does your enjoyment of something depend on any particular conditions?",
+    "qcn":"你对某件事的享受是否取决于特定条件？",
+    "p":"I suppose it depends entirely on...",
+    "pcn":"我认为这完全取决于……",
+    "ex":[
+      {"t":"Hobbies","en":"I suppose it depends entirely on your personality — some people genuinely thrive in highly competitive sporting environments.","cn":"我认为这完全取决于你的个性——有些人在高度竞争的体育环境中真的会茁壮成长。"},
+      {"t":"Travel","en":"I suppose it depends entirely on your travel style — some people crave adventure and challenge, while others seek pure relaxation.","cn":"我认为这完全取决于你的旅行风格——有些人渴望冒险和挑战，而另一些人寻求纯粹的放松。"},
+      {"t":"Study","en":"I suppose it depends entirely on the subject — some disciplines genuinely suit independent self-study far better than structured classroom learning.","cn":"我认为这完全取决于学科——某些专业确实比有结构的课堂学习更适合独立自学。"}
+    ]
+  },
+  
+  {
+    "q":"How have your tastes changed as you___APOS___ve grown older?",
+    "qcn":"随着年龄的增长，你的品味如何变化？",
+    "p":"Over the years, I___APOS___ve gradually come to...",
+    "pcn":"多年来，我逐渐开始……",
+    "ex":[
+      {"t":"Food","en":"Over the years, I___APOS___ve gradually come to appreciate the beauty of simple, perfectly cooked ingredients over elaborate complex dishes.","cn":"多年来，我逐渐开始欣赏简单、完美烹制的食材之美，而不是复杂精致的菜肴。"},
+      {"t":"Hobbies","en":"Over the years, I___APOS___ve gradually come to prefer quieter, more introspective hobbies — I used to be all about competitive team sports.","cn":"多年来，我逐渐开始偏爱更安静、更内省的爱好——我以前热衷于竞技团队运动。"},
+      {"t":"Technology","en":"Over the years, I___APOS___ve gradually come to rely far less on digital devices and far more on meaningful in-person human connection.","cn":"多年来，我逐渐开始减少对数字设备的依赖，更多地依靠有意义的面对面人际联系。"}
+    ]
+  },
+  {
+    "q":"How has your city changed in recent years?",
+    "qcn":"近年来你的城市发生了哪些变化？",
+    "p":"Things have changed dramatically since...",
+    "pcn":"自从……以来，事情发生了巨大的变化",
+    "ex":[
+      {"t":"Hometown","en":"Things have changed dramatically since my childhood — my hometown now boasts a metro system and three thriving new business districts.","cn":"自从我的童年以来，事情发生了巨大的变化——我的家乡现在拥有地铁系统和三个蓬勃发展的新商业区。"},
+      {"t":"Technology","en":"Things have changed dramatically since the pandemic — remote and hybrid working has become completely normalised in my professional field.","cn":"自从疫情以来，事情发生了巨大的变化——远程和混合工作模式在我的专业领域已经完全正常化。"},
+      {"t":"Study","en":"Things have changed dramatically since AI became widely used — the entire way students research and produce academic work has transformed.","cn":"自从人工智能被广泛使用以来，事情发生了巨大的变化——学生研究和完成学术工作的整个方式都发生了变化。"}
+    ]
+  },
+  {
+    "q":"Have your habits changed much over time?",
+    "qcn":"你的习惯随着时间发生了很大变化吗？",
+    "p":"I used to... but nowadays I tend to...",
+    "pcn":"我以前……但现在我倾向于……",
+    "ex":[
+      {"t":"Hobbies","en":"I used to spend most of my evenings playing video games, but nowadays I tend to go for long evening walks to decompress.","cn":"我以前大部分晚上都在玩电子游戏，但现在我倾向于去长时间的晚间散步来放松。"},
+      {"t":"Food","en":"I used to eat red meat virtually every day, but nowadays I tend to follow a predominantly plant-based diet.","cn":"我以前几乎每天都吃红肉，但现在我倾向于遵循以植物性食品为主的饮食。"},
+      {"t":"Study","en":"I used to cram desperately the night before every exam, but nowadays I tend to spread my revision methodically over several weeks.","cn":"我以前在每次考试前一天晚上拼命死记硬背，但现在我倾向于在几周内有条不紊地分散复习。"}
+    ]
+  },
+  {
+    "q":"Have you noticed any remarkable developments in your field recently?",
+    "qcn":"你最近在你的领域注意到什么显著的发展吗？",
+    "p":"It___APOS___s quite remarkable how much... has evolved.",
+    "pcn":"……发展得如此显著，真的很了不起",
+    "ex":[
+      {"t":"Technology","en":"It___APOS___s quite remarkable how much smartphone capability has evolved — my current device is genuinely more powerful than a 2010 laptop.","cn":"智能手机功能发展得如此显著，真的很了不起——我现在的手机实际上比2010年的笔记本电脑更强大。"},
+      {"t":"Food","en":"It___APOS___s quite remarkable how much the specialty coffee and café culture in my city has evolved over just the past five years.","cn":"我城市里的精品咖啡和咖啡馆文化在短短五年内发展得如此显著，真的很了不起。"},
+      {"t":"Study","en":"It___APOS___s quite remarkable how much my musical taste has evolved since I started seriously exploring different genres and studying music history.","cn":"自从我开始认真探索不同流派和学习音乐史以来，我的音乐品味发展得如此显著，真的很了不起。"}
+    ]
+  },
+  {
+    "q":"Is something becoming more or less popular in your country?",
+    "qcn":"在你的国家，某些事情变得更受欢迎还是不那么受欢迎了？",
+    "p":"... has become increasingly... in recent years.",
+    "pcn":"……近年来越来越……",
+    "ex":[
+      {"t":"Environment","en":"Environmental awareness has become increasingly central to political discussions in my country, especially among younger voters.","cn":"在我的国家，环境意识已成为政治讨论中越来越核心的议题，尤其是在年轻选民中。"},
+      {"t":"Technology","en":"Streaming entertainment has become increasingly dominant in recent years, posing a real existential challenge to traditional broadcast television.","cn":"流媒体娱乐近年来越来越占主导地位，对传统广播电视构成了真正的生存挑战。"},
+      {"t":"Food","en":"Plant-based eating has become increasingly mainstream in most major cities I___APOS___ve visited across Asia and Europe.","cn":"在我走访的大多数亚欧主要城市，植物性饮食近年来越来越成为主流。"}
+    ]
+  },
+  
+  {
+    "q":"Is there someone who has had a big influence on you?",
+    "qcn":"有没有人对你产生了很大的影响？",
+    "p":"The person who has inspired me most is... because...",
+    "pcn":"对我启发最大的人是……因为……",
+    "ex":[
+      {"t":"Family","en":"The person who has inspired me most is my grandmother because she rebuilt her entire life from nothing with extraordinary dignity and grace.","cn":"对我启发最大的人是我的祖母，因为她凭借非凡的尊严和优雅从零开始重建了整个生活。"},
+      {"t":"Study","en":"The person who has inspired me most is my professor because she made me genuinely believe that research could change the world.","cn":"对我启发最大的人是我的教授，因为她让我真正相信研究可以改变世界。"},
+      {"t":"Work","en":"The person who has inspired me most is a former mentor because his unique combination of work ethic and kindness was truly unparalleled.","cn":"对我启发最大的人是一位前导师，因为他将职业道德和善良独特结合的方式真的无与伦比。"}
+    ]
+  },
+  {
+    "q":"How would you describe yourself as a person?",
+    "qcn":"你会如何描述你自己？",
+    "p":"I___APOS___d describe myself as someone who...",
+    "pcn":"我会把自己描述为一个……的人",
+    "ex":[
+      {"t":"Hobbies","en":"I___APOS___d describe myself as someone who genuinely needs a creative outlet — without one, I quickly become mentally restless and unfocused.","cn":"我会把自己描述为一个真正需要创意出口的人——没有创意出口，我很快就会精神上焦躁不安。"},
+      {"t":"Study","en":"I___APOS___d describe myself as someone who thrives under moderate pressure — a clear and realistic deadline genuinely sharpens my focus.","cn":"我会把自己描述为一个在适度压力下能发挥最好的人——一个清晰而现实的截止日期真的能锐化我的注意力。"},
+      {"t":"Travel","en":"I___APOS___d describe myself as someone who strongly values authentic cultural immersion over comfortable and predictable tourist experiences.","cn":"我会把自己描述为一个强烈重视真实文化沉浸而不是舒适可预测旅游体验的人。"}
+    ]
+  },
+  {
+    "q":"What qualities do you most admire in other people?",
+    "qcn":"你最欣赏别人身上的什么品质？",
+    "p":"What I admire most about... is their ability to...",
+    "pcn":"我最欣赏……的是他们能够……",
+    "ex":[
+      {"t":"Family","en":"What I admire most about my father is his incredible ability to remain completely calm and composed during the most stressful situations.","cn":"我最欣赏我父亲的是他在最紧张的情况下保持完全冷静和沉着的非凡能力。"},
+      {"t":"Study","en":"What I admire most about my classmate is her remarkable ability to explain incredibly complex concepts in beautifully simple terms.","cn":"我最欣赏我同学的是她将极其复杂的概念用优美简单的语言解释的非凡能力。"},
+      {"t":"Work","en":"What I admire most about my manager is her consistent ability to make every single team member feel genuinely valued and heard.","cn":"我最欣赏我经理的是她让每位团队成员都感到真正被重视和倾听的一贯能力。"}
+    ]
+  },
+  {
+    "q":"Are people___APOS___s perceptions of you always accurate?",
+    "qcn":"别人对你的看法总是准确的吗？",
+    "p":"People often say I___APOS___m... but I think I___APOS___m actually more...",
+    "pcn":"人们常说我……但我认为我实际上更……",
+    "ex":[
+      {"t":"Hobbies","en":"People often say I___APOS___m antisocial because I enjoy solo activities, but I think I___APOS___m actually more selectively social than genuinely antisocial.","cn":"人们常说我不善交际，因为我喜欢独处活动，但我认为我实际上更像是有选择性地社交，而不是真正的不善交际。"},
+      {"t":"Work","en":"People often say I___APOS___m a perfectionist in my work, but I think I___APOS___m actually more detail-oriented and conscientious than perfectionistic.","cn":"人们常说我在工作中是个完美主义者，但我认为我实际上更注重细节和认真，而不是追求完美。"},
+      {"t":"Study","en":"People often say I___APOS___m overly serious about academic study, but I think I___APOS___m actually more deeply passionate than I am intensely driven.","cn":"人们常说我对学业过于严肃，但我认为我实际上更多是深深地充满热情，而不是强烈地被驱动。"}
+    ]
+  },
+  {
+    "q":"Can you give an example to support your point?",
+    "qcn":"你能举例来支持你的观点吗？",
+    "p":"Take... as a perfect example —...",
+    "pcn":"以……为一个完美的例子——……",
+    "ex":[
+      {"t":"Technology","en":"Take social media recommendation algorithms as a perfect example — they___APOS___re engineered to maximise engagement, not user wellbeing or happiness.","cn":"以社交媒体推荐算法为一个完美的例子——它们被设计来最大化参与度，而不是用户的幸福感。"},
+      {"t":"Environment","en":"Take solar energy as a perfect example — the cost per unit is now lower than coal in the majority of developed economies.","cn":"以太阳能为一个完美的例子——每单位成本现在在大多数发达经济体中已低于煤炭。"},
+      {"t":"Food","en":"Take fermented foods as a perfect example — kimchi, kefir and kombucha have been supporting gut health for many centuries.","cn":"以发酵食品为一个完美的例子——泡菜、开菲尔和康普茶支持肠道健康已有许多个世纪。"}
+    ]
+  },
+  
+  {
+    "q":"What gives you genuine satisfaction in your daily life?",
+    "qcn":"什么给你的日常生活带来真正的满足感？",
+    "p":"I genuinely get a great deal of satisfaction from...",
+    "pcn":"我真的从……中得到很大的满足感",
+    "ex":[
+      {"t":"Hobbies","en":"I genuinely get a great deal of satisfaction from completing a genuinely challenging creative project after sustained effort and patience.","cn":"我真的从经过持续努力和耐心完成一个真正具有挑战性的创意项目中获得很大的满足感。"},
+      {"t":"Work","en":"I genuinely get a great deal of satisfaction from seeing a complex project through from its earliest concept to its final polished delivery.","cn":"我真的从看着一个复杂项目从最初的概念到最终的完善交付的过程中获得很大的满足感。"},
+      {"t":"Study","en":"I genuinely get a great deal of satisfaction from explaining difficult material to classmates who are struggling to understand it.","cn":"我真的从向挣扎于理解困难材料的同学解释它的过程中获得很大的满足感。"}
+    ]
+  },
+  {
+    "q":"Is there an experience that has left a lasting impression on you?",
+    "qcn":"有什么给你留下深刻印象的经历吗？",
+    "p":"There___APOS___s nothing quite like the feeling of...",
+    "pcn":"没有什么比……的感觉更特别了",
+    "ex":[
+      {"t":"Travel","en":"There___APOS___s nothing quite like the feeling of arriving in a completely unknown country and breathing in totally unfamiliar air for the first time.","cn":"没有什么比第一次抵达一个完全陌生的国家、呼吸着完全陌生的空气的感觉更特别了。"},
+      {"t":"Hobbies","en":"There___APOS___s nothing quite like the feeling of finishing an intense long run — those endorphins are genuinely quite extraordinary.","cn":"没有什么比完成一次激烈的长跑的感觉更特别了——那些内啡肽真的相当非凡。"},
+      {"t":"Study","en":"There___APOS___s nothing quite like the feeling of finally understanding a concept that has genuinely baffled you for weeks or even months.","cn":"没有什么比终于理解了一个真正困扰你数周甚至数月的概念的感觉更特别了。"}
+    ]
+  },
+  {
+    "q":"Is there anything that makes you feel uncomfortable about modern society?",
+    "qcn":"现代社会有什么让你感到不舒服的吗？",
+    "p":"I find it profoundly... when...",
+    "pcn":"我发现……真的让我深感……",
+    "ex":[
+      {"t":"Environment","en":"I find it profoundly unsettling when people casually dismiss climate change despite the overwhelming and well-documented scientific consensus.","cn":"我发现有人在铺天盖地的科学共识面前随意否定气候变化真的让我深感不安。"},
+      {"t":"Family","en":"I find it profoundly moving when elderly relatives share personal stories from decades before I was even born.","cn":"我发现老年亲属分享我出生前几十年的个人故事真的让我深感感动。"},
+      {"t":"Travel","en":"I find it profoundly humbling when I travel to places where people live joyfully and generously with so very little material wealth.","cn":"我发现旅行到那些人们以极少的物质财富却快乐而慷慨地生活的地方真的让我深感谦卑。"}
+    ]
+  },
+  {
+    "q":"Are there things that bring you a sense of comfort or belonging?",
+    "qcn":"有什么能给你带来舒适感或归属感的事情吗？",
+    "p":"It always brings me a sense of... whenever...",
+    "pcn":"每当……，总会给我带来一种……感",
+    "ex":[
+      {"t":"Hobbies","en":"It always brings me a profound sense of calm whenever I sit down to paint, regardless of how stressful my day has been.","cn":"每当我坐下来画画时，总会给我带来一种深刻的平静感，不管我的一天有多压力山大。"},
+      {"t":"Food","en":"It always brings me a powerful sense of nostalgia whenever I smell my grandmother___APOS___s signature dish being cooked in the kitchen.","cn":"每当我闻到祖母的招牌菜在厨房里被烹制的气味时，总会给我带来一种强烈的怀旧感。"},
+      {"t":"Hometown","en":"It always brings me a deep sense of belonging whenever I return to my hometown after an extended period living away.","cn":"每当我在外地住了很长一段时间后回到家乡时，总会给我带来一种深刻的归属感。"}
+    ]
+  },
+  {
+    "q":"What are your plans for the future?",
+    "qcn":"你对未来有什么计划？",
+    "p":"In the long run, I hope to...",
+    "pcn":"从长远来看，我希望……",
+    "ex":[
+      {"t":"Work","en":"In the long run, I hope to establish my own creative design studio and collaborate with clients from around the world.","cn":"从长远来看，我希望建立自己的创意设计工作室，与世界各地的客户合作。"},
+      {"t":"Study","en":"In the long run, I hope to pursue a PhD and make a meaningful original contribution to my chosen academic field.","cn":"从长远来看，我希望攻读博士学位，并为我选择的学术领域做出有意义的原创性贡献。"},
+      {"t":"Environment","en":"In the long run, I hope to see my country achieve a complete transition to renewable energy sources within my lifetime.","cn":"从长远来看，我希望在我的有生之年看到我的国家完全过渡到可再生能源。"}
+    ]
+  },
+  
+  {
+    "q":"Is environmental responsibility important to you personally?",
+    "qcn":"环保责任对你个人来说重要吗？",
+    "p":"It___APOS___s an issue that affects people from all walks of life.",
+    "pcn":"这是一个影响各行各业人的问题。",
+    "ex":[
+      {"t":"Environment","en":"Climate change is an issue that affects people from all walks of life, regardless of nationality, wealth or political belief.","cn":"气候变化是一个影响各行各业人的问题，不分国籍、财富或政治信仰。"},
+      {"t":"Technology","en":"Digital misinformation is an issue that affects people from all walks of life in increasingly unpredictable and damaging ways.","cn":"数字错误信息是一个以越来越不可预测和有害的方式影响各行各业人的问题。"},
+      {"t":"Food","en":"Food insecurity is an issue that affects people from all walks of life, even in the world___APOS___s most economically advanced nations.","cn":"食品不安全是一个影响各行各业人的问题，即使在世界上经济最发达的国家也不例外。"}
+    ]
+  },
+  {
+    "q":"Do you think young people today care about important issues?",
+    "qcn":"你认为现在的年轻人关心重要的问题吗？",
+    "p":"There___APOS___s growing awareness of... among...",
+    "pcn":"……中对……的意识越来越强",
+    "ex":[
+      {"t":"Environment","en":"There___APOS___s growing awareness of the climate emergency among younger generations, who feel its direct consequences most acutely.","cn":"年轻一代中对气候紧急状态的意识越来越强，他们感受到了最直接的后果。"},
+      {"t":"Study","en":"There___APOS___s growing awareness of mental health challenges among university students globally, and support services are thankfully expanding.","cn":"全球大学生中对心理健康挑战的意识越来越强，支持服务也在幸运地扩大。"},
+      {"t":"Food","en":"There___APOS___s growing awareness of food waste among ordinary consumers, and supermarket chains are finally beginning to respond meaningfully.","cn":"普通消费者中对食物浪费的意识越来越强，超市连锁店终于开始有实质意义的回应。"}
+    ]
+  },
+  {
+    "q":"What do you think society needs to focus on more?",
+    "qcn":"你认为社会需要更多关注什么？",
+    "p":"It___APOS___s something society as a whole needs to address.",
+    "pcn":"这是整个社会都需要解决的问题。",
+    "ex":[
+      {"t":"Technology","en":"Online privacy erosion is something society as a whole urgently needs to address through robust and comprehensive legislation.","cn":"网络隐私侵蚀是整个社会需要通过有力而全面的立法紧急解决的问题。"},
+      {"t":"Environment","en":"Plastic pollution in our oceans and waterways is something society as a whole needs to address with genuine and sustained urgency.","cn":"我们海洋和水道中的塑料污染是整个社会需要以真正持续的紧迫感解决的问题。"},
+      {"t":"Study","en":"The persistent global gap in educational access between wealthy and developing nations is something society as a whole needs to address.","cn":"富裕国家和发展中国家之间持续存在的全球教育获取差距是整个社会需要解决的问题。"}
+    ]
+  },
+  {
+    "q":"Is there anything about your topic that particularly worries you?",
+    "qcn":"关于你的话题，有什么特别让你担心的吗？",
+    "p":"What concerns me most about... is...",
+    "pcn":"关于……最让我担心的是……",
+    "ex":[
+      {"t":"Technology","en":"What concerns me most about artificial intelligence is not the technology itself, but how dramatically regulation is lagging behind its development.","cn":"关于人工智能最让我担心的不是技术本身，而是监管是多么戏剧性地落后于它的发展。"},
+      {"t":"Environment","en":"What concerns me most about deforestation is the irreversible and permanent loss of biodiversity we may never be able to recover.","cn":"关于毁林最让我担心的是我们可能永远无法恢复的不可逆转的永久生物多样性丧失。"},
+      {"t":"Study","en":"What concerns me most about modern education is its excessive, often counterproductive focus on standardised testing over genuine curiosity.","cn":"关于现代教育最让我担心的是它对标准化测试的过度、通常适得其反的关注，而不是真正的好奇心。"}
+    ]
+  },
+  {
+    "q":"Is there anything positive happening in an area you care about?",
+    "qcn":"在你关心的领域，有什么积极的事情正在发生吗？",
+    "p":"It___APOS___s heartening to see that...",
+    "pcn":"看到……真令人鼓舞",
+    "ex":[
+      {"t":"Environment","en":"It___APOS___s heartening to see that renewable energy investment has now surpassed fossil fuel investment in several major world economies.","cn":"看到可再生能源投资现在已经超过了几个主要世界经济体的化石燃料投资，真令人鼓舞。"},
+      {"t":"Study","en":"It___APOS___s heartening to see that a growing number of universities are proactively offering free mental health support to all enrolled students.","cn":"看到越来越多的大学积极主动地向所有在校学生提供免费的心理健康支持，真令人鼓舞。"},
+      {"t":"Technology","en":"It___APOS___s heartening to see that some major technology companies are voluntarily subjecting their AI systems to independent ethical audits.","cn":"看到一些主要科技公司自愿让其人工智能系统接受独立的道德审计，真令人鼓舞。"}
+    ]
+  },
+  
+  {
+    "q":"To wrap up, what___APOS___s your overall view on this topic?",
+    "qcn":"总结一下，你对这个话题的总体看法是什么？",
+    "p":"All things considered, I___APOS___d say...",
+    "pcn":"综合考虑，我会说……",
+    "ex":[
+      {"t":"Technology","en":"All things considered, I___APOS___d say technology has improved our overall quality of life far more than it has genuinely harmed it.","cn":"综合考虑，我会说技术对我们整体生活质量的改善远远超过了它对其的真正伤害。"},
+      {"t":"Study","en":"All things considered, I___APOS___d say my university years have been the most formative, challenging and ultimately valuable period of my life.","cn":"综合考虑，我会说我的大学岁月是我生命中最具塑造性、最具挑战性、也是最有价值的时期。"},
+      {"t":"Travel","en":"All things considered, I___APOS___d say travel has made me significantly more empathetic, curious and genuinely open-minded than almost anything else.","cn":"综合考虑，我会说旅行让我比几乎任何其他事情都更有同理心、更好奇、更真正地开放思维。"}
+    ]
+  },
+  {
+    "q":"How would you sum up your feelings on this?",
+    "qcn":"你会如何总结你对此的感受？",
+    "p":"At the end of the day,...",
+    "pcn":"归根结底……",
+    "ex":[
+      {"t":"Work","en":"At the end of the day, what truly matters is whether your work creates genuine and lasting value for other people___APOS___s lives.","cn":"归根结底，真正重要的是你的工作是否为他人的生活创造了真正和持久的价值。"},
+      {"t":"Environment","en":"At the end of the day, every small individual choice genuinely contributes to either the problem of or the solution to environmental damage.","cn":"归根结底，每一个小小的个人选择都真正地促成了环境破坏的问题或解决方案。"},
+      {"t":"Family","en":"At the end of the day, the relationships you consistently nurture are ultimately what give your life its most profound and lasting meaning.","cn":"归根结底，你持续培养的关系最终赋予了你生活最深刻和持久的意义。"}
+    ]
+  },
+  {
+    "q":"Do you have any final thoughts on what we___APOS___ve discussed?",
+    "qcn":"你对我们讨论的内容有什么最后的想法吗？",
+    "p":"On balance, I think...",
+    "pcn":"总体而言，我认为……",
+    "ex":[
+      {"t":"Technology","en":"On balance, I think the genuine benefits of digital connectivity substantially outweigh its well-documented social and psychological drawbacks.","cn":"总体而言，我认为数字连接的真正好处大大超过了其有据可查的社会和心理缺点。"},
+      {"t":"Food","en":"On balance, I think consciously eating less meat is one of the most impactful individual choices any person can realistically make.","cn":"总体而言，我认为有意识地少吃肉是任何人都能现实地做出的最有影响力的个人选择之一。"},
+      {"t":"Study","en":"On balance, I think a well-designed blended learning approach — combining online flexibility with in-person engagement — is genuinely optimal.","cn":"总体而言，我认为一种设计良好的混合学习方法——结合在线灵活性与面对面参与——是真正最优的。"}
+    ]
+  },
+  {
+    "q":"Is there anything else you___APOS___d like to add on this subject?",
+    "qcn":"关于这个话题，你还有什么想补充的吗？",
+    "p":"When all is said and done,...",
+    "pcn":"一切都说完了……",
+    "ex":[
+      {"t":"Travel","en":"When all is said and done, the memories and perspectives you accumulate from travel are far more precious than any material possession.","cn":"一切都说完了，你从旅行中积累的记忆和视角远比任何物质财富更珍贵。"},
+      {"t":"Hobbies","en":"When all is said and done, the hobbies that bring you genuine and sustainable joy are always worth fiercely protecting and prioritising.","cn":"一切都说完了，给你带来真正和可持续快乐的爱好总是值得坚决保护和优先考虑的。"},
+      {"t":"Work","en":"When all is said and done, financial compensation matters significantly, but ultimately purpose-driven work is what sustains you over the long term.","cn":"一切都说完了，经济补偿确实很重要，但最终，有目标驱动的工作才是让你长期坚持下去的动力。"}
+    ]
+  },
+  {
+    "q":"What___APOS___s your conclusion on this topic?",
+    "qcn":"你对这个话题的结论是什么？",
+    "p":"To sum up my thoughts on this,...",
+    "pcn":"总结一下我对此的想法……",
+    "ex":[
+      {"t":"Environment","en":"To sum up my thoughts on this, individual lifestyle changes and systemic corporate reform must genuinely work in tandem to be effective.","cn":"总结一下我对此的想法，个人生活方式的改变和系统性的企业改革必须真正协同工作才能有效。"},
+      {"t":"Technology","en":"To sum up my thoughts on this, technology is essentially a mirror that reflects and dramatically amplifies our best and worst human impulses.","cn":"总结一下我对此的想法，技术本质上是一面镜子，反映并极大地放大了我们人类最好和最坏的冲动。"},
+      {"t":"Study","en":"To sum up my thoughts on this, ideal education must blend rigorous academic preparation with meaningful, practical real-world experience.","cn":"总结一下我对此的想法，理想的教育必须将严格的学术准备与有意义的实际现实世界经验相结合。"}
+    ]
+  },
+  
+  {
+    "q":"Is this topic more complex than it first appears?",
+    "qcn":"这个话题比初看起来更复杂吗？",
+    "p":"It___APOS___s a nuanced issue and I think...",
+    "pcn":"这是一个微妙的问题，我认为……",
+    "ex":[
+      {"t":"Technology","en":"AI ethics is genuinely a nuanced issue and I think either dismissing or blindly embracing it both dangerously oversimplify the reality.","cn":"人工智能伦理是一个真正微妙的问题，我认为无论是否定它还是盲目接受它，都是危险地过度简化了现实。"},
+      {"t":"Food","en":"Veganism is genuinely a nuanced issue and I think the actual health outcomes depend very much on how thoughtfully you approach it.","cn":"素食主义是一个真正微妙的问题，我认为实际的健康结果在很大程度上取决于你如何认真地对待它。"},
+      {"t":"Study","en":"Academic pressure is genuinely a nuanced issue and I think what powerfully motivates one student may completely discourage another.","cn":"学业压力是一个真正微妙的问题，我认为能有力激励一个学生的东西可能会完全打击另一个学生。"}
+    ]
+  },
+  {
+    "q":"Does your answer change depending on different circumstances?",
+    "qcn":"你的答案会根据不同情况而改变吗？",
+    "p":"It varies considerably depending on...",
+    "pcn":"这在很大程度上取决于……",
+    "ex":[
+      {"t":"Travel","en":"The experience of relocating abroad varies considerably depending on just how open-minded you genuinely are to cultural differences.","cn":"移居海外的体验在很大程度上取决于你对文化差异真正的开放程度。"},
+      {"t":"Study","en":"Academic success rates vary considerably depending on the quality and consistency of the support systems available to individual students.","cn":"学业成功率在很大程度上取决于为个别学生提供的支持系统的质量和一致性。"},
+      {"t":"Food","en":"Individual nutritional needs vary considerably depending on a person___APOS___s age, lifestyle, activity level and underlying health conditions.","cn":"个人的营养需求在很大程度上取决于一个人的年龄、生活方式、活动水平和潜在健康状况。"}
+    ]
+  },
+  {
+    "q":"Is there an important point that often gets missed in this discussion?",
+    "qcn":"在这个讨论中，有什么重要的点经常被忽视吗？",
+    "p":"I think it___APOS___s worth pointing out that...",
+    "pcn":"我认为值得指出的是……",
+    "ex":[
+      {"t":"Environment","en":"I think it___APOS___s worth pointing out that individual lifestyle changes simply cannot solve deeply systemic and structural environmental problems alone.","cn":"我认为值得指出的是，个人生活方式的改变根本无法单独解决深层次的系统性和结构性环境问题。"},
+      {"t":"Technology","en":"I think it___APOS___s worth pointing out that meaningful digital access remains profoundly unequal across very different parts of our world.","cn":"我认为值得指出的是，有意义的数字获取在我们世界的不同地区仍然存在深刻的不平等。"},
+      {"t":"Study","en":"I think it___APOS___s worth pointing out that strong academic qualifications don___APOS___t always translate directly into genuine professional competence or wisdom.","cn":"我认为值得指出的是，强大的学术资格并不总是直接转化为真正的专业能力或智慧。"}
+    ]
+  },
+  {
+    "q":"Is there an aspect of this topic people tend to forget?",
+    "qcn":"这个话题有没有人们倾向于忘记的方面？",
+    "p":"One thing that often gets overlooked is...",
+    "pcn":"一个经常被忽视的事情是……",
+    "ex":[
+      {"t":"Food","en":"One thing that often gets overlooked is the profound psychological comfort that truly familiar foods provide during times of genuine difficulty.","cn":"一个经常被忽视的事情是熟悉的食物在真正困难时期提供的深刻心理安慰。"},
+      {"t":"Technology","en":"One thing that often gets overlooked is the enormous and rapidly growing energy consumption of the data centres powering our cloud services.","cn":"一个经常被忽视的事情是支撑我们云服务的数据中心巨大且快速增长的能耗。"},
+      {"t":"Environment","en":"One thing that often gets overlooked is how traditional indigenous land management practices can meaningfully inform modern conservation strategies.","cn":"一个经常被忽视的事情是传统的土著土地管理实践如何有意义地为现代保护策略提供信息。"}
+    ]
+  },
+  {
+    "q":"Do you have any final nuanced thoughts to add?",
+    "qcn":"你有什么最后的细微想法要补充吗？",
+    "p":"That said, I think we shouldn___APOS___t lose sight of the fact that...",
+    "pcn":"话虽如此，我认为我们不应该忽视这样一个事实……",
+    "ex":[
+      {"t":"Study","en":"That said, I think we shouldn___APOS___t lose sight of the fact that genuine curiosity and love of learning matter more than any grade.","cn":"话虽如此，我认为我们不应该忽视这样一个事实：真正的好奇心和对学习的热爱比任何成绩都重要。"},
+      {"t":"Technology","en":"That said, I think we shouldn___APOS___t lose sight of the fact that not everyone in our world enjoys equal access to digital tools.","cn":"话虽如此，我认为我们不应该忽视这样一个事实：我们世界上并非每个人都享有平等获取数字工具的机会。"},
+      {"t":"Environment","en":"That said, I think we shouldn___APOS___t lose sight of the fact that nature has a truly extraordinary and resilient capacity for regeneration.","cn":"话虽如此，我认为我们不应该忽视这样一个事实：自然界具有真正非凡的、有韧性的再生能力。"}
+    ]
+  },
+  
+  {
+    "q":"One of my long-term goals is to travel everywhere — do you have long-term goals?",
+    "qcn":"我的长期目标之一是走遍世界——你有长期目标吗？",
+    "p":"One of my long-term goals is to...",
+    "pcn":"我的长期目标之一是……",
+    "ex":[
+      {"t":"Travel","en":"One of my long-term goals is to visit every single continent at least once before I reach my fortieth birthday.","cn":"我的长期目标之一是在我四十岁生日之前至少访问每一个大洲一次。"},
+      {"t":"Hobbies","en":"One of my long-term goals is to achieve genuine fluency in Mandarin through determined and consistent self-study over the next few years.","cn":"我的长期目标之一是通过未来几年坚定而持续的自学，实现真正的普通话流利。"},
+      {"t":"Work","en":"One of my long-term goals is to build a career that creates genuine positive social impact, not just personal financial gain.","cn":"我的长期目标之一是建立一个能创造真正积极社会影响的职业，而不仅仅是个人经济收益。"}
+    ]
+  },
+  {
+    "q":"What are you actively working towards right now?",
+    "qcn":"你现在正在积极追求什么？",
+    "p":"What I___APOS___m really working towards is...",
+    "pcn":"我真正正在努力的目标是……",
+    "ex":[
+      {"t":"Study","en":"What I___APOS___m really working towards is building enough specialised expertise to launch a meaningful educational initiative in my local community.","cn":"我真正正在努力的目标是建立足够的专业知识，以便在我当地社区启动一个有意义的教育倡议。"},
+      {"t":"Hobbies","en":"What I___APOS___m really working towards is completing my first half-marathon — I___APOS___ve been training consistently and diligently for nearly six months.","cn":"我真正正在努力的目标是完成我的第一次半程马拉松——我已经坚持不懈地训练了将近六个月。"},
+      {"t":"Work","en":"What I___APOS___m really working towards is building a professional career that meaningfully balances genuine ambition with lasting personal fulfilment.","cn":"我真正正在努力的目标是建立一个有意义地平衡真正雄心壮志与持久个人满足感的职业生涯。"}
+    ]
+  },
+  {
+    "q":"Where do you see yourself in five years?",
+    "qcn":"五年后你认为自己会在哪里？",
+    "p":"I see myself... in the next five years.",
+    "pcn":"在未来五年里，我把自己定位为……",
+    "ex":[
+      {"t":"Work","en":"I see myself running my own small creative business in the next five years — most likely something in the digital design space.","cn":"在未来五年里，我把自己定位为经营自己的小型创意企业——很可能是数字设计领域的某个方向。"},
+      {"t":"Study","en":"I see myself having completed my postgraduate studies in the next five years and beginning a promising professional career.","cn":"在未来五年里，我把自己定位为完成研究生学业并开始一个有前途的职业生涯。"},
+      {"t":"Hobbies","en":"I see myself having published a debut collection of short stories in the next five years — it___APOS___s been a cherished dream for a long time.","cn":"在未来五年里，我把自己定位为出版了我的第一本短篇故事集——这是一个珍视已久的梦想。"}
+    ]
+  },
+  {
+    "q":"If your plans work out, what would you like to achieve?",
+    "qcn":"如果你的计划成功了，你希望实现什么？",
+    "p":"If everything goes to plan, I___APOS___d like to...",
+    "pcn":"如果一切按计划进行，我想……",
+    "ex":[
+      {"t":"Travel","en":"If everything goes to plan, I___APOS___d like to spend a transformative year living and working in a country I___APOS___ve never previously visited.","cn":"如果一切按计划进行，我想在一个我从未去过的国家生活和工作一年，这将是一次变革性的经历。"},
+      {"t":"Work","en":"If everything goes to plan, I___APOS___d like to eventually step into a leadership role where I can actively mentor younger team members.","cn":"如果一切按计划进行，我想最终进入领导角色，在那里我可以积极指导年轻的团队成员。"},
+      {"t":"Study","en":"If everything goes to plan, I___APOS___d like to graduate with distinction and secure a research-focused internship or fellowship abroad.","cn":"如果一切按计划进行，我想以优异成绩毕业，并在海外获得一个以研究为重点的实习或奖学金机会。"}
+    ]
+  },
+  {
+    "q":"Is there a case study or example that illustrates your point well?",
+    "qcn":"有没有什么案例研究或例子能很好地说明你的观点？",
+    "p":"A case in point would be...",
+    "pcn":"一个很好的例子就是……",
+    "ex":[
+      {"t":"Study","en":"A case in point would be Finland___APOS___s world-renowned education system, which prioritises play, wellbeing and curiosity over rigid examination.","cn":"一个很好的例子就是芬兰举世闻名的教育系统，它优先考虑游戏、幸福感和好奇心，而不是死板的考试。"},
+      {"t":"Travel","en":"A case in point would be Bhutan, the remarkable kingdom that measures national success through Gross National Happiness rather than GDP.","cn":"一个很好的例子就是不丹，这个非凡的王国通过国民幸福总值而不是GDP来衡量国家成功。"},
+      {"t":"Environment","en":"A case in point would be Costa Rica, which consistently generates over ninety percent of all its electricity from renewable energy sources.","cn":"一个很好的例子就是哥斯达黎加，该国持续从可再生能源中产生超过百分之九十的所有电力。"}
+    ]
+  },
+  
+  {
+    "q":"Can you illustrate your point more vividly?",
+    "qcn":"你能更生动地说明你的观点吗？",
+    "p":"To illustrate what I mean,...",
+    "pcn":"为了说明我的意思……",
+    "ex":[
+      {"t":"Hobbies","en":"To illustrate what I mean, I once spent an entire weekend learning to make sourdough bread from scratch and it utterly absorbed me.","cn":"为了说明我的意思，我曾经花了整整一个周末从零开始学习制作酸面包，它完全吸引了我。"},
+      {"t":"Technology","en":"To illustrate what I mean, I once tracked my phone usage for a week and discovered I was spending over six hours daily on it.","cn":"为了说明我的意思，我曾经追踪了一周的手机使用情况，发现我每天花在上面超过六个小时。"},
+      {"t":"Food","en":"To illustrate what I mean, I visited a working organic farm last summer and it fundamentally changed how I think about and value food.","cn":"为了说明我的意思，去年夏天我参观了一个运营中的有机农场，这从根本上改变了我对食物的看法和评价。"}
+    ]
+  },
+  {
+    "q":"Can you give a well-known example from the world?",
+    "qcn":"你能从世界上举一个众所周知的例子吗？",
+    "p":"... is a classic example of...",
+    "pcn":"……是……的经典例子",
+    "ex":[
+      {"t":"Travel","en":"Japan is a classic example of a nation that has masterfully balanced the preservation of ancient tradition with enthusiastic modern innovation.","cn":"日本是一个完美地平衡了古老传统的保护与热情的现代创新的国家的经典例子。"},
+      {"t":"Environment","en":"The Great Barrier Reef is a classic example of a precious natural ecosystem that suffers directly and visibly from human-driven climate change.","cn":"大堡礁是一个直接且明显地受到人类驱动的气候变化影响的珍贵自然生态系统的经典例子。"},
+      {"t":"Technology","en":"Wikipedia is a classic example of how the collective and democratic sharing of knowledge can outperform centralised institutional expertise.","cn":"维基百科是知识的集体和民主共享如何能够超越集中式机构专业知识的经典例子。"}
+    ]
+  },
+  {
+    "q":"What surprises most people about this issue?",
+    "qcn":"这个问题让大多数人感到惊讶的是什么？",
+    "p":"Just think about how...",
+    "pcn":"想想……",
+    "ex":[
+      {"t":"Technology","en":"Just think about how dramatically and irreversibly the internet has transformed the way we access and consume information in a single generation.","cn":"想想互联网在短短一代人的时间里是如何戏剧性地、不可逆转地改变了我们获取和消费信息的方式。"},
+      {"t":"Food","en":"Just think about how profoundly globalisation has changed food culture — ingredients once considered exotic are now in every ordinary supermarket.","cn":"想想全球化是如何深刻地改变了饮食文化——曾经被认为是异国情调的食材现在在每个普通超市都有。"},
+      {"t":"Environment","en":"Just think about the truly staggering volume of plastic waste that a single average household generates in just one ordinary week.","cn":"想想一个普通家庭在短短一周内产生的真正令人瞠目结舌的塑料废物量。"}
+    ]
+  },
+  {
+    "q":"I must admit — do you ever feel conflicted about your choices?",
+    "qcn":"我必须承认——你有时会对自己的选择感到矛盾吗？",
+    "p":"I must admit I feel... about...",
+    "pcn":"我必须承认，关于……我感到……",
+    "ex":[
+      {"t":"Technology","en":"I must admit I feel genuinely anxious about how dependent my entire generation has become on AI systems for even basic everyday decisions.","cn":"我必须承认，关于我整个世代对人工智能系统的依赖程度——甚至是基本的日常决策——我感到真正的焦虑。"},
+      {"t":"Study","en":"I must admit I feel incredibly fortunate about having access to a high-quality university with such dedicated and passionate teaching staff.","cn":"我必须承认，关于能够进入一所拥有如此专注和充满热情的教学人员的优质大学，我感到无比幸运。"},
+      {"t":"Environment","en":"I must admit I feel deeply and genuinely concerned about whether the next generation will inherit a truly liveable and sustainable planet.","cn":"我必须承认，关于下一代是否会继承一个真正适宜居住和可持续的地球，我感到深切而真实的担忧。"}
+    ]
+  },
+  {
+    "q":"In your opinion, what is the most valuable thing you___APOS___ve learned?",
+    "qcn":"在你看来，你学到的最有价值的东西是什么？",
+    "p":"I suppose the underlying reason is...",
+    "pcn":"我认为根本原因是……",
+    "ex":[
+      {"t":"Hobbies","en":"I suppose the underlying reason I love reading so passionately is a deep and persistent craving for new knowledge and fresh perspectives.","cn":"我认为我如此热爱阅读的根本原因是对新知识和新视角的深刻和持久渴望。"},
+      {"t":"Travel","en":"I suppose the underlying reason I travel so frequently is a constant and restless need to challenge my own assumptions about the world.","cn":"我认为我如此频繁旅行的根本原因是一种持续而不安的需求，即挑战我对世界的固有假设。"},
+      {"t":"Family","en":"I suppose the underlying reason I call my parents every single day is that I genuinely treasure their perspective, wisdom and steady guidance.","cn":"我认为我每天都给父母打电话的根本原因是我真正珍视他们的见解、智慧和稳定的指导。"}
+    ]
+  },
+  
+  {
+    "q":"Can you give a balanced view of both sides?",
+    "qcn":"你能对两方面给出平衡的看法吗？",
+    "p":"I can see both sides of the argument, but...",
+    "pcn":"我能看到争论的两面，但……",
+    "ex":[
+      {"t":"Technology","en":"I can see both sides of the argument, but ultimately I believe digital literacy should be a core component of primary school education.","cn":"我能看到争论的两面，但最终我认为数字素养应该成为小学教育的核心组成部分。"},
+      {"t":"Food","en":"I can see both sides of the argument, but I genuinely think actively encouraging home cooking creates healthier families in the long run.","cn":"我能看到争论的两面，但我真的认为积极鼓励家庭烹饪从长远来看能创造更健康的家庭。"},
+      {"t":"Environment","en":"I can see both sides of the argument, but economic growth should never be prioritised at the direct expense of environmental sustainability.","cn":"我能看到争论的两面，但经济增长永远不应该以直接牺牲环境可持续性为代价来优先考虑。"}
+    ]
+  },
+  {
+    "q":"Could you elaborate on your perspective with a real-world example?",
+    "qcn":"你能用一个现实世界的例子来阐述你的观点吗？",
+    "p":"... largely contributes to..., which is why...",
+    "pcn":"……在很大程度上促成了……，这就是为什么……",
+    "ex":[
+      {"t":"Environment","en":"Rapid urbanisation largely contributes to dangerously elevated city temperatures, which is why abundant green spaces in cities are truly essential.","cn":"快速城市化在很大程度上促成了城市温度的危险升高，这就是为什么城市中丰富的绿色空间是真正必要的。"},
+      {"t":"Study","en":"Consistent quality of sleep largely contributes to strong academic performance, which is why I___APOS___m extremely disciplined about my bedtime routine.","cn":"持续良好的睡眠质量在很大程度上促成了优秀的学业表现，这就是为什么我对我的睡前例程极其自律。"},
+      {"t":"Food","en":"Long-term diet quality largely contributes to overall health outcomes, which is why I try to make genuinely mindful food choices every day.","cn":"长期饮食质量在很大程度上促成了整体健康结果，这就是为什么我每天都试图做出真正有意识的食物选择。"}
+    ]
+  },
+  {
+    "q":"What has been your most challenging experience?",
+    "qcn":"你最具挑战性的经历是什么？",
+    "p":"I find myself... almost without thinking about it.",
+    "pcn":"我发现自己几乎不假思索地就……",
+    "ex":[
+      {"t":"Work","en":"I find myself problem-solving at work almost without thinking about it — it___APOS___s become a completely natural and ingrained part of how I operate.","cn":"我发现自己在工作中几乎不假思索地就在解决问题——这已经成为我运作方式中完全自然而根深蒂固的一部分。"},
+      {"t":"Study","en":"I find myself asking critical questions in lectures almost without thinking about it — it___APOS___s just become an automatic intellectual reflex for me.","cn":"我发现自己在讲座中几乎不假思索地就提出批判性问题——这已经成为我的一种自动的智识反射。"},
+      {"t":"Hobbies","en":"I find myself humming melodies almost without thinking about it, especially when I___APOS___m deeply absorbed in a creative or repetitive task.","cn":"我发现自己几乎不假思索地就在哼唱旋律，尤其是当我深深沉浸在创意或重复性任务中时。"}
+    ]
+  },
+  {
+    "q":"Does your background influence your current perspectives?",
+    "qcn":"你的背景是否影响了你目前的观点？",
+    "p":"My personal preference would be... mainly because...",
+    "pcn":"我个人更倾向于……主要是因为……",
+    "ex":[
+      {"t":"Hometown","en":"My personal preference would be settling in a medium-sized city, mainly because it offers the best balance of opportunity and genuine community.","cn":"我个人更倾向于定居在中型城市，主要是因为它提供了机会和真正社区之间的最佳平衡。"},
+      {"t":"Food","en":"My personal preference would be seasonal and locally sourced cooking, mainly because it___APOS___s fresher, more ethical, and far more flavourful.","cn":"我个人更倾向于应季和本地采购的烹饪，主要是因为它更新鲜、更道德，而且味道更好。"},
+      {"t":"Technology","en":"My personal preference would be using technology intentionally and minimally, mainly because it genuinely protects both my focus and my mental wellbeing.","cn":"我个人更倾向于有意图地最小化使用技术，主要是因为这真正地保护了我的专注力和心理健康。"}
+    ]
+  },
+  {
+    "q":"Final question — what would you like people to remember about what you said today?",
+    "qcn":"最后一个问题——你希望人们记住今天你说的什么？",
+    "p":"I___APOS___m particularly fond of... because...",
+    "pcn":"我特别喜欢……因为……",
+    "ex":[
+      {"t":"Life","en":"I___APOS___m particularly fond of the idea that every single day offers a genuine opportunity to learn something new and become slightly better.","cn":"我特别喜欢这样一个想法：每一天都提供了一个真正的机会来学习新事物并变得稍微更好。"},
+      {"t":"Study","en":"I___APOS___m particularly fond of the Socratic approach to learning because it constantly challenges us to question our own assumptions and think deeper.","cn":"我特别喜欢苏格拉底式学习方法，因为它不断挑战我们质疑自己的假设并进行更深入的思考。"},
+      {"t":"Work","en":"I___APOS___m particularly fond of collaborative environments because the collective intelligence of a great team always exceeds what any individual can achieve alone.","cn":"我特别喜欢协作环境，因为一个优秀团队的集体智慧总是超过任何个人单独能够实现的。"}
+    ]
+  }
+]

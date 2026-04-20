@@ -1,0 +1,10 @@
+# 最终安全配置
+Options -Indexes
+<Files "config.php">
+    Order allow,deny
+    Deny from all
+</Files>
+<Files "database.php">
+    Order allow,deny
+    Deny from all
+</Files>

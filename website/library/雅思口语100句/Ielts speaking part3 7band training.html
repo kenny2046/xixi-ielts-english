@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS Speaking Part 3 — 7-Band Discussion Trainer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════
+   CSS VARIABLES — Blue-Purple Design System
+   ═══════════════════════════════════════════════════════ */
+:root {
+  --ink: #1a1f3a;
+  --ink2: #3d4570;
+  --muted: #7a83ad;
+  --primary: #5c6bc0;
+  --primary-d: #3949ab;
+  --primary-l: #e8eaf6;
+  --accent: #ff7043;
+  --accent2: #ffb300;
+  --green: #43a047;
+  --green-l: #e8f5e9;
+  --red: #e53935;
+  --red-l: #ffebee;
+  --bg: #f5f6ff;
+  --card: #ffffff;
+  --border: #e4e6f5;
+  --shadow: rgba(92,107,192,.06);
+  --shadow-md: rgba(92,107,192,.12);
+  --shadow-lg: rgba(92,107,192,.18);
+}
+
+/* ═══════════════════════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: #c5cae9; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+/* ═══════════════════════════════════════════════════════
+   TOPBAR — Frosted glass, sticky
+   ═══════════════════════════════════════════════════════ */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(26,35,126,.92);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.topbar-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 18px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.logo-area { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.logo-badge {
+  width: 38px; height: 38px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--accent), #ff8a65);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-weight: 800; font-size: 13px;
+  box-shadow: 0 3px 12px rgba(255,112,67,.4);
+  flex-shrink: 0;
+}
+.logo-title { font-size: 14px; font-weight: 800; color: #fff; line-height: 1.15; }
+.logo-sub { font-size: 10px; color: rgba(255,255,255,.45); font-weight: 600; letter-spacing: .04em; }
+
+/* Progress */
+.prog-wrap { flex: 1; display: flex; align-items: center; gap: 8px; min-width: 0; }
+.prog-bar {
+  flex: 1; max-width: 150px; height: 6px;
+  background: rgba(255,255,255,.12);
+  border-radius: 999px; overflow: hidden;
+}
+.prog-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  border-radius: 999px;
+  transition: width .6s cubic-bezier(.34,1.56,.64,1);
+}
+.prog-lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; font-weight: 600;
+  color: var(--accent2); white-space: nowrap;
+}
+
+/* Topbar buttons */
+.nav-btn {
+  border: none; border-radius: 10px;
+  padding: 7px 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700; font-size: 11.5px;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 5px;
+  transition: all .18s ease;
+  white-space: nowrap; flex-shrink: 0;
+}
+.btn-orange {
+  background: linear-gradient(135deg, var(--accent), #ff8a65);
+  color: #fff;
+  box-shadow: 0 3px 10px rgba(255,112,67,.35);
+}
+.btn-orange:hover { transform: translateY(-1px); box-shadow: 0 5px 18px rgba(255,112,67,.5); }
+.btn-ghost {
+  background: rgba(255,255,255,.08);
+  color: rgba(255,255,255,.7);
+  border: 1px solid rgba(255,255,255,.12);
+}
+.btn-ghost:hover { background: rgba(255,255,255,.15); color: #fff; }
+
+/* Bilingual toggle */
+.bi-sw { position: relative; width: 38px; height: 21px; cursor: pointer; flex-shrink: 0; }
+.bi-sw input { display: none; }
+.bi-track {
+  position: absolute; inset: 0;
+  border-radius: 999px;
+  background: rgba(255,255,255,.15);
+  transition: .25s;
+}
+.bi-track::before {
+  content: '';
+  position: absolute;
+  width: 15px; height: 15px;
+  left: 3px; top: 3px;
+  background: #fff;
+  border-radius: 50%;
+  transition: .25s;
+  box-shadow: 0 1px 4px rgba(0,0,0,.25);
+}
+.bi-sw input:checked ~ .bi-track { background: linear-gradient(135deg, var(--accent), var(--accent2)); }
+.bi-sw input:checked ~ .bi-track::before { transform: translateX(17px); }
+.bi-lbl { font-size: 10.5px; font-weight: 700; color: rgba(255,255,255,.45); }
+
+/* ═══════════════════════════════════════════════════════
+   HERO — Deep blue gradient
+   ═══════════════════════════════════════════════════════ */
+.hero {
+  background: linear-gradient(135deg, #1a237e 0%, #283593 40%, #5c6bc0 100%);
+  padding: 48px 18px 42px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 85% 15%, rgba(255,112,67,.12) 0%, transparent 55%),
+    radial-gradient(ellipse at 10% 85%, rgba(92,107,192,.2) 0%, transparent 50%);
+}
+.hero::after {
+  content: '3';
+  position: absolute; right: -10px; bottom: -35px;
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  font-size: 280px;
+  color: rgba(255,255,255,.03);
+  line-height: 1;
+  pointer-events: none;
+}
+.hero-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative; z-index: 1;
+}
+.hero-eyebrow {
+  font-size: 10px; font-weight: 800;
+  letter-spacing: .16em; text-transform: uppercase;
+  color: rgba(255,255,255,.4);
+  margin-bottom: 10px;
+}
+.diff-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,112,67,.18);
+  border: 1px solid rgba(255,112,67,.35);
+  border-radius: 999px;
+  padding: 5px 14px;
+  font-size: 10.5px; font-weight: 700;
+  color: #ffab91;
+  letter-spacing: .04em;
+  margin-bottom: 14px;
+}
+.hero-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(28px, 4.2vw, 50px);
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+.hero-title em { color: var(--accent); font-style: italic; }
+.hero-desc {
+  font-size: 13.5px;
+  color: rgba(255,255,255,.55);
+  max-width: 600px;
+  line-height: 1.75;
+  margin-bottom: 26px;
+}
+.hero-stats { display: flex; gap: 10px; flex-wrap: wrap; }
+.hero-stat {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 14px;
+  padding: 12px 20px;
+  backdrop-filter: blur(6px);
+  text-align: center;
+}
+.h-stat-n {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px; font-weight: 700; color: #fff; line-height: 1;
+}
+.h-stat-l { font-size: 10px; color: rgba(255,255,255,.45); font-weight: 600; margin-top: 3px; }
+
+/* Score formula pills */
+.score-formula { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.sf-item {
+  background: rgba(92,107,192,.15);
+  border: 1px solid rgba(92,107,192,.3);
+  border-radius: 8px;
+  padding: 5px 11px;
+  font-size: 11px; font-weight: 700;
+  color: #c5cae9;
+}
+
+/* ═══════════════════════════════════════════════════════
+   HINT STRIP
+   ═══════════════════════════════════════════════════════ */
+.hint-strip {
+  background: linear-gradient(135deg, #e8eaf6, #f3f4fc);
+  border: 1.5px solid #c5cae9;
+  border-radius: 18px;
+  padding: 16px 20px;
+  margin: 18px auto 0;
+  max-width: 1100px;
+  display: flex; gap: 14px;
+  align-items: flex-start;
+}
+.hint-strip .icon { font-size: 22px; flex-shrink: 0; }
+.p3-tip {
+  font-size: 12.5px; color: var(--primary-d);
+  line-height: 1.75;
+}
+.p3-tip strong { color: var(--ink); }
+.p3-tip .hl { color: var(--accent); font-weight: 700; }
+
+/* ═══════════════════════════════════════════════════════
+   SEARCH & FILTER CONTROLS
+   ═══════════════════════════════════════════════════════ */
+.ctrl-wrap { max-width: 1100px; margin: 0 auto; padding: 20px 18px 0; }
+.search-wrap { position: relative; }
+.search-icon {
+  position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+  color: var(--muted); font-size: 15px; pointer-events: none;
+}
+.search-box {
+  width: 100%;
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  padding: 12px 16px 12px 44px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px; color: var(--ink);
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+.search-box:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(92,107,192,.12);
+}
+.search-box::placeholder { color: var(--muted); }
+
+.theme-filters { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+.tf {
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 11.5px; font-weight: 700;
+  color: var(--ink2);
+  cursor: pointer;
+  transition: all .18s;
+  white-space: nowrap;
+  font-family: 'DM Sans', sans-serif;
+}
+.tf:hover { border-color: var(--primary); color: var(--primary); }
+.tf.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(92,107,192,.25);
+}
+
+/* ═══════════════════════════════════════════════════════
+   MAIN LAYOUT
+   ═══════════════════════════════════════════════════════ */
+.main { max-width: 1100px; margin: 0 auto; padding: 22px 18px 80px; }
+.theme-grid { display: grid; gap: 22px; }
+
+/* ═══════════════════════════════════════════════════════
+   THEME BLOCKS
+   ═══════════════════════════════════════════════════════ */
+.theme-block {
+  background: var(--card);
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  box-shadow: 0 2px 14px var(--shadow);
+  overflow: hidden;
+  animation: riseUp .5s ease both;
+}
+@keyframes riseUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.theme-block:hover { box-shadow: 0 6px 24px var(--shadow-md); }
+
+.theme-header {
+  padding: 18px 22px;
+  cursor: pointer;
+  user-select: none;
+  display: flex; align-items: center; gap: 14px;
+  transition: background .2s;
+}
+.theme-header:hover { background: #fafaff; }
+.theme-icon {
+  width: 46px; height: 46px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 21px; flex-shrink: 0;
+}
+.theme-meta { flex: 1; min-width: 0; }
+.theme-name { font-size: 16px; font-weight: 800; color: var(--ink); line-height: 1.25; }
+.theme-name-cn {
+  font-size: 12px; color: var(--muted); font-weight: 600;
+  margin-top: 2px; display: none;
+}
+.theme-name-cn.vis { display: block; }
+.theme-q-count { font-size: 11px; color: var(--muted); margin-top: 3px; font-weight: 600; }
+
+.theme-prog { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.theme-prog-track {
+  width: 58px; height: 5px;
+  background: var(--border);
+  border-radius: 999px; overflow: hidden;
+}
+.theme-prog-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), #7986cb);
+  border-radius: 999px;
+  transition: width .5s;
+}
+.theme-prog-lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px; font-weight: 600;
+  color: var(--primary); min-width: 30px;
+}
+.theme-chevron {
+  color: #c5cae9;
+  transition: transform .35s ease;
+  font-size: 14px; flex-shrink: 0;
+}
+.theme-chevron.open { transform: rotate(180deg); }
+
+.theme-body {
+  max-height: 0; overflow: hidden;
+  transition: max-height .5s cubic-bezier(.4,0,.2,1);
+}
+.theme-body.open { max-height: 8000px; }
+
+/* ═══════════════════════════════════════════════════════
+   QUESTION CARDS
+   ═══════════════════════════════════════════════════════ */
+.questions-wrap { padding: 0 20px 20px; border-top: 1px solid var(--border); }
+
+.q-card {
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-top: 14px;
+  transition: border-color .2s, box-shadow .2s;
+}
+.q-card:hover { border-color: #c5cae9; box-shadow: 0 2px 10px var(--shadow); }
+.q-card.mastered { border-color: #a5d6a7; background: #fcfffe; }
+
+.q-header {
+  padding: 14px 16px;
+  cursor: pointer;
+  user-select: none;
+  display: flex; align-items: flex-start; gap: 10px;
+  background: linear-gradient(135deg, #fafaff, #f5f6ff);
+  transition: background .2s;
+}
+.q-header:hover { background: linear-gradient(135deg, #eef0ff, #e8eaf6); }
+.q-card.mastered .q-header { background: linear-gradient(135deg, #f0fdf4, #dcfce7); }
+
+.q-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 500;
+  color: var(--primary);
+  background: var(--primary-l);
+  padding: 2px 8px;
+  border-radius: 6px;
+  flex-shrink: 0; margin-top: 2px;
+}
+.q-text { font-size: 13.5px; font-weight: 700; color: var(--ink); line-height: 1.55; flex: 1; }
+.q-text-cn {
+  font-size: 11.5px; color: var(--muted); margin-top: 4px;
+  font-weight: 500; line-height: 1.5; display: none;
+}
+.q-text-cn.vis { display: block; }
+
+.q-type-tag {
+  font-size: 9.5px; font-weight: 800;
+  padding: 3px 9px; border-radius: 6px;
+  flex-shrink: 0; letter-spacing: .05em;
+  text-transform: uppercase; margin-top: 2px;
+}
+.q-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.mastered-btn {
+  border: none; border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 10.5px; font-weight: 700;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all .15s; white-space: nowrap;
+}
+.mb-off { background: #f1f3fa; color: var(--muted); }
+.mb-off:hover { background: #e4e6f5; color: var(--ink2); }
+.mb-on { background: var(--green-l); color: var(--green); }
+
+.q-expand {
+  width: 26px; height: 26px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--muted);
+  font-size: 11px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s; flex-shrink: 0;
+}
+.q-expand:hover, .q-expand.open {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+.q-expand.open { transform: rotate(180deg); }
+
+.q-body {
+  max-height: 0; overflow: hidden;
+  transition: max-height .45s cubic-bezier(.4,0,.2,1);
+}
+.q-body.open { max-height: 1200px; }
+.q-body-inner {
+  padding: 16px 18px 18px;
+  border-top: 1px solid var(--border);
+  background: #fafaff;
+}
+
+/* ─── Section headers (inside expanded cards) ─── */
+.sec-hd {
+  font-size: 10px; font-weight: 800;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--ink2);
+  margin-bottom: 8px;
+  display: flex; align-items: center; gap: 8px;
+}
+.sec-hd::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* ─── Idea chips ─── */
+.idea-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.idea-chip {
+  font-size: 11.5px; font-weight: 700;
+  padding: 5px 13px;
+  border-radius: 8px;
+  border: 1.5px solid;
+  cursor: pointer;
+  transition: all .15s;
+  font-family: 'DM Sans', sans-serif;
+}
+.idea-chip:hover { opacity: .85; transform: scale(1.02); }
+
+/* ─── Answer box (Sample answer styling) ─── */
+.ans-box {
+  border-radius: 14px;
+  padding: 14px 16px;
+  position: relative;
+  background: linear-gradient(135deg, #eef0ff, #e8eaf6);
+  border: 1.5px solid #c5cae9;
+}
+.ans-label {
+  font-size: 10px; font-weight: 800;
+  letter-spacing: .1em; text-transform: uppercase;
+  margin-bottom: 7px;
+  display: flex; align-items: center; gap: 6px;
+  color: var(--primary-d);
+}
+.ans-en {
+  font-size: 13px; line-height: 1.8;
+  color: var(--ink2);
+}
+.ans-cn {
+  font-size: 11.5px; line-height: 1.65;
+  color: var(--muted);
+  margin-top: 10px;
+  border-top: 1px solid #c5cae9;
+  padding-top: 10px;
+  display: none;
+}
+.ans-cn.vis { display: block; }
+
+.ans-copy {
+  position: absolute; top: 10px; right: 10px;
+  background: rgba(92,107,192,.1);
+  border: none; border-radius: 7px;
+  padding: 4px 10px;
+  font-size: 10px; font-weight: 700;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--primary);
+  transition: all .15s;
+}
+.ans-copy:hover { background: var(--primary); color: #fff; }
+.ans-copy.done { background: var(--green-l); color: var(--green); }
+
+/* ─── Discourse markers ─── */
+.dm-row { display: flex; flex-wrap: wrap; gap: 5px; }
+.dm {
+  font-size: 11px; font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: var(--primary-l);
+  color: var(--primary-d);
+}
+
+/* ─── Debate box ─── */
+.debate-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px; margin-top: 8px;
+}
+.debate-side { border-radius: 12px; padding: 12px 14px; }
+.debate-side.for-side { background: #e8f5e9; border: 1px solid #c8e6c9; }
+.debate-side.against-side { background: #ffebee; border: 1px solid #ffcdd2; }
+.debate-side-lbl {
+  font-size: 10px; font-weight: 800;
+  letter-spacing: .06em; text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.for-side .debate-side-lbl { color: var(--green); }
+.against-side .debate-side-lbl { color: var(--red); }
+.debate-point { font-size: 12px; line-height: 1.65; color: var(--ink2); }
+.debate-point-cn {
+  font-size: 11px; color: var(--muted); margin-top: 4px;
+  display: none; line-height: 1.5;
+}
+.debate-point-cn.vis { display: block; }
+@media (max-width: 560px) { .debate-pair { grid-template-columns: 1fr; } }
+
+/* ═══════════════════════════════════════════════════════
+   MODAL (Random Drill)
+   ═══════════════════════════════════════════════════════ */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(26,31,58,.75);
+  backdrop-filter: blur(14px);
+  z-index: 200;
+  display: flex; align-items: center; justify-content: center;
+  padding: 18px;
+  opacity: 0; pointer-events: none;
+  transition: opacity .25s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal-box {
+  background: var(--card);
+  border-radius: 24px;
+  max-width: 740px; width: 100%;
+  max-height: 90vh; overflow-y: auto;
+  box-shadow: 0 36px 90px rgba(26,35,126,.3);
+  transform: scale(.92) translateY(20px);
+  transition: transform .32s cubic-bezier(.34,1.56,.64,1);
+}
+.modal-overlay.open .modal-box { transform: scale(1) translateY(0); }
+.modal-hd {
+  background: linear-gradient(135deg, #1a237e, #5c6bc0);
+  padding: 26px 28px 22px;
+  border-radius: 24px 24px 0 0;
+  color: #fff;
+}
+.modal-hd .modal-eyebrow {
+  font-size: 10px; font-weight: 800;
+  letter-spacing: .14em;
+  color: rgba(255,255,255,.4);
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.modal-hd .modal-title { font-size: 20px; font-weight: 800; }
+.modal-hd .modal-sub { font-size: 12px; color: rgba(255,255,255,.5); margin-top: 4px; }
+.modal-close {
+  background: rgba(255,255,255,.1);
+  border: none; border-radius: 10px;
+  width: 34px; height: 34px;
+  color: #fff; cursor: pointer;
+  font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .15s;
+}
+.modal-close:hover { background: rgba(255,255,255,.2); }
+
+/* ═══════════════════════════════════════════════════════
+   TOAST
+   ═══════════════════════════════════════════════════════ */
+.toast {
+  position: fixed; bottom: 24px; right: 24px;
+  background: var(--ink);
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 14px;
+  font-size: 12.5px; font-weight: 700;
+  z-index: 999;
+  box-shadow: 0 8px 28px rgba(26,31,58,.35);
+  transform: translateY(70px); opacity: 0;
+  transition: all .3s cubic-bezier(.34,1.56,.64,1);
+  display: flex; align-items: center; gap: 8px;
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+
+/* ═══════════════════════════════════════════════════════
+   NO RESULTS
+   ═══════════════════════════════════════════════════════ */
+#noResults {
+  text-align: center; padding: 60px 20px;
+  color: var(--muted); display: none;
+}
+
+/* ═══════════════════════════════════════════════════════
+   QUESTION TYPE COLORS
+   ═══════════════════════════════════════════════════════ */
+.qt-opinion   { background: #e8eaf6; color: #3949ab; }
+.qt-compare   { background: #f3e5f5; color: #7b1fa2; }
+.qt-cause     { background: #fff3e0; color: #e65100; }
+.qt-solution  { background: #e8f5e9; color: #2e7d32; }
+.qt-future    { background: #e0f7fa; color: #00695c; }
+.qt-society   { background: #fce4ec; color: #c62828; }
+.qt-evaluate  { background: #fff8e1; color: #f57f17; }
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════ */
+@media (max-width: 640px) {
+  .topbar-inner { gap: 8px; }
+  .hero { padding: 36px 16px 32px; }
+  .hero-title { font-size: 26px; }
+  .hero-stats { gap: 8px; }
+  .hero-stat { padding: 10px 14px; }
+  .questions-wrap { padding: 0 12px 14px; }
+  .q-body-inner { padding: 12px 14px 14px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════
+     TOPBAR
+     ════════════════════════════════════════════════════ -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="logo-area">
+      <div class="logo-badge">P3</div>
+      <div>
+        <div class="logo-title">Part 3 Discussion Trainer</div>
+        <div class="logo-sub">Deep Analysis · Band 7+</div>
+      </div>
+    </div>
+    <div class="prog-wrap">
+      <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+      <span class="prog-lbl" id="progLbl">0 / 72</span>
+    </div>
+    <label class="bi-sw" title="中英双语">
+      <input type="checkbox" id="biSwitch" onchange="setBi(this.checked)">
+      <div class="bi-track"></div>
+    </label>
+    <span class="bi-lbl">中文</span>
+    <button class="nav-btn btn-orange" onclick="randomDrill()">🎲 Random</button>
+    <button class="nav-btn btn-ghost" onclick="resetAll()">Reset</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     HERO
+     ════════════════════════════════════════════════════ -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">IELTS Speaking · Band 7+ · Part 3</div>
+    <div class="diff-badge">⚡ Highest Difficulty — Abstract Discussion</div>
+    <h1 class="hero-title">Master the <em>Deep Discussion</em><br>Follow-up Questions</h1>
+    <p class="hero-desc">12 themes × 6 follow-ups = 72 Part 3 questions. Each includes bilingual prompts, multi-angle arguments, Band 7 model answers, balanced debate views, and high-scoring discourse markers.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="h-stat-n">12</div><div class="h-stat-l">Themes 主题</div></div>
+      <div class="hero-stat"><div class="h-stat-n">72</div><div class="h-stat-l">Questions 问题</div></div>
+      <div class="hero-stat"><div class="h-stat-n" id="hstat-m" style="color:var(--accent)">0</div><div class="h-stat-l">Mastered 已掌握</div></div>
+      <div class="hero-stat"><div class="h-stat-n">216</div><div class="h-stat-l">Answer Points 论点</div></div>
+    </div>
+    <div class="score-formula">
+      <div class="sf-item">🎯 Direct Answer</div>
+      <div class="sf-item">🔍 In-depth Analysis</div>
+      <div class="sf-item">⚖️ Balanced View</div>
+      <div class="sf-item">📌 Specific Example</div>
+      <div class="sf-item">🔗 Strong Conclusion</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     HINT STRIP
+     ════════════════════════════════════════════════════ -->
+<div style="padding:0 18px">
+  <div class="hint-strip">
+    <span class="icon">💡</span>
+    <div class="p3-tip">
+      <strong>Part 3 Golden Rule:</strong> The examiner wants to see your <strong>critical thinking</strong> and <strong>language organisation</strong>, not a "correct" answer. Target 45–60 sec per question using the <strong>Point → Analysis → Example → Position</strong> structure.<br>
+      <span class="hl">Open a question → View multi-angle ideas → Study the model answer → Practise debate → Mark ✅ Mastered</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     SEARCH + FILTERS
+     ════════════════════════════════════════════════════ -->
+<div class="ctrl-wrap">
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input class="search-box" id="searchIn" placeholder="Search questions, themes or keywords..." oninput="doSearch()">
+  </div>
+  <div class="theme-filters" id="themeFilters">
+    <button class="tf active" data-t="ALL" onclick="setFilter('ALL',this)">All Themes</button>
+    <button class="tf" data-t="Technology" onclick="setFilter('Technology',this)">💻 Technology</button>
+    <button class="tf" data-t="Education" onclick="setFilter('Education',this)">📚 Education</button>
+    <button class="tf" data-t="Environment" onclick="setFilter('Environment',this)">🌿 Environment</button>
+    <button class="tf" data-t="Society" onclick="setFilter('Society',this)">🏙 Society</button>
+    <button class="tf" data-t="Work" onclick="setFilter('Work',this)">💼 Work</button>
+    <button class="tf" data-t="Culture" onclick="setFilter('Culture',this)">🎭 Culture</button>
+    <button class="tf" data-t="Health" onclick="setFilter('Health',this)">❤️ Health</button>
+    <button class="tf" data-t="Family" onclick="setFilter('Family',this)">👨‍👩‍👧 Family</button>
+    <button class="tf" data-t="Travel" onclick="setFilter('Travel',this)">✈️ Travel</button>
+    <button class="tf" data-t="Media" onclick="setFilter('Media',this)">📺 Media</button>
+    <button class="tf" data-t="Economy" onclick="setFilter('Economy',this)">💰 Economy</button>
+    <button class="tf" data-t="Youth" onclick="setFilter('Youth',this)">🌟 Youth</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     MAIN GRID
+     ════════════════════════════════════════════════════ -->
+<div class="main">
+  <div class="theme-grid" id="themeGrid"></div>
+  <div id="noResults">
+    <div style="font-size:42px;margin-bottom:10px">🔍</div>
+    <div style="font-size:18px;font-weight:700">No results found</div>
+    <div style="font-size:13px;margin-top:5px">Try different keywords</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     MODAL (Random Drill)
+     ════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modalOv" onclick="closeModal(event)">
+  <div class="modal-box">
+    <div class="modal-hd">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div>
+          <div class="modal-eyebrow">🎲 Random Drill</div>
+          <div class="modal-title">5 Random Part 3 Questions</div>
+          <div class="modal-sub">Target 45–60 sec each · Point → Analysis → Example → Position</div>
+        </div>
+        <button class="modal-close" onclick="closeModalBtn()">✕</button>
+      </div>
+    </div>
+    <div id="modalContent" style="padding:20px"></div>
+    <div style="padding:0 20px 20px;display:flex;gap:10px">
+      <button class="nav-btn btn-orange" onclick="randomDrill()">🔀 New Set</button>
+      <button class="nav-btn btn-ghost" style="background:#f1f3fa;color:var(--ink2);border:1.5px solid var(--border)" onclick="closeModalBtn()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✅ <span id="toastMsg">Done!</span></div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     DATA + APPLICATION LOGIC
+     ════════════════════════════════════════════════════════════════ -->
+<script>
+// ═══════════════════════════════════════════════════════
+// THEME META — icons & colors for each topic
+// ═══════════════════════════════════════════════════════
+const THEMES_META={
+  Technology:{icon:'💻',color:'#3949ab',bg:'#e8eaf6',border:'#c5cae9'},
+  Education: {icon:'📚',color:'#7b1fa2',bg:'#f3e5f5',border:'#ce93d8'},
+  Environment:{icon:'🌿',color:'#2e7d32',bg:'#e8f5e9',border:'#a5d6a7'},
+  Society:   {icon:'🏙',color:'#00695c',bg:'#e0f2f1',border:'#80cbc4'},
+  Work:      {icon:'💼',color:'#e65100',bg:'#fff3e0',border:'#ffcc80'},
+  Culture:   {icon:'🎭',color:'#6a1b9a',bg:'#f3e5f5',border:'#ce93d8'},
+  Health:    {icon:'❤️',color:'#c62828',bg:'#ffebee',border:'#ef9a9a'},
+  Family:    {icon:'👨‍👩‍👧',color:'#d84315',bg:'#fbe9e7',border:'#ffab91'},
+  Travel:    {icon:'✈️',color:'#0277bd',bg:'#e1f5fe',border:'#81d4fa'},
+  Media:     {icon:'📺',color:'#283593',bg:'#e8eaf6',border:'#9fa8da'},
+  Economy:   {icon:'💰',color:'#1b5e20',bg:'#e8f5e9',border:'#a5d6a7'},
+  Youth:     {icon:'🌟',color:'#f57f17',bg:'#fff8e1',border:'#ffe082'},
+};
+
+const Q_TYPES={
+  opinion: {label:'Opinion',  cls:'qt-opinion'},
+  compare: {label:'Compare',  cls:'qt-compare'},
+  cause:   {label:'Cause/Effect',cls:'qt-cause'},
+  solution:{label:'Solution', cls:'qt-solution'},
+  future:  {label:'Future',   cls:'qt-future'},
+  society: {label:'Society',  cls:'qt-society'},
+  evaluate:{label:'Evaluate', cls:'qt-evaluate'},
+};
+
+// ═══════════════════════════════════════════════════════
+// FULL DATA — 12 themes × 6 questions = 72
+// ═══════════════════════════════════════════════════════
+const themes=[
+// ─── 1. TECHNOLOGY ───
+{id:'tech',theme:'Technology',cn:'科技',qs:[
+{id:'t1',type:'society',q:'How has technology changed the way people communicate compared to the past?',qcn:'与过去相比，技术如何改变了人们的沟通方式？',ideas:['Instant global connectivity','Loss of face-to-face depth','New forms of misunderstanding','Asynchronous communication'],ideascn:['即时全球连接','失去面对面深度','新型沟通误解','异步通信方式'],ans:{en:'Technology has fundamentally transformed human communication in ways that are both profoundly beneficial and deeply concerning. On the positive side, digital tools have collapsed geographical barriers, allowing people to maintain relationships and collaborate across continents at virtually zero cost. However, and this is something I feel strongly about, the quality of communication has arguably suffered. Face-to-face conversation engages a full range of non-verbal cues — tone, posture, micro-expressions — that text messages simply cannot replicate. There is growing evidence that younger generations, raised almost entirely on digital communication, are experiencing higher rates of social anxiety and loneliness precisely because they lack practice in navigating real-world social complexity. That said, I think the solution lies not in rejecting technology but in being intentional about when we choose depth over convenience.',cn:'技术从根本上改变了人类交流，这种变化既深刻有益又令人担忧。积极方面是数字工具打破了地理障碍，使人们几乎以零成本跨越大陆维持关系和协作。然而，我对此有强烈感受的是，沟通质量可以说是下降了。面对面的对话涉及完整的非语言线索——语气、姿势、微表情——而短信根本无法复制这些。越来越多的证据表明，几乎完全在数字通信环境中成长的年轻一代正经历更高比率的社交焦虑和孤独感，正是因为他们缺乏应对真实世界社交复杂性的练习。尽管如此，我认为解决方案不在于拒绝技术，而在于有意识地选择何时以深度代替便利。'},discourse:['fundamentally transformed','on the positive side','however — and this is something I feel strongly about','arguably','growing evidence suggests','that said'],debate:{for:{label:'Technology improves communication',cn:'技术改善了沟通',point:'Enables connection across distances that were previously impossible; democratises information sharing globally.',pointcn:'实现了以前不可能的跨距离连接；在全球范围内民主化信息共享。'},against:{label:'Technology diminishes communication',cn:'技术削弱了沟通',point:'Reduces depth, increases misunderstanding; algorithmic filter bubbles create echo chambers.',pointcn:'减少深度，增加误解；算法过滤泡沫创造了回音壁。'}}},
+{id:'t2',type:'evaluate',q:'Do you think artificial intelligence will have a mostly positive or negative effect on society?',qcn:'你认为人工智能对社会的影响总体上是积极的还是消极的？',ideas:['Automation of dangerous work','Mass unemployment risk','Medical diagnostics revolution','Bias and surveillance concerns'],ideascn:['自动化危险工作','大规模失业风险','医疗诊断革命','偏见和监控问题'],ans:{en:'This is genuinely one of the most complex questions of our era, and I think it\'s intellectually dishonest to give a simple answer. On balance, I believe AI\'s potential benefits — particularly in medicine, climate modelling, and scientific research — are extraordinary. For example, AI systems are now diagnosing certain cancers with accuracy that exceeds human specialists, which could save millions of lives. Nevertheless, I\'m deeply concerned about the pace of change outstripping society\'s ability to adapt. When technologies eliminate jobs faster than new roles can be created, the social consequences — unemployment, inequality, loss of purpose — can be devastating. My view is that the outcome depends almost entirely on governance: whether governments invest in retraining, regulate monopolistic AI companies, and ensure the gains are broadly shared rather than concentrated among a tiny elite.',cn:'这确实是我们这个时代最复杂的问题之一，我认为给出简单答案在智识上是不诚实的。总体而言，我相信人工智能的潜在好处——特别是在医学、气候模型和科学研究方面——是非凡的。例如，人工智能系统现在诊断某些癌症的准确性超过了人类专家，这可能挽救数百万人的生命。尽管如此，我深深担忧变化的速度超过了社会的适应能力。当技术消除工作的速度快于创造新岗位时，社会后果——失业、不平等、失去目标——可能是毁灭性的。我的观点是，结果几乎完全取决于治理：政府是否投资于再培训、监管垄断性AI公司，并确保收益被广泛共享而不是集中在少数精英手中。'},discourse:['on balance','I believe','nevertheless','my view is that','almost entirely','rather than'],debate:{for:{label:'AI is net positive',cn:'AI总体积极',point:'Solves problems at scale that humans cannot; accelerates scientific discovery beyond human cognitive limits.',pointcn:'以人类无法做到的规模解决问题；加速超越人类认知极限的科学发现。'},against:{label:'AI poses systemic risks',cn:'AI带来系统性风险',point:'Unprecedented unemployment; concentration of power in tech monopolies; existential safety concerns.',pointcn:'史无前例的失业；权力集中在科技垄断企业；存在性安全隐患。'}}},
+{id:'t3',type:'compare',q:'How do older and younger generations differ in their attitudes towards new technology?',qcn:'老一代和年轻一代对新技术的态度有什么不同？',ideas:['Digital natives vs. digital immigrants','Fear vs. excitement','Adaptability differences','Different privacy expectations'],ideascn:['数字原住民与数字移民','恐惧与兴奋','适应能力差异','不同的隐私期望'],ans:{en:'The generational divide around technology is real, though I think it\'s often oversimplified. Younger people who grew up immersed in digital environments tend to adopt new technologies intuitively and with far less anxiety, treating smartphones and social platforms as natural extensions of their social lives. Older generations, by contrast, frequently approach technology with caution — not necessarily because they\'re less intelligent, but because they carry the cognitive overhead of comparing new tools to established ways of doing things. That said, I\'d argue the most striking difference isn\'t about comfort but about the relationship with privacy. People under thirty have largely grown up accepting surveillance capitalism as a normal condition of digital life, whereas older generations often express genuine alarm at how much personal data tech companies collect.',cn:'围绕技术的代际分歧是真实的，尽管我认为它经常被过度简化。在数字环境中成长的年轻人倾向于直觉性地采用新技术，焦虑感远低于老一代，将智能手机和社交平台视为社交生活的自然延伸。相比之下，老一代通常谨慎地对待技术——不一定是因为他们不够聪明，而是因为他们承担着将新工具与既定方式进行比较的认知负担。尽管如此，我认为最显著的差异不在于舒适度，而在于与隐私的关系。三十岁以下的人在很大程度上已经接受了监控资本主义作为数字生活的正常条件，而老一代则经常对科技公司收集如此多个人数据表示真正的警惕。'},discourse:['though I think','by contrast','that said, I\'d argue','not necessarily because','the most striking difference'],debate:{for:{label:'Younger gen adapts better',cn:'年轻一代适应更好',point:'Intuitive adoption, less cognitive resistance, better at navigating digital complexity.',pointcn:'直觉性采用，认知阻力更小，更擅长应对数字复杂性。'},against:{label:'Older gen brings wisdom',cn:'老一代带来智慧',point:'Critical distance, awareness of long-term consequences, healthier boundaries with technology.',pointcn:'批判性距离，对长期后果的意识，与技术更健康的边界。'}}},
+{id:'t4',type:'solution',q:'What can governments do to ensure technology benefits everyone in society equally?',qcn:'政府可以做什么来确保技术让社会所有人平等受益？',ideas:['Digital infrastructure investment','Universal digital literacy education','Anti-monopoly regulation','Data ownership rights'],ideascn:['数字基础设施投资','全民数字素养教育','反垄断监管','数据所有权'],ans:{en:'Bridging the digital divide requires a genuinely multi-layered policy response. First and most urgently, governments must treat broadband internet access as a utility — like water or electricity — and guarantee it to all citizens regardless of geography or income. Without this foundation, all other digital interventions are built on sand. Second, educational systems need urgent reform to incorporate meaningful digital literacy at every level. Third, and perhaps most controversially, governments need to actively regulate the monopolistic tendencies of large technology platforms to prevent further concentration of economic and political power. The concern is that without robust antitrust action, a handful of private companies will effectively control the information infrastructure of entire democracies.',cn:'弥合数字鸿沟需要真正多层次的政策响应。首先也是最紧迫的，政府必须将宽带互联网接入视为公用事业——就像水或电一样——并无论地理位置或收入如何，向所有公民保证这一点。没有这个基础，所有其他数字干预都是建立在沙子上的。其次，教育系统需要紧急改革，在各个层面纳入有意义的数字素养。第三，也许最有争议的是，政府需要积极监管大型技术平台的垄断倾向，以防止经济和政治权力的进一步集中。令人担忧的是，如果没有强有力的反垄断行动，少数私营公司将有效控制整个民主国家的信息基础设施。'},discourse:['requires a genuinely multi-layered','first and most urgently','without this foundation','second','third, and perhaps most controversially','the concern is that'],debate:{for:{label:'State intervention essential',cn:'国家干预必不可少',point:'Market forces alone will never distribute digital benefits equitably; collective action needed.',pointcn:'仅靠市场力量永远无法公平分配数字利益；需要集体行动。'},against:{label:'Regulation stifles innovation',cn:'监管扼杀创新',point:'Heavy-handed government control risks slowing progress; better to rely on market competition.',pointcn:'政府的强力控制可能会减缓进步；最好依靠市场竞争。'}}},
+{id:'t5',type:'future',q:'How do you think technology will change the concept of work in the next 20 years?',qcn:'你认为未来20年技术将如何改变工作的概念？',ideas:['Remote and asynchronous work norms','AI as a collaborator not replacement','New job categories emerging','Shortened work week'],ideascn:['远程和异步工作规范','AI作为协作者而非替代者','新职业类别的出现','工作周缩短'],ans:{en:'I think the most profound shift will be conceptual rather than technical. The traditional notion of work as a fixed location, fixed hours, and single employer is already dissolving, and I expect this to accelerate dramatically. Within twenty years, I predict most knowledge workers will operate as independent contractors managing portfolios of projects rather than holding conventional jobs. AI will handle increasingly sophisticated analytical and creative tasks, which means that uniquely human skills — complex empathy, nuanced ethical judgement, genuine creativity — will become disproportionately valuable. The darker possibility, however, is that this transition will be enormously painful for workers who lack the education or financial cushion to adapt.',cn:'我认为最深刻的转变将是概念性的而不是技术性的。将工作视为固定地点、固定时间和单一雇主的传统观念已经在瓦解，我预计这一趋势将急剧加速。在二十年内，我预测大多数知识工作者将作为独立承包商管理项目组合，而不是从事传统工作。人工智能将处理越来越复杂的分析和创意任务，这意味着独特的人类技能——复杂的同理心、细致的道德判断、真正的创造力——将变得不成比例地有价值。然而，更黑暗的可能性是，这种转变对于缺乏教育或经济缓冲来适应的工人来说将是极其痛苦的。'},discourse:['the most profound shift','already dissolving','I expect this to accelerate','which means that','the darker possibility, however','history suggests'],debate:{for:{label:'Technology liberates workers',cn:'技术解放工人',point:'Automation frees humans from drudgery; new creative and interpersonal roles emerge.',pointcn:'自动化将人类从繁重劳动中解放；新的创意和人际角色出现。'},against:{label:'Disruption causes inequality',cn:'颠覆造成不平等',point:'Benefits accrue to capital owners; ordinary workers face displacement without safety nets.',pointcn:'好处流向资本所有者；普通工人面临没有安全网的替代。'}}},
+{id:'t6',type:'opinion',q:'Should children be taught how to use technology in schools from a very young age?',qcn:'孩子们应该从很小的年龄就在学校学习如何使用技术吗？',ideas:['Critical digital literacy is essential','Screen time developmental concerns','Coding as a foundational skill','Balance with non-digital learning'],ideascn:['批判性数字素养至关重要','屏幕时间发育问题','编程作为基础技能','与非数字学习的平衡'],ans:{en:'I hold a nuanced position on this. I believe digital literacy — and I mean genuine critical literacy, not just clicking and swiping — is as essential as reading in the modern world, so some structured technology education absolutely belongs in schools from a relatively young age. However, I am genuinely concerned about the trend of introducing tablets and screens into the earliest years of primary education, where the developmental priority should be language acquisition, physical play, and social-emotional learning. My view is that a thoughtful curriculum would delay screen-based technology until around age seven, introduce it gradually and critically, and always ensure it complements rather than replaces hands-on, embodied learning.',cn:'我对此持细微立场。我相信数字素养——我的意思是真正的批判性素养，而不仅仅是点击和滑动——在现代世界与阅读一样重要，所以一些结构化的技术教育从相对年轻的年纪就应该在学校中存在。然而，我真的很担心将平板电脑和屏幕引入小学最早年级的趋势，在这些年级，发育优先应该是语言习得、身体玩耍和社交情感学习。我的观点是，一个深思熟虑的课程将推迟基于屏幕的技术到大约七岁，逐渐批判性地引入它，并始终确保它补充而不是取代动手的、具身的学习。'},discourse:['I hold a nuanced position','I believe — and I mean','absolutely belongs','however, I am genuinely concerned','the research is unsettling','my view is that'],debate:{for:{label:'Early tech education essential',cn:'早期技术教育必不可少',point:'Digital fluency is a core 21st-century skill; early exposure builds advantage.',pointcn:'数字流利度是21世纪的核心技能；早期接触建立优势。'},against:{label:'Screen time harms development',cn:'屏幕时间损害发育',point:'Pre-school and early primary years need physical, social, creative play — not screens.',pointcn:'学前和小学早期年龄段需要身体、社交、创意玩耍——而不是屏幕。'}}},
+]},
+// ─── 2. EDUCATION ───
+{id:'edu',theme:'Education',cn:'教育',qs:[
+{id:'e1',type:'compare',q:'How does the education system in your country compare to what you think an ideal system would look like?',qcn:'你国家的教育系统与你认为理想的系统相比如何？',ideas:['Rote memorisation vs. critical thinking','High-stakes examination pressure','Teacher quality disparities','Urban-rural inequality'],ideascn:['死记硬背与批判性思维','高风险考试压力','教师质量差距','城乡不平等'],ans:{en:'I think most educational systems, including my own country\'s, suffer from a fundamental misalignment between what they test and what the modern world genuinely requires. The dominant model still rewards students who can accurately reproduce information under pressure — essentially measuring a form of cognitive obedience — while doing relatively little to develop creative problem-solving, resilience, collaborative intelligence, and critical thinking. An ideal system, in my view, would balance rigorous foundational knowledge with ample space for exploration, failure, and self-directed learning.',cn:'我认为大多数教育系统，包括我国的，都存在他们测试的内容与现代世界真正需要的内容之间的根本错位。主流模式仍然奖励能够在压力下准确重现信息的学生——本质上是衡量一种认知服从——而相对少地发展创造性解决问题、韧性、协作智能和批判性思维的能力。在我看来，理想的系统将平衡严格的基础知识与充足的探索、失败和自主学习空间。'},discourse:['I think most','suffer from a fundamental misalignment','essentially measuring','relatively little to','in my view','which compounds'],debate:{for:{label:'Current systems have value',cn:'现行系统有价值',point:'Standardised testing ensures minimum benchmarks; consistent curriculum enables social mobility.',pointcn:'标准化测试确保最低基准；一致的课程实现社会流动性。'},against:{label:'Radical reform needed',cn:'需要彻底改革',point:'Exam-centred systems crush creativity and wellbeing; Finland\'s model proves alternatives work.',pointcn:'以考试为中心的系统压制创造力和幸福感；芬兰模式证明替代方案有效。'}}},
+{id:'e2',type:'opinion',q:'Do you think universities will continue to be relevant in the age of online learning?',qcn:'你认为在线学习时代大学还会继续保持相关性吗？',ideas:['Social and networking value of campus','Credential signalling vs. actual learning','MOOCs limitations in accountability','Mentorship irreplaceable by algorithms'],ideascn:['校园社交和网络价值','证书信号与实际学习','MOOCs问责性局限','导师关系不可被算法取代'],ans:{en:'Universities face a genuinely existential challenge that they are, in many cases, responding to inadequately. The rise of freely available, high-quality online education has exposed a stark truth: for pure content delivery, universities are almost never the most efficient or cost-effective option anymore. The brutal question every student must now honestly ask is: am I paying a substantial tuition fee for the knowledge itself, or for the credential, the network, and the transformative personal experience? Universities that survive will be those that double down on the irreplaceable aspects — mentorship, research access, campus communities, and reputational value.',cn:'大学面临一个真正的生存挑战，而在许多情况下，它们的应对是不充分的。免费高质量在线教育的兴起揭示了一个残酷的事实：对于纯内容传递，大学几乎不再是最高效或最具成本效益的选择。每个学生现在必须诚实地问的残酷问题是：我支付大量学费是为了知识本身，还是为了证书、网络和变革性的个人经历？存活和蓬勃发展的大学将是那些加倍关注不可替代方面的大学——导师制、研究机会、校园社区和品牌声誉价值。'},discourse:['genuinely existential challenge','a stark truth','the brutal question','for many subjects','what this means is that','rather than trying to'],debate:{for:{label:'Universities remain essential',cn:'大学仍不可或缺',point:'Credentialing, networking, mentorship, research — these cannot be replicated online.',pointcn:'资质认证、社交网络、导师制、研究——这些无法在线复制。'},against:{label:'Online learning will dominate',cn:'在线学习将占主导',point:'Cost, accessibility and pace of online learning will make traditional universities obsolete for many.',pointcn:'在线学习的成本、可及性和速度将使传统大学对许多人来说过时。'}}},
+{id:'e3',type:'cause',q:'Why do some students perform significantly better at school than others?',qcn:'为什么一些学生在学校的表现明显优于其他人？',ideas:['Socioeconomic background','Teacher expectations (Pygmalion effect)','Intrinsic motivation vs. external pressure','Learning style mismatch'],ideascn:['社会经济背景','教师期望（皮格马利翁效应）','内在动机与外部压力','学习风格不匹配'],ans:{en:'The performance gap in schools is one of the most extensively studied questions in educational research. The evidence consistently points to socioeconomic background as the single most powerful predictor of academic performance — not because of inherent ability differences, but because of the accumulated advantages that wealth provides: access to private tutoring, a quiet space to study, books in the home, and the psychological security of not worrying about basic needs. Beyond material conditions, teacher expectations play a surprisingly powerful role — students perform closer to the level that their teachers believe them capable of.',cn:'学校的表现差距是教育研究中研究最广泛的问题之一。证据一致指向社会经济背景是学业表现最有力的单一预测因素——不是因为固有能力差异，而是因为财富提供的累积优势：接受私人辅导、有安静的学习空间、家中有书，以及不必担心基本需求的心理安全感。超越物质条件，教师期望发挥着令人惊讶的强大作用——学生的表现更接近老师认为他们能够达到的水平。'},discourse:['consistently points to','not because of — but because of','beyond material conditions','surprisingly powerful role','whether conscious or not','self-fulfilling'],debate:{for:{label:'Structural factors dominate',cn:'结构因素占主导',point:'Socioeconomic inequality is the root cause; individual effort cannot overcome systemic disadvantage.',pointcn:'社会经济不平等是根本原因；个人努力无法克服系统性劣势。'},against:{label:'Individual factors matter too',cn:'个人因素也很重要',point:'Motivation, mindset and resilience significantly mediate structural disadvantage.',pointcn:'动力、心态和韧性显著调节结构性劣势。'}}},
+{id:'e4',type:'society',q:'How important is it for people to continue learning throughout their adult lives?',qcn:'对于人们来说，在整个成年生活中持续学习有多重要？',ideas:['Technological disruption requires adaptation','Lifelong learning for personal fulfilment','Employer investment vs. self-investment','Formal vs. informal learning'],ideascn:['技术颠覆需要适应','终身学习促进个人满足','雇主投资与自我投资','正式与非正式学习'],ans:{en:'In the current era of accelerating technological change, lifelong learning has shifted from being a personal virtue to an economic and social necessity. The average career now spans forty years, during which the skills landscape will transform multiple times. Someone who stops learning at twenty-two and coasts on the same knowledge for the next four decades will find themselves progressively more economically marginal. Beyond professional survival, continuous learning is essential to human flourishing and civic health.',cn:'在当前技术变革加速的时代，终身学习已从个人美德转变为经济和社会必需品。平均职业生涯现在跨越四十年，在此期间技能格局将多次转变。在二十二岁停止学习并在接下来的四十年里依赖同样知识的人将发现自己在经济上越来越边缘化。除了职业生存，持续学习对人类繁荣和公民健康至关重要。'},discourse:['has shifted from — to','the average career','find themselves progressively','beyond professional survival','I think','a population that'],debate:{for:{label:'Continuous learning is vital',cn:'持续学习至关重要',point:'Rapid change makes lifelong learning economically essential; personal growth benefits wellbeing.',pointcn:'快速变化使终身学习在经济上不可或缺；个人成长对幸福感有益。'},against:{label:'Depth over breadth matters',cn:'深度胜于广度',point:'Constant re-skilling is exhausting; deep expertise in one area still has tremendous value.',pointcn:'不断重新学习技能令人精疲力竭；在一个领域的深度专业知识仍然具有巨大价值。'}}},
+{id:'e5',type:'evaluate',q:'To what extent should education focus on preparing students for employment?',qcn:'教育在多大程度上应该专注于为学生就业做准备？',ideas:['Holistic vs. vocational education','Liberal arts and citizenship value','Corporate influence on curricula','Short-term vs. long-term preparation'],ideascn:['整体与职业教育','人文学科和公民价值','企业对课程的影响','短期与长期准备'],ans:{en:'I think the framing of this question reveals a false dichotomy. The assumption that education must choose between preparing employable graduates and developing well-rounded human beings is not only wrong but actively counterproductive. The skills that make someone a genuinely valuable employee — critical thinking, clear communication, ethical reasoning, adaptability — are precisely the same skills that make someone a thoughtful citizen. The real tragedy is that hyper-vocational education actually fails on its own terms — it produces workers who are rapidly made obsolete by automation.',cn:'我认为这个问题的框架揭示了一个错误的二元对立。教育必须在培养有就业能力的毕业生和发展全面的人之间做出选择的假设不仅是错误的，而且是适得其反的。让人成为真正有价值的员工的技能——批判性思维、清晰沟通、道德推理、适应能力——恰恰与让人成为深思熟虑的公民的技能相同。真正的悲剧是，高度职业化的教育在其自身条件下也是失败的——它产生的工作者很快就会被自动化淘汰。'},discourse:['reveals a false dichotomy','I would argue','not only — but','precisely the same','where education goes wrong','actually fails on its own terms'],debate:{for:{label:'Employment focus is practical',cn:'就业导向是实用的',point:'Students need marketable skills; universities have a responsibility to the labour market.',pointcn:'学生需要可市场化的技能；大学对劳动力市场有责任。'},against:{label:'Broader goals are essential',cn:'更广泛的目标至关重要',point:'Democracy needs critically informed citizens; vocational focus narrows human potential.',pointcn:'民主需要批判性知情的公民；职业重点缩小了人类潜力。'}}},
+{id:'e6',type:'solution',q:'What changes do you think are most needed in education systems around the world?',qcn:'你认为全球教育系统最需要哪些改变？',ideas:['Mental health prioritisation','Teacher status and pay reform','Decolonising curricula','Assessment diversity beyond exams'],ideascn:['心理健康优先','教师地位和薪资改革','课程去殖民化','超越考试的多元评估'],ans:{en:'If I had to identify the single most urgent reform, it would be the radical elevation of teacher status and compensation. The quality of teaching is the most powerful controllable variable in educational outcomes, yet in most countries, teaching is chronically undervalued, underpaid, and starved of professional development. Countries like Finland and Singapore that consistently top international rankings have solved this problem first. Beyond teacher quality, I believe the second most important change is diversifying how we assess learning.',cn:'如果我必须确定单一最紧迫的改革，那将是从根本上提升教师地位和薪酬。教学质量是教育成果中最有力的可控变量，但在大多数国家，教学长期被低估、薪酬不足。像芬兰和新加坡这样在国际排名中名列前茅的国家首先解决了这个问题。除了教师质量，我相信第二重要的改变是多样化我们评估学习的方式。'},discourse:['if I had to identify','the most powerful controllable variable','yet in most countries','countries like','beyond teacher quality','I believe','systematically disadvantages'],debate:{for:{label:'Teacher reform is the priority',cn:'教师改革是重中之重',point:'No curriculum or technology can overcome a fundamental deficit in teacher quality.',pointcn:'没有任何课程或技术能够克服教师质量的根本缺陷。'},against:{label:'Systemic redesign is needed',cn:'需要系统性重新设计',point:'Incremental reform won\'t fix deeply inequitable systems; radical structural change is required.',pointcn:'渐进式改革无法修复深度不公平的系统；需要彻底的结构性变革。'}}},
+]},
+// ─── 3. ENVIRONMENT ───
+{id:'env',theme:'Environment',cn:'环境',qs:[
+{id:'env1',type:'cause',q:'Why do you think many people are still not taking environmental issues seriously enough?',qcn:'你认为为什么很多人仍然没有足够认真地对待环境问题？',ideas:['Psychological distance of future harms','Short political election cycles','Fossil fuel industry disinformation','Tragedy of the commons'],ideascn:['未来伤害的心理距离','短期政治选举周期','化石燃料行业虚假信息','公地悲剧'],ans:{en:'Several factors converge to explain this. Firstly, the human brain is extraordinarily poorly equipped to respond to slow, gradual, statistically distributed threats. Climate change, being diffuse and temporally distant, registers as abstract rather than urgent. Secondly, industries with enormous financial stakes in the status quo have invested billions in deliberate doubt-seeding campaigns. And thirdly, elected governments operate on four-to-five year cycles, making it rational for politicians to avoid costly environmental policies whose benefits only accrue decades hence.',cn:'几个因素汇聚在一起解释了这一点。首先，人类大脑极度不擅长应对缓慢、渐进、统计分布的威胁。气候变化作为分散的、时间上遥远的威胁，被感知为抽象的而非紧迫的。其次，在现状中有巨大经济利益的行业已经投资了数十亿美元在蓄意制造怀疑的活动上。第三，民选政府按照四到五年的周期运作，使政客合理地避免那些利益只会在数十年后累积的昂贵环境政策。'},discourse:['several factors converge','firstly','secondly','and thirdly','a structural political problem'],debate:{for:{label:'Systemic barriers explain inaction',cn:'系统性障碍解释了不作为',point:'Cognitive limitations + corporate lobbying + political short-termism = structural inaction.',pointcn:'认知局限+企业游说+政治短视=结构性不作为。'},against:{label:'Individual complacency is the problem',cn:'个人自满是问题所在',point:'Information is widely available; inaction reflects comfortable apathy and lifestyle inertia.',pointcn:'信息广泛可得；不作为反映了舒适的冷漠和生活方式惯性。'}}},
+{id:'env2',type:'solution',q:'What do you think is the most effective way to encourage people to live more sustainably?',qcn:'你认为鼓励人们更可持续地生活最有效的方式是什么？',ideas:['Making green options the default','Carbon pricing mechanisms','Social norm shifting campaigns','Infrastructure investment not just messaging'],ideascn:['使绿色选项成为默认','碳定价机制','社会规范转变活动','基础设施投资而非仅仅信息传递'],ans:{en:'The evidence from behavioural economics is quite clear: lectures and moral appeals are largely ineffective at changing behaviour at scale, while structural changes that make sustainable choices easier, cheaper or socially normative are extraordinarily powerful. The most compelling example is default settings. When companies automatically enrol employees in pension schemes, participation rates jump from thirty to over ninety percent. The same principle applies to sustainability. Carbon pricing is also crucial because it corrects a fundamental market failure.',cn:'行为经济学的证据在这点上相当清晰：说教和道德呼吁在大规模改变行为方面基本上是无效的，而使可持续选择更容易、更便宜或社会上更规范的结构性变化则异常有力。最令人信服的例子是默认设置。当公司自动为员工注册养老金计划时，参与率从百分之三十跃升至超过百分之九十。同样的原则适用于可持续性。碳定价也至关重要，因为它纠正了一个根本的市场失灵。'},discourse:['the evidence is quite clear','largely ineffective','extraordinarily powerful','the most compelling example','the same principle applies','also crucial because'],debate:{for:{label:'Structural/policy change is key',cn:'结构/政策变革是关键',point:'Individual behaviour change is insufficient; systemic incentive structures must change first.',pointcn:'个人行为改变是不够的；系统性激励结构必须首先改变。'},against:{label:'Culture change precedes policy',cn:'文化变革先于政策',point:'Political will follows public demand; grassroots attitude shifts ultimately drive legislation.',pointcn:'政治意愿跟随公众需求；草根态度转变最终推动立法。'}}},
+{id:'env3',type:'future',q:'Do you think it is too late to reverse the damage done to the environment?',qcn:'你认为逆转对环境造成的损害现在已经太晚了吗？',ideas:['Tipping points vs. reversible damage','Technology optimism (carbon capture)','Intergenerational justice','Cost of inaction vs. action'],ideascn:['临界点与可逆损害','技术乐观主义（碳捕获）','代际公正','不作为与行动的成本'],ans:{en:'This is a question I find genuinely difficult to answer with certainty. Some damage is irreversible on any humanly relevant timescale. However, I am deeply resistant to a counsel of despair. Practically, the difference between 1.5 and 2 and 3 degrees of warming represents an immense difference in human suffering — every fraction of a degree avoided matters. Morally, the populations who will suffer most have contributed least to the problem. I hold what I\'d call a position of urgent, clear-eyed hope.',cn:'这是一个我发现真正难以确定回答的问题。某些损害在任何与人类相关的时间尺度上都是不可逆的。然而，我深深抵制绝望的建议。从实际角度看，1.5度和2度以及3度变暖之间的差异代表了人类苦难的巨大差异——每避免一个分数度的变暖都非常重要。从道德角度看，受影响最严重的人群对问题的贡献最少。我持有一种紧迫、清醒的希望立场。'},discourse:['I find genuinely difficult','intellectual honesty requires','however, I am deeply resistant to','for both practical and moral reasons','I hold what I\'d call'],debate:{for:{label:'Meaningful reversal is still possible',cn:'有意义的逆转仍然可能',point:'Renewable energy costs collapsed; clean tech innovation accelerating; political will growing.',pointcn:'可再生能源成本已崩溃；清洁技术创新加速；政治意愿增强。'},against:{label:'Key tipping points already passed',cn:'关键临界点已经越过',point:'Permafrost methane release and ice albedo loss are self-reinforcing feedback loops now beyond control.',pointcn:'永久冻土甲烷释放、冰反照率损失是无法控制的自我强化反馈循环。'}}},
+{id:'env4',type:'society',q:'Should wealthy nations do more to help poorer countries deal with climate change?',qcn:'富裕国家是否应该做更多来帮助贫穷国家应对气候变化？',ideas:['Historical emissions responsibility','Climate finance pledges unfulfilled','Adaptation vs. mitigation needs','Green colonialism concerns'],ideascn:['历史排放责任','气候融资承诺未兑现','适应与减缓需求','绿色殖民主义担忧'],ans:{en:'I hold a strong view on this: yes, and the moral case is overwhelming. The countries that will suffer most from climate change are precisely those that have contributed least to historical greenhouse gas emissions. The industrial nations of Europe and North America built their wealth over two centuries of essentially unrestricted carbon burning. The promised $100 billion per year in climate finance has consistently fallen short — this is a failure not just of generosity but of basic historical accountability.',cn:'我对此持强烈观点：是的，道德依据是压倒性的。将最灾难性地受到气候变化影响的国家恰恰是那些对历史温室气体排放贡献最少的国家。欧洲和北美的工业国家在两个世纪几乎不受限制的碳燃烧中建立了他们的财富。承诺给发展中国家每年1000亿美元的气候融资一直未能兑现——这不仅仅是慷慨的失败，也是基本历史责任的失败。'},discourse:['I hold a strong view','the moral case is overwhelming','precisely those that','the promised — has consistently fallen short','a failure not just of — but of'],debate:{for:{label:'Historical responsibility demands action',cn:'历史责任要求行动',point:'Polluter pays principle; rich nations owe climate debt to those they have damaged.',pointcn:'污染者付费原则；富裕国家对受损国家负有气候债务。'},against:{label:'Shared responsibility for all nations',cn:'所有国家共同承担责任',point:'China and India are now major emitters; climate solution requires universal participation.',pointcn:'中国和印度现在是主要排放国；气候解决方案需要普遍参与。'}}},
+{id:'env5',type:'evaluate',q:'How effective have international agreements like the Paris Agreement been in tackling climate change?',qcn:'像《巴黎协定》这样的国际协议在应对气候变化方面有多有效？',ideas:['Voluntary vs. binding commitments','NDC ambition gap','Historical precedent (Montreal Protocol)','Diplomatic signalling value'],ideascn:['自愿与约束性承诺','国家自主贡献雄心差距','历史先例（蒙特利尔议定书）','外交信号价值'],ans:{en:'International climate agreements occupy an uncomfortable middle ground between genuine progress and profound inadequacy. On the positive side, the Paris Agreement brought virtually every nation into a shared framework and established 1.5 degrees as a global target. However — and this is crucial — the voluntary nature of commitments means there is no enforcement mechanism. The aggregate commitments still track towards approximately 2.7 degrees of warming, which would be catastrophic. The gap between ambition and action remains vast.',cn:'国际气候协议占据了真正进步与深刻不足之间不舒适的中间地带。积极方面，《巴黎协定》将几乎每个国家纳入一个共同框架，将1.5度确立为全球目标。然而——这是关键——承诺的自愿性质意味着没有执法机制。综合承诺仍然指向大约2.7度的升温，这将是灾难性的。雄心与行动之间的差距仍然巨大。'},discourse:['occupy an uncomfortable middle ground','on the positive side','however — and this is crucial','the gap between — remains vast'],debate:{for:{label:'Agreements create momentum',cn:'协议创造动力',point:'Normative frameworks shift expectations; Paris created political infrastructure for climate action.',pointcn:'规范框架改变预期；巴黎协定为气候行动创建了政治基础设施。'},against:{label:'Voluntary pledges are inadequate',cn:'自愿承诺是不够的',point:'Without enforcement, agreements are PR exercises; emissions continue to rise.',pointcn:'没有执法，协议只是公关活动；排放量继续上升。'}}},
+{id:'env6',type:'compare',q:'Do you think individual lifestyle changes or government policy is more important for protecting the environment?',qcn:'你认为个人生活方式改变还是政府政策对保护环境更重要？',ideas:['Carbon footprint concept invented by BP','Consumer choices as market signals','Policy changes scale of impact','Both are necessary but neither sufficient'],ideascn:['碳足迹概念由BP发明','消费者选择作为市场信号','政策变化的影响规模','两者都必要但都不充分'],ans:{en:'I think this framing presents a false choice, but if forced to prioritise, I would argue strongly that systemic policy change is far more powerful than individual lifestyle modification. The concept of the personal carbon footprint was actually popularised by BP in 2004 — a deliberate attempt to shift moral responsibility from the fossil fuel industry onto individuals. The uncomfortable truth is that a hundred companies are responsible for approximately seventy-one percent of global emissions. That said, consumer behaviour creates market signals and cultural norms shift political possibility.',cn:'我认为这个框架提出了一个错误的选择，但如果被迫优先考虑，我会强烈主张系统性政策变革远比个人生活方式修改更有力。个人碳足迹的概念实际上是由BP在2004年推广的——一次将道德责任从化石燃料行业转移到个人消费者身上的蓄意尝试。令人不舒服的真相是，一百家公司约占全球排放量的百分之七十一。尽管如此，消费者行为创造市场信号，文化规范改变政治可能性。'},discourse:['I think this framing presents a false choice','but if forced to prioritise','the uncomfortable truth is that','that said, I don\'t believe','the most accurate position is'],debate:{for:{label:'Policy change is primary',cn:'政策变革是首要的',point:'Only government regulation can change industrial systems at the necessary scale and speed.',pointcn:'只有政府监管才能以必要的规模和速度改变工业系统。'},against:{label:'Both are mutually reinforcing',cn:'两者相互强化',point:'Cultural change enables political change; individual and systemic transformation must happen together.',pointcn:'文化变革使政治变革成为可能；个人和系统性转变必须同时发生。'}}},
+]},
+// ─── 4. SOCIETY ───
+{id:'soc',theme:'Society',cn:'社会',qs:[
+{id:'s1',type:'compare',q:'How has the role of women in society changed over the past fifty years?',qcn:'在过去五十年里，女性在社会中的角色发生了怎样的变化？',ideas:['Workforce participation surge','Persistent pay and leadership gaps','Shifting domestic labour expectations','Cultural variation in progress pace'],ideascn:['劳动力参与率激增','持续的薪酬和领导力差距','家庭劳动期望的转变','进步速度的文化差异'],ans:{en:'The transformation has been genuinely remarkable by almost any historical measure, yet it\'s important not to conflate progress with completion. Women now have legal equality and representation in almost every professional field. However, stark inequalities persist. The gender pay gap remains persistent; women are still dramatically underrepresented in senior leadership; and unpaid domestic and care work remains deeply gendered. Real equality will require not just opening professional doors but fundamentally restructuring domestic expectations and parental leave policies.',cn:'转变从几乎任何历史衡量标准来看都是真正非凡的，但不将进步与完成混淆是重要的。女性现在拥有法律平等和在几乎每个专业领域都有代表。然而，显著的不平等仍然存在。性别薪酬差距仍然持续；女性在高级领导职位中仍然严重代表不足；无偿家务和护理工作仍然深度性别化。真正的平等不仅需要打开职业大门，还需要从根本上重组家庭期望和育儿假政策。'},discourse:['genuinely remarkable','yet it\'s important not to','stark inequalities persist','still dramatically underrepresented','real equality will require not just — but'],debate:{for:{label:'Enormous progress has been made',cn:'已经取得了巨大进步',point:'Legal equality, educational access and professional representation have transformed fundamentally.',pointcn:'法律平等、教育机会和职业代表已经发生了根本性变化。'},against:{label:'Structural inequalities persist',cn:'结构性不平等持续存在',point:'Pay gap, care burden, underrepresentation in power — formal equality masks continued disadvantage.',pointcn:'薪酬差距、护理负担、权力中的代表不足——形式平等掩盖了持续的劣势。'}}},
+{id:'s2',type:'evaluate',q:'To what extent has immigration enriched or created tensions in modern societies?',qcn:'移民在多大程度上丰富了或造成了现代社会的紧张局势？',ideas:['Economic contributions of migrants','Cultural exchange and enrichment','Political scapegoating of migrants','Integration policy effectiveness'],ideascn:['移民的经济贡献','文化交流和丰富','移民的政治替罪羊','融合政策有效性'],ans:{en:'Immigration is one of those topics where the empirical evidence and the political discourse are spectacularly divorced. The economic research is broadly consistent: immigration is a net positive for host economies. The cultural enrichment argument is equally compelling — virtually every great world city is a product of centuries of migration. However, where immigration does generate stress is when it concentrates rapidly without adequate public services or integration support. The failures are almost always failures of policy rather than evidence of inherent incompatibility between cultures.',cn:'移民是一个经验证据与政治话语惊人地脱节的话题。经济研究大体上是一致的：移民对东道国经济是净正收益。文化丰富论点同样令人信服——几乎每一个伟大的世界城市都是几个世纪移民的产物。然而，移民产生压力的地方是当它在没有足够公共服务或融合支持的情况下在特定社区迅速集中时。失败几乎总是政策的失败，而不是文化之间固有不兼容的证据。'},discourse:['so spectacularly divorced','the economic research is broadly consistent','equally compelling','however, where — does generate stress','the failures are almost always'],debate:{for:{label:'Immigration enriches societies',cn:'移民丰富了社会',point:'Economic, cultural and demographic benefits are well-documented and substantial.',pointcn:'经济、文化和人口方面的好处有充分记录且相当可观。'},against:{label:'Integration challenges are real',cn:'融合挑战是真实的',point:'Rapid demographic change without adequate policy support creates genuine social strain.',pointcn:'在没有足够政策支持的情况下快速的人口变化会产生真正的社会压力。'}}},
+{id:'s3',type:'opinion',q:'How important is it to preserve cultural traditions in a rapidly changing world?',qcn:'在快速变化的世界中保护文化传统有多重要？',ideas:['Identity and belonging function','Living cultures vs. museum cultures','Risk of cultural homogenisation','Selective preservation vs. wholesale retention'],ideascn:['身份认同和归属功能','活的文化与博物馆文化','文化同质化风险','选择性保护与全面保留'],ans:{en:'This requires distinguishing between two very different kinds of cultural preservation. There are traditions that serve as living vessels of identity and wisdom — folk music, culinary traditions, indigenous languages — and their loss represents genuine impoverishment. Then there are traditions that function primarily as instruments of social control. These deserve critical scrutiny rather than automatic preservation. My view is that healthy cultures are not static — they have always evolved. The goal should not be to freeze cultures in amber but to ensure communities have genuine agency over how their cultures evolve.',cn:'这需要区分两种非常不同的文化保护。有些传统作为身份认同和智慧的活生生容器——民间音乐、烹饪传统、土著语言——它们的消失代表了真正的贫困。然后有些传统主要作为社会控制的工具运作。这些值得批判性审视而不是自动保护。我的观点是，健康的文化不是静止的——它们总是在进化。目标不应该是将文化冻结在琥珀中，而是确保社区对其文化如何演变拥有真正的自主权。'},discourse:['requires distinguishing between','there are — and their loss represents','then there are','my view is that','the goal should not be — but to'],debate:{for:{label:'Traditions provide vital continuity',cn:'传统提供重要的连续性',point:'Shared cultural heritage builds social cohesion, identity, and intergenerational wisdom.',pointcn:'共享的文化遗产建立社会凝聚力、身份认同和代际智慧。'},against:{label:'Cultures should evolve freely',cn:'文化应该自由进化',point:'Forced preservation creates museum cultures; natural evolution is healthier than artificial conservation.',pointcn:'强制保护创造博物馆文化；自然演化比人工保护更健康。'}}},
+{id:'s4',type:'society',q:'Do you think social media has had a mostly positive or negative impact on society?',qcn:'你认为社交媒体对社会总体上产生了积极还是消极的影响？',ideas:['Arab Spring mobilisation power','Mental health crisis in adolescents','Filter bubbles and polarisation','Creator economy opportunities'],ideascn:['阿拉伯之春的动员力量','青少年心理健康危机','过滤泡沫和极化','创作者经济机会'],ans:{en:'Social media is genuinely one of the most consequential social experiments in human history. On the empowerment side, it has given voice to marginalised communities and created economic opportunities for individual creators. However, I am genuinely alarmed by the accumulating evidence of harm, particularly to adolescents. Multiple studies now link heavy social media use in teenage girls to significant increases in anxiety, depression, and body dysmorphia. This isn\'t a moral panic — it\'s data. The business model of attention maximisation is producing measurable harm at population scale. I believe this constitutes a public health crisis requiring regulatory intervention.',cn:'社交媒体确实是人类历史上最重要的社会实验之一。在赋权方面，它为被边缘化的社区提供了声音，为个人创作者创造了经济机会。然而，我对积累的伤害证据感到真正的警惕，特别是对青少年。现在有多项研究将青少年女孩大量使用社交媒体与焦虑、抑郁发病率的显著增加联系起来。这不是道德恐慌——这是数据。注意力最大化商业模式正在人口规模上产生可衡量的伤害。我相信这构成了需要监管干预的公共卫生危机。'},discourse:['genuinely one of the most','on the empowerment side','however, I am genuinely alarmed by','this isn\'t — it\'s','I believe this constitutes'],debate:{for:{label:'Social media democratises voice',cn:'社交媒体民主化声音',point:'Enables grassroots organising, gives voice to the marginalised, connects isolated communities.',pointcn:'使基层组织成为可能，给边缘化群体声音，连接孤立的社区。'},against:{label:'Mental health crisis outweighs benefits',cn:'心理健康危机超过了好处',point:'Teen mental health data is unambiguous; attention economy causes documented harm at scale.',pointcn:'青少年心理健康数据是明确的；注意力经济在规模上造成有据可查的伤害。'}}},
+{id:'s5',type:'compare',q:'How do urban and rural lifestyles differ, and which offers a higher quality of life?',qcn:'城市和农村生活方式有何不同，哪个提供更高的生活质量？',ideas:['Economic opportunity concentration in cities','Mental health costs of urban density','Community bonds in rural settings','Remote work changing the calculus'],ideascn:['经济机会集中在城市','城市密度的心理健康成本','农村环境中的社区纽带','远程工作改变了计算方式'],ans:{en:'Quality of life is inherently multidimensional and resists simple ranking. Cities offer unparalleled economic opportunity, cultural richness, and diversity — but the costs are real: chronic noise, air pollution, unaffordable housing, and the paradox of feeling lonely surrounded by millions. Rural settings offer the inverse: clean air, community depth, connection to nature — but often at the cost of economic opportunity. The advent of remote work is genuinely reshaping this trade-off, enabling some people to access urban income while living with rural quality of life.',cn:'生活质量本质上是一个多维概念，抵制简单排名。城市提供无与伦比的经济机会、文化丰富性和多样性——但成本是真实的：慢性噪声、空气污染、负担不起的住房和在数百万人中感到孤独的悖论。农村环境提供了相反的东西：清洁空气、社区深度、与自然的联系——但通常以经济机会为代价。远程工作的出现正在真正地重塑这种权衡。'},discourse:['inherently multidimensional','cities offer — however, the costs are real','rural settings offer the inverse','the advent of — is genuinely reshaping'],debate:{for:{label:'Cities offer superior quality',cn:'城市提供更高质量',point:'Economic opportunity, culture, diversity and services are concentrated in urban centres.',pointcn:'经济机会、文化、多样性和服务集中在城市中心。'},against:{label:'Rural life is fundamentally healthier',cn:'农村生活从根本上更健康',point:'Clean air, community bonds, natural environments and lower stress produce better wellbeing outcomes.',pointcn:'清洁空气、社区纽带、自然环境和较低压力产生更好的幸福感结果。'}}},
+{id:'s6',type:'future',q:'Do you think inequality in society will increase or decrease in the coming decades?',qcn:'你认为未来几十年社会不平等会增加还是减少？',ideas:['AI and automation wealth concentration','Universal basic income proposals','Political backlash against plutocracy','Progressive tax resistance'],ideascn:['AI和自动化财富集中','全民基本收入提案','对金权政治的政治反弹','累进税阻力'],ans:{en:'My honest assessment is that inequality will worsen before it improves — potentially dramatically so. The primary driver is the automation of cognitive labour by AI, which threatens to concentrate productivity gains almost entirely in the hands of capital owners. However, I don\'t think this is inevitable. The critical variable is political will. Societies have successfully reduced inequality in the past — through progressive taxation and robust public investment. The current backlash against extreme wealth concentration suggests conditions may be aligning, but the pace of change makes me cautiously rather than confidently optimistic.',cn:'我的诚实评估是不平等在改善之前会恶化——可能会剧烈恶化。主要驱动因素是AI对认知劳动的自动化，这威胁将生产力收益几乎完全集中在资本所有者手中。然而，我认为这不是不可避免的。关键变量是政治意愿。社会过去已经成功减少了不平等——通过累进税和强大的公共投资。目前对极端财富集中的反弹表明条件可能一致，但变化的速度让我持谨慎而非自信的乐观态度。'},discourse:['my honest assessment','however, I don\'t think — is inevitable','the critical variable is','makes me cautiously rather than confidently optimistic'],debate:{for:{label:'Technology will concentrate wealth',cn:'技术将进一步集中财富',point:'AI automates middle-class jobs; capital gains compound while wage growth stagnates.',pointcn:'AI自动化中产阶级工作；资本收益复利增长，而工资增长停滞。'},against:{label:'Political redistribution will correct',cn:'政治再分配将纠正',point:'Historical precedent shows democratic societies eventually course-correct on extreme inequality.',pointcn:'历史先例表明民主社会最终会在极端不平等上修正方向。'}}},
+]},
+// ─── 5. HEALTH ───
+{id:'hlt',theme:'Health',cn:'健康',qs:[
+{id:'h1',type:'society',q:'Why do you think mental health issues have become more prevalent in modern societies?',qcn:'你认为为什么心理健康问题在现代社会变得更为普遍？',ideas:['Social isolation despite digital connection','Productivity culture and burnout','Reduced stigma increasing reporting','Economic precarity and anxiety'],ideascn:['数字连接下的社会孤立','生产力文化和职业倦怠','减少偏见增加报告','经济不稳定和焦虑'],ans:{en:'I think we need to disentangle two phenomena: whether mental health conditions have genuinely become more prevalent, or whether we\'re simply better at identifying them. The answer is almost certainly both. Reduced stigma means conditions are now being recognised — which is good. But the modern environment genuinely generates more psychological stress: chronic social comparison via social media, economic precarity, the blurring of work-life boundaries, and climate anxiety all represent genuine stressors that previous generations didn\'t face at this intensity.',cn:'我认为我们需要分清两种不同的现象：心理健康状况是否真的变得更普遍，还是我们只是比以前更善于识别它们。答案几乎肯定两者都有。减少的偏见意味着状况现在被认可——这是好的。但现代环境确实产生了更多的心理压力：通过社交媒体的慢性社会比较、经济不稳定、工作生活边界的模糊，以及气候焦虑都代表了以前几代人没有以这种强度面对的真实压力源。'},discourse:['I think we need to disentangle','almost certainly both','which is unambiguously good','but I also believe','all represent genuine stressors'],debate:{for:{label:'Modern life creates genuine harm',cn:'现代生活造成真实伤害',point:'Social media comparison, economic precarity and isolation create unprecedented stressors.',pointcn:'社交媒体比较、经济不稳定和孤立创造了前所未有的压力源。'},against:{label:'Better recognition explains the rise',cn:'更好的识别解释了上升',point:'Reduced stigma and improved diagnostics account for most of the apparent increase.',pointcn:'减少的偏见和改进的诊断解释了大部分明显的增加。'}}},
+{id:'h2',type:'evaluate',q:'To what extent is it the government\'s responsibility to promote healthy lifestyles?',qcn:'在多大程度上，促进公民健康生活方式是政府的责任？',ideas:['Nanny state concerns','Sugar/tobacco taxes effectiveness','Nudge theory applications','Healthcare cost argument for intervention'],ideascn:['保姆国家担忧','糖/烟草税效果','助推理论应用','干预的医疗成本论点'],ans:{en:'This question sits at the intersection of libertarian and communitarian philosophies. The libertarian objection is genuinely compelling in principle. However, two considerations complicate the picture. First, choices people make about their health are rarely fully free — they\'re shaped by food environments and advertising. Choosing junk food isn\'t autonomous when it\'s three times cheaper than fresh produce. Second, in societies with public healthcare, poor individual choices generate collective costs borne by all taxpayers. This creates a legitimate public interest in population health beyond simple individual autonomy.',cn:'这个问题处于自由主义和社群主义哲学的交叉点。自由主义反对在原则上确实令人信服。然而，两个考量复杂化了这幅图景。首先，人们对健康所做的选择很少是完全自由的——它们受到食物环境和广告的塑造。当垃圾食品比新鲜农产品便宜三倍时，选择它并不是自主行为。其次，在有公共医疗系统的社会中，个人健康选择不佳会产生由所有纳税人承担的集体成本。'},discourse:['sits at the intersection of','the libertarian objection — is genuinely compelling','however, two considerations','first','second','this creates a legitimate'],debate:{for:{label:'Government has public health mandate',cn:'政府有公共卫生使命',point:'Healthcare system costs create collective interest; nudge policy is effective and non-coercive.',pointcn:'医疗系统成本创造集体利益；助推政策有效且非强制性。'},against:{label:'Individual freedom must be respected',cn:'必须尊重个人自由',point:'Lifestyle choices are personal; paternalistic intervention breeds resentment and dependency.',pointcn:'生活方式选择是个人的；家长式干预滋生怨恨和依赖。'}}},
+{id:'h3',type:'compare',q:'How do attitudes to health and fitness differ between generations?',qcn:'不同代际对健康和健身的态度有何不同？',ideas:['Wellness industry growth among millennials','Sedentary technology habits in Gen Z','Traditional medicine vs. evidence-based','Mindfulness trend'],ideascn:['千禧一代健康产业增长','Z世代久坐技术习惯','传统医学与循证医学','正念趋势'],ans:{en:'The picture is more complex and contradictory than popular narratives suggest. Younger millennials and Gen Z demonstrate remarkable verbal commitment to wellness — mental health awareness, work-life balance, clean eating — in ways previous generations didn\'t. This is genuinely progressive. However, there\'s a striking paradox: they\'re also more sedentary than any previous generation due to screen time. Older generations may not have had Instagram wellness accounts, but they walked more and had stronger community bonds. The lesson is that wellness as a marketed identity may sometimes substitute for wellness as an actual practice.',cn:'这幅图景比流行叙事所暗示的更复杂和矛盾。年轻的千禧一代和Z世代展示了对健康的显著口头承诺——心理健康意识、工作生活平衡、清洁饮食——以前的几代人不是这样。这是真正进步的。然而，有一个显著的悖论：由于屏幕时间，他们也比任何以前的一代人更久坐。老一代可能没有Instagram健康账户，但他们走更多路，有更强的社区纽带。教训是，作为营销身份的健康有时可能替代了作为实际实践的健康。'},discourse:['more complex and contradictory than','this is genuinely progressive','however, there\'s a striking paradox','the lesson is that'],debate:{for:{label:'Younger gen has healthier awareness',cn:'年轻一代有更健康的意识',point:'Mental health destigmatisation, work-life balance and nutritional knowledge have improved.',pointcn:'心理健康去污名化、工作生活平衡优先化和营养知识已经改善。'},against:{label:'Older gen had healthier habits',cn:'老一代有更健康的习惯',point:'More active lifestyles, stronger communities — results mattered more than labels.',pointcn:'更积极的生活方式、更强的社区——结果比标签更重要。'}}},
+{id:'h4',type:'solution',q:'What can be done to reduce the global burden of non-communicable diseases?',qcn:'可以采取什么措施来减少非传染性疾病的全球负担？',ideas:['Ultra-processed food regulation','Urban planning for active transport','Food labelling reform','Addressing food deserts'],ideascn:['超加工食品监管','城市规划促进积极交通','食品标签改革','解决食品荒漠问题'],ans:{en:'The non-communicable disease burden is fundamentally a product of the environments we\'ve built, which means genuine solutions must be primarily systemic. The most evidence-backed interventions are structural: sugar taxes, front-of-pack nutrition labelling, zoning policies that create supermarkets in food deserts, and urban design that builds walkability into cities. Crucially, the food industry must be regulated with the same rigour as the tobacco industry. The evidence that this is possible comes from the dramatic success of anti-tobacco policy over the past four decades.',cn:'非传染性疾病负担从根本上是我们建造的环境的产物，这意味着真正的解决方案必须主要是系统性的。最有证据支持的干预措施是结构性的：糖税、包装正面营养标签、在食品荒漠地区创建超市的分区政策，以及将步行能力嵌入城市的设计。至关重要的是，食品行业必须以与烟草行业相同的严格程度进行监管。这是可能的证据来自过去四十年反烟草政策的巨大成功。'},discourse:['fundamentally a product of','genuine solutions must be primarily systemic','the most evidence-backed interventions are','crucially','the evidence that this is possible comes from'],debate:{for:{label:'Systemic solutions are essential',cn:'系统/政策解决方案至关重要',point:'Individual choice is constrained by the food environment; structural change alone can shift population health.',pointcn:'个人选择受食物环境限制；只有结构性变革才能改变人口健康。'},against:{label:'Education and personal responsibility matter',cn:'教育和个人责任很重要',point:'Informed individuals with good habits make better choices regardless of environment.',pointcn:'具有良好习惯的知情个人无论环境如何都会做出更好的选择。'}}},
+{id:'h5',type:'opinion',q:'Do you think people in modern societies exercise enough?',qcn:'你认为现代社会的人们锻炼足够吗？',ideas:['Sedentary job proliferation','Active commuting declining','Exercise as luxury of time and money','Built environment walkability'],ideascn:['久坐工作激增','积极通勤减少','锻炼作为时间和金钱的奢侈品','建成环境步行能力'],ans:{en:'The evidence suggests unambiguously that most populations in high-income countries are significantly below recommended activity levels, and the causes are systemic rather than motivational. The post-industrial economy has engineered incidental physical activity almost entirely out of daily life. The average office worker sits for more than eight hours a day. The solution isn\'t moral exhortation to exercise more; it\'s redesigning cities, workplaces and daily structures so that movement is built into the architecture of ordinary life.',cn:'证据明确表明高收入国家大多数人口显著低于推荐的活动水平，原因是系统性的而不是动机性的。后工业经济几乎完全将偶发性体力活动从日常生活中去除了。普通办公室工作者每天坐超过八小时。解决方案不是道德劝诫多锻炼；而是重新设计城市、工作场所和日常结构，使运动融入普通生活的架构中。'},discourse:['suggests unambiguously that','I think the causes are systemic rather than motivational','has been almost entirely engineered out','the solution isn\'t — it\'s'],debate:{for:{label:'Built environments discourage activity',cn:'建成环境阻碍活动',point:'Car-centric urban design and sedentary jobs have removed incidental activity from modern life.',pointcn:'以汽车为中心的城市设计和久坐工作已从现代生活中去除了偶发性活动。'},against:{label:'Individual motivation is key',cn:'个人动力是关键',point:'Many people choose convenience over health; better education and priorities can change this.',pointcn:'许多人选择便利而非健康；更好的教育和优先事项可以改变这一点。'}}},
+{id:'h6',type:'future',q:'How do you think advances in medicine will change healthcare in the future?',qcn:'你认为医学进步将如何改变未来的医疗？',ideas:['Personalised genomic medicine','AI diagnostics outperforming doctors','Healthcare access inequality deepening','Preventive rather than reactive model'],ideascn:['个性化基因组医学','AI诊断优于医生','医疗获取不平等加深','预防而非反应模式'],ans:{en:'The medical revolution unfolding will likely be one of the most consequential in human history, and we should be simultaneously excited and cautious. The convergence of genomic medicine, AI, and real-time biometric monitoring creates the genuine possibility of healthcare that is radically personalised and predictive. AI is already diagnosing certain conditions with accuracy matching or exceeding human specialists. However, my deep concern is that these advances will systematically amplify existing healthcare inequalities unless society makes a deliberate political choice to ensure equitable distribution.',cn:'正在展开的医学革命可能是人类历史上最重要的革命之一，我们应该同时感到兴奋和谨慎。基因组医学、AI和实时生物特征监测的融合创造了医疗真正个性化和预测性的可能性。AI已经在诊断某些状况时准确性与人类专家相当或超越。然而，我深深担忧这些进步将系统性地放大现有医疗不平等，除非社会做出刻意的政治选择来确保公平分配。'},discourse:['simultaneously excited and profoundly cautious','the genuine possibility of','this is extraordinary','however, my deep concern is that','unless society makes a deliberate political choice'],debate:{for:{label:'Medical technology will save millions',cn:'医疗技术将拯救数百万人',point:'AI diagnostics, genomic medicine and preventive technology will dramatically extend healthy lifespans.',pointcn:'AI诊断、基因组医学和预防技术将显著延长健康寿命。'},against:{label:'Inequality will determine access',cn:'不平等将决定获取',point:'Without equitable distribution, advanced medicine will deepen the health divide between rich and poor.',pointcn:'没有公平分配政策，先进医学将加深富人和穷人之间的健康鸿沟。'}}},
+]},
+// ─── 6. WORK ───
+{id:'wrk',theme:'Work',cn:'工作',qs:[
+{id:'w1',type:'evaluate',q:'What are the advantages and disadvantages of working from home?',qcn:'在家工作有什么优缺点？',ideas:['Productivity gains vs. collaboration loss','Work-life boundary erosion','Reduced commuting time','Isolation risks'],ideascn:['生产力提升与协作损失','工作生活边界侵蚀','减少通勤时间','孤立风险'],ans:{en:'Remote work is genuinely complex — the truth depends enormously on individual circumstances, job type, and domestic environment. The benefits are real: elimination of commuting recovers hours of life every week; flexibility reduces stress; and for deep work, many people perform better at home. However, the downsides are underacknowledged. Collaboration, creativity, mentorship, and culture are deeply relational activities that emerge from physical proximity. Junior employees in particular are disadvantaged. My view is that a well-designed hybrid model captures the best of both.',cn:'远程工作确实复杂——真相在很大程度上取决于个人情况、工作类型和家庭环境。好处是真实的：消除通勤每周恢复数小时的生命；灵活性减少压力；对于深度工作，许多人在家工作表现更好。然而，缺点被低估了。协作、创造力、导师制和文化都是从物理接近中涌现的关系活动。初级员工尤其处于不利地位。我的观点是设计良好的混合模式捕捉了两者的最佳之处。'},discourse:['genuinely complex','the truth depends enormously on','the benefits are real','however, I think the downsides are underacknowledged','in particular','my view is that'],debate:{for:{label:'Remote work benefits are substantial',cn:'远程工作好处相当大',point:'Time saved, flexibility gained, and productivity for focused work often improves.',pointcn:'节省时间、获得灵活性，专注工作的生产力通常有所提高。'},against:{label:'Office culture creates irreplaceable value',cn:'办公室文化创造不可替代的价值',point:'Collaboration, mentorship, culture and career development all suffer in remote-only environments.',pointcn:'协作、导师制、文化和职业发展在纯远程环境中都会受损。'}}},
+{id:'w2',type:'compare',q:'How important is job satisfaction compared to financial reward?',qcn:'在选择职业时，工作满意度与经济回报相比有多重要？',ideas:['Maslow hierarchy of needs','Flow state and intrinsic motivation','Financial security as prerequisite','Ikigai concept'],ideascn:['马斯洛需求层次理论','心流状态和内在动机','财务安全作为前提','生き甲斐概念'],ans:{en:'This question reveals more about one\'s material circumstances than any universal truth. Financial security is a prerequisite for being able to value intrinsic job satisfaction. Someone whose income barely covers rent has very limited luxury to prioritise fulfilment. That said, above a certain income threshold, additional financial reward yields diminishing marginal returns on wellbeing, while job satisfaction becomes increasingly dominant. I believe the most resilient career strategy pursues roles at the intersection of genuine competence, intrinsic interest, and adequate financial reward.',cn:'我认为这是一个更多揭示一个人物质状况而非普遍真理的问题。财务安全是能够重视工作内在满足感的前提。收入几乎仅够支付租金的人在优先考虑满足感方面空间非常有限。尽管如此，在某个收入门槛之上，额外的经济回报对幸福感产生递减的边际收益，而工作满意度成为越来越主要的决定因素。我相信最具韧性的职业策略是追求位于真正能力、内在兴趣和足够经济回报交叉点的角色。'},discourse:['reveals more about — than about','that said, above a certain threshold','I believe the most resilient strategy is','neither — nor'],debate:{for:{label:'Fulfilment outlasts financial reward',cn:'满足感比经济回报更持久',point:'Intrinsic motivation sustains long-term performance; purely financial motivation leads to burnout.',pointcn:'内在动机维持长期表现；纯粹的经济动机导致职业倦怠。'},against:{label:'Financial security enables everything else',cn:'经济安全使其他一切成为可能',point:'Without adequate income, wellbeing suffers regardless of job meaning; security is the foundation.',pointcn:'没有足够收入，无论工作意义如何，幸福感都会受损；安全感是基础。'}}},
+{id:'w3',type:'future',q:'How will the relationship between employers and employees change in the future?',qcn:'你认为未来雇主和雇员之间的关系将如何改变？',ideas:['Gig economy expansion','Employee bargaining power shifts','Transparency and values alignment','Four-day work week experiments'],ideascn:['零工经济扩张','雇员议价能力转变','透明度和价值观一致','四天工作制实验'],ans:{en:'The employment relationship is undergoing profound structural change, and the direction is genuinely uncertain. On one trajectory, platform capitalism further erodes employee protections, creating a precariat of workers with no guaranteed income or pension. On an alternative trajectory, tight labour markets have shifted bargaining power toward employees who now demand not just pay but flexibility, purpose alignment, and ethical corporate behaviour. The growing phenomenon of "values-based attrition" suggests a new generation will accept less purely transactional relationships.',cn:'就业关系正在经历深刻的结构性变化，方向确实不确定。在一条轨迹上，平台资本主义进一步侵蚀了员工保护，创造了一个不稳定阶层。在另一条轨迹上，紧张的劳动力市场将议价能力转移到员工身上，他们现在不仅要求薪酬，还要求灵活性、目的一致性和有道德的企业行为。"基于价值观的流失"这一日益增长的现象表明新一代将接受更少的纯粹交易性关系。'},discourse:['profound structural change','I think the direction is genuinely uncertain','on one trajectory','on an alternative trajectory','suggests that'],debate:{for:{label:'Workers will gain more power',cn:'工人将获得更多权力',point:'Skills scarcity, remote work options and values awareness shift leverage toward employees.',pointcn:'技能稀缺、远程工作选项和价值观意识将筹码转向员工。'},against:{label:'Gig economy erodes worker security',cn:'零工经济侵蚀工人安全感',point:'Platform capitalism externalises risk onto workers while concentrating profits.',pointcn:'平台资本主义将风险外部化到工人身上，同时集中利润。'}}},
+{id:'w4',type:'society',q:'Do you think it is fair that some professions are paid significantly more than others?',qcn:'你认为某些职业的薪酬明显高于其他职业公平吗？',ideas:['Labour market supply and demand','Social value vs. market value divergence','Teachers and nurses underpaid','CEO pay ratio controversies'],ideascn:['劳动力市场供需','社会价值与市场价值的分歧','教师和护士薪酬偏低','CEO薪资比例争议'],ans:{en:'I find this question genuinely uncomfortable because honest analysis requires confronting a deep tension between market logic and moral intuition. The market explanation — that pay reflects scarcity and demand — is internally consistent, but produces outcomes that are morally incoherent. A hedge fund manager earns several hundred times more than a nurse, yet the nurse\'s work seems by any reasonable moral accounting to be at least as socially valuable. The disparity is explained by the structural power of financial capital. I\'m not a crude egalitarian, but the current distribution bears no reasonable relationship to social contribution.',cn:'我发现这个问题确实令人不舒服，因为诚实的分析需要面对市场逻辑和道德直觉之间的深层张力。市场解释——薪酬反映了稀缺性和需求——在内部是一致的，但产生的结果在道德上是不连贯的。对冲基金经理的收入是护士的几百倍，然而护士的工作按任何合理的道德核算似乎至少具有同等的社会价值。差距由金融资本的结构性权力来解释。我不是一个粗糙的平均主义者，但目前的分配与社会贡献没有合理的关系。'},discourse:['I find this question genuinely uncomfortable','is internally consistent, but','by any reasonable moral accounting','I\'m not a crude egalitarian','represents a significant market failure'],debate:{for:{label:'Market determines fair compensation',cn:'市场决定公平薪酬',point:'Pay reflects skill scarcity and value created; market signals allocate talent efficiently.',pointcn:'薪酬反映技能稀缺性和创造的价值；市场信号有效分配人才。'},against:{label:'Market undervalues social contribution',cn:'市场低估了社会贡献',point:'Teachers and nurses are underpaid; financial sector overpaid relative to social value.',pointcn:'教师和护士薪酬偏低；金融部门相对于创造的社会价值薪酬过高。'}}},
+{id:'w5',type:'opinion',q:'Should people be encouraged to change careers multiple times?',qcn:'应该鼓励人们多次转换职业吗？',ideas:['Portfolio career model emerging','Specialisation depth value','Institutional knowledge loss','Personal fulfilment and adaptability'],ideascn:['投资组合职业模式出现','专业化深度价值','机构知识损失','个人满足感和适应能力'],ans:{en:'I hold a genuinely positive view of career transitions, though with qualifications. The traditional expectation that people would enter a single career and remain until retirement was always as much a product of limited options as of genuine merit. The modern economy actually demands greater professional agility — the career you optimise for at twenty-two may be substantially automated by forty-five. From a personal development perspective, career transitions often produce the most significant growth periods. The qualification is that transitions are most valuable when they\'re purposeful rather than merely reactive.',cn:'我对职业转型持真正积极的观点，尽管有限定条件。人们会入一个职业并在退休前一直留在那里的传统期望，从来都与其说是真正的优点，不如说是有限选择的产物。现代经济实际上要求更大的职业敏捷性——你在二十二岁优化的职业到四十五岁时可能已基本被自动化。从个人发展角度看，职业转型通常产生最重要的成长时期。限定条件是转型最有价值是当它们是有目的的而不仅仅是反应性的。'},discourse:['I hold a genuinely positive view','with important qualifications','actually demands','the qualification I\'d add is that'],debate:{for:{label:'Career diversity builds adaptability',cn:'职业多样性建立适应能力',point:'Cross-domain experience and continuous learning are essential in rapidly changing economies.',pointcn:'跨领域经验和持续学习在快速变化的经济中至关重要。'},against:{label:'Deep expertise has unique value',cn:'深度专业知识有独特价值',point:'The world needs deep specialists; career stability builds trust and mastery.',pointcn:'世界需要深度专家；职业稳定性建立信任和精通。'}}},
+{id:'w6',type:'compare',q:'How do attitudes towards work-life balance differ between cultures?',qcn:'不同文化对工作与生活平衡的态度有何不同？',ideas:['Nordic vs. East Asian contrast','Hustle culture glorification','Karoshi phenomenon in Japan','Vacation time as productivity investment'],ideascn:['北欧与东亚对比','奋斗文化美化','日本过劳死现象','休假时间作为生产力投资'],ans:{en:'The cross-cultural variation is fascinating and tells us important things about which values lead to better outcomes. At one extreme, Japan and South Korea have cultivated cultures where extreme overwork is expected and tied to identity. The costs are documented and severe — Japan even has a word, karoshi, meaning death by overwork. At the other extreme, Nordic countries treat leisure and family time as preconditions for sustainable productivity. The research consistently shows that Nordic workers generate higher per-hour productivity despite working fewer hours. This suggests that the veneration of overwork is actually a productivity myth.',cn:'工作态度的跨文化差异既迷人也告诉我们哪些文化价值观导致了更好的结果。在一个极端，日本和韩国培育了过度工作被期待且与身份认同相连的文化。代价严重——日本甚至有一个词，過労死。在另一个极端，北欧国家将休闲和家庭时间视为可持续生产力的前提条件。研究一致表明北欧工作者尽管工作时间更少但产生更高的每小时生产力。这表明对过度工作的崇拜实际上是一个生产力神话。'},discourse:['both fascinating and — tells us','at one extreme','at the other extreme','interestingly, consistently shows','this suggests that','which no longer holds for'],debate:{for:{label:'Work-centred cultures drive growth',cn:'以工作为中心的文化推动增长',point:'Intense work culture has driven rapid economic development in East Asian economies.',pointcn:'强烈的工作文化推动了东亚经济体的快速经济发展。'},against:{label:'Rest is a prerequisite for productivity',cn:'休息是生产力的前提',point:'Nordic evidence shows fewer hours with better rest produces higher per-hour output and wellbeing.',pointcn:'北欧证据表明更少时间加更好休息产生更高每小时产出和幸福感。'}}},
+]},
+// ─── 7. FAMILY ───
+{id:'fam',theme:'Family',cn:'家庭',qs:[
+{id:'f1',type:'compare',q:'How have family structures changed in your country over recent decades?',qcn:'近几十年来，你国家的家庭结构发生了哪些变化？',ideas:['Declining marriage rates','Single-parent normalisation','Multi-generational living returning','Chosen family concept'],ideascn:['结婚率下降','单亲家庭正常化','多代同堂回归','选择家庭概念'],ans:{en:'Family structures have undergone probably the most significant transformation in several centuries. The diversification of family forms — single parents, same-sex parents, cohabiting couples, chosen families — represents a largely positive expansion of what it means to build a life together. What concerns me more is the extent to which family formation itself has been delayed or foregone due to economic factors — unaffordable housing and prohibitive childcare costs are preventing many young people who want families from having them. This isn\'t a voluntary lifestyle choice; it\'s an economic constraint.',cn:'家庭结构可能经历了几个世纪中最重要的转变。家庭形式的多样化——单亲父母、同性父母、同居伴侣、选择家庭——代表了关于共同建设生活意味着什么的积极扩展。更让我担心的是家庭组建本身由于经济因素而被推迟或放弃的程度——负担不起的住房和高昂的育儿成本正在阻止许多想要家庭的年轻人拥有家庭。这不是自愿的生活方式选择；这是经济约束。'},discourse:['I think it\'s crucial to distinguish between','represents a largely positive expansion','what concerns me more is','this isn\'t — it\'s'],debate:{for:{label:'Diverse family forms are progress',cn:'多样化家庭形式是进步',point:'Greater individual freedom to define family structures; more acceptance of difference.',pointcn:'更大的个人自由来定义家庭结构；对差异的更多接受。'},against:{label:'Economic barriers prevent family formation',cn:'经济壁垒阻止家庭组建',point:'Many people who want families cannot afford them; the trend reflects constraint not choice.',pointcn:'许多想要家庭的人负担不起；趋势反映的是约束而非选择。'}}},
+{id:'f2',type:'opinion',q:'Should parents be responsible for their children\'s behaviour in public?',qcn:'父母应该对孩子在公共场合的行为负责吗？',ideas:['Parental modelling importance','Peer influence on adolescents','Structural social factors','Limits of individual parental responsibility'],ideascn:['父母示范重要性','同伴对青少年行为的影响','结构性社会因素','个人父母责任的限度'],ans:{en:'The reflexive answer is yes, but honest analysis requires nuance. Parents unquestionably have primary responsibility for instilling values and modelling appropriate behaviour during formative years. However, I resist holding parents solely responsible while ignoring structural factors that constrain effective parenting. Poverty, housing instability, and domestic stress all demonstrably undermine parenting capacity. And as children age into adolescence, peer influence and external cultural forces increasingly overwhelm parental influence.',cn:'反射性的回答是肯定的，但诚实的分析需要细微差别。父母毫无疑问在成长年代有主要责任灌输价值观和示范适当行为。然而，我抵制将孩子的行为仅仅归咎于父母，同时忽视限制有效育儿的结构性因素。贫困、住房不稳定和家庭压力都可以证明地削弱育儿能力。随着孩子步入青春期，同伴影响和外部文化力量越来越多地压倒父母影响。'},discourse:['I think the reflexive answer is yes, but','unquestionably','however, I resist the tendency to','all demonstrably undermine'],debate:{for:{label:'Parents are primarily responsible',cn:'父母负有主要责任',point:'Parental modelling, discipline and values transmission are the primary determinants of child behaviour.',pointcn:'父母示范、纪律和价值观传递是儿童行为的主要决定因素。'},against:{label:'Social structures share responsibility',cn:'社会结构分担责任',point:'Poverty, peer influence and cultural factors are beyond individual parental control.',pointcn:'贫困、同伴影响和文化因素超出了个人父母的控制。'}}},
+{id:'f3',type:'society',q:'How has the role of grandparents and extended family changed?',qcn:'祖父母和大家庭的角色发生了怎样的变化？',ideas:['Geographic mobility reducing proximity','Childcare costs reviving multi-generational living','Intergenerational wisdom erosion','Digital connection substituting presence'],ideascn:['地理流动性减少了亲近度','育儿成本促使多代同堂','代际智慧传递侵蚀','数字连接替代实体存在'],ans:{en:'The role of extended family has contracted dramatically in most industrialised societies, and the consequences are more profound than we acknowledge. Historically, grandparents served not just as childcare resources but as living archives of family memory and wisdom. Geographic mobility has scattered families, turning embedded community life into occasional video calls. The costs are real: crushing childcare costs; children growing up without grandparental love; and elderly people facing isolation. I find it telling that multi-generational living, which economic pressure is driving back in some countries, tends to produce strong wellbeing outcomes for all generations.',cn:'大家庭的角色在大多数工业化社会中急剧收缩，后果比我们承认的更深刻。从历史上看，祖父母不仅作为育儿资源，还作为家庭记忆和智慧的活档案。地理流动性将家庭分散。代价是真实的：巨大育儿成本；孩子们缺乏祖父母的爱；老年人面临孤立。我发现有启示性的是，在一些国家经济压力推动回归的多代同堂，往往对所有涉及的世代产生强烈的幸福感结果。'},discourse:['contracted dramatically','more profound than we tend to acknowledge','historically','the costs are real','I find it telling that'],debate:{for:{label:'Extended family provides irreplaceable value',cn:'大家庭提供不可替代的价值',point:'Intergenerational wisdom, free childcare and emotional continuity cannot be commercially replicated.',pointcn:'代际智慧、免费育儿和情感连续性无法在商业上复制。'},against:{label:'Nuclear family independence is valuable',cn:'核心家庭独立很有价值',point:'Geographic freedom and personal autonomy are legitimate goods that extended family can constrain.',pointcn:'地理自由和个人自主权是合法的利益，大家庭可能会限制。'}}},
+{id:'f4',type:'evaluate',q:'To what extent should parents sacrifice their personal goals for their children?',qcn:'你认为父母在多大程度上应该为了孩子牺牲个人目标？',ideas:['Secure base theory','Self-actualisation parenting model','Cultural variation in sacrifice expectations','Parental wellbeing and child outcomes linkage'],ideascn:['安全基地理论','自我实现育儿模式','牺牲期望的文化差异','父母幸福感与儿童成果联系'],ans:{en:'The honest answer is that unlimited self-sacrifice is neither practically wise nor ultimately good for children. Research shows children need stable, emotionally present parents — not martyred ones. A parent who has abandoned every personal aspiration and is consumed by resentment provides a worse emotional environment than one who maintains some personal vitality and models that adults can have aspirations. That said, parenthood does require genuine and significant sacrifice — of sleep, spontaneity, and financial freedom — and people who treat it as a lifestyle appendage do their children real harm.',cn:'诚实的答案是无限制的自我牺牲既不是实际上明智的，也不是最终对孩子有益的。研究表明孩子需要稳定的、情感在场的父母——而不是殉道者。一个放弃了每一个志向并被怨恨所消耗的父母，提供了比保持一些个人活力的父母更糟糕的情感环境。尽管如此，为人父母确实需要真实且重大的牺牲——睡眠、自发性和财务自由——将其视为生活方式附属品的人对孩子造成了真实伤害。'},discourse:['I think the honest answer is','the research is surprisingly consistent','that said, parenthood does require'],debate:{for:{label:'Children\'s needs come first',cn:'孩子的需求排在第一位',point:'Parental sacrifice is the foundation of secure attachment and healthy child development.',pointcn:'父母的牺牲是安全依附和健康儿童发展的基础。'},against:{label:'Parental wellbeing is equally important',cn:'父母幸福感同样重要',point:'Fulfilled parents raise more confident children; martyrdom creates resentment that harms relationships.',pointcn:'满足的父母培养更自信的孩子；殉道主义产生伤害关系的怨恨。'}}},
+{id:'f5',type:'opinion',q:'Do you think children today have too much freedom, or not enough?',qcn:'你认为当今的孩子自由过多还是不够？',ideas:['Helicopter parenting consequences','Risk aversion and resilience deficit','Digital freedom vs. physical freedom paradox','Cultural variation'],ideascn:['直升机式父母养育的后果','风险厌恶和韧性缺陷','数字自由与实体自由悖论','文化差异'],ans:{en:'I think the framing conceals a more interesting paradox: children in many wealthy countries simultaneously have too much freedom in digital spaces and far too little in physical spaces. Compared to previous generations, today\'s children spend dramatically less time in unsupervised outdoor play — the kind where they learn risk assessment and self-reliance. Yet those same children have almost unmonitored access to the full spectrum of internet content. This paradox — physical restriction alongside digital permissiveness — strikes me as one of the most significant unaddressed failures of contemporary parenting culture.',cn:'我认为框架掩盖了一个更有趣的悖论：许多富裕国家的孩子同时在数字空间拥有太多自由，在实体空间拥有太少自由。与以前的几代人相比，今天的孩子在无监督的户外玩耍中度过的时间急剧减少——那种学习风险评估和自力更生的活动。然而这些孩子对互联网内容几乎没有监控地访问。这种悖论——实体限制与数字宽容并存——对我来说是当代育儿文化中最重要的未解决失败之一。'},discourse:['conceals a more interesting paradox','compared to previous generations','yet those same children','this paradox — strikes me as'],debate:{for:{label:'Children have too little physical freedom',cn:'孩子们实体自由太少',point:'Over-supervised childhoods reduce resilience, risk literacy and genuine independence.',pointcn:'过度监管的童年减少了韧性、风险素养和真正的独立性。'},against:{label:'Digital freedoms are excessive',cn:'数字自由过多且有害',point:'Unmonitored internet access exposes children to harmful content and social comparison.',pointcn:'无监控的互联网访问使儿童暴露于有害内容和社会比较中。'}}},
+{id:'f6',type:'future',q:'How do you think the definition of family will change in the future?',qcn:'你认为未来家庭的定义将如何改变？',ideas:['Chosen family legal recognition','Reproductive technology expanding possibilities','Declining birth rates','Community living as alternative'],ideascn:['选择家庭的法律认可','生殖技术扩展可能性','出生率下降','社区生活作为替代'],ans:{en:'I believe the concept of family will continue to expand and diversify, and the most significant future development will be the gradual legal and social recognition of chosen family — deliberate communities of mutual care and belonging constructed outside biological bonds. As urbanisation, geographic mobility, and delayed family formation continue, more people will rely primarily on chosen rather than natal families for emotional support. The declining birth rates in virtually every wealthy country are telling us something important about economic conditions making conventional family formation feel less viable.',cn:'我相信家庭的概念将继续扩展和多样化，最重要的未来发展将是选择家庭的逐渐法律和社会认可——在生物纽带之外构建的相互关怀和归属感的蓄意社区。随着城市化、地理流动性和推迟家庭组建继续增长，更多人将主要依赖选择而非出生的家庭来获得情感支持。几乎每个富裕国家出生率的下降正在告诉我们一些关于使传统家庭组建感觉不那么可行的经济条件的重要事情。'},discourse:['I believe','the most significant future development will be','telling us something important','any honest response requires confronting'],debate:{for:{label:'Chosen families will become primary',cn:'选择家庭将成为主要形式',point:'Urbanisation and delayed marriage make deliberate community the default for many.',pointcn:'城市化和推迟婚姻使刻意社区对许多人成为默认选择。'},against:{label:'Biological family remains foundational',cn:'生物家庭仍然是基础',point:'Evolutionary bonds and intergenerational care are not easily replicated by chosen networks.',pointcn:'进化纽带和代际护理不容易被选择网络复制。'}}},
+]},
+// ─── 8. TRAVEL ───
+{id:'trl',theme:'Travel',cn:'旅行',qs:[
+{id:'tr1',type:'evaluate',q:'What are the benefits and drawbacks of international tourism?',qcn:'国际旅游有哪些利弊？',ideas:['Cultural exchange','Over-tourism damage','Local economic dependency','Aviation carbon footprint'],ideascn:['文化交流','过度旅游损害','地方经济依赖','航空碳足迹'],ans:{en:'International tourism represents a genuine double-edged phenomenon. Cultural exchange has genuine potential to reduce prejudice and build understanding. Tourism also generates enormous economic benefits for host communities. However, environmental degradation of iconic destinations is well-documented. Housing markets in popular cities have been severely distorted by Airbnb. Aviation represents about two to three percent of global CO2 emissions. My view is that tourism needs urgent regulatory rethinking — not elimination, but intelligent management that distributes benefits while limiting costs.',cn:'国际旅游代表了一种真正的双刃现象。文化交流有减少偏见和建立理解的真正潜力。旅游业还为东道主社区带来了巨大的经济利益。然而，标志性目的地的环境退化有充分记录。热门城市的住房市场因Airbnb而严重扭曲。航空约占全球二氧化碳排放量的百分之二到三。我的观点是旅游业需要紧急的监管重新思考——不是消除它，而是智能管理。'},discourse:['represents a genuine double-edged phenomenon','on the positive side','however, the negative externalities','my view is that'],debate:{for:{label:'Tourism builds understanding',cn:'旅游建立理解',point:'Direct cultural exchange reduces prejudice; economic development benefits host communities.',pointcn:'直接文化交流减少偏见；经济发展使东道主社区受益。'},against:{label:'Mass tourism causes serious harm',cn:'大众旅游造成严重伤害',point:'Environmental degradation, housing distortion and cultural commodification undermine destinations.',pointcn:'环境退化、住房扭曲和文化商品化破坏了目的地。'}}},
+{id:'tr2',type:'compare',q:'How does travelling alone compare to travelling with others?',qcn:'独自旅行与和他人一起旅行相比如何？',ideas:['Self-reliance development','Social bonding in groups','Flexibility vs. compromise','Personality compatibility'],ideascn:['自力更生培养','团体中的社会纽带','灵活性与妥协','个性相容性'],ans:{en:'Both modes offer distinct and irreplaceable benefits. Solo travel offers total freedom to follow curiosity, heightened sensory presence, and forced engagement with strangers that often produces the most memorable connections. Solo travellers develop a particular self-reliance. Group travel, by contrast, offers shared joy of discovery — the ability to say "did you see that?" and have someone who genuinely cares. It\'s also safer, more economically viable, and produces sustained intimacy that deepens friendships in ways ordinary life rarely permits.',cn:'两种旅行方式都提供独特且不可替代的好处。独自旅行提供跟随好奇心的完全自由、增强感官存在，以及与陌生人的强制接触。独自旅行者发展出特定的自力更生。相比之下，团体旅行提供共同发现的喜悦——能够说"你看到了吗？"并且有人真正在乎。它在某些情况下也更安全，经济上更可行，并产生加深友谊的亲密感。'},discourse:['both offer distinct and irreplaceable benefits','by contrast','it\'s also'],debate:{for:{label:'Solo travel is more transformative',cn:'独自旅行更具变革性',point:'Self-reliance, full freedom and deeper stranger interactions build character uniquely.',pointcn:'自力更生、完全自由和更深的陌生人互动独特地塑造性格。'},against:{label:'Shared travel creates deeper memories',cn:'共同旅行创造更深刻的记忆',point:'Shared experiences bond people deeply; joy multiplies when experienced together.',pointcn:'共同体验使人深深联系；当一起体验时喜悦会倍增。'}}},
+{id:'tr3',type:'future',q:'Do you think space tourism will become realistic for ordinary people?',qcn:'你认为太空旅游将来会成为普通人的现实选择吗？',ideas:['Cost trajectory of aviation as precedent','Environmental ethics','Technological progress pace','Earth problems vs. space ambition'],ideascn:['航空成本轨迹作为先例','环境伦理','技术进步速度','地球问题与太空雄心'],ans:{en:'The trajectory is genuinely difficult to predict, but drawing on the historical precedent of commercial aviation is instructive. In 1950, transatlantic flight was exclusive to the very wealthy; by 2000, billions had flown. The same cost-reduction dynamics could theoretically apply. However, comparing aviation to space is misleading in one critical respect: the energy requirements for overcoming Earth\'s gravity well are qualitatively different from atmospheric travel. My honest view is that space tourism will become accessible to a large affluent class within fifty years, but genuinely democratic access probably requires breakthroughs we cannot yet predict.',cn:'轨迹确实难以预测，但参考商业航空的历史先例有启示意义。1950年跨大西洋飞行是非常富有的人的专属；到2000年数十亿人已经飞行。同样的成本降低动态理论上可以应用。然而，将航空与太空比较在一个关键方面是误导性的：克服地球引力井的能量需求在质上与大气飞行不同。我的诚实观点是太空旅游将在五十年内成为大批富裕阶层所能获得的，但真正民主的获取可能需要我们无法预测的突破。'},discourse:['genuinely difficult to predict','drawing on the historical precedent is instructive','however, I think comparing — is misleading','my honest view is that'],debate:{for:{label:'Costs will fall like aviation',cn:'成本将像航空一样下降',point:'Commercial competition and technology curves will drive costs down dramatically.',pointcn:'商业竞争和技术曲线将使成本急剧下降。'},against:{label:'Physics limits democratisation',cn:'物理学限制了民主化',point:'Fundamental energy requirements impose hard cost floors; Earth problems demand priority.',pointcn:'基本能源需求强加了硬性成本底线；地球问题要求优先处理。'}}},
+{id:'tr4',type:'society',q:'How important is cultural sensitivity when visiting another country?',qcn:'访问另一个国家时，文化敏感性有多重要？',ideas:['Respectful curiosity','Religious and dress code respect','Performative vs. genuine engagement','Photography ethics'],ideascn:['尊重好奇心','宗教和着装规范尊重','表演性与真实参与','摄影伦理'],ans:{en:'Cultural sensitivity is both practically important and morally significant, but I\'m wary of two failure modes: insensitivity on one side and paralysing over-cautiousness on the other. Beyond basic respect for customs, genuine cultural sensitivity involves encountering another culture on its own terms rather than as a backdrop for one\'s own journey. The most concerning form of tourism reduces living cultures to spectacle. Genuine engagement means being willing to be changed by what you encounter, not just to record it.',cn:'文化敏感性既具有实际重要性也具有道德意义，但我警惕两种失败模式：一方面的不敏感和另一方面的麻痹性过度谨慎。超越对习俗的基本尊重，真正的文化敏感性涉及按另一种文化的自身条件来接触它，而不是作为自己旅程的背景。最令人担忧的旅游形式将活生生的文化简化为景观。真正的接触意味着愿意被你所遇到的改变，而不仅仅是记录它。'},discourse:['both practically important and morally significant','I\'m wary of two failure modes','beyond this basic respect','genuine engagement means'],debate:{for:{label:'Sensitivity shows deep respect',cn:'敏感性显示深刻尊重',point:'Understanding local customs is the foundation of positive cross-cultural exchange.',pointcn:'理解当地习俗是积极跨文化交流的基础。'},against:{label:'Over-sensitivity can be patronising',cn:'过度敏感可能居高临下',point:'Treating cultures as fragile can itself be a form of condescension.',pointcn:'将文化视为脆弱本身可能是居高临下的态度。'}}},
+{id:'tr5',type:'opinion',q:'Should people prioritise domestic travel over international travel for environmental reasons?',qcn:'出于环保原因，人们应该优先国内旅游吗？',ideas:['Flight shame movement','Carbon offsetting debate','Local tourism economic benefits','Personal freedom vs. collective responsibility'],ideascn:['飞行羞耻运动','碳抵消争议','本地旅游经济效益','个人自由与集体责任'],ans:{en:'The environmental case for domestic travel is real but more nuanced than the flight shame movement acknowledges. A long-haul flight generates significant personal carbon burden. However, I\'m reluctant to frame this primarily as individual moral responsibility — systemic change matters far more. What would be more effective than flight shame is honest carbon pricing that makes aviation\'s true cost visible in ticket prices, alongside genuine investment in high-speed rail infrastructure. That said, I personally think there\'s genuine value in exploring one\'s own country more deeply before seeking novelty further afield.',cn:'国内旅行的环境案例是真实的，但比飞行羞耻运动承认的更细微。长途飞行产生重大的个人碳负担。然而，我不愿意将其主要定义为个人道德责任——系统性变革重要得多。比飞行羞耻更有效的是诚实的碳定价，使航空的真正成本在机票价格中可见，同时投资高铁基础设施。尽管如此，我个人认为在寻求更远处的新奇之前更深入地探索自己的国家有真正的价值。'},discourse:['is real but more nuanced than','however, I\'m reluctant to frame this as','what I believe would be more effective','that said, I personally think'],debate:{for:{label:'Domestic travel is environmentally essential',cn:'国内旅游在环境上至关重要',point:'Aviation emissions are significant; domestic alternatives reduce footprint meaningfully.',pointcn:'航空排放量相当大；国内替代方案有意义地减少足迹。'},against:{label:'Carbon pricing is more effective than shame',cn:'碳定价比羞耻更有效',point:'Individual guilt is misdirected; systemic pricing and infrastructure investment matter more.',pointcn:'个人内疚被错误引导；系统性定价和基础设施投资更重要。'}}},
+{id:'tr6',type:'cause',q:'Why has travel become so much more accessible in recent decades?',qcn:'为什么近几十年来旅行变得更加便利？',ideas:['Low-cost airline revolution','Internet booking democratisation','Rising global middle class','Visa liberalisation'],ideascn:['廉价航空革命','互联网预订民主化','全球中产阶级崛起','签证自由化'],ans:{en:'The democratisation of travel stems from several converging forces. Most significantly, airline deregulation triggered competition that drove prices down dramatically, enabling the low-cost carrier model. Simultaneously, the internet transformed travel planning economics — previously requiring expensive travel agents. The parallel rise of a substantial global middle class, particularly in China and India, dramatically expanded the pool of potential travellers. And gradual visa liberalisation, particularly within regional blocs like the EU and ASEAN, removed bureaucratic barriers.',cn:'旅行的民主化源于几种汇聚的力量。最重要的是，航空业放松管制引发了竞争，大幅降低了价格，使低成本航空公司模式成为可能。与此同时，互联网改变了旅行规划的经济学——以前需要昂贵的旅行社。全球大量中产阶级的并行崛起，特别是在中国和印度，大幅扩大了潜在旅行者的池子。逐步的签证自由化消除了官僚障碍。'},discourse:['stems from several converging forces','most significantly','simultaneously','the parallel rise of'],debate:{for:{label:'Technology and competition democratised travel',cn:'技术和竞争使旅行民主化',point:'Low-cost aviation, internet booking and rising incomes have transformed accessibility.',pointcn:'低成本航空、互联网预订和收入增长改变了旅行的可及性。'},against:{label:'Travel access remains deeply unequal',cn:'旅行机会仍然严重不平等',point:'Visa restrictions, wealth divides and passport privileges mean democratisation is partial at best.',pointcn:'签证限制、财富鸿沟和护照特权意味着旅行民主化充其量是部分的。'}}},
+]},
+// ─── 9. CULTURE ───
+{id:'cult',theme:'Culture',cn:'文化',qs:[
+{id:'c1',type:'evaluate',q:'To what extent does art and culture reflect or shape society?',qcn:'艺术和文化在多大程度上反映或塑造了社会？',ideas:['Art as mirror vs. catalyst','Propaganda potential','Censorship of controversial art','Counter-cultural movements'],ideascn:['艺术作为镜子与催化剂','宣传潜力','争议艺术的审查','反文化运动'],ans:{en:'The relationship between art and society is bidirectional and inseparable. Art always emerges from social conditions, but also reshapes them — great literature changes how people think about moral questions; powerful cinema creates new cultural templates. The 20th century\'s most transformative cultural moments — the Harlem Renaissance, Punk, the Nouvelle Vague — were simultaneously products of specific social tensions and forces that actively reshaped them.',cn:'艺术与社会的关系是双向的且不可分割的。艺术总是从社会条件中涌现，但也重塑了它们——伟大的文学改变了人们对道德问题的思考方式；有力的电影创造了新的文化模板。20世纪最具变革性的文化时刻——哈莱姆文艺复兴、朋克、法国新浪潮——同时是特定社会张力的产物和积极重塑它们的力量。'},discourse:['bidirectional and inseparable','but art also reshapes','simultaneously products of — and forces that'],debate:{for:{label:'Art shapes consciousness',cn:'艺术塑造意识',point:'Great art creates new moral possibilities and social templates that outlast their creators.',pointcn:'伟大的艺术创造了超越其创造者的新道德可能性和社会模板。'},against:{label:'Art merely reflects conditions',cn:'艺术仅仅反映条件',point:'Art emerges from social conditions; claiming it drives change overstates its autonomous power.',pointcn:'艺术从社会条件中涌现；声称它推动变革夸大了其自主力量。'}}},
+{id:'c2',type:'compare',q:'How is popular culture today different from fifty years ago?',qcn:'今天的流行文化与五十年前有什么不同？',ideas:['Global homogenisation vs. fragmentation','Attention economy shortening content','Participatory culture','Loss of shared reference points'],ideascn:['全球同质化与碎片化','注意力经济缩短内容','参与式文化','共享参考点的丧失'],ans:{en:'The most structurally significant shift is the collapse of shared cultural experience. In 1975, a hit song or TV programme could create a common cultural moment experienced simultaneously by a significant portion of the population. Today, algorithmic personalisation has fragmented audiences into thousands of micro-niches. The second major shift is the erosion of the producer-consumer distinction. Participatory culture has democratised cultural production while simultaneously devaluing the individual creative act through sheer volume.',cn:'结构上最重要的转变是共享文化体验的崩溃。1975年一首热门歌曲或电视节目可以创造一个由相当一部分人口同时体验的共同文化时刻。今天算法个性化将受众碎片化成数千个微小众。第二个重大转变是生产者和消费者之间区分的侵蚀。参与式文化民主化了文化生产，同时通过纯粹数量使个人创意行为贬值。'},discourse:['the most structurally significant shift is','the second major shift is','has democratised — while simultaneously devaluing'],debate:{for:{label:'Today\'s culture is more democratic',cn:'今天的文化更加民主',point:'Participatory technology gives everyone a creative voice.',pointcn:'参与式技术给了每个人创意声音。'},against:{label:'Depth and shared culture have been lost',cn:'深度和共享文化已经丧失',point:'Fragmentation destroys shared cultural moments; algorithmic shortening erodes complexity.',pointcn:'碎片化破坏了共享文化时刻；算法缩短侵蚀了复杂性。'}}},
+{id:'c3',type:'opinion',q:'Do you think governments should fund the arts?',qcn:'你认为政府应该资助艺术吗？',ideas:['Arts as public good','Culture as soft power','Economic case for cultural investment','Independence from state control concern'],ideascn:['艺术作为公共品','文化作为软实力','文化投资的经济案例','对国家控制下独立性的担忧'],ans:{en:'I believe strongly that governments have a legitimate and necessary role in supporting the arts. The market failure argument is compelling: important, challenging art often lacks commercial viability, while commercially appealing art needs no subsidy. Without public investment, the cultural ecology would be dominated entirely by commercially viable forms. The legitimate concern, however, is dependency: arts too reliant on government funding risk becoming politically cautious. The solution is arm\'s-length funding through independent arts councils.',cn:'我坚信政府在支持艺术方面既有合法性也有必要性的角色。市场失灵论点是令人信服的：重要的挑战性艺术往往缺乏商业可行性，而商业上有吸引力的艺术不需要补贴。没有公共投资，文化生态将完全被商业形式主导。然而合理的担忧是依赖性：过于依赖政府资金的艺术有变得政治上谨慎的风险。解决方案是通过独立艺术委员会的隔臂式资助。'},discourse:['I believe strongly that','the market failure argument is compelling','without public investment','the legitimate concern, however, is','the solution is'],debate:{for:{label:'Public arts funding is essential',cn:'公共艺术资助至关重要',point:'Market failures leave vital arts underfunded; cultural ecology requires public investment.',pointcn:'市场失灵使重要艺术资金不足；文化生态需要公共投资。'},against:{label:'Government funding risks capture',cn:'政府资助有被俘获的风险',point:'State funding creates political dependency and self-censorship.',pointcn:'国家资金创造政治依赖和自我审查。'}}},
+{id:'c4',type:'society',q:'How has globalisation affected local cultures around the world?',qcn:'全球化如何影响了世界各地的本地文化？',ideas:['Cultural homogenisation fears','Glocalisation as adaptation','Local revival movements','Digital platforms as amplifiers'],ideascn:['文化同质化恐惧','全球化本土化','本地复兴运动','数字平台作为放大器'],ans:{en:'The reality is considerably more nuanced than either the homogenisation thesis or the resilient diversity thesis alone can capture. The homogenisation concern is real: American consumer culture has reshaped daily life virtually everywhere; languages are dying at unprecedented rate. But in many places, what happens is "glocalisation" — local communities actively appropriate global forms and adapt them to local meanings, creating genuinely new hybrid cultures. Korean pop music, Bollywood cinema, and Nigerian Afrobeats are not American culture; they\'re local cultural responses to global conditions.',cn:'现实比单独的同质化论题或多样性论题更为细微。同质化担忧是真实的：美国消费文化几乎在任何地方重塑了日常生活；语言以前所未有的速度消亡。但在许多地方发生的是"全球本土化"——本地社区积极挪用全球文化形式并适应于本地意义，创造出真正新颖的混合文化。韩国流行音乐、宝莱坞电影和尼日利亚Afrobeats不是美国文化；它们是对全球条件的本地文化回应。'},discourse:['the reality is considerably more nuanced than','the homogenisation concern is real','but the picture isn\'t simply','what sociologists call'],debate:{for:{label:'Globalisation destroys diversity',cn:'全球化破坏多样性',point:'American consumer culture homogenises; languages die; traditional practices disappear.',pointcn:'美国消费文化同质化；语言消亡；传统实践消失。'},against:{label:'Glocalisation creates new cultures',cn:'全球化本土化创造新文化',point:'Local communities actively adapt global forms; cultural exchange creates rather than only destroys.',pointcn:'本地社区积极适应全球形式；文化交流创造而不仅仅是破坏。'}}},
+{id:'c5',type:'compare',q:'Are traditional art forms as relevant today as they were historically?',qcn:'传统艺术形式在今天与历史上一样有现实意义吗？',ideas:['Living tradition vs. museum piece','Digital technology renewing traditional forms','Intergenerational transmission challenges','Authenticity vs. innovation'],ideascn:['活的传统与博物馆展品','数字技术更新传统形式','代际传承挑战','真实性与创新'],ans:{en:'Traditional art forms remain profoundly relevant, but their mode of relevance has evolved. The forms with the greatest vitality today are those brought into genuine dialogue with contemporary concerns — traditional instruments fused with electronic production, ancient theatrical forms reinterpreted through contemporary narratives. The forms that struggle are those preserved in amber as heritage performance without creative evolution. The most productive relationship between tradition and the present is creative reinvention — taking the wisdom of traditional forms and asking what they might say to contemporary experience.',cn:'传统艺术形式仍然深刻相关，但其相关性的模式已经演变。今天生命力最强的形式是那些与当代关切真正对话的——传统乐器与电子制作融合，古代戏剧形式通过当代叙事重新诠释。挣扎的形式是那些作为遗产表演被保存在琥珀中而没有创意演变的。传统与现在之间最富成效的关系是创意改造——采用传统形式的智慧，询问它们可能向当代体验传达什么。'},discourse:['remain profoundly relevant','the forms that struggle are those','the most productive relationship is','neither — nor but'],debate:{for:{label:'Traditional forms carry timeless wisdom',cn:'传统形式承载永恒智慧',point:'Technical mastery and cultural continuity make traditional forms enduringly valuable.',pointcn:'技术掌握和文化连续性使传统形式具有持久价值。'},against:{label:'Living traditions must evolve',cn:'活的传统必须进化',point:'Forms preserved without adaptation become heritage exhibits rather than living art.',pointcn:'没有适应的保存形式变成遗产展品而不是活的艺术。'}}},
+{id:'c6',type:'future',q:'Will English continue to dominate as a world language?',qcn:'英语将继续主导世界语言吗？',ideas:['Mandarin economic rise','AI real-time translation','Digital content English dominance','Linguistic diversity as asset'],ideascn:['普通话经济崛起','AI实时翻译','数字内容英语主导','语言多样性作为资产'],ans:{en:'English\'s global dominance is one of the most durable legacies of imperialism, and I think its grip will remain strong for longer than many predict — but may ultimately be weakened by the very technology that currently amplifies it. The wildcard that could genuinely transform the linguistic landscape is real-time AI translation. If machine translation enables fluid, nuanced communication across languages, English\'s advantage as a lingua franca becomes less essential, potentially allowing linguistic diversity to survive rather than being eroded by the pressure to converge on a single dominant medium.',cn:'英语的全球主导地位是帝国主义最持久的遗产之一，我认为其控制将比许多人预测的更长时间保持强劲——但最终可能被目前放大它的技术所削弱。真正可能改变语言格局的不确定因素是实时AI翻译。如果机器翻译实现跨语言流畅细微的交流，英语作为通用语言的优势变得不那么重要，可能允许语言多样性生存而不是被融合的压力稳定侵蚀。'},discourse:['one of the most durable legacies','the wildcard that could genuinely transform','if — it fundamentally changes the calculus','allowing — rather than being eroded by'],debate:{for:{label:'English dominance will persist',cn:'英语主导地位将持续',point:'Digital infrastructure, academic publishing and global business entrench English for generations.',pointcn:'数字基础设施、学术出版和全球商业将使英语根深蒂固。'},against:{label:'AI translation will shift the balance',cn:'AI翻译将改变平衡',point:'Mandarin\'s economic weight and AI translation could erode English\'s comparative advantage.',pointcn:'普通话的经济份量和AI翻译可能侵蚀英语的比较优势。'}}},
+]},
+// ─── 10. ECONOMY ───
+{id:'eco',theme:'Economy',cn:'经济',qs:[
+{id:'ec1',type:'evaluate',q:'Should economic growth always be the primary goal of governments?',qcn:'经济增长应该始终是政府的首要目标吗？',ideas:['GDP as flawed welfare measure','Degrowth economics','Green economy transition','Wellbeing indexes as alternatives'],ideascn:['GDP作为有缺陷的福利衡量标准','去增长经济学','绿色经济转型','幸福感指数作为替代'],ans:{en:'My answer is a clear no. GDP growth is a spectacularly narrow metric that counts production regardless of social value or environmental cost. A country that destroys its forests to sell timber registers this as success. Meanwhile, parental care and ecosystem services — activities of enormous social value — register as nothing. The emerging field of wellbeing economics argues compellingly that governments should target a multidimensional index of human flourishing. New Zealand and several Nordic countries are already experimenting with wellbeing budgets.',cn:'我的回答是明确的否。GDP增长是一个极其狭窄的指标，它计算生产而不考虑社会价值或环境成本。一个为出售木材而破坏森林的国家将这注册为成功。与此同时，父母护理和生态系统服务——具有巨大社会价值的活动——什么都不计算。新兴的幸福经济学令人信服地主张政府应以人类繁荣的多维指数为目标。新西兰和几个北欧国家已在实验幸福预算。'},discourse:['my answer is a clear no','a spectacularly narrow metric','meanwhile','the emerging field — argues compellingly','the evidence suggests'],debate:{for:{label:'Growth enables social investment',cn:'增长使社会投资成为可能',point:'Economic growth generates tax revenues that fund healthcare, education and poverty reduction.',pointcn:'经济增长产生资助医疗、教育和减贫的税收收入。'},against:{label:'Wellbeing should replace growth',cn:'幸福感应该取代增长',point:'GDP is ecologically destructive and socially inadequate; wellbeing indexes measure what matters.',pointcn:'GDP在生态上是破坏性的；幸福感指数衡量重要的事情。'}}},
+{id:'ec2',type:'compare',q:'What are the relative merits of capitalism and socialist economic models?',qcn:'资本主义和社会主义经济模式各有什么优点？',ideas:['Innovation incentives','Public good provision failures','Scandinavian mixed economy','China\'s state capitalism'],ideascn:['创新激励','公共品提供失败','斯堪的纳维亚混合经济','中国国家资本主义'],ans:{en:'This question is best approached empirically rather than ideologically. Purely unregulated capitalism generates extraordinary innovation but also systematic market failures — undersupplied public goods, under-priced externalities, and compounding inequality. Pure central planning catastrophically fails at resource allocation. The empirical evidence strongly favours some variant of the mixed economy model — combining market mechanisms with substantial state intervention. The Nordic countries offer the most compelling proof: they combine high productivity with consistently high wellbeing scores.',cn:'这个问题最好从经验而非意识形态角度来处理。纯粹不受监管的资本主义产生了非凡的创新但也产生了系统性的市场失灵。纯粹的中央计划在资源分配方面灾难性地失败。经验证据强烈支持混合经济模式的某些变体——将市场机制与大量国家干预相结合。北欧国家提供了最令人信服的证明：他们将高生产力与持续高幸福感分数相结合。'},discourse:['best approached empirically rather than ideologically','but also produces','the empirical evidence strongly favours','perhaps the most compelling proof of concept'],debate:{for:{label:'Mixed economy is empirically superior',cn:'混合经济在经验上更优越',point:'Nordic countries prove markets + redistribution outperforms either extreme.',pointcn:'北欧国家证明市场+再分配优于任何极端。'},against:{label:'Markets must be given primacy',cn:'市场必须获得优先地位',point:'State intervention distorts price signals; only markets efficiently allocate scarce resources.',pointcn:'国家干预扭曲价格信号；只有市场才能有效分配稀缺资源。'}}},
+{id:'ec3',type:'society',q:'How does economic inequality affect social cohesion and wellbeing?',qcn:'经济不平等如何影响社会凝聚力和幸福感？',ideas:['Wilkinson & Pickett Spirit Level research','Social trust erosion','Relative deprivation and status anxiety','Political polarisation'],ideascn:['威尔金森和皮克特研究','社会信任侵蚀','相对剥夺感和地位焦虑','政治极化'],ans:{en:'The relationship is one of the most robustly evidenced findings in social science. The landmark research by Wilkinson and Pickett demonstrated that among rich countries, the most unequal consistently perform worst on virtually every social measure: health, educational attainment, mental illness, obesity, and homicide rates. The mechanism appears primarily psychosocial: high inequality increases status competition and erodes social trust. Crucially, these effects are felt across the income distribution — inequality damages the wellbeing of rich and poor alike.',cn:'这种关系是社会科学中证据最充分的发现之一。威尔金森和皮克特的里程碑研究表明，在富裕国家中，最不平等的在几乎每个社会衡量标准上持续表现最差：健康、教育成就、心理疾病、肥胖和凶杀率。机制主要是心理社会性的：高不平等增加地位竞争并侵蚀社会信任。至关重要的是，这些影响在整个收入分配中都能感受到——不平等损害富人和穷人的幸福感。'},discourse:['one of the most robustly evidenced findings','demonstrated compellingly','the mechanism appears to be primarily','crucially'],debate:{for:{label:'Inequality is deeply socially corrosive',cn:'不平等对社会具有深刻腐蚀性',point:'Robust evidence links high inequality to worse outcomes on virtually every social measure.',pointcn:'有力证据将高不平等与几乎每个社会衡量标准上的更差结果联系起来。'},against:{label:'Some inequality incentivises effort',cn:'一些不平等激励努力',point:'Reward differentials motivate innovation; flat equality removes productive incentives.',pointcn:'奖励差距激励创新；平等消除了生产性激励。'}}},
+{id:'ec4',type:'opinion',q:'Is free trade between countries always beneficial?',qcn:'国家之间的自由贸易总是有益的吗？',ideas:['Comparative advantage theory','Supply chain vulnerability','Deindustrialisation','Environmental and labour standards dumping'],ideascn:['比较优势理论','供应链脆弱性','去工业化','环境和劳工标准竞次'],ans:{en:'Free trade is theoretically sound but considerably more contested in real-world application. The comparative advantage argument has contributed to impressive aggregate global growth. However, the distributional consequences have been devastating in specific communities — the deindustrialisation of working-class communities caused by manufacturing offshoring created concentrated economic devastation that aggregate GDP statistics systematically obscured. Free trade between economies with vastly different regulatory standards amounts to regulatory arbitrage — exporting social costs while capturing private profits.',cn:'自由贸易在理论上是合理的，但在现实世界应用中相当有争议。比较优势论点为全球总体增长做出了贡献。然而，贸易自由化的分配后果在特定社区是毁灭性的——因制造业外包导致的工人阶级社区去工业化造成了总体GDP统计系统性掩盖的集中经济破坏。拥有截然不同监管标准的经济体之间的自由贸易相当于监管套利——输出社会成本同时获取私人利润。'},discourse:['robust as a theoretical principle but considerably more complex','however, the distributional consequences','that aggregate GDP statistics systematically obscured','amounts to a form of'],debate:{for:{label:'Free trade raises global prosperity',cn:'自由贸易提高全球繁荣',point:'Comparative advantage drives efficiency gains and growth across trading nations.',pointcn:'比较优势驱动贸易国的效率收益和增长。'},against:{label:'Free trade has distributional victims',cn:'自由贸易有分配受害者',point:'Manufacturing communities are devastated; regulatory arbitrage exports social costs.',pointcn:'制造业社区被摧毁；监管套利输出社会成本。'}}},
+{id:'ec5',type:'future',q:'How will the global economy be different in twenty years?',qcn:'二十年后全球经济将有何不同？',ideas:['Multipolar economic order','Climate transition reshaping industries','Automation-driven paradox','Digital currency'],ideascn:['多极经济秩序','气候转型重塑产业','自动化驱动的悖论','数字货币'],ans:{en:'The most certain development is the continued rise of the Global South as centres of economic gravity, creating a genuinely multipolar economic order. The green energy transition is structurally irreversible — the economics of renewable energy are now so compelling that fossil fuel industries face existential decline regardless of political headwinds. The most uncertain factor is artificial intelligence — whether it produces genuine productivity transformation or merely automates certain tasks without fundamentally raising living standards remains genuinely unknown.',cn:'最确定的发展是全球南方的持续崛起作为经济重心，创造一个真正多极经济秩序。绿色能源转型在结构上是不可逆转的——可再生能源的经济学现在如此令人信服。最不确定的因素是人工智能——它是否产生真正的生产力变革还是仅仅自动化某些任务而没有从根本上提高生活水平，这仍然是真正未知的。'},discourse:['intellectual honesty requires acknowledging','the most certain development is','I believe, structurally irreversible','remains genuinely unknown'],debate:{for:{label:'AI and green transition will drive growth',cn:'AI和绿色转型将推动增长',point:'Productivity from AI + cost collapse of renewables will power extraordinary transformation.',pointcn:'AI的生产力+可再生能源成本崩溃将推动非凡变革。'},against:{label:'Multipolar disorder will dominate',cn:'多极无序将占主导',point:'Geopolitical fragmentation and transition costs will create volatility rather than growth.',pointcn:'地缘政治碎片化和转型成本将创造波动而非增长。'}}},
+{id:'ec6',type:'solution',q:'What should be done to reduce the gap between rich and poor countries?',qcn:'应该采取什么措施来缩小富国和穷国之间的差距？',ideas:['Debt relief','Technology transfer','Fair trade vs. free trade','Colonial reparations debate'],ideascn:['债务减免','技术转让','公平贸易与自由贸易','殖民赔偿辩论'],ans:{en:'Addressing global inequality requires confronting uncomfortable truths about the international system\'s structural architecture. Persistent poverty of many developing nations is not simply internal policy failures — it\'s partly a product of international arrangements favouring wealthy countries: trade rules protecting rich nations\' sectors; intellectual property regimes pricing medicines beyond poor countries\' reach; and ongoing debt burdens from loans whose original beneficiaries were often authoritarian regimes. Genuine development assistance should prioritise technology transfer, clean energy infrastructure, and debt relief over tied aid that primarily benefits donor country corporations.',cn:'解决全球不平等需要面对关于国际体系结构架构的令人不舒服的真相。许多发展中国家的持续贫困不仅仅是内部政策失败——它部分是有利于富裕国家的国际安排的产物：保护富国部门的贸易规则；使药品定价超出穷国承受范围的知识产权制度；以及持续的债务负担。真正的发展援助应优先考虑技术转让、清洁能源基础设施和债务减免。'},discourse:['requires confronting uncomfortable truths','not simply — it\'s partly a product of','genuine development assistance should prioritise','more fundamentally'],debate:{for:{label:'Systemic reform of global institutions needed',cn:'需要对全球机构进行系统性改革',point:'Trade rules, IP regimes and debt structures perpetuate disadvantage; reform is essential.',pointcn:'贸易规则、知识产权制度和债务结构使劣势永久化；改革至关重要。'},against:{label:'Internal governance is the primary issue',cn:'内部治理是主要问题',point:'Good governance, rule of law and anti-corruption reform within developing nations drives development.',pointcn:'发展中国家内部的良好治理和反腐改革推动发展。'}}},
+]},
+// ─── 11. MEDIA ───
+{id:'med',theme:'Media',cn:'媒体',qs:[
+{id:'m1',type:'evaluate',q:'How reliable do you think the news media is in your country?',qcn:'你认为你国家的新闻媒体有多可靠？',ideas:['Ownership concentration and editorial bias','Clickbait incentives vs. accuracy','Public broadcasting independence','Citizen journalism as corrective'],ideascn:['所有权集中和编辑偏见','点击诱导与准确性','公共广播独立性','公民新闻作为纠正'],ans:{en:'Media reliability is a genuinely complex question that resists simple binary answers. Most established outlets employ professional journalists who sincerely attempt accuracy, and dismissing all mainstream media as unreliable is both factually wrong and democratically dangerous. However, structural pressures — advertising-driven revenue models that reward clickbait over depth, concentration of ownership that narrows editorial perspectives, and political polarisation that creates market incentives for partisan framing — all systematically compromise reliability. The most trustworthy approach is to consume news from multiple sources, prioritise outlets with transparent editorial standards, and develop the media literacy to distinguish between reporting and commentary.',cn:'媒体可靠性是一个真正复杂的问题，抵制简单的二元答案。大多数已建立的媒体雇用真诚尝试准确的专业记者，将所有主流媒体视为不可靠既在事实上是错误的也在民主上是危险的。然而，结构性压力——奖励点击诱导而非深度的广告驱动收入模式、缩小编辑视角的所有权集中、以及创造党派框架市场激励的政治极化——都系统性地损害了可靠性。最值得信赖的方法是从多个来源消费新闻，优先选择具有透明编辑标准的媒体。'},discourse:['genuinely complex','dismissing all mainstream media is both — and','however, structural pressures','the most trustworthy approach is'],debate:{for:{label:'Professional media remains essential',cn:'专业媒体仍然至关重要',point:'Trained journalists with editorial standards provide accountability that citizen journalism cannot.',pointcn:'具有编辑标准的受训记者提供了公民新闻无法提供的问责。'},against:{label:'Structural incentives compromise reliability',cn:'结构性激励损害了可靠性',point:'Revenue models reward engagement over accuracy; ownership concentration narrows perspectives.',pointcn:'收入模式奖励参与度而非准确性；所有权集中缩小了视角。'}}},
+{id:'m2',type:'society',q:'What impact does advertising have on society and consumer behaviour?',qcn:'广告对社会和消费者行为有什么影响？',ideas:['Manufactured desire vs. informing consumers','Body image and self-esteem damage','Children as vulnerable targets','Advertising as economic engine'],ideascn:['制造欲望与告知消费者','身体形象和自尊心损害','儿童作为脆弱目标','广告作为经济引擎'],ans:{en:'Advertising\'s societal impact is far more profound and psychologically invasive than most people consciously recognise. The average person encounters thousands of commercial messages daily, each designed by sophisticated behavioural psychology to create dissatisfaction with current circumstances and desire for products positioned as solutions. The cumulative effect is a culture of manufactured inadequacy — a persistent sense that we are not attractive enough, successful enough, or complete enough without the next purchase. The evidence of harm is particularly strong regarding body image: decades of research link advertising exposure to body dissatisfaction, disordered eating, and depression, particularly among young women.',cn:'广告的社会影响比大多数人有意识地认识到的更深刻和心理上更具侵入性。普通人每天遇到数千条商业信息，每条都由复杂的行为心理学设计，以创造对当前状况的不满和对被定位为解决方案的产品的欲望。累积效果是一种制造不足感的文化——一种我们不够有吸引力、不够成功或不够完整的持续感觉。关于身体形象的伤害证据尤其有力：数十年的研究将广告暴露与身体不满、饮食失调和抑郁联系起来。'},discourse:['far more profound than most people recognise','the cumulative effect is','the evidence of harm is particularly strong'],debate:{for:{label:'Advertising funds free content',cn:'广告资助免费内容',point:'Ad-supported media, search and social platforms would not exist without advertising revenue.',pointcn:'广告支持的媒体、搜索和社交平台没有广告收入就不会存在。'},against:{label:'Advertising manufactures dissatisfaction',cn:'广告制造不满',point:'Psychological manipulation creates artificial demand; body image harm is well-documented.',pointcn:'心理操控创造人为需求；身体形象损害有充分记录。'}}},
+{id:'m3',type:'opinion',q:'Should there be stricter regulations on what content social media companies can promote?',qcn:'是否应该对社交媒体公司可以推广的内容进行更严格的监管？',ideas:['Algorithm transparency demands','Free speech absolutism','Harmful content amplification','Platform self-regulation failure'],ideascn:['算法透明度要求','言论自由绝对主义','有害内容放大','平台自我监管失败'],ans:{en:'I believe the argument for regulation has become overwhelming, though the form it takes matters enormously. The current business model of social media platforms — which maximises engagement by algorithmically amplifying the most emotionally provocative content — has been demonstrated to spread misinformation faster than truth, to radicalise vulnerable users, and to cause measurable mental health harm particularly to adolescents. The platforms\' record of self-regulation has been a comprehensive failure. However, regulation must be carefully designed to target algorithmic amplification and business models rather than content itself, to avoid the very real danger of government censorship. Mandating algorithmic transparency, requiring impact assessments, and prohibiting engagement-maximising defaults for minors would be effective first steps.',cn:'我相信支持监管的论点已经变得压倒性的，尽管其形式非常重要。社交媒体平台目前的商业模式——通过算法放大最具情感挑衅性的内容来最大化参与度——已被证明比真相更快地传播错误信息、激进化脆弱用户，并对青少年造成可衡量的心理健康伤害。平台的自我监管记录是全面的失败。然而，监管必须精心设计，针对算法放大和商业模式而非内容本身，以避免政府审查的真实危险。'},discourse:['the argument for regulation has become overwhelming','the current business model','a comprehensive failure','however, regulation must be carefully designed'],debate:{for:{label:'Regulation of algorithms is essential',cn:'算法监管至关重要',point:'Engagement-maximising algorithms spread harm at scale; self-regulation has demonstrably failed.',pointcn:'参与度最大化算法大规模传播伤害；自我监管已明显失败。'},against:{label:'Regulation risks overreach',cn:'监管有过度风险',point:'Government content control risks censorship; market competition is a better corrective.',pointcn:'政府内容控制有审查风险；市场竞争是更好的纠正。'}}},
+{id:'m4',type:'compare',q:'How has the way people consume news changed, and is this positive?',qcn:'人们消费新闻的方式如何变化，这是积极的吗？',ideas:['From scheduled broadcast to always-on feeds','Local journalism collapse','Subscription model paywall inequality','Podcasts as long-form revival'],ideascn:['从定时播出到永续信息流','本地新闻业崩溃','订阅模式付费墙不平等','播客作为长篇复兴'],ans:{en:'My assessment is that the net effect has been substantially negative, though with important qualifications. The collapse of the scheduled broadcast model has destroyed shared information experiences that were foundational to democratic discourse. In its place we have algorithmically personalised streams structurally incapable of serving an informed citizenry. The most catastrophic development has been the collapse of local journalism — the loss of reporters covering city councils and courts has created accountability voids. That said, the genuine positive is the expansion of long-form specialist journalism through podcasts and newsletters.',cn:'我认为其净效果基本上是消极的，尽管有重要的限定条件。定时播出模式的崩溃摧毁了民主话语基础的共享信息体验。取而代之的是算法个性化的内容流，在结构上无法满足知情公民的需求。最灾难性的发展是本地新闻业的崩溃——报道市议会和法院的记者的流失创造了问责空白。尽管如此，真正的积极之处在于通过播客和通讯扩展了长篇专业新闻。'},discourse:['my assessment is that','whatever their limitations','the most catastrophic specific development','that said, the genuine positive'],debate:{for:{label:'Fragmented consumption is empowering',cn:'碎片化消费赋予力量',point:'Greater choice, deeper specialist analysis via podcasts, democratised access.',pointcn:'更多选择、通过播客的更深度分析、民主化获取。'},against:{label:'Shared discourse has been lost',cn:'共享话语已丧失',point:'Algorithmic personalisation destroys common facts; local journalism collapse is catastrophic.',pointcn:'算法个性化摧毁共同事实；本地新闻业崩溃是灾难性的。'}}},
+{id:'m5',type:'future',q:'Will traditional media outlets like newspapers and television survive?',qcn:'报纸和电视等传统媒体能生存吗？',ideas:['Niche premium content strategy','Paywall models','Streaming competition','Public service broadcasting role'],ideascn:['利基高端内容策略','付费墙模式','流媒体竞争','公共服务广播角色'],ans:{en:'Traditional media is not facing extinction but profound reinvention. The most resilient outlets will survive by becoming premium, trusted sources of depth rather than competing on speed. While social media delivers instant, free information, it cannot replicate institutional credibility, editorial standards, and long-form investigative capacity. Outlets that invest in quality journalism and build loyal subscriber bases will thrive as "quality signals" in an ocean of noise. Television, particularly public service broadcasting, retains a vital role in creating shared national moments. The outlets that die will be those clinging to legacy formats without adapting.',cn:'传统媒体并非面临灭绝，而是深刻的改造。最具韧性的媒体将通过成为高端、可信的深度来源而非在速度上竞争而生存。虽然社交媒体提供即时免费信息，但无法复制制度可信度、编辑标准和长篇调查能力。投资高质量新闻并建立忠实订阅者基础的媒体将蓬勃发展。电视尤其是公共服务广播保留了创造共享国家时刻的重要角色。将消亡的媒体是那些坚持传统格式而不适应的。'},discourse:['not facing extinction but a profound reinvention','the key insight is that','the outlets that die will be those'],debate:{for:{label:'Traditional media will adapt and endure',cn:'传统媒体将适应并持续',point:'Institutional trust and depth cannot be replicated by algorithms; premium models are viable.',pointcn:'制度信任和深度无法被算法复制；高端模式是可行的。'},against:{label:'Digital disruption is terminal',cn:'数字颠覆是致命的',point:'Attention has permanently shifted; younger generations rarely consume legacy formats.',pointcn:'注意力已永久转移；年轻一代很少消费传统格式。'}}},
+{id:'m6',type:'opinion',q:'Should governments regulate the spread of fake news on social media?',qcn:'政府是否应该监管社交媒体上假新闻的传播？',ideas:['Freedom of speech concerns','Harm to democratic processes','Fact-checking vs. censorship risk','Platform self-regulation failure'],ideascn:['言论自由担忧','对民主进程的伤害','事实核查与审查风险','平台自我监管失败'],ans:{en:'I hold a strong but carefully qualified position: yes, governments have both a right and a duty to regulate the deliberate spread of verifiably false information that poses clear harm. Free speech was never intended to protect provably false statements designed to manipulate public opinion at scale — that is weaponised disinformation. However, any regulatory framework must be narrow, transparent, and subject to independent judicial oversight to prevent mission creep into political censorship. The evidence from countries that have introduced such laws shows targeted regulation can reduce egregious harms without collapsing into authoritarian control.',cn:'我持强烈但谨慎限定的立场：是的，政府既有权利也有责任监管故意传播可验证虚假信息的行为。言论自由从未旨在保护旨在大规模操纵公众舆论的明显虚假陈述——那是武器化的虚假信息。然而，任何监管框架都必须狭窄、透明，并接受独立司法监督，以防止任务蔓延成政治审查。引入此类法律的国家的证据表明有针对性的监管可以减少最严重的伤害。'},discourse:['I hold a strong but carefully qualified position','the principle of free speech was never intended','however, any regulatory framework must be','the evidence from','the alternative of'],debate:{for:{label:'Regulation protects democracy',cn:'监管保护民主',point:'Deliberate disinformation undermines elections and public health; targeted rules are legitimate.',pointcn:'故意虚假信息破坏选举和公共健康；有针对性的规则是合法的。'},against:{label:'Regulation risks state censorship',cn:'监管有国家审查风险',point:'Governments cannot be trusted to define "truth"; free speech must remain absolute.',pointcn:'政府不能被信任来定义"真相"；言论自由必须保持绝对。'}}},
+]},
+// ─── 12. YOUTH ───
+{id:'yth',theme:'Youth',cn:'青年',qs:[
+{id:'y1',type:'compare',q:'How do young people today differ from previous generations in their outlook on life?',qcn:'当今年轻人与前几代人在人生观上有何不同？',ideas:['Pragmatism vs. idealism','Climate anxiety','Mental health awareness','Delayed milestones'],ideascn:['实用主义与理想主义','气候焦虑','心理健康意识','推迟里程碑'],ans:{en:'The generational shift is profound and, I would argue, largely a rational response to changed material conditions. Previous generations assumed steady progress and institutional stability; today\'s young people inherit climate breakdown, technological disruption, housing unaffordability, and precarious work. This produces a more pragmatic, risk-averse, and mentally health-literate cohort. I reject the narrative that they are "entitled" or "fragile" — their apparent delay in traditional milestones is not laziness but economic realism: when housing costs outstrip wages and student debt is crushing, postponing marriage is simply prudent.',cn:'代际人生观转变是深刻的，我认为主要是对改变了的物质条件的理性回应。前几代人假设经济稳步进步和制度稳定；今天年轻人继承了气候崩溃、技术颠覆、住房负担不起和不稳定的工作。这产生了一个更加实用、规避风险的群体。我拒绝他们"自以为是"或"脆弱"的叙事——他们在传统里程碑上的延迟不是懒惰而是经济现实主义。'},discourse:['I would argue','this produces','that said, I reject','their apparent delay is not'],debate:{for:{label:'Youth outlook is more realistic',cn:'青年人生观更现实',point:'They face genuine systemic crises; pragmatism is adaptive, not entitled.',pointcn:'他们面临真正的系统性危机；实用主义是适应性的。'},against:{label:'Traditional resilience has been lost',cn:'传统韧性已丧失',point:'Social media and safetyism have produced anxiety-prone generations less equipped for adversity.',pointcn:'社交媒体和安全主义产生了更容易焦虑的世代。'}}},
+{id:'y2',type:'opinion',q:'Do young people have too much pressure to succeed these days?',qcn:'现在年轻人承受的成功压力太大吗？',ideas:['Social media comparison culture','High-stakes education','Economic precarity','Parental expectations'],ideascn:['社交媒体比较文化','高风险教育','经济不稳定','父母期望'],ans:{en:'Yes, and the pressure is both quantitatively greater and qualitatively different. Social media has turned success into a 24/7 public performance metric. This is compounded by education systems that treat exam results as the primary determinant of life chances, and an economy where entry-level wages have stagnated while housing costs have skyrocketed. The result is chronic status anxiety at younger ages. I believe the solution lies in redefining success more broadly — valuing contribution, wellbeing, and community over purely financial markers — and in structural reforms that make the path to a stable life less punishingly competitive.',cn:'是的，而且压力在量上更大，在质上也不同。社交媒体将成功变成了24/7的公共表演指标。这与教育系统和经济（入门级工资停滞而住房成本飙升）相结合。结果是一代人在更年轻时就经历慢性地位焦虑。我相信解决方案在于更广泛地重新定义成功——重视贡献、幸福感和社区——以及结构性改革。'},discourse:['yes, and the pressure is both','this is compounded by','the result is','I believe the solution lies in'],debate:{for:{label:'Pressure is unprecedented and harmful',cn:'压力空前且有害',point:'Social media + economic insecurity create toxic perfectionism and mental health crisis.',pointcn:'社交媒体+经济不安全创造有毒的完美主义和心理健康危机。'},against:{label:'Pressure drives achievement',cn:'压力驱动成就',point:'Healthy ambition has always existed; today\'s youth benefit from more opportunities.',pointcn:'健康的雄心一直存在；今天年轻人受益于更多机会。'}}},
+{id:'y3',type:'society',q:'What role do young people play in driving social change?',qcn:'年轻人在推动社会变革中扮演什么角色？',ideas:['Climate strikes and activism','Digital-native organising','Value shifts on diversity','Intergenerational tension'],ideascn:['气候罢课','数字原住民组织','多样性价值观转变','代际紧张'],ans:{en:'Young people have always been at the forefront of social change, but today\'s youth are uniquely positioned by technology and crisis to accelerate it. From Fridays for Future to #MeToo, digitally native generations organise globally at unprecedented speed. Their advantage is twofold: they inherit the problems with none of the sunk-cost loyalty to failing systems, and they possess native digital fluency to bypass traditional gatekeepers. The tension is intergenerational — older generations often perceive this activism as naive. In reality, it is a rational response to inheriting a world whose rules were written before the crises became existential.',cn:'年轻人一直处于社会变革的前沿，但今天的青年因技术和危机而独特地定位于加速它。从Fridays for Future到#MeToo，数字原生世代以前所未有的速度全球组织。他们的优势有两点：继承了问题而对失败系统没有沉没成本忠诚，并拥有原生数字流利度绕过传统把关者。紧张是代际的——实际上这是对继承一个规则在危机成为存在性之前写就的世界的理性回应。'},discourse:['have always been','but today\'s youth are uniquely positioned','their advantage is twofold','in reality, it is','history consistently shows'],debate:{for:{label:'Youth drive necessary disruption',cn:'青年驱动必要颠覆',point:'They force systemic issues onto the agenda; digital tools amplify their impact.',pointcn:'他们将系统性问题推上议程；数字工具放大影响。'},against:{label:'Experience matters more than passion',cn:'经验比热情更重要',point:'Youth activism often lacks nuance; sustainable change requires cross-generational wisdom.',pointcn:'青年activism往往缺乏细微差别；可持续变革需要跨代智慧。'}}},
+{id:'y4',type:'evaluate',q:'To what extent should society listen to the views of young people on major issues?',qcn:'社会在多大程度上应该听取年轻人在重大问题上的观点？',ideas:['Stakeholder principle','Inexperience vs. fresh perspective','Tokenism in youth consultation','Intergenerational equity'],ideascn:['利益相关者原则','经验不足与新鲜视角','青年咨询中的象征性','代际公平'],ans:{en:'Society should listen to young people not out of tokenism but because they are the primary stakeholders in long-term consequences of today\'s decisions. Climate policy, housing, education debt, and AI will shape their lives far more than mine. Dismissing their views on grounds of "inexperience" is convenient but logically flawed — experience is valuable, but can also create path dependency and status-quo bias. The most effective approach is structured intergenerational dialogue that values both lived wisdom and unencumbered vision. Countries like Wales with its Future Generations Commissioner show that institutionalising youth voice leads to more sustainable, forward-looking policy.',cn:'社会应该听取年轻人的意见不是出于象征性而是因为他们是今天决策长期后果的主要利益相关者。气候政策、住房、教育债务和AI将比对我更深刻地塑造他们的生活。以"经验不足"为由驳回他们的观点在逻辑上是错误的——经验有价值但也可能产生路径依赖。最有效的方法是结构化的代际对话，既重视生活智慧也重视不受束缚的愿景。像威尔士设有未来世代专员的国家表明制度化青年声音带来更可持续的政策。'},discourse:['not out of tokenism but because','dismissing their views on the grounds of','the most effective approach is','the alternative is'],debate:{for:{label:'Youth voice is essential for future equity',cn:'青年声音对未来公平至关重要',point:'They bear the long-term costs; intergenerational justice requires their input.',pointcn:'他们承担长期成本；代际公正需要他们的投入。'},against:{label:'Maturity requires life experience',cn:'成熟需要生活经验',point:'Complex policy needs seasoned judgement; youth perspectives can be idealistic but impractical.',pointcn:'复杂政策需要经验丰富的判断；青年视角可能理想化但不切实际。'}}},
+{id:'y5',type:'solution',q:'What can be done to better support young people entering the workforce?',qcn:'可以采取什么措施来更好地支持进入职场的年轻人？',ideas:['Apprenticeship expansion','Mental health support in workplaces','Affordable housing and debt relief','Mentorship reform'],ideascn:['学徒制扩展','工作场所心理健康支持','住房和债务减免','导师制改革'],ans:{en:'The transition from education to work has become dangerously protracted and precarious. First, we must expand high-quality apprenticeships rather than pushing everyone toward degrees of questionable value. Second, workplaces must treat mental health as seriously as physical safety. Third, governments must address housing unaffordability and student debt — without a realistic prospect of financial independence, young people remain stuck in "extended adolescence". Finally, career guidance must move beyond generic advice to genuine skills forecasting. Countries like Germany with strong dual-education systems show dramatically better youth employment outcomes.',cn:'从教育到工作的过渡已变得危险地漫长和不稳定。首先我们必须扩展高质量学徒制。其次工作场所必须将心理健康视为与身体安全同等重要。第三政府必须解决住房和学生债务的结构性障碍。最后职业指导必须超越泛泛建议转向真正的技能预测。像德国这样拥有强大双元教育体系的国家显示出显著更好的青年就业成果。'},discourse:['has become dangerously protracted','meaningful support requires action on multiple fronts','first','second','third','finally'],debate:{for:{label:'Systemic support is urgently needed',cn:'系统性支持迫在眉睫',point:'Economic and housing barriers have fundamentally changed the youth transition; policy must catch up.',pointcn:'经济和住房障碍已从根本上改变了青年过渡；政策必须跟上。'},against:{label:'Personal responsibility remains key',cn:'个人责任仍是关键',point:'Resilience and adaptability are still the most important predictors of success.',pointcn:'韧性和适应能力仍然是成功的最重要预测因素。'}}},
+{id:'y6',type:'future',q:'What challenges and opportunities will young people face in the next twenty years?',qcn:'未来二十年年轻人将面临什么挑战和机会？',ideas:['AI automation of entry-level jobs','Climate migration','Longer lifespans and multi-career paths','Greater global connectivity'],ideascn:['AI自动化入门级工作','气候移民','更长寿命和多职业路径','更大全球连通性'],ans:{en:'The next two decades will be defined by two contradictory forces: unprecedented technological opportunity and equally unprecedented existential risk. Young people will inherit tools — AI, biotechnology, renewable energy — that could solve problems previous generations couldn\'t imagine. They will likely live longer and work more flexibly. The challenges, however, are daunting: AI will automate many entry-level cognitive jobs; climate disruption will reshape where people can live; and economic inequality may intensify. My hope is that this generation, having grown up with both the diagnosis and the tools, will demand and deliver the systemic changes that older generations found politically difficult.',cn:'未来二十年将由两种矛盾力量定义：前所未有的技术机会和同样前所未有的存在性风险。年轻人将继承工具——AI、生物技术、可再生能源——可以解决前几代人无法想象的问题。他们可能活得更长工作更灵活。然而挑战令人畏惧：AI将自动化许多入门级认知工作；气候破坏将重塑人们可以生活的地方。我希望这一代人既诊断了问题又拥有解决工具，将要求并交付老一代觉得困难的系统性变革。'},discourse:['will be defined by two contradictory forces','on the opportunity side','the challenges, however, are daunting','my hope is that'],debate:{for:{label:'Opportunities outweigh challenges',cn:'机会大于挑战',point:'Technological abundance and global connectivity will create unprecedented possibilities.',pointcn:'技术丰裕和全球连通性将创造前所未有的可能性。'},against:{label:'Existential risks dominate',cn:'存在性风险占主导',point:'Climate tipping points and AI disruption could overwhelm adaptive capacity without urgent action.',pointcn:'气候临界点和AI颠覆可能压倒适应能力。'}}},
+]},
+];
+
+// ═══════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════
+let mastered = JSON.parse(localStorage.getItem('p3mastered')||'{}');
+let bilingualOn = false;
+let currentFilter = 'ALL';
+const TOTAL = themes.reduce((s,t)=>s+t.qs.length,0);
+
+// ═══════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════
+function render(){
+  const grid = document.getElementById('themeGrid');
+  const search = (document.getElementById('searchIn').value||'').toLowerCase();
+  let html = '';
+  let visibleThemes = 0;
+
+  themes.forEach((t,ti)=>{
+    if(currentFilter!=='ALL' && t.theme!==currentFilter) return;
+    const meta = THEMES_META[t.theme];
+    // filter questions by search
+    const filteredQs = t.qs.filter(q=>{
+      if(!search) return true;
+      return q.q.toLowerCase().includes(search)||q.qcn.includes(search)||(q.ideas.join(' ')+q.ideascn.join(' ')).toLowerCase().includes(search);
+    });
+    if(filteredQs.length===0) return;
+    visibleThemes++;
+    const masteredCount = filteredQs.filter(q=>mastered[q.id]).length;
+    const pct = Math.round(masteredCount/filteredQs.length*100);
+
+    html+=`<div class="theme-block" style="animation-delay:${ti*.05}s">
+      <div class="theme-header" onclick="toggleTheme(this)">
+        <div class="theme-icon" style="background:${meta.bg};border:1.5px solid ${meta.border}">${meta.icon}</div>
+        <div class="theme-meta">
+          <div class="theme-name">${t.theme}</div>
+          <div class="theme-name-cn${bilingualOn?' vis':''}">${t.cn}</div>
+          <div class="theme-q-count">${filteredQs.length} questions · ${masteredCount} mastered</div>
+        </div>
+        <div class="theme-prog">
+          <div class="theme-prog-track"><div class="theme-prog-fill" style="width:${pct}%"></div></div>
+          <span class="theme-prog-lbl">${pct}%</span>
+        </div>
+        <span class="theme-chevron">▼</span>
+      </div>
+      <div class="theme-body">
+        <div class="questions-wrap">`;
+
+    filteredQs.forEach((q,qi)=>{
+      const isMastered = mastered[q.id];
+      const qt = Q_TYPES[q.type]||{label:q.type,cls:'qt-opinion'};
+      html+=`<div class="q-card${isMastered?' mastered':''}" id="qcard-${q.id}">
+        <div class="q-header" onclick="toggleQ('${q.id}')">
+          <span class="q-num">Q${qi+1}</span>
+          <div style="flex:1;min-width:0">
+            <div class="q-text">${q.q}</div>
+            <div class="q-text-cn${bilingualOn?' vis':''}">${q.qcn}</div>
+          </div>
+          <span class="q-type-tag ${qt.cls}">${qt.label}</span>
+          <div class="q-actions">
+            <button class="mastered-btn ${isMastered?'mb-on':'mb-off'}" onclick="event.stopPropagation();toggleMastered('${q.id}')">${isMastered?'✅ Mastered':'☐ Master'}</button>
+            <button class="q-expand" id="qexp-${q.id}">▼</button>
+          </div>
+        </div>
+        <div class="q-body" id="qbody-${q.id}">
+          <div class="q-body-inner">
+            <div class="sec-hd">💡 Key Ideas / 关键论点</div>
+            <div class="idea-row">${q.ideas.map((idea,i)=>`<span class="idea-chip" style="background:${meta.bg};border-color:${meta.border};color:${meta.color}">${idea}${bilingualOn&&q.ideascn[i]?' · '+q.ideascn[i]:''}</span>`).join('')}</div>
+
+            <div class="sec-hd" style="margin-top:14px">📝 Band 7+ Model Answer</div>
+            <div class="ans-box">
+              <div class="ans-label" style="color:${meta.color}">🎯 Sample Response</div>
+              <button class="ans-copy" onclick="copyAns(this,'${q.id}')">Copy</button>
+              <div class="ans-en">${q.ans.en}</div>
+              <div class="ans-cn${bilingualOn?' vis':''}" style="border-color:${meta.border}">${q.ans.cn}</div>
+            </div>
+
+            <div class="sec-hd" style="margin-top:14px">🔗 Discourse Markers</div>
+            <div class="dm-row">${q.discourse.map(d=>`<span class="dm">${d}</span>`).join('')}</div>
+
+            <div class="sec-hd" style="margin-top:14px">⚖️ Balanced Debate</div>
+            <div class="debate-pair">
+              <div class="debate-side for-side">
+                <div class="debate-side-lbl">✅ ${q.debate.for.label}</div>
+                <div class="debate-point">${q.debate.for.point}</div>
+                <div class="debate-point-cn${bilingualOn?' vis':''}">${q.debate.for.pointcn}</div>
+              </div>
+              <div class="debate-side against-side">
+                <div class="debate-side-lbl">❌ ${q.debate.against.label}</div>
+                <div class="debate-point">${q.debate.against.point}</div>
+                <div class="debate-point-cn${bilingualOn?' vis':''}">${q.debate.against.pointcn}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    });
+    html+=`</div></div></div>`;
+  });
+
+  grid.innerHTML = html;
+  document.getElementById('noResults').style.display = visibleThemes===0?'block':'none';
+  updateProgress();
+}
+
+// ═══════════════════════════════════════════════════════
+// INTERACTIONS
+// ═══════════════════════════════════════════════════════
+function toggleTheme(el){
+  const body = el.nextElementSibling;
+  const chev = el.querySelector('.theme-chevron');
+  body.classList.toggle('open');
+  chev.classList.toggle('open');
+}
+
+function toggleQ(id){
+  const body = document.getElementById('qbody-'+id);
+  const btn = document.getElementById('qexp-'+id);
+  body.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+
+function toggleMastered(id){
+  mastered[id] = !mastered[id];
+  if(!mastered[id]) delete mastered[id];
+  localStorage.setItem('p3mastered', JSON.stringify(mastered));
+  render();
+  toast(mastered[id]?'✅ Marked as mastered!':'Unmarked');
+}
+
+function copyAns(btn, id){
+  let q = null;
+  themes.forEach(t=>t.qs.forEach(qq=>{ if(qq.id===id) q=qq; }));
+  if(!q) return;
+  navigator.clipboard.writeText(q.ans.en).then(()=>{
+    btn.textContent='Copied!';
+    btn.classList.add('done');
+    setTimeout(()=>{ btn.textContent='Copy'; btn.classList.remove('done'); },1500);
+  });
+}
+
+function setBi(on){
+  bilingualOn = on;
+  render();
+}
+
+function setFilter(f, el){
+  currentFilter = f;
+  document.querySelectorAll('.tf').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  render();
+}
+
+function doSearch(){ render(); }
+
+function updateProgress(){
+  const m = Object.keys(mastered).filter(k=>mastered[k]).length;
+  document.getElementById('progFill').style.width = (m/TOTAL*100)+'%';
+  document.getElementById('progLbl').textContent = m+' / '+TOTAL;
+  document.getElementById('hstat-m').textContent = m;
+}
+
+function resetAll(){
+  if(!confirm('Reset all mastered progress?')) return;
+  mastered = {};
+  localStorage.removeItem('p3mastered');
+  render();
+  toast('Progress reset');
+}
+
+function toast(msg){
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+// ═══════════════════════════════════════════════════════
+// RANDOM DRILL MODAL
+// ═══════════════════════════════════════════════════════
+function randomDrill(){
+  const allQs = [];
+  themes.forEach(t=>t.qs.forEach(q=>allQs.push({...q,theme:t.theme})));
+  const shuffled = allQs.sort(()=>Math.random()-.5).slice(0,5);
+  let html = '';
+  shuffled.forEach((q,i)=>{
+    const meta = THEMES_META[q.theme];
+    const qt = Q_TYPES[q.type]||{label:q.type,cls:'qt-opinion'};
+    html+=`<div style="padding:14px 16px;border:1.5px solid var(--border);border-radius:14px;margin-bottom:12px;background:linear-gradient(135deg,#fafaff,#f5f6ff)">
+      <div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:8px">
+        <span class="q-num">Q${i+1}</span>
+        <span class="q-type-tag ${qt.cls}">${qt.label}</span>
+        <span style="font-size:10px;font-weight:700;color:var(--muted);margin-left:auto">${q.theme}</span>
+      </div>
+      <div style="font-size:14px;font-weight:700;color:var(--ink);line-height:1.55">${q.q}</div>
+      ${bilingualOn?`<div style="font-size:12px;color:var(--muted);margin-top:3px">${q.qcn}</div>`:''}
+      <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:8px">${q.ideas.map(id=>`<span style="font-size:10.5px;font-weight:700;padding:3px 10px;border-radius:6px;background:${meta.bg};color:${meta.color};border:1px solid ${meta.border}">${id}</span>`).join('')}</div>
+    </div>`;
+  });
+  document.getElementById('modalContent').innerHTML = html;
+  document.getElementById('modalOv').classList.add('open');
+}
+
+function closeModal(e){ if(e.target===e.currentTarget) document.getElementById('modalOv').classList.remove('open'); }
+function closeModalBtn(){ document.getElementById('modalOv').classList.remove('open'); }
+
+// ═══════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════
+render();
+console.log(`%c✅ IELTS Part 3 Trainer — ${TOTAL} questions loaded across ${themes.length} themes`, 'color:#5c6bc0;font-weight:800;font-size:13px');
+</script>
+</body>
+</html>

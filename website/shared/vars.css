@@ -1,0 +1,94 @@
+/* ===== 熙熙雅思英语 · 全局 CSS 变量（所有页面引入）===== */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+
+:root {
+    --primary:        #3b82f6;
+    --primary-dark:   #1e40af;
+    --primary-light:  #e0f2fe;
+    --success:        #10b981;
+    --success-light:  #d1fae5;
+    --danger:         #ef4444;
+    --danger-light:   #fee2e2;
+    --warning:        #f59e0b;
+    --teal:           #14b8a6;
+    --purple:         #8b5cf6;
+
+    --bg:             #f8fafc;
+    --card-bg:        #ffffff;
+    --text:           #1e2937;
+    --text-muted:     #64748b;
+    --border:         #f1f5f9;
+    --border-hover:   #e0f2fe;
+
+    --radius-card:    20px;
+    --radius-btn:     9999px;
+    --radius-sm:      12px;
+
+    --font:           'Noto Sans SC', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --max-width:      1280px;
+    --container-pad:  0 24px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    font-family: var(--font);
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+.xh-container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--container-pad);
+}
+
+/* ── 统一卡片 ── */
+.xh-card {
+    background: var(--card-bg);
+    border-radius: var(--radius-card);
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+.xh-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+    border-color: var(--border-hover);
+}
+
+/* ── 统一按钮 ── */
+.xh-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: var(--primary);
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: var(--radius-btn);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 6px -1px rgb(59 130 246 / 0.3);
+}
+.xh-btn:hover { background: #2563eb; transform: scale(1.03); box-shadow: 0 10px 15px -3px rgb(59 130 246 / 0.4); }
+.xh-btn.success  { background: var(--success);  box-shadow: 0 4px 6px -1px rgb(16 185 129 / 0.3); }
+.xh-btn.success:hover  { background: #059669; box-shadow: 0 10px 15px -3px rgb(16 185 129 / 0.4); }
+.xh-btn.danger   { background: var(--danger);   box-shadow: 0 4px 6px -1px rgb(239 68 68 / 0.3); }
+.xh-btn.danger:hover   { background: #dc2626; box-shadow: 0 10px 15px -3px rgb(239 68 68 / 0.4); }
+.xh-btn.teal     { background: var(--teal);     box-shadow: 0 4px 6px -1px rgb(20 184 166 / 0.3); }
+.xh-btn.teal:hover     { background: #0d9488; box-shadow: 0 10px 15px -3px rgb(20 184 166 / 0.4); }
+.xh-btn.purple   { background: var(--purple);   box-shadow: 0 4px 6px -1px rgb(139 92 246 / 0.3); }
+.xh-btn.purple:hover   { background: #7c3aed; }
+.xh-btn.gray     { background: #64748b; box-shadow: none; }
+.xh-btn.gray:hover     { background: #475569; }
+
+@media (max-width: 640px) {
+    .xh-card:hover { transform: none; }
+}

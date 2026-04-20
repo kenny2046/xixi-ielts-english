@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF 局部剪裁转长图工具</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .preview-container { max-height: 500px; overflow-y: auto; }
+        #cropper-wrapper { display: none; }
+    </style>
+</head>
+<body class="bg-gray-50 p-8">
+    <div class="max-w-4xl mx-auto bg-white p-6 rounded-xl shadow-md">
+        <h1 class="text-2xl font-bold mb-6 text-gray-800">PDF 剪裁导出工具</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <input type="file" id="pdf-upload" accept="application/pdf" class="border p-2 rounded w-full col-span-1">
+            <div class="flex gap-2 col-span-2">
+                <input type="number" id="start-page" placeholder="起始页码" class="border p-2 rounded w-24" value="1">
+                <input type="number" id="end-page" placeholder="结束页码" class="border p-2 rounded w-24" value="1">
+                <button id="load-pdf" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">加载 PDF</button>
+            </div>
+        </div>
+
+        <div id="status-msg" class="text-sm text-gray-500 mb-2"></div>
+        <div id="pdf-render-area" class="preview-container border-2 border-dashed border-gray-200 rounded mb-4 p-4 flex flex-col items-center gap-4">
+            <p class="text-gray-400">待加载内容...</p>
+        </div>
+
+        <div id="cropper-wrapper">
+            <div class="bg-yellow-50 p-4 rounded mb-4 border border-yellow-200">
+                <p class="text-sm text-yellow-700 font-medium">提示：下方已将所选页面合并，请拖动选框选择剪裁区域。</p>
+            </div>
+            <div class="mb-4">
+                <img id="image-to-crop" style="max-width: 100%;">
+            </div>
+            <button id="export-btn" class="bg-green-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-green-700 w-full">
+                剪裁并导出长图
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+
+    <script>
+        const pdfjsLib = window['pdfjs-dist/build/pdf'];
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+
+        let cropper = null;
+        let mergedCanvas = null;
+
+        // 点击加载 PDF 逻辑
+        document.getElementById('load-pdf').addEventListener('click', async () => {
+            const file = document.getElementById('pdf-upload').files[0];
+            if (!file) return alert('请先选择文件');
+
+            const startPage = parseInt(document.getElementById('start-page').value);
+            const endPage = parseInt(document.getElementById('end-page').value);
+            
+            const fileReader = new FileReader();
+            fileReader.onload = async function() {
+                const typedarray = new Uint8Array(this.result);
+                const pdf = await pdfjsLib.getDocument(typedarray).promise;
+                
+                const renderArea = document.getElementById('pdf-render-area');
+                renderArea.innerHTML = ''; // 清空
+                const canvases = [];
+
+                // 循环渲染指定范围的页面
+                for (let i = startPage; i <= Math.min(endPage, pdf.numPages); i++) {
+                    const page = await pdf.getPage(i);
+                    const viewport = page.getViewport({ scale: 1.5 });
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+                    
+                    await page.render({ canvasContext: context, viewport: viewport }).promise;
+                    canvases.push(canvas);
+                    renderArea.appendChild(canvas);
+                }
+
+                // 合并所有 Canvas 为一张大图，以便进行整体剪裁
+                mergeAndPrepareCropper(canvases);
+            };
+            fileReader.readAsArrayBuffer(file);
+        });
+
+        function mergeAndPrepareCropper(canvases) {
+            if (canvases.length === 0) return;
+
+            const totalWidth = Math.max(...canvases.map(c => c.width));
+            const totalHeight = canvases.reduce((sum, c) => sum + c.height, 0);
+
+            mergedCanvas = document.createElement('canvas');
+            mergedCanvas.width = totalWidth;
+            mergedCanvas.height = totalHeight;
+            const ctx = mergedCanvas.getContext('2d');
+
+            let currentY = 0;
+            canvases.forEach(c => {
+                ctx.drawImage(c, 0, currentY);
+                currentY += c.height;
+            });
+
+            // 将合并后的图放入 Cropper
+            const imgToCrop = document.getElementById('image-to-crop');
+            imgToCrop.src = mergedCanvas.toDataURL('image/png');
+            
+            document.getElementById('cropper-wrapper').style.display = 'block';
+            
+            if (cropper) cropper.destroy();
+            cropper = new Cropper(imgToCrop, {
+                viewMode: 1,
+                autoCropArea: 1,
+                movable: false,
+                zoomable: false,
+                scalable: false
+            });
+        }
+
+        // 导出长图
+        document.getElementById('export-btn').addEventListener('click', () => {
+            if (!cropper) return;
+
+            const croppedCanvas = cropper.getCroppedCanvas();
+            const link = document.createElement('a');
+            link.download = 'cropped-long-image.png';
+            link.href = croppedCanvas.toDataURL('image/png');
+            link.click();
+        });
+    </script>
+</body>
+</html>

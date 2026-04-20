@@ -1,0 +1,23 @@
+# IAGSv16 tools 目录 - 完整实用配置
+DirectoryIndex index.php index.html
+
+RewriteEngine On
+
+# 强制 HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# 禁止目录浏览
+Options -Indexes
+
+# 防盗链（保护你的工具页面和资源）
+RewriteCond %{HTTP_REFERER} !^https?://(www\.)?ielts360.ggff.net [NC]
+RewriteRule \.(html|php|pdf|mp3|wav)$ - [F]
+
+# 缓存加速
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/html "access plus 1 hour"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType text/css "access plus 1 month"
+</IfModule>

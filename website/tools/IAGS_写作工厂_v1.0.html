@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>IAGS 写作工厂 v1.1</title>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b1220; --surface: #131e30; --card: #1a2740; --border: #253550;
+    --blue: #3b82f6; --blue-light: #60a5fa; --green: #10b981; --amber: #f59e0b;
+    --text: #e2e8f0; --muted: #64748b; --accent: #818cf8; --purple: #a78bfa; --cyan: #22d3ee;
+    --indigo: #6366f1;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Quicksand', 'Noto Sans SC', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: linear-gradient(rgba(59,130,246,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,0.03) 1px, transparent 1px); background-size: 40px 40px; pointer-events: none; }
+  .factory { width: 100%; max-width: 560px; position: relative; }
+  .header { text-align: center; margin-bottom: 28px; }
+  .header-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(99,102,241,0.12); border: 1px solid rgba(99,102,241,0.3); border-radius: 99px; padding: 4px 14px; font-size: 0.7rem; font-weight: 700; color: #a5b4fc; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+  .header h1 { font-size: 1.8rem; font-weight: 700; background: linear-gradient(135deg, #60a5fa, #a78bfa, #f9a8d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .header p { color: var(--muted); font-size: 0.8rem; margin-top: 6px; }
+  .steps { display: flex; flex-direction: column; gap: 12px; }
+  .step { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 18px 20px; transition: border-color 0.3s, box-shadow 0.3s; position: relative; overflow: hidden; }
+  .step::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--indigo); opacity: 0; transition: opacity 0.3s; }
+  .step:hover { border-color: rgba(99,102,241,0.4); box-shadow: 0 4px 24px rgba(99,102,241,0.08); }
+  .step:hover::before { opacity: 1; }
+  .step-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .step-num { width: 28px; height: 28px; border-radius: 50%; background: rgba(99,102,241,0.15); border: 1.5px solid rgba(99,102,241,0.4); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: #a5b4fc; flex-shrink: 0; }
+  .step-title { font-weight: 700; font-size: 0.9rem; color: var(--text); }
+  .step-desc { font-size: 0.72rem; color: var(--muted); margin-top: 1px; }
+  .btn { width: 100%; padding: 13px 18px; border-radius: 14px; font-weight: 700; font-size: 0.9rem; font-family: inherit; cursor: pointer; border: none; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .btn:active { transform: scale(0.97); }
+  .btn-indigo { background: linear-gradient(135deg, #6366f1, #4f46e5); color: white; box-shadow: 0 4px 15px rgba(99,102,241,0.3); }
+  .btn-indigo:hover { box-shadow: 0 6px 20px rgba(99,102,241,0.45); }
+  .btn-green { background: linear-gradient(135deg, #10b981, #059669); color: white; box-shadow: 0 4px 15px rgba(16,185,129,0.3); }
+  .btn-green:hover { box-shadow: 0 6px 20px rgba(16,185,129,0.45); }
+  .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-80px); background: #10b981; color: white; padding: 10px 20px; border-radius: 99px; font-size: 0.85rem; font-weight: 700; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); z-index: 9999; white-space: nowrap; box-shadow: 0 4px 20px rgba(16,185,129,0.4); }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+  .toast.error { background: #ef4444; box-shadow: 0 4px 20px rgba(239,68,68,0.4); }
+  textarea, input[type="text"] { width: 100%; background: var(--surface); border: 1.5px solid var(--border); color: #34d399; padding: 12px 14px; border-radius: 14px; font-family: 'Courier New', monospace; font-size: 0.8rem; resize: vertical; transition: border-color 0.2s; outline: none; }
+  textarea:focus, input[type="text"]:focus { border-color: rgba(99,102,241,0.5); box-shadow: 0 0 0 3px rgba(99,102,241,0.1); }
+  textarea::placeholder, input::placeholder { color: #3a5170; }
+  .filename-row { display: flex; align-items: center; background: var(--surface); border: 1.5px solid var(--border); border-radius: 14px; overflow: hidden; transition: border-color 0.2s, box-shadow 0.2s; }
+  .filename-row:focus-within { border-color: rgba(99,102,241,0.5); box-shadow: 0 0 0 3px rgba(99,102,241,0.1); }
+  .filename-prefix { padding: 12px 14px; font-family: 'Courier New', monospace; font-size: 0.8rem; font-weight: 700; color: #a5b4fc; background: rgba(99,102,241,0.1); border-right: 1.5px solid var(--border); white-space: nowrap; user-select: none; flex-shrink: 0; }
+  .filename-row input { border: none; border-radius: 0; background: transparent; padding: 12px 14px; flex: 1; }
+  .filename-row input:focus { box-shadow: none; }
+  .json-status { display: flex; align-items: center; gap: 6px; font-size: 0.7rem; margin-top: 6px; color: var(--muted); }
+  .json-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); flex-shrink: 0; }
+  .json-dot.valid { background: var(--green); box-shadow: 0 0 6px var(--green); }
+  .json-dot.invalid { background: #ef4444; box-shadow: 0 0 6px #ef4444; }
+  .arrow-divider { text-align: center; color: var(--border); font-size: 1rem; margin: -2px 0; }
+  .upgrade-list { list-style: none; display: flex; flex-direction: column; gap: 7px; margin-top: 2px; }
+  .upgrade-list li { display: flex; align-items: flex-start; gap: 8px; font-size: 0.72rem; color: var(--muted); line-height: 1.5; }
+  .upgrade-list li .dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+  .dot-b { background: #3b82f6; } .dot-g { background: #10b981; } .dot-a { background: #f59e0b; }
+  .dot-c { background: #22d3ee; } .dot-p { background: #a78bfa; } .dot-i { background: #6366f1; }
+  .upgrade-list li strong { color: var(--text); }
+  .callout { background: rgba(99,102,241,0.07); border: 1px solid rgba(99,102,241,0.22); border-radius: 14px; padding: 12px 14px; font-size: 0.72rem; color: #c7d2fe; line-height: 1.7; margin-top: 12px; }
+  .callout-title { font-weight: 700; color: #a5b4fc; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+  .prompt-preview { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 12px 14px; font-size: 0.7rem; color: #64748b; line-height: 1.6; margin-top: 10px; display: none; }
+  .prompt-preview.show { display: block; }
+  .prompt-preview strong { color: #94a3b8; }
+  .band-badge { display: inline-flex; align-items: center; gap: 5px; background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.3); border-radius: 99px; padding: 3px 10px; font-size: 0.65rem; font-weight: 700; color: #fcd34d; margin-left: 8px; }
+</style>
+</head>
+<body>
+<div class="factory">
+  <div class="header">
+    <div class="header-badge">✍️ IAGS Writing Factory v1.1</div>
+    <h1>雅思写作生成工厂</h1>
+    <p>Band 7 词汇 · 语法结构 · 写作引导 · 从初中起点到 7 分</p>
+  </div>
+
+  <div class="steps">
+
+    <!-- What's new -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">🆕</div>
+        <div>
+          <div class="step-title">写作工厂 v1.1 能做什么 <span class="band-badge">🎯 Band 7</span></div>
+          <div class="step-desc">专为初中起点设计，系统化提升至雅思写作 7 分</div>
+        </div>
+      </div>
+      <ul class="upgrade-list">
+        <li><span class="dot dot-i"></span><div><strong>Band 7 学习包</strong> — 20-30词 + 10-15短语 + 6-10语法结构，覆盖 80% 知识点</div></li>
+        <li><span class="dot dot-b"></span><div><strong>自评过滤机制</strong> — 先过一遍标认识/模糊/不认识，只学真正需要的</div></li>
+        <li><span class="dot dot-g"></span><div><strong>四大学习模块</strong> — 语境猜词 · 题眼训练 · 做题模拟 · 语法专项</div></li>
+        <li><span class="dot dot-a"></span><div><strong>✍️ 写作引导</strong> — 分段引导写完整作文，优先用你标记要学的词汇结构</div></li>
+        <li><span class="dot dot-c"></span><div><strong>测试模式</strong> — 倒计时模拟真实考场，提交后输出 JSON 给 AI 评分</div></li>
+        <li><span class="dot dot-p"></span><div><strong>矢量图表</strong> — Task 1 自动生成 Mermaid 图表，精准还原题目图形</div></li>
+      </ul>
+    </div>
+
+    <div class="arrow-divider">↓</div>
+
+    <!-- Step 1 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-title">复制 v1.1 写作提取 Prompt</div>
+          <div class="step-desc">粘贴至支持图片识别的 AI（Gemini / Claude / GPT-4o），上传题目截图</div>
+        </div>
+      </div>
+      <button class="btn btn-indigo" onclick="copyPrompt()">
+        <span>📋</span> 复制写作专用 Prompt
+      </button>
+      <div class="prompt-preview" id="promptPreview">
+        <strong>Prompt 已复制 — 使用方法：</strong><br>
+        · 将 Prompt 粘贴给支持图片的 AI<br>
+        · 上传雅思写作题目截图（Task 1 或 Task 2）<br>
+        · AI 自动识别题型、生成学习包和范文<br>
+        · Task 1 额外生成 Mermaid 矢量图代码
+      </div>
+    </div>
+
+    <div class="arrow-divider">↓</div>
+
+    <!-- Step 2 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-title">粘贴 AI 生成的 JSON</div>
+          <div class="step-desc">系统自动检测题型、词汇量、是否含 Band 7 范文</div>
+        </div>
+      </div>
+      <textarea id="jsonBox" rows="7" placeholder='{"system_version":"IELTS_Writing_Generator_v1.1_Band7","task_type":"Task 2","full_question":"...","learning_package":{...},"sample_essay_7":"..."}' oninput="validateJSON()"></textarea>
+      <div class="json-status">
+        <div class="json-dot" id="jsonDot"></div>
+        <span id="jsonStatus">等待粘贴 JSON...</span>
+      </div>
+    </div>
+
+    <div class="arrow-divider">↓</div>
+
+    <!-- Step 3 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-title">输入题目编号</div>
+          <div class="step-desc">例如输入 T2_Education，文件将保存为 writing_T2_Education.html</div>
+        </div>
+      </div>
+      <div class="filename-row">
+        <span class="filename-prefix">writing_</span>
+        <input type="text" id="fileName" placeholder="T2_Education">
+      </div>
+    </div>
+
+    <div class="arrow-divider">↓</div>
+
+    <!-- Step 4 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">4</div>
+        <div>
+          <div class="step-title">导出写作训练系统</div>
+          <div class="step-desc">生成含六大模块的完整 Band 7 写作学习系统</div>
+        </div>
+      </div>
+      <button class="btn btn-green" id="exportBtn" onclick="doExport()">
+        <span>🚀</span> 导出 Band 7 写作系统 HTML
+      </button>
+      <div class="callout">
+        <div class="callout-title">✦ 导出包含六大模块</div>
+        ① 自评过滤 — 先标记认识/模糊/不认识，过滤已掌握内容<br>
+        ② 语境识词 — 语境猜词 + 直接学词两种模式<br>
+        ③ 题眼训练 — paraphrase 识别 + 同义替换选择<br>
+        ④ 做题模拟 — 填空题 + 语法专项练习<br>
+        ⑤ ✍️ 写作引导 — 分段引导完成整篇 Band 7 作文<br>
+        ⑥ 测试模式 — 倒计时考场模拟，提交输出 JSON
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const PROMPT = `你是一名专业的雅思写作教学专家，专为初中英语起点学生提供 Band 7.0 级别的学习支持。
+请分析我提供的雅思写作题目截图，严格按以下规范输出，仅输出纯 JSON，不得添加任何 markdown 代码块、前缀或说明文字。第一个字符必须是 {。
+
+【识别要求】
+1. 识别题型：Task 1（图表/流程图/地图）或 Task 2（议论文）
+2. 完整提取题目文字
+3. Task 1 必须生成 Mermaid 矢量图代码还原图表
+
+【Band 7 学习包要求】
+- 词汇：20-30个，分 level1（初中）/ level2（高中）/ level3（雅思Band 7核心）
+- 词组：10-15个搭配与短语，强调 collocations 和 idiomatic expressions
+- 时态语法：6-10个关键结构，说明 Band 7 所需复杂句型
+- 覆盖题目所需知识点的 50% 以上
+- 所有解释用初中生能懂的中文，配简单英文例句
+
+【范文要求】
+- Task 2：280词左右，Band 7 水平，体现 variety of complex structures、less common lexical items、strong cohesion
+- Task 1：170词左右，准确描述图表趋势，使用恰当的描述词汇
+
+【JSON结构严格输出】
+{
+  "system_version": "IELTS_Writing_Generator_v1.1_Band7",
+  "timestamp": "生成时间",
+  "task_type": "Task 1 或 Task 2",
+  "full_question": "题目完整文字",
+  "visual": {
+    "has_image": true或false,
+    "chart_type": "line/bar/pie/table/process/map/none",
+    "visual_description": "图表简要描述（Task 1必填，Task 2填none）",
+    "mermaid_code": "Mermaid代码（Task 1必填，Task 2填空字符串）"
+  },
+  "target_band": "7.0",
+  "learning_package": {
+    "vocabulary": {
+      "coverage_note": "已提供题目所需词汇量的XX%，共XX个词",
+      "words": [
+        {
+          "word": "单词",
+          "level": "level1/level2/level3",
+          "chinese": "中文释义",
+          "example": "真题或范文例句",
+          "synonym": "同义词",
+          "collocation": "常见搭配",
+          "trap": "雅思题目中的同义替换词",
+          "paraphrase": "原文: XXX → 题目: YYY"
+        }
+      ]
+    },
+    "phrases": {
+      "coverage_note": "共XX个高频词组",
+      "items": [
+        {
+          "phrase": "词组",
+          "level": "level1/level2/level3",
+          "chinese": "中文释义",
+          "example": "例句",
+          "synonym": "同义替换",
+          "trap": "陷阱替换词"
+        }
+      ]
+    },
+    "tenses_and_grammar": {
+      "recommended": ["推荐使用的时态列表"],
+      "items": [
+        {
+          "type": "tense或grammar",
+          "structure": "结构名称",
+          "explanation": "Band 7 所需说明（中文，初中生能懂）",
+          "example": "例句"
+        }
+      ]
+    }
+  },
+  "sample_essay_7": "完整Band 7范文",
+  "study_mode_content": {
+    "contextual_guessing": [
+      {
+        "masked_sentence": "含____的遮蔽句子",
+        "target": "目标词/词组/结构",
+        "full_sentence": "完整句子",
+        "type": "vocabulary/phrase/grammar",
+        "hint": "中文提示"
+      }
+    ],
+    "question_eye_training": [
+      {
+        "original": "原文用词",
+        "paraphrase_in_question": "题目替换词",
+        "trap": "容易混淆的陷阱词"
+      }
+    ],
+    "simulation_exercises": [
+      {
+        "question_stem": "题干说明",
+        "blank_sentence": "含______的填空句",
+        "answer": "正确答案",
+        "type": "vocabulary/phrase/grammar"
+      }
+    ],
+    "grammar_exercises": [
+      {
+        "instruction": "练习说明",
+        "base_sentence": "基础句子",
+        "task": "改写要求",
+        "model_answer": "范例答案",
+        "band7_note": "Band 7 提升点说明"
+      }
+    ],
+    "step_by_step_guide": {
+      "task_type": "Task 1或Task 2",
+      "structure_overview": "整体结构说明",
+      "steps": [
+        {
+          "step_num": 1,
+          "title": "段落名称（如：引言段）",
+          "instruction": "写作指导",
+          "sentence_starters": ["开头句建议1", "开头句建议2"],
+          "key_vocab": ["推荐使用的词汇/词组"],
+          "band7_tip": "Band 7 提升建议",
+          "word_target": "建议字数"
+        }
+      ],
+      "cohesion_tips": ["衔接词建议1", "衔接词建议2"],
+      "common_mistakes": ["初学者常见错误1", "初学者常见错误2"]
+    }
+  },
+  "test_mode_setup": {
+    "time_limit_minutes": 40,
+    "word_requirement": "250+",
+    "time_warnings": [10, 20, 30]
+  },
+  "ui_compatibility_note": "此JSON专为IAGS写作工厂v1.1设计，支持六大模块，严格遵循深色工厂页与浅色输出页规范"
+}
+
+- 仅输出JSON，第一个字符必须是 {
+- 所有中文解释保持初中生能理解的程度
+- Band 7范文必须真实体现7分水平，不得使用过于简单的句式`;
+
+function showToast(msg, isError = false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast' + (isError ? ' error' : '');
+  requestAnimationFrame(() => { requestAnimationFrame(() => { t.classList.add('show'); }); });
+  setTimeout(() => { t.classList.remove('show'); }, 2800);
+}
+
+function copyPrompt() {
+  const doFallback = () => {
+    const el = document.createElement('textarea');
+    el.value = PROMPT;
+    el.style.cssText = 'position:fixed;opacity:0;';
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    showToast('✅ 写作 Prompt 已复制！');
+    document.getElementById('promptPreview').classList.add('show');
+  };
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(PROMPT).then(() => {
+      showToast('✅ 写作 Prompt 已复制！');
+      document.getElementById('promptPreview').classList.add('show');
+    }).catch(doFallback);
+  } else { doFallback(); }
+}
+
+function validateJSON() {
+  const val = document.getElementById('jsonBox').value.trim();
+  const dot = document.getElementById('jsonDot');
+  const status = document.getElementById('jsonStatus');
+  if (!val) { dot.className = 'json-dot'; status.textContent = '等待粘贴 JSON...'; return false; }
+  try {
+    const d = JSON.parse(val);
+    const hasLearning = d.learning_package && d.learning_package.vocabulary;
+    const hasEssay = !!d.sample_essay_7;
+    const hasStudy = !!d.study_mode_content;
+    const taskType = d.task_type || '未知题型';
+    const wordCount = (d.learning_package?.vocabulary?.words || []).length;
+    const phraseCount = (d.learning_package?.phrases?.items || []).length;
+    const grammarCount = (d.learning_package?.tenses_and_grammar?.items || []).length;
+    const hasMermaid = d.visual?.mermaid_code && d.visual.mermaid_code.length > 10;
+    if (hasLearning) {
+      dot.className = 'json-dot valid';
+      let info = `✓ 有效 · ${taskType} · ${wordCount}词 · ${phraseCount}短语 · ${grammarCount}语法`;
+      if (hasEssay) info += ' · ✦ 含Band 7范文';
+      if (hasMermaid) info += ' · 📊 含矢量图';
+      if (!hasStudy) info += ' · ⚠ 建议重生成含study_mode_content';
+      status.textContent = info;
+      return true;
+    } else {
+      dot.className = 'json-dot invalid';
+      status.textContent = '⚠️ 缺少 learning_package 字段，请使用写作专用 Prompt 重新生成';
+      return false;
+    }
+  } catch(e) {
+    dot.className = 'json-dot invalid';
+    status.textContent = '✗ JSON格式错误：' + e.message.substring(0, 50);
+    return false;
+  }
+}
+
+function doExport() {
+  const jsonStr = document.getElementById('jsonBox').value.trim();
+  const name = document.getElementById('fileName').value.trim() || 'Task';
+  if (!jsonStr) { showToast('⚠️ 请先粘贴 JSON', true); return; }
+  if (!validateJSON()) { showToast('⚠️ JSON 格式有误', true); return; }
+  let parsed;
+  try { parsed = JSON.parse(jsonStr); } catch(e) { showToast('JSON 解析失败', true); return; }
+  const safeName = name.replace(/^writing_/i, '');
+  const html = buildOutputHTML(safeName, jsonStr, parsed);
+  const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'writing_' + safeName + '.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  showToast(`🎉 writing_${safeName}.html 已导出！`);
+}
+
+// ═══════════════════════════════════════════════════════════
+// OUTPUT HTML BUILDER
+// ═══════════════════════════════════════════════════════════
+function buildOutputHTML(name, jsonStr, parsed) {
+  const taskType = parsed.task_type || 'Task 2';
+  const wordCount = (parsed.learning_package?.vocabulary?.words || []).length;
+  const phraseCount = (parsed.learning_package?.phrases?.items || []).length;
+  const grammarCount = (parsed.learning_package?.tenses_and_grammar?.items || []).length;
+  const timeLimit = parsed.test_mode_setup?.time_limit_minutes || (taskType === 'Task 1' ? 20 : 40);
+  const wordReq = parsed.test_mode_setup?.word_requirement || (taskType === 'Task 1' ? '150+' : '250+');
+  const hasMermaid = parsed.visual?.mermaid_code && parsed.visual.mermaid_code.length > 10;
+
+  return `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>IELTS 写作系统 v1.1 — ${name}</title>
+<script src="https://cdn.tailwindcss.com"><\/script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"><\/script>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Quicksand','Noto Sans SC',sans-serif; background:#f1f5f9; color:#1e293b; touch-action:manipulation; }
+  .container { max-width:500px; margin:0 auto; padding:12px; }
+  .tab-bar { display:flex; gap:3px; background:#e2e8f0; padding:4px; border-radius:16px; margin-bottom:12px; overflow-x:auto; }
+  .tab { flex:1; min-width:52px; padding:9px 3px; text-align:center; cursor:pointer; border-radius:12px; font-size:0.68rem; font-weight:700; color:#64748b; transition:0.2s; white-space:nowrap; }
+  .tab.active { background:#fff; color:#6366f1; box-shadow:0 2px 8px rgba(0,0,0,0.05); }
+  .card { background:white; border-radius:24px; padding:1.25rem; box-shadow:0 8px 20px rgba(0,0,0,0.04); min-height:560px; display:flex; flex-direction:column; border:3px solid #e2e8f0; position:relative; }
+  .card-no-min { min-height:auto; }
+  .ex-box { background:#eff6ff; border-radius:16px; border-left:4px solid #3b82f6; padding:1rem; margin:0.75rem 0; }
+  .ex-box-indigo { background:#eef2ff; border-left-color:#6366f1; }
+  .ex-box-green { background:#ecfdf5; border-left-color:#10b981; }
+  .ex-box-amber { background:#fffbeb; border-left-color:#f59e0b; }
+  .ex-box-purple { background:#fdf4ff; border-left-color:#9333ea; }
+  .detail-box { background:#f8fafc; border-radius:16px; border:1px solid #edf2f7; padding:0.85rem; font-size:0.85rem; }
+  .root-box { background:#fff7ed; border-radius:16px; border:1px solid #ffedd5; padding:0.85rem; margin-top:0.75rem; font-size:0.85rem; }
+  .trap-box { background:linear-gradient(135deg,#fdf4ff,#eff6ff); border-radius:16px; border:1px solid #e9d5ff; padding:0.85rem; margin-top:0.75rem; font-size:0.85rem; }
+  .trap-title { font-size:0.6rem; font-weight:800; text-transform:uppercase; letter-spacing:0.1em; color:#9333ea; margin-bottom:6px; }
+  .trap-row { display:flex; align-items:flex-start; gap:8px; margin-bottom:4px; }
+  .trap-lbl { font-size:0.58rem; font-weight:700; background:#ede9fe; color:#7c3aed; padding:2px 7px; border-radius:99px; white-space:nowrap; flex-shrink:0; margin-top:1px; }
+  .trap-val { color:#4c1d95; font-size:0.8rem; line-height:1.4; }
+  .lbl { font-weight:800; color:#6366f1; font-size:0.65rem; text-transform:uppercase; margin-right:8px; display:inline-block; width:65px; flex-shrink:0; }
+  .lbl-g { color:#10b981; } .lbl-a { color:#f59e0b; } .lbl-r { color:#ef4444; }
+  .btn-mark { padding:1rem 0.5rem; border-radius:16px; font-size:0.85rem; font-weight:700; color:white; transition:0.2s; cursor:pointer; border:none; font-family:inherit; }
+  .btn-mark:active { transform:scale(0.95); }
+  .opt-btn { width:100%; padding:0.9rem; margin-bottom:0.65rem; border:2px solid #f1f5f9; border-radius:16px; text-align:left; font-size:0.92rem; background:#fff; font-family:inherit; cursor:pointer; transition:0.15s; }
+  .opt-btn:hover { background:#f8fafc; }
+  .section { display:none; } .section.active { display:block; }
+  .flash-green { animation:flash 0.8s; --c:#10b981; }
+  .flash-amber { animation:flash 0.8s; --c:#f59e0b; }
+  .flash-rose { animation:flash 0.8s; --c:#ef4444; }
+  @keyframes flash { 0%,100%{border-color:#e2e8f0} 50%{border-color:var(--c);box-shadow:0 0 15px var(--c)} }
+  .prog-bar { height:3px; background:#e2e8f0; border-radius:99px; overflow:hidden; margin-bottom:12px; }
+  .prog-fill { height:100%; background:linear-gradient(90deg,#6366f1,#a78bfa); border-radius:99px; transition:width 0.4s; }
+  .lv-nav { display:flex; gap:6px; margin-bottom:10px; }
+  .lv-btn { flex:1; padding:7px 4px; border-radius:10px; font-size:0.68rem; font-weight:700; text-align:center; cursor:pointer; border:1.5px solid #e2e8f0; background:white; color:#64748b; transition:0.2s; }
+  .lv-btn.active { border-color:#6366f1; background:#eef2ff; color:#4f46e5; }
+  .mode-toggle { display:flex; gap:6px; margin-bottom:12px; }
+  .mode-btn { flex:1; padding:8px; border-radius:10px; font-size:0.7rem; font-weight:700; text-align:center; cursor:pointer; border:1.5px solid #e2e8f0; background:white; color:#64748b; transition:0.2s; }
+  .mode-btn.active { border-color:#6366f1; background:#eef2ff; color:#6366f1; }
+  .ctx-blank { display:inline-block; background:#cbd5e1; color:transparent; border-radius:6px; cursor:pointer; user-select:none; padding:0 6px; min-width:60px; transition:all 0.3s; }
+  .ctx-blank.revealed { background:transparent; color:#4f46e5; font-weight:700; }
+  .reinforce-badge { display:inline-flex; align-items:center; gap:4px; background:#fef3c7; border:1px solid #fde68a; border-radius:99px; padding:3px 10px; font-size:0.65rem; font-weight:700; color:#92400e; margin-bottom:10px; }
+  .self-badge { display:inline-flex; align-items:center; gap:4px; border-radius:99px; padding:3px 10px; font-size:0.65rem; font-weight:700; margin-right:6px; cursor:pointer; border:1.5px solid; transition:0.15s; }
+  .sb-know { background:#ecfdf5; border-color:#10b981; color:#065f46; }
+  .sb-fuzzy { background:#fffbeb; border-color:#f59e0b; color:#92400e; }
+  .sb-unknown { background:#fef2f2; border-color:#ef4444; color:#991b1b; }
+  .self-badge:hover { transform:scale(1.05); }
+  #mk-empty { color:#94a3b8; text-align:center; padding:40px 20px; }
+  .mk-item { background:white; border-radius:16px; padding:14px; margin-bottom:10px; border:2px solid #fecaca; }
+  .mk-word { font-size:1.1rem; font-weight:700; color:#ef4444; }
+  .mk-meaning { color:#64748b; font-size:0.85rem; margin-top:2px; }
+  .writing-step { background:#f8fafc; border-radius:16px; border:1px solid #e2e8f0; padding:1rem; margin-bottom:0.75rem; }
+  .writing-step-title { font-size:0.72rem; font-weight:700; color:#6366f1; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; }
+  .writing-step-num { display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:50%; background:#eef2ff; border:1.5px solid #6366f1; font-size:0.7rem; font-weight:700; color:#6366f1; margin-right:6px; flex-shrink:0; }
+  .writing-textarea { width:100%; background:#fff; border:1.5px solid #e2e8f0; border-radius:12px; padding:10px 12px; font-size:0.85rem; font-family:inherit; resize:vertical; outline:none; transition:border-color 0.2s; color:#1e293b; line-height:1.6; }
+  .writing-textarea:focus { border-color:#6366f1; box-shadow:0 0 0 3px rgba(99,102,241,0.1); }
+  .writing-textarea::placeholder { color:#94a3b8; }
+  .chip { display:inline-block; background:#eef2ff; border:1px solid #c7d2fe; border-radius:8px; padding:2px 8px; font-size:0.7rem; color:#4f46e5; margin:2px; font-weight:600; cursor:pointer; transition:0.15s; }
+  .chip:hover { background:#e0e7ff; }
+  .chip-green { background:#ecfdf5; border-color:#a7f3d0; color:#065f46; }
+  .chip-amber { background:#fffbeb; border-color:#fde68a; color:#92400e; }
+  .timer-display { font-size:2rem; font-weight:700; font-family:'Courier New',monospace; text-align:center; padding:12px; border-radius:16px; margin:8px 0; transition:color 0.3s; }
+  .timer-normal { background:#f0f9ff; color:#0369a1; }
+  .timer-warning { background:#fffbeb; color:#b45309; }
+  .timer-danger { background:#fef2f2; color:#dc2626; }
+  .essay-display { background:#fff; border:1px solid #e2e8f0; border-radius:16px; padding:1rem; font-size:0.88rem; line-height:1.8; color:#1e293b; white-space:pre-wrap; max-height:320px; overflow-y:auto; }
+  .level-tag { display:inline-block; font-size:0.58rem; font-weight:700; border-radius:99px; padding:1px 6px; margin-left:4px; }
+  .lv1-tag { background:#dbeafe; color:#1d4ed8; }
+  .lv2-tag { background:#d1fae5; color:#065f46; }
+  .lv3-tag { background:#ede9fe; color:#5b21b6; }
+  .grammar-card { background:linear-gradient(135deg,#f0f9ff,#faf5ff); border-radius:16px; border:1px solid #e0e7ff; padding:1rem; margin-bottom:0.75rem; }
+  .mermaid-wrap { background:#f8fafc; border-radius:16px; border:1px solid #e2e8f0; padding:1rem; margin:0.75rem 0; overflow-x:auto; text-align:center; }
+  .band7-tip { background:linear-gradient(135deg,#fdf4ff,#eff6ff); border:1px solid #e9d5ff; border-radius:12px; padding:8px 12px; font-size:0.72rem; color:#6d28d9; margin-top:6px; }
+  .band7-tip::before { content:'🎯 Band 7 提升 '; font-weight:700; }
+  .hint-box { background:#f0fdf4; border:1px solid #bbf7d0; border-radius:12px; padding:8px 12px; font-size:0.72rem; color:#166534; margin-top:6px; }
+  .submit-output { background:#0f172a; border-radius:16px; padding:1rem; font-size:0.72rem; font-family:'Courier New',monospace; color:#34d399; max-height:200px; overflow-y:auto; white-space:pre-wrap; margin-top:8px; display:none; }
+  .filter-summary { background:#fffbeb; border:1px solid #fde68a; border-radius:12px; padding:10px 14px; font-size:0.75rem; color:#78350f; margin-bottom:10px; }
+  .section-label { font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:8px; color:#94a3b8; }
+<\/style>
+<\/head>
+<body>
+<div class="container">
+  <div style="text-align:center;margin-bottom:12px;">
+    <span style="font-size:0.6rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.1em;">IELTS Writing · ${name} · Band 7 · v1.1<\/span>
+  <\/div>
+
+  <!-- Tab Bar -->
+  <div class="tab-bar">
+    <div class="tab active" onclick="switchTab('assess')">📋 自评<\/div>
+    <div class="tab" onclick="switchTab('vocab')">识词<\/div>
+    <div class="tab" onclick="switchTab('trap')">题眼<\/div>
+    <div class="tab" onclick="switchTab('sim')">模拟<\/div>
+    <div class="tab" onclick="switchTab('writing')">✍️ 写作<\/div>
+    <div class="tab" onclick="switchTab('test')">⏱️ 测试<\/div>
+  <\/div>
+
+  <!-- ① 自评过滤 -->
+  <div id="assess" class="section active">
+    <div class="prog-bar"><div class="prog-fill" id="assessProg" style="width:0%"><\/div><\/div>
+    <div class="card" id="assess-card"><\/div>
+  <\/div>
+
+  <!-- ② 语境识词 -->
+  <div id="vocab" class="section">
+    <div class="lv-nav">
+      <div class="lv-btn active" id="lv1btn" onclick="jumpLevel('level1')">LV1 初中<\/div>
+      <div class="lv-btn" id="lv2btn" onclick="jumpLevel('level2')">LV2 高中<\/div>
+      <div class="lv-btn" id="lv3btn" onclick="jumpLevel('level3')">LV3 Band7<\/div>
+    <\/div>
+    <div class="mode-toggle">
+      <div class="mode-btn active" id="modeCtx" onclick="setMode('ctx')">🕵️ 语境猜词<\/div>
+      <div class="mode-btn" id="modeDir" onclick="setMode('dir')">📖 直接学词<\/div>
+    <\/div>
+    <div class="prog-bar"><div class="prog-fill" id="vocabProg" style="width:0%"><\/div><\/div>
+    <div id="reinforce-notice" style="display:none;"><div class="reinforce-badge">🔄 强化复习中 — 标记过的词再过一遍<\/div><\/div>
+    <div class="card" id="vocab-card"><\/div>
+  <\/div>
+
+  <!-- ③ 题眼训练 -->
+  <div id="trap" class="section">
+    <div class="prog-bar"><div class="prog-fill" id="trapProg" style="width:0%"><\/div><\/div>
+    <div class="card" id="trap-card"><\/div>
+  <\/div>
+
+  <!-- ④ 做题模拟 -->
+  <div id="sim" class="section">
+    <div class="mode-toggle">
+      <div class="mode-btn active" id="simModeFill" onclick="setSimMode('fill')">填空练习<\/div>
+      <div class="mode-btn" id="simModeGrammar" onclick="setSimMode('grammar')">📐 语法专项<\/div>
+    <\/div>
+    <div class="prog-bar"><div class="prog-fill" id="simProg" style="width:0%"><\/div><\/div>
+    <div class="card" id="sim-card"><\/div>
+  <\/div>
+
+  <!-- ⑤ 写作引导 -->
+  <div id="writing" class="section">
+    <div class="card card-no-min" id="writing-card"><\/div>
+  <\/div>
+
+  <!-- ⑥ 测试模式 -->
+  <div id="test" class="section">
+    <div class="card card-no-min" id="test-card"><\/div>
+  <\/div>
+
+<\/div>
+
+<script>
+const rawData = ${jsonStr};
+const lp = rawData.learning_package || {};
+const allWords = lp.vocabulary?.words || [];
+const allPhrases = lp.phrases?.items || [];
+const allGrammar = lp.tenses_and_grammar?.items || [];
+const smc = rawData.study_mode_content || {};
+const guide = smc.step_by_step_guide || {};
+const testSetup = rawData.test_mode_setup || {};
+
+// Vocabulary by level
+const vocabByLevel = {
+  level1: allWords.filter(w => w.level === 'level1'),
+  level2: allWords.filter(w => w.level === 'level2'),
+  level3: allWords.filter(w => w.level === 'level3' || w.level === undefined)
+};
+// Ensure level3 has content if missing
+if (!vocabByLevel.level3.length && allWords.length) {
+  vocabByLevel.level3 = allWords.slice(Math.floor(allWords.length * 0.6));
+}
+if (!vocabByLevel.level1.length && allWords.length) {
+  vocabByLevel.level1 = allWords.slice(0, Math.floor(allWords.length * 0.4));
+  vocabByLevel.level2 = allWords.slice(Math.floor(allWords.length * 0.4), Math.floor(allWords.length * 0.7));
+}
+
+// Self-assessment state
+const selfAssess = new Map(); // word -> 'know' | 'fuzzy' | 'unknown'
+let assessItems = [
+  ...allWords.map(w => ({...w, _type:'word'})),
+  ...allPhrases.map(p => ({...p, word: p.phrase, _type:'phrase'})),
+  ...allGrammar.map(g => ({...g, word: g.structure, _type:'grammar'}))
+];
+let assessIdx = 0;
+
+// Vocab state
+let curLv = 'level1', curWIdx = 0;
+let vocabMode = 'ctx';
+let reinforceQueue = [], reinforcing = false;
+const mistakeMap = new Map();
+
+// Trap/Sim state
+let trapSet = [], curTrapIdx = 0;
+let simMode = 'fill';
+let simFillSet = [], curSimIdx = 0;
+let grammarSet = [], curGrammarIdx = 0;
+
+// Writing state
+const writingParts = {};
+let writingSubmitted = false;
+
+// Test state
+let testTimer = null, testSeconds = 0, testRunning = false;
+const timeLimit = (testSetup.time_limit_minutes || ${timeLimit}) * 60;
+
+// ── Tab switch ──
+function switchTab(id) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => {
+    if (t.getAttribute('onclick') && t.getAttribute('onclick').includes("'" + id + "'")) t.classList.add('active');
+  });
+  document.querySelectorAll('.section').forEach(s => s.classList.toggle('active', s.id === id));
+  if (id === 'assess') renderAssess();
+  if (id === 'vocab') renderVocab();
+  if (id === 'trap') initTrap();
+  if (id === 'sim') initSim();
+  if (id === 'writing') renderWriting();
+  if (id === 'test') renderTest();
+}
+
+function speak(text) {
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-GB';
+  window.speechSynthesis.speak(u);
+}
+
+function escQ(s) { return (s||'').replace(/\\\\/g,'\\\\\\\\').replace(/'/g,"\\\\'"); }
+
+function lvTag(lv) {
+  if (lv === 'level1') return '<span class="level-tag lv1-tag">初中<\\/span>';
+  if (lv === 'level2') return '<span class="level-tag lv2-tag">高中<\\/span>';
+  return '<span class="level-tag lv3-tag">Band7<\\/span>';
+}
+
+// ════════════════════════════════════════
+// ① SELF-ASSESSMENT
+// ════════════════════════════════════════
+function renderAssess() {
+  const total = assessItems.length;
+  if (!total) {
+    document.getElementById('assess-card').innerHTML = '<div class="text-center p-10 text-slate-400">暂无词汇数据<\\/div>';
+    return;
+  }
+  if (assessIdx >= total) {
+    renderAssessSummary();
+    return;
+  }
+  document.getElementById('assessProg').style.width = Math.round((assessIdx / total) * 100) + '%';
+  const item = assessItems[assessIdx];
+  const typeLabel = item._type === 'word' ? '词汇' : item._type === 'phrase' ? '词组' : '语法';
+  const typeColor = item._type === 'word' ? 'text-indigo-600' : item._type === 'phrase' ? 'text-emerald-600' : 'text-amber-600';
+  const prevStatus = selfAssess.get(item.word) || null;
+
+  document.getElementById('assess-card').innerHTML = \`
+    <div class="flex justify-between items-start mb-2">
+      <div class="text-[0.58rem] font-bold \${typeColor} uppercase tracking-widest">自评过滤 · \${typeLabel} \${assessIdx+1}/\${total}<\\/div>
+      <div class="text-[0.6rem] text-slate-300 font-bold">\${assessIdx+1} / \${total}<\\/div>
+    <\\/div>
+    <div class="ex-box ex-box-indigo mb-3">
+      <div class="text-xl font-bold text-indigo-800 mb-1">\${item.word || item.phrase || item.structure}\${lvTag(item.level)}<\\/div>
+      <div class="text-sm text-indigo-600/80">\${item.chinese || item.explanation || ''}<\\/div>
+      \${item.example ? \`<div class="text-xs text-slate-400 mt-2 italic">\${item.example}<\\/div>\` : ''}
+    <\\/div>
+    <div class="text-[0.65rem] text-slate-400 text-center mb-3">根据你的掌握程度，如实选择：</div>
+    <div class="flex gap-2 justify-center mb-4">
+      <button class="self-badge sb-know \${prevStatus==='know'?'ring-2 ring-emerald-400':''}" onclick="markAssess('know')">✓ 认识<\\/button>
+      <button class="self-badge sb-fuzzy \${prevStatus==='fuzzy'?'ring-2 ring-amber-400':''}" onclick="markAssess('fuzzy')">~ 模糊<\\/button>
+      <button class="self-badge sb-unknown \${prevStatus==='unknown'?'ring-2 ring-red-400':''}" onclick="markAssess('unknown')">✗ 不认识<\\/button>
+    <\\/div>
+    \${item.collocation ? \`<div class="detail-box text-xs text-slate-500">搭配: <strong class="text-slate-700">\${item.collocation}<\\/strong><\\/div>\` : ''}
+    \${item.synonym ? \`<div class="text-xs text-slate-400 mt-2">同义: \${item.synonym}<\\/div>\` : ''}
+  \`;
+}
+
+function markAssess(status) {
+  const item = assessItems[assessIdx];
+  selfAssess.set(item.word, status);
+  if (status !== 'know') {
+    if (!reinforceQueue.find(x => x.word === item.word)) reinforceQueue.push(item);
+  }
+  assessIdx++;
+  renderAssess();
+}
+
+function renderAssessSummary() {
+  document.getElementById('assessProg').style.width = '100%';
+  const know = [...selfAssess.values()].filter(v => v === 'know').length;
+  const fuzzy = [...selfAssess.values()].filter(v => v === 'fuzzy').length;
+  const unknown = [...selfAssess.values()].filter(v => v === 'unknown').length;
+  const needLearn = fuzzy + unknown;
+  document.getElementById('assess-card').innerHTML = \`
+    <div class="text-center p-6">
+      <div class="text-4xl mb-4">📊<\\/div>
+      <div class="text-lg font-bold text-indigo-600 mb-4">自评完成！<\\/div>
+      <div class="grid grid-cols-3 gap-3 mb-6">
+        <div class="bg-emerald-50 rounded-2xl p-3 border border-emerald-200">
+          <div class="text-2xl font-bold text-emerald-600">\${know}<\\/div>
+          <div class="text-xs text-emerald-600 mt-1">已掌握<\\/div>
+        <\\/div>
+        <div class="bg-amber-50 rounded-2xl p-3 border border-amber-200">
+          <div class="text-2xl font-bold text-amber-500">\${fuzzy}<\\/div>
+          <div class="text-xs text-amber-600 mt-1">模糊<\\/div>
+        <\\/div>
+        <div class="bg-red-50 rounded-2xl p-3 border border red-200">
+          <div class="text-2xl font-bold text-red-500">\${unknown}<\\/div>
+          <div class="text-xs text-red-600 mt-1">不认识<\\/div>
+        <\\/div>
+      <\\/div>
+      \${needLearn > 0
+        ? \`<div class="filter-summary">✦ 已为你过滤 <strong>\${know}</strong> 个已掌握内容，<strong class="text-amber-700">\${needLearn}</strong> 个模糊/不认识的词汇将在学习模块中重点练习</div>\`
+        : \`<div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-3 text-sm text-emerald-700 mb-4">🎉 全部已掌握！可直接进行写作训练或测试模式</div>\`
+      }
+      <button class="w-full py-3 bg-indigo-600 text-white rounded-2xl font-bold text-sm" onclick="assessIdx=0;renderAssess()">重新自评<\\/button>
+      <button class="w-full py-3 bg-slate-100 text-slate-600 rounded-2xl font-bold text-sm mt-2" onclick="switchTab('vocab')">开始学习 →<\\/button>
+    <\\/div>
+  \`;
+}
+
+// ════════════════════════════════════════
+// ② VOCAB
+// ════════════════════════════════════════
+function setMode(m) {
+  vocabMode = m;
+  document.getElementById('modeCtx').classList.toggle('active', m === 'ctx');
+  document.getElementById('modeDir').classList.toggle('active', m === 'dir');
+  renderVocab();
+}
+
+function jumpLevel(lv) {
+  curLv = lv; curWIdx = 0;
+  ['lv1btn','lv2btn','lv3btn'].forEach((id, i) => {
+    document.getElementById(id).classList.toggle('active', lv === 'level' + (i+1));
+  });
+  renderVocab();
+}
+
+function renderVocab() {
+  // Filter by self-assessment: only show fuzzy/unknown if assessed
+  let list = reinforcing ? reinforceQueue : (vocabByLevel[curLv] || []);
+  // If self-assessment done, filter to only fuzzy/unknown for that level
+  if (!reinforcing && selfAssess.size > 0) {
+    const filtered = list.filter(w => {
+      const s = selfAssess.get(w.word);
+      return s === 'fuzzy' || s === 'unknown' || s === undefined;
+    });
+    if (filtered.length > 0) list = filtered;
+  }
+  if (!list.length) {
+    document.getElementById('vocab-card').innerHTML = \`<div class="text-center p-10 text-slate-400"><div class="text-3xl mb-3">✅<\\/div><div class="font-bold text-emerald-600">该等级词汇已全部掌握<\\/div><div class="text-sm mt-2">前往下一等级或进行题眼训练</div><\\/div>\`;
+    return;
+  }
+  const idx = reinforcing ? 0 : Math.min(curWIdx, list.length - 1);
+  const data = list[idx];
+  if (!data) return;
+  document.getElementById('reinforce-notice').style.display = reinforcing ? 'block' : 'none';
+  document.getElementById('vocabProg').style.width = Math.round((idx / list.length) * 100) + '%';
+  speak(data.word);
+  if (vocabMode === 'ctx') renderVocabCtx(data, list.length, idx);
+  else renderVocabDir(data, list.length, idx);
+}
+
+function renderVocabCtx(data, total, idx) {
+  const ex = data.example || '';
+  const target = data.word || data.phrase || '';
+  const _wi = ex.toLowerCase().indexOf(target.toLowerCase());
+  const blanked = _wi >= 0
+    ? ex.slice(0,_wi) + '<span class=\\'ctx-blank\\' id=\\'ctx-hw\\' onclick=\\'revealWord()\\'>' + '_'.repeat(Math.min(target.length, 8)) + '<\\/span>' + ex.slice(_wi + target.length)
+    : ex;
+  const hasBlanked = blanked !== ex;
+
+  document.getElementById('vocab-card').innerHTML = \`
+    <div class="flex justify-between items-start mb-1">
+      <div class="text-[0.58rem] font-bold text-indigo-500 uppercase tracking-widest">\${curLv} · 语境猜词<\\/div>
+      <div class="text-[0.6rem] text-slate-300 font-bold">\${idx+1} / \${total}<\\/div>
+    <\\/div>
+    <div class="ex-box ex-box-indigo">
+      <div class="text-[0.6rem] font-bold text-indigo-500 mb-1">📖 例句 — \${hasBlanked ? '点击空格揭开单词' : '阅读并尝试理解'}<\\/div>
+      <p class="text-sm font-bold text-indigo-900 leading-snug">\${hasBlanked ? blanked : ex}<\\/p>
+      <p class="text-[0.72rem] text-indigo-700/70 mt-1">\${data.hint || ''}<\\/p>
+    <\\/div>
+    <div class="text-[0.68rem] text-slate-400 text-center mb-2">👆 先读句子猜意思，再点击揭开</div>
+    <div id="word-reveal" style="display:\${hasBlanked ? 'none' : 'block'}">
+      <div class="flex justify-between items-start mb-2">
+        <div>
+          <h1 class="text-3xl font-bold text-slate-800">\${data.word || data.phrase}\${lvTag(data.level)}<\\/h1>
+          <div class="text-slate-400 text-sm mt-1"><span onclick="speak('\${escQ(data.word || data.phrase)}')" class="cursor-pointer">🔊<\\/span><\\/div>
+        <\\/div>
+        <div class="text-indigo-600 font-bold text-lg text-right max-w-[140px]">\${data.chinese || ''}<\\/div>
+      <\\/div>
+      <div class="detail-box space-y-2">
+        \${data.synonym ? \`<div class="flex"><span class="lbl">同义词<\\/span><span class="text-slate-600 font-bold">\${data.synonym}<\\/span><\\/div>\` : ''}
+        \${data.collocation ? \`<div class="flex"><span class="lbl">搭配<\\/span><span class="text-slate-600">\${data.collocation}<\\/span><\\/div>\` : ''}
+      <\\/div>
+      \${data.trap ? \`<div class="trap-box"><div class="trap-title">⚡ 题眼信息<\\/div><div class="trap-row"><span class="trap-lbl">陷阱替换<\\/span><span class="trap-val">\${data.trap}<\\/span><\\/div>\${data.paraphrase ? \`<div class="trap-row"><span class="trap-lbl">Paraphrase<\\/span><span class="trap-val">\${data.paraphrase}<\\/span><\\/div>\` : ''}<\\/div>\` : ''}
+    <\\/div>
+    <div class="grid grid-cols-3 gap-3 mt-auto pt-4" id="mark-btns" style="\${hasBlanked ? 'display:none' : ''}">
+      <button class="btn-mark bg-emerald-500" onclick="handleMark('known','v')">掌握 ✓<\\/button>
+      <button class="btn-mark bg-amber-500" onclick="handleMark('unsure','v')">模糊 ~<\\/button>
+      <button class="btn-mark bg-rose-500" onclick="handleMark('unknown','v')">不识 ✗<\\/button>
+    <\\/div>
+  \`;
+  if (!hasBlanked) {
+    document.getElementById('word-reveal').style.display = 'block';
+  }
+}
+
+function revealWord() {
+  const hw = document.getElementById('ctx-hw');
+  let list = reinforcing ? reinforceQueue : (vocabByLevel[curLv] || []);
+  if (!reinforcing && selfAssess.size > 0) {
+    const filtered = list.filter(w => { const s = selfAssess.get(w.word); return s === 'fuzzy' || s === 'unknown' || s === undefined; });
+    if (filtered.length > 0) list = filtered;
+  }
+  const data = list[reinforcing ? 0 : curWIdx];
+  if (hw && data) { hw.classList.add('revealed'); hw.textContent = data.word || data.phrase; }
+  document.getElementById('word-reveal').style.display = 'block';
+  const mb = document.getElementById('mark-btns');
+  if (mb) mb.style.display = 'grid';
+}
+
+function renderVocabDir(data, total, idx) {
+  document.getElementById('vocab-card').innerHTML = \`
+    <div class="flex justify-between items-start">
+      <div class="flex-1">
+        <div class="text-[0.58rem] font-bold text-indigo-500 uppercase tracking-widest mb-1">\${curLv}<\\/div>
+        <h1 class="text-3xl font-bold text-slate-800">\${data.word || data.phrase}\${lvTag(data.level)}<\\/h1>
+        <div class="text-slate-400 text-sm mt-1"><span onclick="speak('\${escQ(data.word || data.phrase)}')" class="cursor-pointer ml-1">🔊<\\/span><\\/div>
+      <\\/div>
+      <div class="text-right">
+        <div class="text-slate-300 text-[0.6rem] font-bold mb-2">\${idx+1} / \${total}<\\/div>
+        <div class="text-indigo-600 font-bold text-lg max-w-[140px]">\${data.chinese || ''}<\\/div>
+      <\\/div>
+    <\\/div>
+    <div class="ex-box ex-box-indigo">
+      <p class="text-sm font-bold text-indigo-900 mb-1 leading-snug">"\${data.example || ''}"<\\/p>
+    <\\/div>
+    <div class="detail-box space-y-2">
+      \${data.synonym ? \`<div class="flex"><span class="lbl">同义词<\\/span><span class="text-slate-600 font-bold">\${data.synonym}<\\/span><\\/div>\` : ''}
+      \${data.collocation ? \`<div class="flex"><span class="lbl">搭配<\\/span><span class="text-slate-600">\${data.collocation}<\\/span><\\/div>\` : ''}
+    <\\/div>
+    \${data.trap ? \`<div class="trap-box"><div class="trap-title">⚡ 题眼信息<\\/div><div class="trap-row"><span class="trap-lbl">陷阱替换<\\/span><span class="trap-val">\${data.trap}<\\/span><\\/div>\${data.paraphrase ? \`<div class="trap-row"><span class="trap-lbl">Paraphrase<\\/span><span class="trap-val">\${data.paraphrase}<\\/span><\\/div>\` : ''}<\\/div>\` : ''}
+    <div class="grid grid-cols-3 gap-3 mt-auto pt-4">
+      <button class="btn-mark bg-emerald-500" onclick="handleMark('known','v')">掌握 ✓<\\/button>
+      <button class="btn-mark bg-amber-500" onclick="handleMark('unsure','v')">模糊 ~<\\/button>
+      <button class="btn-mark bg-rose-500" onclick="handleMark('unknown','v')">不识 ✗<\\/button>
+    <\\/div>
+  \`;
+}
+
+function handleMark(status, type) {
+  const cardId = type === 'v' ? 'vocab-card' : 'phrase-card';
+  const card = document.getElementById(cardId);
+  const cls = status === 'known' ? 'flash-green' : (status === 'unsure' ? 'flash-amber' : 'flash-rose');
+  card.classList.add(cls);
+  if (status !== 'known') {
+    let list = vocabByLevel[curLv] || [];
+    if (!reinforcing && selfAssess.size > 0) {
+      const filtered = list.filter(w => { const s = selfAssess.get(w.word); return s === 'fuzzy' || s === 'unknown' || s === undefined; });
+      if (filtered.length > 0) list = filtered;
+    }
+    const item = reinforcing ? reinforceQueue[0] : list[curWIdx];
+    if (item) {
+      const key = item.word;
+      if (!mistakeMap.has(key)) mistakeMap.set(key, { data: item, count: 1 });
+      else mistakeMap.get(key).count++;
+      if (!reinforceQueue.find(x => x.word === key)) reinforceQueue.push(item);
+    }
+  }
+  setTimeout(() => {
+    card.classList.remove(cls);
+    advanceVocab();
+  }, 800);
+}
+
+function advanceVocab() {
+  if (reinforcing) {
+    reinforceQueue.shift();
+    if (!reinforceQueue.length) {
+      reinforcing = false;
+      document.getElementById('reinforce-notice').style.display = 'none';
+      document.getElementById('vocab-card').innerHTML = '<div class="text-center p-10"><div class="text-5xl mb-4">🎯<\\/div><div class="text-xl font-bold text-indigo-600">强化轮完成！<\\/div><div class="text-sm text-slate-400 mt-2">去做题眼训练检验效果<\\/div><\\/div>';
+    } else renderVocab();
+    return;
+  }
+  let list = vocabByLevel[curLv] || [];
+  if (selfAssess.size > 0) {
+    const filtered = list.filter(w => { const s = selfAssess.get(w.word); return s === 'fuzzy' || s === 'unknown' || s === undefined; });
+    if (filtered.length > 0) list = filtered;
+  }
+  if (curWIdx < list.length - 1) { curWIdx++; renderVocab(); }
+  else if (reinforceQueue.length > 0) { reinforcing = true; renderVocab(); }
+  else {
+    const nextLv = { level1:'level2', level2:'level3' }[curLv];
+    document.getElementById('vocab-card').innerHTML = \`
+      <div class="text-center p-10">
+        <div class="text-5xl mb-4">✅<\\/div>
+        <div class="text-xl font-bold text-emerald-600">本级完成！🎉<\\/div>
+        \${nextLv ? \`<button class="mt-6 px-6 py-3 bg-indigo-500 text-white rounded-2xl font-bold" onclick="jumpLevel('\${nextLv}')">继续下一级 →<\\/button>\` : ''}
+      <\\/div>
+    \`;
+  }
+}
+
+// ════════════════════════════════════════
+// ③ TRAP QUIZ
+// ════════════════════════════════════════
+function initTrap() {
+  const trainItems = smc.question_eye_training || [];
+  // Build from question_eye_training or words with trap
+  const withTrap = trainItems.length > 0
+    ? trainItems
+    : allWords.filter(w => w.trap || w.synonym).map(w => ({
+        original: w.word,
+        paraphrase_in_question: w.trap || w.synonym,
+        trap: w.synonym || ''
+      }));
+  if (!withTrap.length) {
+    document.getElementById('trap-card').innerHTML = '<div class="text-center p-10 text-slate-400"><div class="text-4xl mb-4">⚠️<\\/div><div class="font-bold mb-2">暂无题眼数据<\\/div><div class="text-sm">请使用 v1.1 Prompt 重新生成<\\/div><\\/div>';
+    return;
+  }
+  trapSet = [...withTrap].sort(() => Math.random() - 0.5).slice(0, Math.min(15, withTrap.length));
+  curTrapIdx = 0;
+  renderTrap();
+}
+
+function renderTrap() {
+  const q = trapSet[curTrapIdx];
+  const total = trapSet.length;
+  document.getElementById('trapProg').style.width = Math.round((curTrapIdx / total) * 100) + '%';
+
+  // Paraphrase display mode (50% chance) or MCQ
+  if (q.paraphrase_in_question && Math.random() > 0.4) {
+    document.getElementById('trap-card').innerHTML = \`
+      <div class="text-[0.6rem] font-bold text-purple-600 uppercase tracking-widest mb-3">题眼训练 \${curTrapIdx+1}/\${total} · Paraphrase 配对<\\/div>
+      <div class="trap-box mb-3">
+        <div class="trap-title">同义替换配对<\\/div>
+        <div class="text-base font-bold text-purple-900 leading-relaxed">
+          原文用词：<span class="text-blue-700">\${q.original}<\\/span><br>
+          题目替换：<span class="text-purple-700">\${q.paraphrase_in_question}<\\/span>
+        <\\/div>
+      <\\/div>
+      \${q.trap ? \`<div class="detail-box text-sm text-slate-600 mb-3">⚠️ 注意别混淆：<strong class="text-red-500">\${q.trap}<\\/strong><\\/div>\` : ''}
+      <div class="text-xs text-slate-400 mb-4">记住：题目出现 <strong>\${q.paraphrase_in_question}<\\/strong> → 对应原文的 <strong>\${q.original}<\\/strong></div>
+      <div class="mt-auto">
+        <button class="w-full py-4 bg-purple-600 text-white rounded-2xl font-bold text-base" onclick="advanceTrap()">已理解，下一题 →<\\/button>
+      <\\/div>
+    \`;
+    return;
+  }
+
+  // MCQ mode
+  const correct = q.paraphrase_in_question || q.trap || q.original;
+  const pool = allWords.map(w => w.synonym || w.trap || w.word).filter(Boolean);
+  const decoys = pool.filter(x => x !== correct).sort(() => Math.random() - 0.5).slice(0, 3);
+  const opts = [correct, ...decoys].sort(() => Math.random() - 0.5);
+
+  document.getElementById('trap-card').innerHTML = \`
+    <div class="text-[0.6rem] font-bold text-purple-600 uppercase tracking-widest mb-4">题眼训练 \${curTrapIdx+1}/\${total} · 同义替换识别<\\/div>
+    <div class="text-sm text-slate-500 mb-1">原文出现了：</div>
+    <div class="text-3xl font-bold text-slate-800 mb-2 cursor-pointer" onclick="speak('\${escQ(q.original)}')">\${q.original} 🔊<\\/div>
+    <div class="text-sm font-bold text-slate-600 mb-4">题目中最可能用哪个词替换它？</div>
+    <div class="space-y-1">\${opts.map(o => \`<button class="opt-btn" onclick="checkTrap(this,'\${escQ(o)}','\${escQ(correct)}')">\${o}<\\/button>\`).join('')}<\\/div>
+  \`;
+}
+
+function checkTrap(el, sel, cor) {
+  document.querySelectorAll('#trap-card .opt-btn').forEach(b => b.disabled = true);
+  if (sel === cor) {
+    el.style.borderColor = '#10b981'; el.style.background = '#ecfdf5';
+    setTimeout(advanceTrap, 600);
+  } else {
+    el.style.borderColor = '#ef4444'; el.style.background = '#fef2f2';
+    document.querySelectorAll('#trap-card .opt-btn').forEach(b => {
+      if (b.textContent.trim() === cor) { b.style.borderColor = '#10b981'; b.style.background = '#ecfdf5'; }
+    });
+    setTimeout(advanceTrap, 1400);
+  }
+}
+
+function advanceTrap() {
+  if (curTrapIdx < trapSet.length - 1) { curTrapIdx++; renderTrap(); }
+  else {
+    document.getElementById('trapProg').style.width = '100%';
+    document.getElementById('trap-card').innerHTML = '<div class="text-center p-10"><div class="text-5xl mb-4">🏆<\\/div><div class="text-xl font-bold text-purple-600">题眼训练完成！<\\/div><div class="text-sm text-slate-400 mt-2">去做题模拟实战检验吧</div><button class="mt-6 px-6 py-3 bg-purple-500 text-white rounded-2xl font-bold" onclick="initTrap()">再练一遍<\\/button><\\/div>';
+  }
+}
+
+// ════════════════════════════════════════
+// ④ SIMULATION
+// ════════════════════════════════════════
+function setSimMode(m) {
+  simMode = m;
+  document.getElementById('simModeFill').classList.toggle('active', m === 'fill');
+  document.getElementById('simModeGrammar').classList.toggle('active', m === 'grammar');
+  initSim();
+}
+
+function initSim() {
+  if (simMode === 'fill') initFillSim();
+  else initGrammarSim();
+}
+
+function initFillSim() {
+  const exercises = smc.simulation_exercises || [];
+  let fillSet = [];
+  if (exercises.length > 0) {
+    fillSet = [...exercises].sort(() => Math.random() - 0.5).slice(0, Math.min(15, exercises.length));
+  } else {
+    // Build from contextual_guessing or words
+    const cg = smc.contextual_guessing || [];
+    fillSet = cg.length > 0
+      ? cg.sort(() => Math.random() - 0.5).slice(0, 12).map(item => ({
+          question_stem: item.type === 'grammar' ? '请填入正确的语法结构' : '请选择正确的词汇',
+          blank_sentence: item.masked_sentence,
+          answer: item.target,
+          type: item.type
+        }))
+      : allWords.slice(0, 10).map(w => {
+          const ex = w.example || '';
+          const idx = ex.toLowerCase().indexOf(w.word.toLowerCase());
+          return {
+            question_stem: '选择正确的词汇填入空格',
+            blank_sentence: idx >= 0 ? ex.slice(0,idx)+'______'+ex.slice(idx+w.word.length) : ex,
+            answer: w.word,
+            type: 'vocabulary'
+          };
+        }).filter(x => x.blank_sentence.includes('______'));
+  }
+  simFillSet = fillSet;
+  curSimIdx = 0;
+  renderFillSim();
+}
+
+function renderFillSim() {
+  if (!simFillSet.length) {
+    document.getElementById('sim-card').innerHTML = '<div class="text-center p-10 text-slate-400">暂无填空练习数据<\\/div>';
+    return;
+  }
+  const total = simFillSet.length;
+  document.getElementById('simProg').style.width = Math.round((curSimIdx / total) * 100) + '%';
+  const q = simFillSet[curSimIdx];
+  const typeColor = q.type === 'grammar' ? 'text-amber-600' : q.type === 'phrase' ? 'text-emerald-600' : 'text-cyan-600';
+  const typeLabel = q.type === 'grammar' ? '语法专项' : q.type === 'phrase' ? '词组填空' : '词汇填空';
+
+  // Build MCQ options
+  const pool = allWords.map(w => w.word).concat(allPhrases.map(p => p.phrase)).concat(allGrammar.map(g => g.structure));
+  const decoys = pool.filter(x => x !== q.answer).sort(() => Math.random() - 0.5).slice(0, 3);
+  const opts = [q.answer, ...decoys].sort(() => Math.random() - 0.5);
+
+  document.getElementById('sim-card').innerHTML = \`
+    <div class="text-[0.6rem] font-bold \${typeColor} uppercase tracking-widest mb-3">做题模拟 \${curSimIdx+1}/\${total} · \${typeLabel}<\\/div>
+    <div class="text-xs text-slate-400 mb-2 font-bold">\${q.question_stem || '选出正确的词填入空格：'}<\\/div>
+    <div class="ex-box" style="border-left-color:#0ea5e9;background:#f0f9ff;">
+      <p class="text-sm font-bold text-slate-700 leading-relaxed">\${q.blank_sentence || q.masked_sentence || ''}<\\/p>
+    <\\/div>
+    <div class="space-y-1">\${opts.map(o => \`<button class="opt-btn" onclick="checkFillSim(this,'\${escQ(o)}','\${escQ(q.answer)}')">\${o}<\\/button>\`).join('')}<\\/div>
+  \`;
+}
+
+function checkFillSim(el, sel, cor) {
+  document.querySelectorAll('#sim-card .opt-btn').forEach(b => b.disabled = true);
+  const advance = () => {
+    if (curSimIdx < simFillSet.length - 1) { curSimIdx++; renderFillSim(); }
+    else {
+      document.getElementById('simProg').style.width = '100%';
+      document.getElementById('sim-card').innerHTML = '<div class="text-center p-10"><div class="text-5xl mb-4">🎯<\\/div><div class="text-xl font-bold text-cyan-600">填空练习完成！<\\/div><button class="mt-6 px-6 py-3 bg-cyan-500 text-white rounded-2xl font-bold" onclick="initFillSim()">再来一轮<\\/button><\\/div>';
+    }
+  };
+  if (sel === cor) {
+    el.style.borderColor = '#10b981'; el.style.background = '#ecfdf5';
+    setTimeout(advance, 500);
+  } else {
+    el.style.borderColor = '#ef4444'; el.style.background = '#fef2f2';
+    document.querySelectorAll('#sim-card .opt-btn').forEach(b => {
+      if (b.textContent.trim() === cor) { b.style.borderColor = '#10b981'; b.style.background = '#ecfdf5'; }
+    });
+    setTimeout(advance, 1400);
+  }
+}
+
+function initGrammarSim() {
+  const exercises = smc.grammar_exercises || [];
+  grammarSet = exercises.length > 0
+    ? [...exercises].sort(() => Math.random() - 0.5)
+    : allGrammar.map(g => ({
+        instruction: '理解并记忆以下 Band 7 语法结构',
+        base_sentence: g.example || '',
+        task: '思考这个结构如何用在你的作文中',
+        model_answer: g.example || '',
+        band7_note: g.explanation || ''
+      }));
+  curGrammarIdx = 0;
+  renderGrammarSim();
+}
+
+function renderGrammarSim() {
+  if (!grammarSet.length) {
+    document.getElementById('sim-card').innerHTML = '<div class="text-center p-10 text-slate-400">暂无语法练习数据<\\/div>';
+    return;
+  }
+  const total = grammarSet.length;
+  document.getElementById('simProg').style.width = Math.round((curGrammarIdx / total) * 100) + '%';
+  const q = grammarSet[curGrammarIdx];
+  const grammarItem = allGrammar[curGrammarIdx] || {};
+
+  document.getElementById('sim-card').innerHTML = \`
+    <div class="text-[0.6rem] font-bold text-amber-600 uppercase tracking-widest mb-3">语法专项 \${curGrammarIdx+1}/\${total}<\\/div>
+    <div class="grammar-card mb-3">
+      <div class="text-[0.62rem] font-bold text-purple-700 uppercase mb-2">\${grammarItem.type || 'Grammar'} · \${grammarItem.structure || ''}<\\/div>
+      <div class="text-sm text-slate-700 leading-relaxed mb-2">\${grammarItem.explanation || q.instruction || ''}<\\/div>
+      \${grammarItem.example ? \`<div class="ex-box ex-box-amber text-sm text-amber-900 font-bold">\${grammarItem.example}<\\/div>\` : ''}
+    <\\/div>
+    \${q.base_sentence && q.base_sentence !== grammarItem.example ? \`
+    <div class="text-xs text-slate-500 font-bold mb-1">📝 练习：\${q.task || '改写以下句子'}<\\/div>
+    <div class="ex-box text-sm text-blue-900">\${q.base_sentence}<\\/div>
+    \` : ''}
+    \${q.model_answer ? \`<div class="band7-tip">\${q.band7_note || ''}<br><span class="text-indigo-700 font-bold">参考：\${q.model_answer}<\\/span><\\/div>\` : ''}
+    <div class="flex gap-2 mt-auto pt-4">
+      <button class="flex-1 py-3 bg-amber-500 text-white rounded-2xl font-bold text-sm" onclick="advanceGrammar()">已理解 →<\\/button>
+    <\\/div>
+  \`;
+}
+
+function advanceGrammar() {
+  if (curGrammarIdx < grammarSet.length - 1) { curGrammarIdx++; renderGrammarSim(); }
+  else {
+    document.getElementById('simProg').style.width = '100%';
+    document.getElementById('sim-card').innerHTML = '<div class="text-center p-10"><div class="text-5xl mb-4">📐<\\/div><div class="text-xl font-bold text-amber-600">语法专项完成！<\\/div><div class="text-sm text-slate-400 mt-2">现在去写作引导模块实际运用这些结构</div><button class="mt-6 px-6 py-3 bg-amber-500 text-white rounded-2xl font-bold" onclick="initGrammarSim()">再过一遍<\\/button><\\/div>';
+  }
+}
+
+// ════════════════════════════════════════
+// ⑤ WRITING GUIDE
+// ════════════════════════════════════════
+function renderWriting() {
+  const card = document.getElementById('writing-card');
+  const taskType = rawData.task_type || 'Task 2';
+  const guideSteps = guide.steps || [];
+  const hasMermaid = rawData.visual?.mermaid_code && rawData.visual.mermaid_code.length > 10;
+  const essay = rawData.sample_essay_7 || '';
+  const q = rawData.full_question || '';
+
+  // Get words that need learning
+  const needLearnWords = allWords.filter(w => {
+    const s = selfAssess.get(w.word);
+    return s === 'fuzzy' || s === 'unknown' || s === undefined;
+  }).slice(0, 12);
+
+  let mermaidSection = '';
+  if (hasMermaid) {
+    mermaidSection = \`
+      <div class="mb-4">
+        <div class="section-label">📊 题目图表</div>
+        <div class="mermaid-wrap">
+          <div class="mermaid">\${rawData.visual.mermaid_code}<\\/div>
+        <\\/div>
+      <\\/div>
+    \`;
+  }
+
+  let stepsHTML = '';
+  if (guideSteps.length > 0) {
+    stepsHTML = guideSteps.map((step, i) => {
+      const partKey = 'part_' + i;
+      const starterChips = (step.sentence_starters || []).map(s =>
+        \`<span class="chip" onclick="insertStarter('\${partKey}','\${escQ(s)}')">\${s}<\\/span>\`
+      ).join('');
+      const vocabChips = (step.key_vocab || []).map(v =>
+        \`<span class="chip chip-green" onclick="copyChip(this)">\${v}<\\/span>\`
+      ).join('');
+      const curVal = writingParts[partKey] || '';
+      return \`
+        <div class="writing-step">
+          <div class="flex items-center mb-2">
+            <span class="writing-step-num">\${step.step_num || i+1}<\\/span>
+            <span class="writing-step-title">\${step.title || '段落 '+(i+1)}<\\/span>
+            <span class="text-[0.6rem] text-slate-400 ml-auto">\${step.word_target || ''}<\\/span>
+          <\\/div>
+          <div class="text-xs text-slate-500 mb-2">\${step.instruction || ''}<\\/div>
+          \${starterChips ? \`<div class="mb-2"><div class="text-[0.6rem] text-slate-400 mb-1">开头句参考（点击插入）：<\\/div>\${starterChips}<\\/div>\` : ''}
+          \${vocabChips ? \`<div class="mb-2"><div class="text-[0.6rem] text-slate-400 mb-1">推荐词汇（点击复制）：<\\/div>\${vocabChips}<\\/div>\` : ''}
+          <textarea class="writing-textarea" id="ta_\${partKey}" rows="4" placeholder="在这里写这段..." oninput="saveWritingPart('\${partKey}')">\${curVal}<\\/textarea>
+          \${step.band7_tip ? \`<div class="band7-tip">\${step.band7_tip}<\\/div>\` : ''}
+        <\\/div>
+      \`;
+    }).join('');
+  } else {
+    // Default 4-para structure for Task 2, 3-para for Task 1
+    const defaultSteps = taskType === 'Task 1'
+      ? [
+          { num:1, title:'引言 Introduction', inst:'改写题目，说明图表类型和时间范围', placeholder:'The graph/chart illustrates...' },
+          { num:2, title:'主要特征 Overview', inst:'概述最显著的趋势（不写数据，写规律）', placeholder:'Overall, it can be seen that...' },
+          { num:3, title:'细节描述 Details', inst:'用具体数据支撑主要趋势，比较各项', placeholder:'In terms of..., the figure stood at...' },
+        ]
+      : [
+          { num:1, title:'引言 Introduction', inst:'改写题目背景，表明立场', placeholder:'In recent years, ...' },
+          { num:2, title:'主体段 1', inst:'提出第一个论点，举例说明', placeholder:'One significant advantage is that...' },
+          { num:3, title:'主体段 2', inst:'提出第二个论点或对立观点', placeholder:'However, critics argue that...' },
+          { num:4, title:'结论 Conclusion', inst:'总结立场，提出建议或展望', placeholder:'In conclusion, ...' },
+        ];
+    stepsHTML = defaultSteps.map((step, i) => {
+      const partKey = 'part_' + i;
+      const curVal = writingParts[partKey] || '';
+      return \`
+        <div class="writing-step">
+          <div class="flex items-center mb-2">
+            <span class="writing-step-num">\${step.num}<\\/span>
+            <span class="writing-step-title">\${step.title}<\\/span>
+          <\\/div>
+          <div class="text-xs text-slate-500 mb-2">\${step.inst}<\\/div>
+          <textarea class="writing-textarea" id="ta_\${partKey}" rows="4" placeholder="\${step.placeholder}" oninput="saveWritingPart('\${partKey}')">\${curVal}<\\/textarea>
+        <\\/div>
+      \`;
+    }).join('');
+  }
+
+  // Build recommended words for writing
+  const recWords = needLearnWords.slice(0, 8).map(w =>
+    \`<span class="chip" title="\${w.chinese}" onclick="copyChip(this)">\${w.word}<\\/span>\`
+  ).join('');
+
+  const cohesionTips = (guide.cohesion_tips || ['Furthermore,','However,','In contrast,','As a result,','Nevertheless,','Therefore,']).map(t =>
+    \`<span class="chip chip-amber" onclick="copyChip(this)">\${t}<\\/span>\`
+  ).join('');
+
+  card.innerHTML = \`
+    <div class="text-[0.6rem] font-bold text-indigo-500 uppercase tracking-widest mb-3">✍️ 写作引导 · \${taskType}</div>
+
+    \${q ? \`<div class="ex-box ex-box-indigo mb-3"><div class="text-[0.6rem] font-bold text-indigo-500 mb-1">📌 写作题目<\\/div><p class="text-xs text-indigo-800 leading-relaxed">\${q}<\\/p><\\/div>\` : ''}
+
+    \${mermaidSection}
+
+    \${recWords ? \`<div class="mb-3"><div class="section-label">💡 你需要学习的词汇（点击复制）</div>\${recWords}<\\/div>\` : ''}
+
+    \${cohesionTips ? \`<div class="mb-4"><div class="section-label">🔗 衔接词参考（点击复制）</div>\${cohesionTips}<\\/div>\` : ''}
+
+    \${guide.structure_overview ? \`<div class="hint-box mb-3">\${guide.structure_overview}<\\/div>\` : ''}
+
+    \${stepsHTML}
+
+    <div class="mt-4 grid grid-cols-2 gap-3">
+      <button class="py-3 bg-indigo-600 text-white rounded-2xl font-bold text-sm" onclick="assembleEssay()">📄 拼接完整作文<\\/button>
+      <button class="py-3 bg-slate-100 text-slate-600 rounded-2xl font-bold text-sm" onclick="showSampleEssay()">📖 查看范文<\\/button>
+    <\\/div>
+
+    <div id="assembled-essay" style="display:none" class="mt-4">
+      <div class="section-label">你的完整作文</div>
+      <div class="essay-display" id="essay-content"><\\/div>
+      <div class="text-xs text-slate-400 mt-2" id="essay-wordcount"><\\/div>
+      <button class="w-full mt-2 py-3 bg-emerald-500 text-white rounded-2xl font-bold text-sm" onclick="copyEssay()">📋 复制作文<\\/button>
+    <\\/div>
+
+    <div id="sample-essay-area" style="display:none" class="mt-4">
+      <div class="section-label">📖 Band 7 范文</div>
+      <div class="essay-display">\${essay || '范文将在生成时自动填入'}<\\/div>
+    <\\/div>
+  \`;
+
+  // Render Mermaid if needed
+  if (hasMermaid && typeof mermaid !== 'undefined') {
+    mermaid.initialize({ startOnLoad: false, theme: 'default' });
+    mermaid.run({ querySelector: '.mermaid' });
+  }
+}
+
+function saveWritingPart(key) {
+  const el = document.getElementById('ta_' + key);
+  if (el) writingParts[key] = el.value;
+}
+
+function insertStarter(key, text) {
+  const el = document.getElementById('ta_' + key);
+  if (el) { el.value = text + ' '; el.focus(); writingParts[key] = el.value; }
+}
+
+function copyChip(el) {
+  const text = el.textContent;
+  if (navigator.clipboard) navigator.clipboard.writeText(text).catch(() => {});
+  el.style.background = '#d1fae5';
+  setTimeout(() => { el.style.background = ''; }, 800);
+}
+
+function assembleEssay() {
+  // Save all parts first
+  document.querySelectorAll('.writing-textarea').forEach(ta => {
+    const match = ta.id.match(/ta_(.+)/);
+    if (match) writingParts[match[1]] = ta.value;
+  });
+  const parts = Object.values(writingParts).filter(p => p.trim());
+  if (!parts.length) { alert('请先写一些内容再拼接！'); return; }
+  const fullEssay = parts.join('\\n\\n');
+  const wordCount = fullEssay.trim().split(/\\s+/).filter(w => w.match(/[a-zA-Z]/)).length;
+  document.getElementById('assembled-essay').style.display = 'block';
+  document.getElementById('essay-content').textContent = fullEssay;
+  document.getElementById('essay-wordcount').textContent = \`字数统计：\${wordCount} 词\`;
+  document.getElementById('sample-essay-area').style.display = 'none';
+  document.getElementById('assembled-essay').scrollIntoView({behavior:'smooth'});
+}
+
+function copyEssay() {
+  const text = document.getElementById('essay-content').textContent;
+  if (navigator.clipboard) navigator.clipboard.writeText(text).then(() => alert('作文已复制！')).catch(() => {});
+}
+
+function showSampleEssay() {
+  const sa = document.getElementById('sample-essay-area');
+  const ae = document.getElementById('assembled-essay');
+  sa.style.display = sa.style.display === 'none' ? 'block' : 'none';
+  ae.style.display = 'none';
+}
+
+// ════════════════════════════════════════
+// ⑥ TEST MODE
+// ════════════════════════════════════════
+function renderTest() {
+  const card = document.getElementById('test-card');
+  const taskType = rawData.task_type || 'Task 2';
+  const wordReq = testSetup.word_requirement || '${wordReq}';
+  const timeLimitMin = testSetup.time_limit_minutes || ${timeLimit};
+  const q = rawData.full_question || '（题目将在此显示）';
+  const hasMermaid = rawData.visual?.mermaid_code && rawData.visual.mermaid_code.length > 10;
+
+  card.innerHTML = \`
+    <div class="text-[0.6rem] font-bold text-red-500 uppercase tracking-widest mb-3">⏱️ 测试模式 · \${taskType}</div>
+
+    <div class="ex-box ex-box-indigo mb-3">
+      <div class="text-[0.6rem] font-bold text-indigo-500 mb-1">📌 考试题目</div>
+      <p class="text-xs text-indigo-800 leading-relaxed">\${q}<\\/p>
+    <\\/div>
+
+    \${hasMermaid ? \`<div class="mermaid-wrap mb-3"><div class="mermaid">\${rawData.visual.mermaid_code}<\\/div><\\/div>\` : ''}
+
+    <div class="grid grid-cols-2 gap-2 mb-3">
+      <div class="bg-red-50 border border-red-200 rounded-2xl p-3 text-center">
+        <div class="text-xs text-red-500 font-bold">建议用时<\\/div>
+        <div class="text-lg font-bold text-red-600">\${timeLimitMin} 分钟<\\/div>
+      <\\/div>
+      <div class="bg-indigo-50 border border-indigo-200 rounded-2xl p-3 text-center">
+        <div class="text-xs text-indigo-500 font-bold">字数要求<\\/div>
+        <div class="text-lg font-bold text-indigo-600">\${wordReq} 词<\\/div>
+      <\\/div>
+    <\\/div>
+
+    <div class="timer-display timer-normal" id="test-timer">00:00<\\/div>
+
+    <div class="flex gap-2 mb-3">
+      <button class="flex-1 py-3 bg-red-500 text-white rounded-2xl font-bold text-sm" id="test-start-btn" onclick="startTest()">▶ 开始计时<\\/button>
+      <button class="flex-1 py-3 bg-slate-200 text-slate-600 rounded-2xl font-bold text-sm" id="test-stop-btn" onclick="stopTest()" style="display:none">⏸ 暂停<\\/button>
+    <\\/div>
+
+    <textarea class="writing-textarea mb-3" id="test-essay" rows="10" placeholder="在这里写你的作文...\\n\\n计时开始后请专注书写，完成后点击「提交」" style="min-height:200px" oninput="updateTestWordCount()"><\\/textarea>
+
+    <div class="flex justify-between text-xs text-slate-400 mb-3">
+      <span id="test-wc">字数：0 词<\\/span>
+      <span id="test-time-hint">计时未开始<\\/span>
+    <\\/div>
+
+    <button class="w-full py-3 bg-indigo-600 text-white rounded-2xl font-bold text-sm" onclick="submitTest()">📤 提交作文 · 生成评分 JSON<\\/button>
+
+    <div class="submit-output" id="test-output"><\\/div>
+  \`;
+
+  // Init mermaid in test tab
+  if (hasMermaid && typeof mermaid !== 'undefined') {
+    mermaid.initialize({ startOnLoad: false, theme: 'default' });
+    mermaid.run({ querySelector: '#test-card .mermaid' });
+  }
+
+  testRunning = false;
+  if (testTimer) { clearInterval(testTimer); testTimer = null; }
+  testSeconds = 0;
+}
+
+function startTest() {
+  if (testRunning) return;
+  testRunning = true;
+  document.getElementById('test-start-btn').style.display = 'none';
+  document.getElementById('test-stop-btn').style.display = 'block';
+  document.getElementById('test-time-hint').textContent = '计时进行中...';
+  testTimer = setInterval(() => {
+    testSeconds++;
+    const m = String(Math.floor(testSeconds / 60)).padStart(2,'0');
+    const s = String(testSeconds % 60).padStart(2,'0');
+    const timerEl = document.getElementById('test-timer');
+    if (timerEl) timerEl.textContent = m + ':' + s;
+    // Color warning
+    const pct = testSeconds / (timeLimit);
+    if (timerEl) {
+      timerEl.className = 'timer-display ' + (pct < 0.6 ? 'timer-normal' : pct < 0.85 ? 'timer-warning' : 'timer-danger');
+    }
+    // Time warnings
+    const warns = testSetup.time_warnings || [10, 20, 30];
+    warns.forEach(w => {
+      if (testSeconds === w * 60) {
+        const hint = document.getElementById('test-time-hint');
+        if (hint) hint.textContent = \`⚠️ 已用时 \${w} 分钟\`;
+      }
+    });
+  }, 1000);
+}
+
+function stopTest() {
+  if (testTimer) { clearInterval(testTimer); testTimer = null; }
+  testRunning = false;
+  document.getElementById('test-start-btn').style.display = 'block';
+  document.getElementById('test-stop-btn').style.display = 'none';
+  document.getElementById('test-time-hint').textContent = '计时已暂停';
+}
+
+function updateTestWordCount() {
+  const text = document.getElementById('test-essay')?.value || '';
+  const wc = text.trim().split(/\\s+/).filter(w => w.match(/[a-zA-Z]/)).length;
+  const wcEl = document.getElementById('test-wc');
+  if (wcEl) wcEl.textContent = \`字数：\${wc} 词\`;
+}
+
+function submitTest() {
+  stopTest();
+  const essay = document.getElementById('test-essay')?.value || '';
+  const wordCount = essay.trim().split(/\\s+/).filter(w => w.match(/[a-zA-Z]/)).length;
+  const timeTaken = Math.floor(testSeconds / 60) + '分' + (testSeconds % 60) + '秒';
+
+  const output = {
+    submission_type: 'IELTS_Writing_Student_Submission',
+    task_type: rawData.task_type || 'Task 2',
+    question: rawData.full_question || '',
+    student_essay: essay,
+    word_count: wordCount,
+    time_taken: timeTaken,
+    time_limit: (testSetup.time_limit_minutes || ${timeLimit}) + '分钟',
+    word_requirement: testSetup.word_requirement || '${wordReq}',
+    target_band: '7.0',
+    request: '请按照雅思官方评分标准（Task Response / Coherence & Cohesion / Lexical Resource / Grammatical Range & Accuracy）为这篇作文评分，给出Band分数估计，并提供具体改进建议，帮助提升至Band 7.0水平。'
+  };
+
+  const outputEl = document.getElementById('test-output');
+  outputEl.style.display = 'block';
+  outputEl.textContent = JSON.stringify(output, null, 2);
+  outputEl.scrollIntoView({behavior:'smooth'});
+}
+
+// ════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════
+mermaid.initialize({ startOnLoad: false, theme: 'default', securityLevel: 'loose' });
+renderAssess();
+<\/script>
+<\/body>
+<\/html>`;
+}
+</script>
+</body>
+</html>

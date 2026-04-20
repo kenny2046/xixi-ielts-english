@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>IAGS 口语工厂 v1.0</title>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0b1220;--surface:#131e30;--card:#1a2740;--border:#253550;
+    --blue:#3b82f6;--blue-light:#60a5fa;--green:#10b981;--amber:#f59e0b;
+    --text:#e2e8f0;--muted:#64748b;--purple:#a78bfa;--cyan:#22d3ee;
+    --teal:#14b8a6;--teal-light:#5eead4;--teal-dark:#0f766e;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Quicksand','Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
+  body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(20,184,166,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(20,184,166,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;}
+  .factory{width:100%;max-width:560px;position:relative;}
+  .header{text-align:center;margin-bottom:28px;}
+  .header-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(20,184,166,0.12);border:1px solid rgba(20,184,166,0.3);border-radius:99px;padding:4px 14px;font-size:0.7rem;font-weight:700;color:var(--teal-light);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px;}
+  .header h1{font-size:1.8rem;font-weight:700;background:linear-gradient(135deg,#5eead4,#22d3ee,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .header p{color:var(--muted);font-size:0.8rem;margin-top:6px;}
+  .steps{display:flex;flex-direction:column;gap:12px;}
+  .step{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:18px 20px;transition:border-color 0.3s,box-shadow 0.3s;position:relative;overflow:hidden;}
+  .step::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--teal);opacity:0;transition:opacity 0.3s;}
+  .step:hover{border-color:rgba(20,184,166,0.4);box-shadow:0 4px 24px rgba(20,184,166,0.08);}
+  .step:hover::before{opacity:1;}
+  .step-header{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+  .step-num{width:28px;height:28px;border-radius:50%;background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;color:var(--teal-light);flex-shrink:0;}
+  .step-title{font-weight:700;font-size:0.9rem;color:var(--text);}
+  .step-desc{font-size:0.72rem;color:var(--muted);margin-top:1px;}
+  .btn{width:100%;padding:13px 18px;border-radius:14px;font-weight:700;font-size:0.9rem;font-family:inherit;cursor:pointer;border:none;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px;}
+  .btn:active{transform:scale(0.97);}
+  .btn-teal{background:linear-gradient(135deg,#14b8a6,#0f766e);color:white;box-shadow:0 4px 15px rgba(20,184,166,0.3);}
+  .btn-teal:hover{box-shadow:0 6px 20px rgba(20,184,166,0.45);}
+  .btn-green{background:linear-gradient(135deg,#10b981,#059669);color:white;box-shadow:0 4px 15px rgba(16,185,129,0.3);}
+  .btn-green:hover{box-shadow:0 6px 20px rgba(16,185,129,0.45);}
+  .toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-80px);background:#10b981;color:white;padding:10px 20px;border-radius:99px;font-size:0.85rem;font-weight:700;transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);z-index:9999;white-space:nowrap;box-shadow:0 4px 20px rgba(16,185,129,0.4);}
+  .toast.show{transform:translateX(-50%) translateY(0);}
+  .toast.error{background:#ef4444;box-shadow:0 4px 20px rgba(239,68,68,0.4);}
+  textarea,input[type="text"]{width:100%;background:var(--surface);border:1.5px solid var(--border);color:#34d399;padding:12px 14px;border-radius:14px;font-family:'Courier New',monospace;font-size:0.8rem;resize:vertical;transition:border-color 0.2s;outline:none;}
+  textarea:focus,input[type="text"]:focus{border-color:rgba(20,184,166,0.5);box-shadow:0 0 0 3px rgba(20,184,166,0.1);}
+  textarea::placeholder,input::placeholder{color:#3a5170;}
+  .filename-row{display:flex;align-items:center;background:var(--surface);border:1.5px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color 0.2s,box-shadow 0.2s;}
+  .filename-row:focus-within{border-color:rgba(20,184,166,0.5);box-shadow:0 0 0 3px rgba(20,184,166,0.1);}
+  .filename-prefix{padding:12px 14px;font-family:'Courier New',monospace;font-size:0.8rem;font-weight:700;color:var(--teal-light);background:rgba(20,184,166,0.1);border-right:1.5px solid var(--border);white-space:nowrap;user-select:none;flex-shrink:0;}
+  .filename-row input{border:none;border-radius:0;background:transparent;padding:12px 14px;flex:1;}
+  .filename-row input:focus{box-shadow:none;}
+  .json-status{display:flex;align-items:center;gap:6px;font-size:0.7rem;margin-top:6px;color:var(--muted);}
+  .json-dot{width:6px;height:6px;border-radius:50%;background:var(--muted);flex-shrink:0;}
+  .json-dot.valid{background:var(--green);box-shadow:0 0 6px var(--green);}
+  .json-dot.invalid{background:#ef4444;box-shadow:0 0 6px #ef4444;}
+  .arrow-divider{text-align:center;color:var(--border);font-size:1rem;margin:-2px 0;}
+  .upgrade-list{list-style:none;display:flex;flex-direction:column;gap:7px;margin-top:2px;}
+  .upgrade-list li{display:flex;align-items:flex-start;gap:8px;font-size:0.72rem;color:var(--muted);line-height:1.5;}
+  .upgrade-list li .dot{width:6px;height:6px;border-radius:50%;margin-top:5px;flex-shrink:0;}
+  .dot-t{background:#14b8a6;}.dot-g{background:#10b981;}.dot-a{background:#f59e0b;}
+  .dot-c{background:#22d3ee;}.dot-p{background:#a78bfa;}.dot-b{background:#3b82f6;}
+  .upgrade-list li strong{color:var(--text);}
+  .callout{background:rgba(20,184,166,0.07);border:1px solid rgba(20,184,166,0.22);border-radius:14px;padding:12px 14px;font-size:0.72rem;color:#99f6e4;line-height:1.7;margin-top:12px;}
+  .callout-title{font-weight:700;color:var(--teal-light);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;}
+  .prompt-preview{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:12px 14px;font-size:0.7rem;color:#64748b;line-height:1.6;margin-top:10px;display:none;}
+  .prompt-preview.show{display:block;}
+  .prompt-preview strong{color:#94a3b8;}
+  .band-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(20,184,166,0.12);border:1px solid rgba(20,184,166,0.3);border-radius:99px;padding:3px 10px;font-size:0.65rem;font-weight:700;color:var(--teal-light);margin-left:8px;}
+</style>
+</head>
+<body>
+<div class="factory">
+  <div class="header">
+    <div class="header-badge">🎙️ IAGS Speaking Factory v1.0</div>
+    <h1>雅思口语生成工厂</h1>
+    <p>结构展开 · 词汇升级 · 流利度训练 · 发音跟读 · Band 6.0</p>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">🎙️</div>
+        <div>
+          <div class="step-title">口语工厂能解决什么 <span class="band-badge">🎯 Band 6.0</span></div>
+          <div class="step-desc">初中/高中双起点，精准击穿四大口语痛点</div>
+        </div>
+      </div>
+      <ul class="upgrade-list">
+        <li><span class="dot dot-t"></span><div><strong>答题结构</strong> — IDEA框架 + 分Part模板，再也不怕不知道说什么</div></li>
+        <li><span class="dot dot-g"></span><div><strong>词汇升级</strong> — 告别 good/bad/nice，Band 6 替换词库 + 口语搭配</div></li>
+        <li><span class="dot dot-c"></span><div><strong>流利度工具</strong> — 填充词/过渡语/买时间策略，卡顿急救包</div></li>
+        <li><span class="dot dot-p"></span><div><strong>发音跟读</strong> — 音标 + TTS正常/慢速 + 录音自评对比</div></li>
+        <li><span class="dot dot-b"></span><div><strong>Part 1/2/3 全覆盖</strong> — 不同Part答题长度、策略、结构针对性训练</div></li>
+        <li><span class="dot dot-a"></span><div><strong>模拟考场</strong> — 计时练习 + 录音 + 输出JSON给AI评分</div></li>
+      </ul>
+    </div>
+
+    <div class="arrow-divider">↓</div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-title">复制口语专用 Prompt</div>
+          <div class="step-desc">粘贴给 Claude / Gemini / GPT-4o，告诉 AI 你的口语题目</div>
+        </div>
+      </div>
+      <button class="btn btn-teal" onclick="copyPrompt()"><span>📋</span> 复制口语提取 Prompt</button>
+      <div class="prompt-preview" id="promptPreview">
+        <strong>Prompt 已复制 — 使用方法：</strong><br>
+        · 粘贴给 AI 后，告知 Part 编号 + 题目文字（无需截图）<br>
+        · Part 2 请提供完整 cue card 内容<br>
+        · AI 生成词汇包、结构模板、流利工具、发音要点、范例回答<br>
+        · 将 JSON 粘贴至本工厂，导出专属练习系统
+      </div>
+    </div>
+
+    <div class="arrow-divider">↓</div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-title">粘贴 AI 生成的 JSON</div>
+          <div class="step-desc">自动检测 Part 类型、词汇量、范例回答、结构模板</div>
+        </div>
+      </div>
+      <textarea id="jsonBox" rows="7" placeholder='{"system_version":"IELTS_Speaking_v1.0_Band6","part":"Part 2","topic":"...","learning_package":{...},"model_answer":{...}}' oninput="validateJSON()"></textarea>
+      <div class="json-status">
+        <div class="json-dot" id="jsonDot"></div>
+        <span id="jsonStatus">等待粘贴 JSON...</span>
+      </div>
+    </div>
+
+    <div class="arrow-divider">↓</div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-title">输入题目编号</div>
+          <div class="step-desc">例如输入 P2_Hobby，文件保存为 speaking_P2_Hobby.html</div>
+        </div>
+      </div>
+      <div class="filename-row">
+        <span class="filename-prefix">speaking_</span>
+        <input type="text" id="fileName" placeholder="P2_Hobby">
+      </div>
+    </div>
+
+    <div class="arrow-divider">↓</div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">4</div>
+        <div>
+          <div class="step-title">导出口语训练系统</div>
+          <div class="step-desc">生成含六大模块的完整 Band 6 口语练习系统</div>
+        </div>
+      </div>
+      <button class="btn btn-green" id="exportBtn" onclick="doExport()"><span>🚀</span> 导出 Band 6 口语系统 HTML</button>
+      <div class="callout">
+        <div class="callout-title">✦ 导出包含六大模块</div>
+        ① 词汇升级 — 分级替换词 + 口语搭配 + 标记掌握/模糊/不识<br>
+        ② 结构模板 — IDEA框架 + 分Part答题骨架 + 开场句一键听/复制<br>
+        ③ 流利工具 — 填充词/过渡语/买时间策略 + TTS朗读示范<br>
+        ④ 跟读发音 — 音标 + 正常/慢速TTS + 麦克风录音自评<br>
+        ⑤ 答题练习 — 逐句跟读范例 + 录音对比 + 完整回答TTS<br>
+        ⑥ 模拟考场 — 计时器 + 录音 + 输出JSON给AI批改
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const PROMPT = `你是一名专业的雅思口语教学专家，专为初中至高中英语起点学生提供 Band 6.0 级别的口语学习支持。
+请分析我给你的雅思口语题目，严格按以下规范输出，仅输出纯 JSON，不得添加任何 markdown 代码块、前缀或说明文字。第一个字符必须是 {。
+
+【题目输入格式】
+我会告诉你 Part 1 / Part 2 / Part 3 的题目。Part 2 请提供完整 cue card。
+
+【Band 6.0 学习包要求】
+- 词汇升级包：20-25个，分 basic（初中替换）/ standard（高中水平）/ advanced（Band 6 核心）三级
+  核心任务：用更地道的词替换 good/bad/nice/like/have/think/very 等低分词
+- 口语搭配短语：8-12个，强调 spoken collocations，自然口语风格（非书面语）
+- 流利度工具：填充词6-8个 + 买时间策略3-4个，含真实使用场景
+- 语音要点：5-8个关键词的音标 + 发音难点
+- 结构模板：针对该Part的答题框架（Part 2用IDEA框架，Part 1/3用简洁展开法）
+- 范例回答：Band 6水平（Part 1: 3-4句约40词；Part 2: 约180-220词；Part 3: 4-6句约80词）
+  逐句存储，每句标注功能（开场/论点/举例/对比/收尾）
+
+【JSON结构严格输出】
+{
+  "system_version": "IELTS_Speaking_v1.0_Band6",
+  "part": "Part 1 或 Part 2 或 Part 3",
+  "topic": "题目主题（简短）",
+  "question": "完整题目文字",
+  "follow_up_questions": ["追问1","追问2"],
+  "target_band": "6.0",
+  "learning_package": {
+    "vocabulary": {
+      "coverage_note": "共XX个词",
+      "words": [
+        {
+          "word": "目标词",
+          "level": "basic/standard/advanced",
+          "chinese": "中文释义",
+          "replaces": "替代的低分词（如: good）",
+          "example_spoken": "自然口语例句",
+          "phonetic": "音标",
+          "pronunciation_tip": "发音难点（可选）",
+          "collocation": "口语搭配"
+        }
+      ]
+    },
+    "spoken_phrases": {
+      "items": [
+        { "phrase": "短语", "chinese": "释义", "usage": "使用场景", "example": "例句" }
+      ]
+    },
+    "fluency_tools": {
+      "fillers": [
+        { "expression": "填充词/过渡语", "chinese": "说明", "usage": "何时使用", "example": "例句" }
+      ],
+      "stall_tactics": [
+        { "strategy": "策略名", "phrase": "具体表达", "chinese": "说明" }
+      ]
+    },
+    "pronunciation_focus": [
+      { "word": "单词", "phonetic": "音标", "difficulty": "发音难点", "tip": "纠音建议" }
+    ],
+    "structure_template": {
+      "part_type": "Part 1/2/3",
+      "time_target": "建议时长",
+      "framework_name": "框架名称",
+      "framework_steps": [
+        { "step": "步骤名", "role": "作用", "sentence_starters": ["开场句1","开场句2"], "time_seconds": 20 }
+      ],
+      "band6_tips": ["提升建议1","建议2"],
+      "avoid_mistakes": ["常见错误1","错误2"]
+    },
+    "model_answer": {
+      "full_text": "完整范例回答",
+      "sentences": [
+        { "id": 1, "text": "句子", "function": "开场/论点/举例/对比/收尾", "band6_feature": "该句Band 6特征", "key_words": ["关键词"] }
+      ],
+      "word_count": 0,
+      "duration_estimate": "约XX秒"
+    }
+  },
+  "practice_mode": {
+    "vocab_quiz": [
+      { "context": "含____的句子", "answer": "正确答案", "distractors": ["干扰1","干扰2","干扰3"] }
+    ]
+  },
+  "ui_compatibility_note": "此JSON专为IAGS口语工厂v1.0设计"
+}
+
+- 仅输出JSON，第一个字符必须是 {
+- 口语例句必须自然口语风格，避免书面语
+- 范例回答真实体现Band 6：流利有结构、词汇有变化、少量语法错误可接受`;
+
+function showToast(msg, isError=false) {
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.className='toast'+(isError?' error':'');
+  requestAnimationFrame(()=>{requestAnimationFrame(()=>{t.classList.add('show');});});
+  setTimeout(()=>{t.classList.remove('show');},2800);
+}
+
+function copyPrompt() {
+  const doFallback=()=>{
+    const el=document.createElement('textarea');
+    el.value=PROMPT;el.style.cssText='position:fixed;opacity:0;';
+    document.body.appendChild(el);el.select();document.execCommand('copy');document.body.removeChild(el);
+    showToast('✅ 口语 Prompt 已复制！');
+    document.getElementById('promptPreview').classList.add('show');
+  };
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(PROMPT).then(()=>{showToast('✅ 口语 Prompt 已复制！');document.getElementById('promptPreview').classList.add('show');}).catch(doFallback);
+  } else doFallback();
+}
+
+function validateJSON() {
+  const val=document.getElementById('jsonBox').value.trim();
+  const dot=document.getElementById('jsonDot');
+  const status=document.getElementById('jsonStatus');
+  if(!val){dot.className='json-dot';status.textContent='等待粘贴 JSON...';return false;}
+  try {
+    const d=JSON.parse(val);
+    const hasLp=d.learning_package&&d.learning_package.vocabulary;
+    const part=d.part||'未知Part';
+    const topic=d.topic||'';
+    const wc=(d.learning_package?.vocabulary?.words||[]).length;
+    const pc=(d.learning_package?.spoken_phrases?.items||[]).length;
+    const hasModel=!!(d.learning_package?.model_answer?.full_text);
+    const hasTmpl=!!(d.learning_package?.structure_template);
+    if(hasLp){
+      dot.className='json-dot valid';
+      let info=`✓ 有效 · ${part}`;
+      if(topic)info+=` · ${topic}`;
+      info+=` · ${wc}词 · ${pc}短语`;
+      if(hasModel)info+=' · ✦ 含范例回答';
+      if(hasTmpl)info+=' · 📐 含结构模板';
+      status.textContent=info;return true;
+    } else {
+      dot.className='json-dot invalid';
+      status.textContent='⚠️ 缺少 learning_package，请用口语 Prompt 重新生成';return false;
+    }
+  } catch(e){
+    dot.className='json-dot invalid';
+    status.textContent='✗ JSON格式错误：'+e.message.substring(0,50);return false;
+  }
+}
+
+function doExport() {
+  const jsonStr=document.getElementById('jsonBox').value.trim();
+  const name=document.getElementById('fileName').value.trim()||'Speaking';
+  if(!jsonStr){showToast('⚠️ 请先粘贴 JSON',true);return;}
+  if(!validateJSON()){showToast('⚠️ JSON 格式有误',true);return;}
+  let parsed;
+  try{parsed=JSON.parse(jsonStr);}catch(e){showToast('JSON 解析失败',true);return;}
+  const safeName=name.replace(/^speaking_/i,'');
+  const html=buildOutputHTML(safeName,jsonStr,parsed);
+  const blob=new Blob([html],{type:'text/html;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='speaking_'+safeName+'.html';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  showToast(`🎉 speaking_${safeName}.html 已导出！`);
+}
+
+function buildOutputHTML(name, jsonStr, parsed) {
+  const part=parsed.part||'Part 2';
+  const partNum=part.includes('1')?1:part.includes('3')?3:2;
+
+  return `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>IELTS 口语系统 v1.0 — ${name}</title>
+<script src="https://cdn.tailwindcss.com"><\/script>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body{font-family:'Quicksand','Noto Sans SC',sans-serif;background:#f1f5f9;color:#1e293b;touch-action:manipulation;}
+  .container{max-width:500px;margin:0 auto;padding:12px;}
+  .tab-bar{display:flex;gap:3px;background:#e2e8f0;padding:4px;border-radius:16px;margin-bottom:12px;overflow-x:auto;}
+  .tab{flex:1;min-width:46px;padding:9px 2px;text-align:center;cursor:pointer;border-radius:12px;font-size:0.64rem;font-weight:700;color:#64748b;transition:0.2s;white-space:nowrap;}
+  .tab.active{background:#fff;color:#14b8a6;box-shadow:0 2px 8px rgba(0,0,0,0.05);}
+  .card{background:white;border-radius:24px;padding:1.25rem;box-shadow:0 8px 20px rgba(0,0,0,0.04);min-height:540px;display:flex;flex-direction:column;border:3px solid #e2e8f0;}
+  .card-auto{min-height:auto;}
+  .ex-box{background:#f0fdfa;border-radius:16px;border-left:4px solid #14b8a6;padding:1rem;margin:0.75rem 0;}
+  .ex-indigo{background:#eef2ff;border-left-color:#6366f1;}
+  .ex-amber{background:#fffbeb;border-left-color:#f59e0b;}
+  .ex-blue{background:#eff6ff;border-left-color:#3b82f6;}
+  .detail-box{background:#f8fafc;border-radius:16px;border:1px solid #edf2f7;padding:0.85rem;font-size:0.85rem;}
+  .trap-box{background:linear-gradient(135deg,#f0fdfa,#eef2ff);border-radius:16px;border:1px solid #99f6e4;padding:0.85rem;margin-top:0.75rem;}
+  .trap-title{font-size:0.6rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:#0f766e;margin-bottom:6px;}
+  .trap-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:4px;}
+  .trap-lbl{font-size:0.58rem;font-weight:700;background:#ccfbf1;color:#0f766e;padding:2px 7px;border-radius:99px;white-space:nowrap;flex-shrink:0;margin-top:1px;}
+  .trap-val{color:#134e4a;font-size:0.8rem;line-height:1.4;}
+  .lbl{font-weight:800;color:#14b8a6;font-size:0.65rem;text-transform:uppercase;margin-right:8px;display:inline-block;width:65px;flex-shrink:0;}
+  .btn-mark{padding:1rem 0.5rem;border-radius:16px;font-size:0.85rem;font-weight:700;color:white;transition:0.2s;cursor:pointer;border:none;font-family:inherit;}
+  .btn-mark:active{transform:scale(0.95);}
+  .opt-btn{width:100%;padding:0.9rem;margin-bottom:0.65rem;border:2px solid #f1f5f9;border-radius:16px;text-align:left;font-size:0.92rem;background:#fff;font-family:inherit;cursor:pointer;transition:0.15s;}
+  .opt-btn:hover{background:#f8fafc;}
+  .section{display:none;}.section.active{display:block;}
+  .flash-green{animation:flash 0.8s;--c:#10b981;}
+  .flash-amber{animation:flash 0.8s;--c:#f59e0b;}
+  .flash-rose{animation:flash 0.8s;--c:#ef4444;}
+  @keyframes flash{0%,100%{border-color:#e2e8f0}50%{border-color:var(--c);box-shadow:0 0 15px var(--c)}}
+  .prog-bar{height:3px;background:#e2e8f0;border-radius:99px;overflow:hidden;margin-bottom:12px;}
+  .prog-fill{height:100%;background:linear-gradient(90deg,#14b8a6,#6366f1);border-radius:99px;transition:width 0.4s;}
+  .lv-nav{display:flex;gap:6px;margin-bottom:10px;}
+  .lv-btn{flex:1;padding:7px 4px;border-radius:10px;font-size:0.68rem;font-weight:700;text-align:center;cursor:pointer;border:1.5px solid #e2e8f0;background:white;color:#64748b;transition:0.2s;}
+  .lv-btn.active{border-color:#14b8a6;background:#f0fdfa;color:#0f766e;}
+  .ctx-blank{display:inline-block;background:#cbd5e1;color:transparent;border-radius:6px;cursor:pointer;user-select:none;padding:0 6px;min-width:60px;transition:all 0.3s;}
+  .ctx-blank.revealed{background:transparent;color:#0f766e;font-weight:700;}
+  .level-tag{display:inline-block;font-size:0.58rem;font-weight:700;border-radius:99px;padding:1px 6px;margin-left:4px;}
+  .lv-basic{background:#d1fae5;color:#065f46;}
+  .lv-standard{background:#dbeafe;color:#1d4ed8;}
+  .lv-advanced{background:#ede9fe;color:#5b21b6;}
+  .replaces-tag{display:inline-flex;align-items:center;gap:4px;background:#fef2f2;border:1px solid #fecaca;border-radius:99px;padding:2px 8px;font-size:0.65rem;color:#991b1b;margin-top:4px;}
+  .tts-btn{display:inline-flex;align-items:center;gap:4px;background:#f0fdfa;border:1.5px solid #99f6e4;border-radius:99px;padding:5px 12px;font-size:0.75rem;font-weight:700;color:#0f766e;cursor:pointer;transition:0.2s;margin:3px 2px;}
+  .tts-btn:hover{background:#ccfbf1;}
+  .tts-btn.playing{background:#14b8a6;color:white;border-color:#14b8a6;}
+  .record-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:14px;border-radius:16px;font-size:0.9rem;font-weight:700;cursor:pointer;border:none;font-family:inherit;transition:0.2s;}
+  .record-btn.idle{background:#f1f5f9;color:#64748b;border:2px solid #e2e8f0;}
+  .record-btn.recording{background:#ef4444;color:white;animation:pulse-rec 1s infinite;}
+  .record-btn.done{background:#ecfdf5;color:#065f46;border:2px solid #a7f3d0;}
+  @keyframes pulse-rec{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,0.4)}50%{box-shadow:0 0 0 8px rgba(239,68,68,0)}}
+  .sent-card{background:#f8fafc;border-radius:14px;padding:12px;margin-bottom:8px;border:1.5px solid #e2e8f0;cursor:pointer;transition:0.2s;}
+  .sent-card:hover,.sent-card.active{border-color:#14b8a6;background:#f0fdfa;}
+  .func-tag{display:inline-block;font-size:0.58rem;font-weight:700;border-radius:99px;padding:2px 7px;margin-bottom:4px;}
+  .ft-open{background:#d1fae5;color:#065f46;}
+  .ft-point{background:#dbeafe;color:#1d4ed8;}
+  .ft-example{background:#fef3c7;color:#78350f;}
+  .ft-contrast{background:#ede9fe;color:#5b21b6;}
+  .ft-close{background:#fce7f3;color:#9d174d;}
+  .ft-other{background:#f1f5f9;color:#475569;}
+  .structure-step{background:#f8fafc;border-radius:16px;border:1.5px solid #e2e8f0;padding:1rem;margin-bottom:10px;}
+  .step-circle{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:#f0fdfa;border:1.5px solid #14b8a6;font-size:0.72rem;font-weight:700;color:#0f766e;flex-shrink:0;margin-right:8px;}
+  .fluency-card{background:linear-gradient(135deg,#f0fdfa,#eef2ff);border-radius:16px;border:1px solid #99f6e4;padding:1rem;margin-bottom:10px;}
+  .chip{display:inline-block;background:#f0fdfa;border:1px solid #99f6e4;border-radius:8px;padding:3px 10px;font-size:0.7rem;color:#0f766e;margin:2px;font-weight:600;cursor:pointer;transition:0.15s;}
+  .chip:hover{background:#ccfbf1;}
+  .chip-amber{background:#fffbeb;border-color:#fde68a;color:#92400e;}
+  .chip-purple{background:#fdf4ff;border-color:#e9d5ff;color:#6d28d9;}
+  .band6-tip{background:linear-gradient(135deg,#f0fdfa,#eef2ff);border:1px solid #99f6e4;border-radius:12px;padding:8px 12px;font-size:0.72rem;color:#0f766e;margin-top:6px;}
+  .band6-tip::before{content:'🎯 Band 6  ';font-weight:700;}
+  .pron-card{background:#fff;border-radius:16px;border:2px solid #e2e8f0;padding:1rem;margin-bottom:10px;}
+  .phonetic-big{font-size:1.3rem;color:#0f766e;font-family:'Courier New',monospace;font-weight:700;letter-spacing:0.05em;}
+  .sim-timer{font-size:1.8rem;font-weight:700;font-family:'Courier New',monospace;text-align:center;padding:10px;border-radius:14px;background:#f0fdfa;color:#0f766e;margin:8px 0;}
+  .sim-timer.warn{background:#fffbeb;color:#b45309;}
+  .sim-timer.danger{background:#fef2f2;color:#dc2626;}
+  .audio-row{background:#f8fafc;border-radius:12px;padding:8px 12px;margin-top:6px;display:flex;align-items:center;gap:8px;}
+  .submit-json{background:#0f172a;border-radius:14px;padding:1rem;font-size:0.7rem;font-family:'Courier New',monospace;color:#34d399;max-height:180px;overflow-y:auto;white-space:pre-wrap;margin-top:8px;display:none;}
+  .reinforce-badge{display:inline-flex;align-items:center;gap:4px;background:#fef3c7;border:1px solid #fde68a;border-radius:99px;padding:3px 10px;font-size:0.65rem;font-weight:700;color:#92400e;margin-bottom:10px;}
+  .section-lbl{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#94a3b8;margin-bottom:6px;}
+<\/style>
+<\/head>
+<body>
+<div class="container">
+  <div style="text-align:center;margin-bottom:12px;">
+    <span style="font-size:0.6rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.1em;">IELTS Speaking · ${name} · ${part} · Band 6 · v1.0<\/span>
+  <\/div>
+  <div class="tab-bar">
+    <div class="tab active" onclick="switchTab('vocab')">词汇升级<\/div>
+    <div class="tab" onclick="switchTab('structure')">📐 结构<\/div>
+    <div class="tab" onclick="switchTab('fluency')">💬 流利<\/div>
+    <div class="tab" onclick="switchTab('pron')">🔊 发音<\/div>
+    <div class="tab" onclick="switchTab('answer')">答题练<\/div>
+    <div class="tab" onclick="switchTab('sim')">⏱️ 模拟<\/div>
+  <\/div>
+
+  <div id="vocab" class="section active">
+    <div class="lv-nav">
+      <div class="lv-btn active" id="lvBasic" onclick="jumpLv('basic')">初中替换<\/div>
+      <div class="lv-btn" id="lvStd" onclick="jumpLv('standard')">高中水平<\/div>
+      <div class="lv-btn" id="lvAdv" onclick="jumpLv('advanced')">Band 6<\/div>
+    <\/div>
+    <div class="prog-bar"><div class="prog-fill" id="vocabProg" style="width:0%"><\/div><\/div>
+    <div id="reinforce-notice" style="display:none"><div class="reinforce-badge">🔄 强化复习中<\/div><\/div>
+    <div class="card" id="vocab-card"><\/div>
+  <\/div>
+
+  <div id="structure" class="section">
+    <div class="card card-auto" id="structure-card"><\/div>
+  <\/div>
+
+  <div id="fluency" class="section">
+    <div class="card card-auto" id="fluency-card"><\/div>
+  <\/div>
+
+  <div id="pron" class="section">
+    <div class="prog-bar"><div class="prog-fill" id="pronProg" style="width:0%"><\/div><\/div>
+    <div class="card" id="pron-card"><\/div>
+  <\/div>
+
+  <div id="answer" class="section">
+    <div class="prog-bar"><div class="prog-fill" id="answerProg" style="width:0%"><\/div><\/div>
+    <div class="card" id="answer-card"><\/div>
+  <\/div>
+
+  <div id="sim" class="section">
+    <div class="card card-auto" id="sim-card"><\/div>
+  <\/div>
+<\/div>
+
+<script>
+const rawData=${jsonStr};
+const lp=rawData.learning_package||{};
+const allWords=lp.vocabulary?.words||[];
+const allPhrases=lp.spoken_phrases?.items||[];
+const fluencyTools=lp.fluency_tools||{};
+const pronFocus=lp.pronunciation_focus||[];
+const tmpl=lp.structure_template||{};
+const modelAns=lp.model_answer||{};
+const pNum=${partNum};
+const pLabel=rawData.part||'Part 2';
+
+const byLevel={
+  basic:allWords.filter(w=>w.level==='basic'),
+  standard:allWords.filter(w=>w.level==='standard'),
+  advanced:allWords.filter(w=>w.level==='advanced')
+};
+if(!byLevel.basic.length)byLevel.basic=allWords.slice(0,Math.ceil(allWords.length/3));
+if(!byLevel.standard.length)byLevel.standard=allWords.slice(Math.ceil(allWords.length/3),Math.ceil(allWords.length*2/3));
+if(!byLevel.advanced.length)byLevel.advanced=allWords.slice(Math.ceil(allWords.length*2/3));
+
+let curLv='basic',curWIdx=0;
+let reinforceQ=[],reinforcing=false;
+const mistakeMap=new Map();
+let curPronIdx=0,curSentIdx=0;
+let simTimer=null,simSecs=0,simRunning=false;
+let mediaRecorder=null,audioChunks=[],recordedBlob=null;
+
+function switchTab(id){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>{if(t.getAttribute('onclick')&&t.getAttribute('onclick').includes("'"+id+"'"))t.classList.add('active');});
+  document.querySelectorAll('.section').forEach(s=>s.classList.toggle('active',s.id===id));
+  if(id==='vocab')renderVocab();
+  if(id==='structure')renderStructure();
+  if(id==='fluency')renderFluency();
+  if(id==='pron')renderPron();
+  if(id==='answer')renderAnswer();
+  if(id==='sim')renderSim();
+}
+
+function escQ(s){return(s||'').replace(/\\\\/g,'\\\\\\\\').replace(/'/g,"\\\\'")}
+
+function lvTag(lv){
+  if(lv==='basic')return '<span class="level-tag lv-basic">初中<\\/span>';
+  if(lv==='standard')return '<span class="level-tag lv-standard">高中<\\/span>';
+  return '<span class="level-tag lv-advanced">Band6<\\/span>';
+}
+function funcTag(fn){
+  const map={'开场':'ft-open','论点':'ft-point','举例':'ft-example','对比':'ft-contrast','收尾':'ft-close'};
+  return \`<span class="func-tag \${map[fn]||'ft-other'}">\${fn}<\\/span>\`;
+}
+
+// TTS
+let curUtt=null;
+function speak(text,btnId){
+  window.speechSynthesis.cancel();
+  document.querySelectorAll('.tts-btn').forEach(b=>b.classList.remove('playing'));
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang='en-GB';u.rate=0.85;
+  if(btnId){
+    const btn=document.getElementById(btnId);
+    if(btn)btn.classList.add('playing');
+    u.onend=()=>{if(btn)btn.classList.remove('playing');};
+  }
+  curUtt=u;window.speechSynthesis.speak(u);
+}
+function speakSlow(text,btnId){
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang='en-GB';u.rate=0.6;
+  if(btnId){const btn=document.getElementById(btnId);if(btn)btn.classList.add('playing');u.onend=()=>{if(btn)btn.classList.remove('playing');};}
+  window.speechSynthesis.speak(u);
+}
+function copyAndSpeak(text){
+  if(navigator.clipboard)navigator.clipboard.writeText(text).catch(()=>{});
+  speak(text);
+}
+
+// Recording
+function toggleRecord(btnId,audioAreaId){
+  const btn=document.getElementById(btnId);
+  if(!btn)return;
+  if(mediaRecorder&&mediaRecorder.state==='recording'){
+    mediaRecorder.stop();
+    btn.className='record-btn done';
+    btn.textContent='✅ 录音完成 — 再次点击重录';
+  } else {
+    audioChunks=[];
+    navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
+      mediaRecorder=new MediaRecorder(stream);
+      mediaRecorder.ondataavailable=e=>audioChunks.push(e.data);
+      mediaRecorder.onstop=()=>{
+        recordedBlob=new Blob(audioChunks,{type:'audio/webm'});
+        const url=URL.createObjectURL(recordedBlob);
+        const area=document.getElementById(audioAreaId);
+        const pb=document.getElementById(audioAreaId+'-pb');
+        if(area&&pb){area.style.display='flex';pb.src=url;}
+        stream.getTracks().forEach(t=>t.stop());
+      };
+      mediaRecorder.start();
+      btn.className='record-btn recording';
+      btn.textContent='⏹ 点击停止';
+    }).catch(()=>{btn.className='record-btn idle';btn.textContent='❌ 麦克风权限被拒';});
+  }
+}
+
+function audioRow(areaId){
+  return \`<div id="\${areaId}" style="display:none" class="audio-row"><span class="text-xs text-slate-500">你的录音：<\\/span><audio id="\${areaId}-pb" controls style="height:32px;flex:1;"><\\/audio><\\/div>\`;
+}
+
+// ═══════════════════
+// ① VOCAB
+// ═══════════════════
+function jumpLv(lv){
+  curLv=lv;curWIdx=0;
+  document.getElementById('lvBasic').classList.toggle('active',lv==='basic');
+  document.getElementById('lvStd').classList.toggle('active',lv==='standard');
+  document.getElementById('lvAdv').classList.toggle('active',lv==='advanced');
+  renderVocab();
+}
+
+function renderVocab(){
+  const list=reinforcing?reinforceQ:(byLevel[curLv]||[]);
+  if(!list.length){
+    document.getElementById('vocab-card').innerHTML=\`<div class="text-center p-10 text-slate-400"><div class="text-3xl mb-3">✅<\\/div><div class="font-bold text-teal-600">该等级词汇已掌握<\\/div><button class="mt-4 px-5 py-2 bg-teal-500 text-white rounded-2xl font-bold text-sm" onclick="jumpLv(\${curLv==='basic'?"'standard'":curLv==='standard'?"'advanced'":"'basic'"})">下一级 →<\\/button><\\/div>\`;
+    return;
+  }
+  const idx=reinforcing?0:Math.min(curWIdx,list.length-1);
+  const w=list[idx];
+  document.getElementById('reinforce-notice').style.display=reinforcing?'block':'none';
+  document.getElementById('vocabProg').style.width=Math.round((idx/list.length)*100)+'%';
+  speak(w.word);
+  document.getElementById('vocab-card').innerHTML=\`
+    <div class="flex justify-between items-start mb-2">
+      <div class="text-[0.58rem] font-bold text-teal-500 uppercase tracking-widest">\${curLv} · 词汇升级<\\/div>
+      <div class="text-[0.6rem] text-slate-300 font-bold">\${idx+1}/\${list.length}<\\/div>
+    <\\/div>
+    <div class="flex items-start justify-between mb-2">
+      <div>
+        <h1 class="text-3xl font-bold text-slate-800">\${w.word}\${lvTag(w.level)}<\\/h1>
+        \${w.phonetic?\`<div class="phonetic-big mt-1">/\${w.phonetic}/<\\/div>\`:''}
+        \${w.replaces?\`<div class="replaces-tag">↑ 替代低分词：\${w.replaces}<\\/div>\`:''}
+      <\\/div>
+      <div class="text-teal-600 font-bold text-lg text-right max-w-[140px] mt-1">\${w.chinese||''}<\\/div>
+    <\\/div>
+    <div class="flex gap-2 my-3">
+      <button class="tts-btn" id="tv-n" onclick="speak('\${escQ(w.word)}','tv-n')">▶ 正常<\\/button>
+      <button class="tts-btn" id="tv-s" onclick="speakSlow('\${escQ(w.word)}','tv-s')">🐢 慢速<\\/button>
+    <\\/div>
+    \${w.example_spoken?\`<div class="ex-box"><div class="text-[0.6rem] font-bold text-teal-500 mb-1">💬 口语例句<\\/div><p class="text-sm font-bold text-teal-900 leading-snug">\${w.example_spoken}<\\/p><button class="tts-btn mt-2" id="tv-ex" onclick="speak('\${escQ(w.example_spoken)}','tv-ex')">▶ 听例句<\\/button><\\/div>\`:''}
+    <div class="detail-box space-y-2">
+      \${w.collocation?\`<div class="flex"><span class="lbl">搭配<\\/span><span class="text-slate-600 font-bold">\${w.collocation}<\\/span><\\/div>\`:''}
+      \${w.pronunciation_tip?\`<div class="flex"><span class="lbl">发音<\\/span><span class="text-slate-600">\${w.pronunciation_tip}<\\/span><\\/div>\`:''}
+    <\\/div>
+    <div class="grid grid-cols-3 gap-3 mt-auto pt-4">
+      <button class="btn-mark bg-emerald-500" onclick="handleMark('known')">掌握 ✓<\\/button>
+      <button class="btn-mark bg-amber-500" onclick="handleMark('unsure')">模糊 ~<\\/button>
+      <button class="btn-mark bg-rose-500" onclick="handleMark('unknown')">不识 ✗<\\/button>
+    <\\/div>
+  \`;
+}
+
+function handleMark(status){
+  const card=document.getElementById('vocab-card');
+  const cls=status==='known'?'flash-green':status==='unsure'?'flash-amber':'flash-rose';
+  card.classList.add(cls);
+  if(status!=='known'){
+    const list=reinforcing?reinforceQ:(byLevel[curLv]||[]);
+    const item=list[reinforcing?0:curWIdx];
+    if(item){
+      const key=item.word;
+      if(!mistakeMap.has(key))mistakeMap.set(key,{data:item,count:1});else mistakeMap.get(key).count++;
+      if(!reinforceQ.find(x=>x.word===key))reinforceQ.push(item);
+    }
+  }
+  setTimeout(()=>{card.classList.remove(cls);advanceVocab();},800);
+}
+
+function advanceVocab(){
+  if(reinforcing){
+    reinforceQ.shift();
+    if(!reinforceQ.length){reinforcing=false;document.getElementById('reinforce-notice').style.display='none';document.getElementById('vocab-card').innerHTML='<div class="text-center p-10"><div class="text-5xl mb-4">🎯<\\/div><div class="text-xl font-bold text-teal-600">强化完成！<\\/div><\\/div>';}
+    else renderVocab();return;
+  }
+  const list=byLevel[curLv]||[];
+  if(curWIdx<list.length-1){curWIdx++;renderVocab();}
+  else if(reinforceQ.length>0){reinforcing=true;renderVocab();}
+  else{
+    const nx={basic:'standard',standard:'advanced'}[curLv];
+    document.getElementById('vocab-card').innerHTML=\`<div class="text-center p-10"><div class="text-5xl mb-4">✅<\\/div><div class="text-xl font-bold text-emerald-600">本级完成！🎉<\\/div>\${nx?\`<button class="mt-6 px-6 py-3 bg-teal-500 text-white rounded-2xl font-bold" onclick="jumpLv('\${nx}')">下一级 →<\\/button>\`:''}<\\/div>\`;
+  }
+}
+
+// ═══════════════════
+// ② STRUCTURE
+// ═══════════════════
+function renderStructure(){
+  const card=document.getElementById('structure-card');
+  const q=rawData.question||rawData.topic||'';
+  const steps=tmpl.framework_steps||[];
+  const tips=tmpl.band6_tips||[];
+  const mistakes=tmpl.avoid_mistakes||[];
+  const timeTarget=tmpl.time_target||(pNum===1?'约30-40秒':pNum===3?'约45-60秒':'约90-120秒');
+  const fwName=tmpl.framework_name||(pNum===2?'IDEA 框架':'简洁展开法');
+
+  const ideaDefault=[
+    {step:'I — Introduce',role:'破题，说明你要讲什么',sentence_starters:[\"I'd like to talk about...\",\"The thing I want to describe is...\"],time_seconds:15},
+    {step:'D — Describe',role:'回答 cue card 要点（who/what/when/where）',sentence_starters:[\"It happened when...\",\"I remember that...\"],time_seconds:40},
+    {step:'E — Explain',role:'解释为什么有意义，加感受/原因',sentence_starters:[\"What made it special was...\",\"The reason I remember it is...\"],time_seconds:35},
+    {step:'A — Add',role:'补充细节/对比/反思，填满时间',sentence_starters:[\"Looking back, I think...\",\"Compared to other experiences...\"],time_seconds:30},
+  ];
+  const p1Default=[
+    {step:'直接回答',role:'用一句话直接回答问题',sentence_starters:[\"Yes, definitely...\",\"To be honest...\",\"Not really, because...\"],time_seconds:8},
+    {step:'展开原因',role:'给出1-2个理由或细节',sentence_starters:[\"The main reason is...\",\"I think it's because...\"],time_seconds:18},
+    {step:'举例收尾',role:'加一个具体例子或对比',sentence_starters:[\"For example...\",\"I remember once...\"],time_seconds:12},
+  ];
+  const p3Default=[
+    {step:'观点表态',role:'先表明立场，不要犹豫',sentence_starters:[\"I think generally speaking...\",\"From my perspective...\"],time_seconds:10},
+    {step:'论点支撑',role:'给出2-3个理由',sentence_starters:[\"One reason is...\",\"Another factor is...\",\"Moreover...\"],time_seconds:30},
+    {step:'收尾延伸',role:'总结或引申思考',sentence_starters:[\"So overall, I believe...\",\"This is why...\"],time_seconds:15},
+  ];
+  const displaySteps=steps.length>0?steps:(pNum===2?ideaDefault:pNum===1?p1Default:p3Default);
+
+  const stepsHTML=displaySteps.map((s,i)=>{
+    const chips=(s.sentence_starters||[]).map(st=>\`<span class="chip" onclick="copyAndSpeak('\${escQ(st)}')">\${st}<\\/span>\`).join('');
+    return \`<div class="structure-step">
+      <div class="flex items-center mb-2"><span class="step-circle">\${i+1}<\\/span><span class="font-bold text-sm text-slate-700">\${s.step}<\\/span>\${s.time_seconds?\`<span class="text-[0.6rem] text-slate-400 ml-auto">~\${s.time_seconds}s<\\/span>\`:''}
+      <\\/div>
+      <div class="text-xs text-slate-500 mb-2">\${s.role||''}<\\/div>
+      \${chips?\`<div class="text-[0.6rem] text-slate-400 mb-1">开场句（点击复制+朗读）：<\\/div>\${chips}\`:''}
+    <\\/div>\`;
+  }).join('');
+
+  card.innerHTML=\`
+    <div class="text-[0.6rem] font-bold text-teal-500 uppercase tracking-widest mb-3">📐 结构模板 · \${pLabel}<\\/div>
+    \${q?\`<div class="ex-box mb-3"><div class="text-[0.6rem] font-bold text-teal-500 mb-1">📌 题目<\\/div><p class="text-xs text-teal-800 leading-relaxed font-bold">\${q}<\\/p><\\/div>\`:''}
+    <div class="flex gap-2 mb-4">
+      <div class="bg-teal-50 border border-teal-200 rounded-xl px-3 py-2 text-center flex-1">
+        <div class="text-[0.6rem] text-teal-500 font-bold">框架<\\/div>
+        <div class="text-sm font-bold text-teal-700">\${fwName}<\\/div>
+      <\\/div>
+      <div class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-center flex-1">
+        <div class="text-[0.6rem] text-slate-500 font-bold">目标时长<\\/div>
+        <div class="text-sm font-bold text-slate-700">\${timeTarget}<\\/div>
+      <\\/div>
+    <\\/div>
+    \${stepsHTML}
+    \${tips.length?\`<div class="band6-tip">\${tips.join('<br>')}<\\/div>\`:''}
+    \${mistakes.length?\`<div class="mt-3 bg-red-50 border border-red-200 rounded-2xl p-3"><div class="text-[0.6rem] font-bold text-red-500 uppercase mb-2">⚠️ 常见错误<\\/div>\${mistakes.map(m=>\`<div class="text-xs text-red-600 mb-1">· \${m}<\\/div>\`).join('')}<\\/div>\`:''}
+  \`;
+}
+
+// ═══════════════════
+// ③ FLUENCY
+// ═══════════════════
+function renderFluency(){
+  const card=document.getElementById('fluency-card');
+  const fillers=fluencyTools.fillers||[];
+  const tactics=fluencyTools.stall_tactics||[];
+  const defFillers=[
+    {expression:"Well, that's a good question...",chinese:"嗯，这是个好问题",usage:"开场争取思考时间",example:"Well, that's a good question. I suppose I'd have to say..."},
+    {expression:"Let me think about that for a second...",chinese:"让我想一想",usage:"需要时间组织语言",example:"Let me think about that for a second... I'd say it depends."},
+    {expression:"What I mean is,",chinese:"我的意思是",usage:"重新表达或澄清",example:"It was great. What I mean is, it was really memorable."},
+    {expression:"To be honest,",chinese:"说实话",usage:"引出个人真实想法",example:"To be honest, I've never really thought about it before."},
+    {expression:"Actually,",chinese:"实际上",usage:"转折或补充信息",example:"Actually, I think the opposite might be true."},
+    {expression:"I mean,",chinese:"就是说",usage:"口语化衔接，填充停顿",example:"It was fun. I mean, we all really enjoyed it."},
+  ];
+  const defTactics=[
+    {strategy:"重复题目关键词",phrase:"When it comes to [topic],",chinese:"争取思考时间的同时扣题"},
+    {strategy:"承认难度然后回答",phrase:"That's quite a complex question, but I think...",chinese:"显示思考深度"},
+    {strategy:"举例展开",phrase:"For example, I remember once...",chinese:"想不到新内容就用例子填充时间"},
+  ];
+  const dFillers=fillers.length>0?fillers:defFillers;
+  const dTactics=tactics.length>0?tactics:defTactics;
+
+  const fillersHTML=dFillers.map((f,i)=>\`
+    <div class="fluency-card">
+      <div class="flex items-start justify-between mb-1">
+        <div class="font-bold text-teal-800 text-sm">\${f.expression}<\\/div>
+        <button class="tts-btn" id="tf-\${i}" onclick="speak('\${escQ(f.expression)}','tf-\${i}')">▶<\\/button>
+      <\\/div>
+      <div class="text-xs text-slate-500 mb-1">\${f.chinese||''}\${f.usage?' · '+f.usage:''}<\\/div>
+      \${f.example?\`<div class="ex-box text-xs text-teal-800 font-bold">\${f.example}<\\/div>\`:''}
+    <\\/div>
+  \`).join('');
+
+  const tacticsHTML=dTactics.map(t=>\`
+    <div class="structure-step">
+      <div class="font-bold text-sm text-slate-700 mb-1">\${t.strategy}<\\/div>
+      <span class="chip" onclick="copyAndSpeak('\${escQ(t.phrase)}')">\${t.phrase}<\\/span>
+      <div class="text-xs text-slate-400 mt-1">\${t.chinese||''}<\\/div>
+    <\\/div>
+  \`).join('');
+
+  const phrasesHTML=allPhrases.map((p,i)=>\`
+    <div class="fluency-card">
+      <div class="flex items-start justify-between mb-1">
+        <div class="font-bold text-teal-800 text-sm">\${p.phrase}<\\/div>
+        <button class="tts-btn" id="tph-\${i}" onclick="speak('\${escQ(p.phrase)}','tph-\${i}')">▶<\\/button>
+      <\\/div>
+      <div class="text-xs text-slate-500 mb-1">\${p.chinese||''}\${p.usage?' · '+p.usage:''}<\\/div>
+      \${p.example?\`<div class="ex-box text-xs text-teal-800">\${p.example}<\\/div>\`:''}
+    <\\/div>
+  \`).join('');
+
+  card.innerHTML=\`
+    <div class="text-[0.6rem] font-bold text-teal-500 uppercase tracking-widest mb-3">💬 流利工具包</div>
+    <div class="section-lbl">🎯 填充词 & 过渡语（点击 ▶ 听发音）</div>
+    \${fillersHTML}
+    <div class="section-lbl mt-2">⏱️ 卡顿急救 — 买时间策略</div>
+    \${tacticsHTML}
+    \${phrasesHTML?\`<div class="section-lbl mt-2">💡 口语搭配短语<\\/div>\${phrasesHTML}\`:''}
+  \`;
+}
+
+// ═══════════════════
+// ④ PRONUNCIATION
+// ═══════════════════
+function renderPron(){
+  const items=pronFocus.length>0?pronFocus:allWords.filter(w=>w.phonetic).slice(0,8).map(w=>({word:w.word,phonetic:w.phonetic,difficulty:w.pronunciation_tip||'',tip:w.pronunciation_tip||''}));
+  if(!items.length){document.getElementById('pron-card').innerHTML='<div class="text-center p-10 text-slate-400">暂无发音数据</div>';return;}
+  const total=items.length;
+  const idx=Math.min(curPronIdx,total-1);
+  document.getElementById('pronProg').style.width=Math.round((idx/total)*100)+'%';
+  const item=items[idx];
+
+  document.getElementById('pron-card').innerHTML=\`
+    <div class="flex justify-between items-start mb-3">
+      <div class="text-[0.58rem] font-bold text-teal-500 uppercase tracking-widest">🔊 发音训练<\\/div>
+      <div class="text-[0.6rem] text-slate-300 font-bold">\${idx+1}/\${total}<\\/div>
+    <\\/div>
+    <div class="pron-card mb-3">
+      <h1 class="text-4xl font-bold text-slate-800 mb-2">\${item.word}<\\/h1>
+      <div class="phonetic-big mb-2">/\${item.phonetic||'?'}/</div>
+      \${item.difficulty?\`<div class="text-xs text-amber-600 mb-1">⚠️ \${item.difficulty}<\\/div>\`:''}
+      \${item.tip&&item.tip!==item.difficulty?\`<div class="text-xs text-slate-500">\${item.tip}<\\/div>\`:''}
+    <\\/div>
+    <div class="flex gap-2 mb-4">
+      <button class="tts-btn flex-1 justify-center" id="pn" onclick="speak('\${escQ(item.word)}','pn')">▶ 正常<\\/button>
+      <button class="tts-btn flex-1 justify-center" id="ps" onclick="speakSlow('\${escQ(item.word)}','ps')">🐢 慢速<\\/button>
+    <\\/div>
+    <div class="text-center mb-3">
+      <div class="text-xs text-slate-400 mb-2">先听 → 跟读 → 录音 → 回放对比</div>
+      <button class="record-btn idle" id="prec" onclick="toggleRecord('prec','prec-audio')">🎤 点击录音跟读<\\/button>
+    <\\/div>
+    \${audioRow('prec-audio')}
+    <div class="flex gap-3 mt-auto pt-3">
+      <button class="flex-1 py-3 bg-slate-100 text-slate-600 rounded-2xl font-bold text-sm" onclick="if(curPronIdx>0){curPronIdx--;renderPron()}">← 上一个<\\/button>
+      <button class="flex-1 py-3 bg-teal-500 text-white rounded-2xl font-bold text-sm" onclick="nextPron(\${total})">下一个 →<\\/button>
+    <\\/div>
+  \`;
+}
+
+function nextPron(total){
+  if(curPronIdx<total-1){curPronIdx++;renderPron();}
+  else{document.getElementById('pron-card').innerHTML='<div class="text-center p-10"><div class="text-5xl mb-4">🎉<\\/div><div class="text-xl font-bold text-teal-600">发音训练完成！<\\/div><button class="mt-4 px-6 py-3 bg-teal-500 text-white rounded-2xl font-bold" onclick="curPronIdx=0;renderPron()">再练一遍<\\/button><\\/div>';}
+}
+
+// ═══════════════════
+// ⑤ ANSWER PRACTICE
+// ═══════════════════
+function renderAnswer(){
+  const card=document.getElementById('answer-card');
+  const sentences=modelAns.sentences||[];
+  const fullText=modelAns.full_text||'';
+  const wc=modelAns.word_count||(fullText.trim().split(/\\s+/).filter(w=>w.match(/[a-zA-Z]/)).length);
+  const dur=modelAns.duration_estimate||'';
+
+  if(!sentences.length&&!fullText){
+    card.innerHTML='<div class="text-center p-10 text-slate-400">暂无范例回答<br><small>请用 v1.0 Prompt 重新生成</small></div>';return;
+  }
+
+  if(sentences.length>0){
+    const total=sentences.length;
+    const idx=Math.min(curSentIdx,total-1);
+    document.getElementById('answerProg').style.width=Math.round((idx/(total-1||1))*100)+'%';
+    const sent=sentences[idx];
+    card.innerHTML=\`
+      <div class="flex justify-between items-start mb-2">
+        <div class="text-[0.58rem] font-bold text-teal-500 uppercase tracking-widest">答题练习 · 逐句跟读<\\/div>
+        <div class="text-[0.6rem] text-slate-300 font-bold">\${idx+1}/\${total}<\\/div>
+      <\\/div>
+      <div class="ex-box mb-3">
+        <div class="mb-2">\${funcTag(sent.function||'内容')}\${(sent.key_words||[]).map(k=>\`<span class="chip text-[0.6rem]">\${k}<\\/span>\`).join('')}<\\/div>
+        <p class="text-base font-bold text-teal-900 leading-relaxed">\${sent.text}<\\/p>
+        \${sent.band6_feature?\`<div class="band6-tip mt-2">\${sent.band6_feature}<\\/div>\`:''}
+      <\\/div>
+      <div class="flex gap-2 mb-3">
+        <button class="tts-btn flex-1 justify-center" id="an" onclick="speak('\${escQ(sent.text)}','an')">▶ 听这句<\\/button>
+        <button class="tts-btn flex-1 justify-center" id="as" onclick="speakSlow('\${escQ(sent.text)}','as')">🐢 慢速<\\/button>
+      <\\/div>
+      <div class="text-center mb-2">
+        <button class="record-btn idle" id="arec" onclick="toggleRecord('arec','arec-audio')">🎤 跟读录音<\\/button>
+      <\\/div>
+      \${audioRow('arec-audio')}
+      <div class="flex gap-3 mt-auto pt-3">
+        <button class="flex-1 py-3 bg-slate-100 text-slate-600 rounded-2xl font-bold text-sm" onclick="if(curSentIdx>0){curSentIdx--;renderAnswer()}">← 上句<\\/button>
+        <button class="flex-1 py-3 bg-teal-500 text-white rounded-2xl font-bold text-sm" onclick="if(curSentIdx<\${total-1}){curSentIdx++;renderAnswer()}else{showFull()}">下句 →<\\/button>
+      <\\/div>
+    \`;
+  } else showFull();
+}
+
+function showFull(){
+  const card=document.getElementById('answer-card');
+  const fullText=modelAns.full_text||'';
+  const wc=modelAns.word_count||(fullText.trim().split(/\\s+/).filter(w=>w.match(/[a-zA-Z]/)).length);
+  const dur=modelAns.duration_estimate||'';
+  document.getElementById('answerProg').style.width='100%';
+  card.innerHTML=\`
+    <div class="text-[0.58rem] font-bold text-teal-500 uppercase tracking-widest mb-3">完整范例回答<\\/div>
+    <div class="flex gap-2 mb-3">
+      <div class="bg-teal-50 border border-teal-200 rounded-xl px-3 py-2 text-center flex-1">
+        <div class="text-[0.6rem] text-teal-500 font-bold">字数<\\/div>
+        <div class="text-sm font-bold text-teal-700">\${wc} 词<\\/div>
+      <\\/div>
+      \${dur?\`<div class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-center flex-1"><div class="text-[0.6rem] text-slate-500 font-bold">预计时长<\\/div><div class="text-sm font-bold text-slate-700">\${dur}<\\/div><\\/div>\`:''}
+    <\\/div>
+    <div class="bg-teal-50 border border-teal-200 rounded-2xl p-4 mb-3 text-sm text-teal-900 leading-relaxed font-medium">\${fullText}<\\/div>
+    <div class="flex gap-2 mb-3">
+      <button class="flex-1 py-3 bg-teal-500 text-white rounded-2xl font-bold text-sm" id="ftt" onclick="speak('\${escQ(fullText)}','ftt')">▶ 听完整回答<\\/button>
+      <button class="flex-1 py-3 bg-slate-100 text-slate-600 rounded-2xl font-bold text-sm" onclick="curSentIdx=0;renderAnswer()">逐句模式<\\/button>
+    <\\/div>
+    <div class="text-center mb-2">
+      <button class="record-btn idle" id="frec" onclick="toggleRecord('frec','frec-audio')">🎤 录制完整回答<\\/button>
+    <\\/div>
+    \${audioRow('frec-audio')}
+  \`;
+}
+
+// ═══════════════════
+// ⑥ SIMULATION
+// ═══════════════════
+function renderSim(){
+  const card=document.getElementById('sim-card');
+  const q=rawData.question||rawData.topic||'（请输入题目）';
+  const followUps=rawData.follow_up_questions||[];
+  const ptMap={1:'30–40秒',2:'90–120秒',3:'45–60秒'};
+  const targetStr=ptMap[pNum]||'90秒';
+  const targetSec=pNum===1?35:pNum===3?50:105;
+
+  simRunning=false;simSecs=0;
+  if(simTimer){clearInterval(simTimer);simTimer=null;}
+
+  card.innerHTML=\`
+    <div class="text-[0.6rem] font-bold text-red-500 uppercase tracking-widest mb-3">⏱️ 模拟考场 · \${pLabel}<\\/div>
+    <div class="ex-box mb-3">
+      <div class="text-[0.6rem] font-bold text-teal-500 mb-1">📌 考试题目<\\/div>
+      <p class="text-sm text-teal-800 leading-relaxed font-bold">\${q}<\\/p>
+    <\\/div>
+    \${followUps.length?\`<div class="detail-box mb-3"><div class="text-[0.6rem] font-bold text-slate-500 uppercase mb-2">相关追问<\\/div>\${followUps.map(f=>\`<div class="text-xs text-slate-600 mb-1">· \${f}<\\/div>\`).join('')}<\\/div>\`:''}
+    <div class="flex gap-2 mb-3">
+      <div class="bg-teal-50 border border-teal-200 rounded-2xl p-3 text-center flex-1">
+        <div class="text-xs text-teal-500 font-bold">目标用时<\\/div>
+        <div class="text-lg font-bold text-teal-600">\${targetStr}<\\/div>
+      <\\/div>
+      <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3 text-center flex-1">
+        <div class="text-xs text-slate-500 font-bold">Part \${pNum} 特点<\\/div>
+        <div class="text-sm font-bold text-slate-600">\${pNum===1?'简短自然':pNum===3?'深度讨论':'详细描述'}<\\/div>
+      <\\/div>
+    <\\/div>
+    <div class="sim-timer" id="sim-clock">00:00<\\/div>
+    <div class="flex gap-2 mb-3">
+      <button class="flex-1 py-3 bg-red-500 text-white rounded-2xl font-bold text-sm" id="sim-start" onclick="startSim(\${targetSec})">▶ 开始计时<\\/button>
+      <button class="flex-1 py-3 bg-slate-200 text-slate-600 rounded-2xl font-bold text-sm" id="sim-stop" onclick="stopSim()" style="display:none">⏸ 暂停<\\/button>
+    <\\/div>
+    <div class="text-center mb-2">
+      <button class="record-btn idle" id="simrec" onclick="toggleRecord('simrec','simrec-audio')">🎤 录制回答<\\/button>
+    <\\/div>
+    \${audioRow('simrec-audio')}
+    <div class="text-xs text-slate-400 mt-3 mb-3">回放自评：结构清晰？词汇多样？无长时间停顿？</div>
+    <button class="w-full py-3 bg-teal-600 text-white rounded-2xl font-bold text-sm" onclick="submitSim()">📤 完成 · 生成评分 JSON<\\/button>
+    <div class="submit-json" id="sim-out"><\\/div>
+  \`;
+}
+
+function startSim(targetSec){
+  if(simRunning)return;
+  simRunning=true;
+  document.getElementById('sim-start').style.display='none';
+  document.getElementById('sim-stop').style.display='block';
+  simTimer=setInterval(()=>{
+    simSecs++;
+    const m=String(Math.floor(simSecs/60)).padStart(2,'0');
+    const s=String(simSecs%60).padStart(2,'0');
+    const el=document.getElementById('sim-clock');
+    if(el){
+      el.textContent=m+':'+s;
+      const p=simSecs/targetSec;
+      el.className='sim-timer'+(p<0.7?'':p<1.0?' warn':' danger');
+    }
+  },1000);
+}
+
+function stopSim(){
+  if(simTimer){clearInterval(simTimer);simTimer=null;}
+  simRunning=false;
+  const ss=document.getElementById('sim-start');
+  const sp=document.getElementById('sim-stop');
+  if(ss)ss.style.display='block';
+  if(sp)sp.style.display='none';
+}
+
+function submitSim(){
+  stopSim();
+  const ptMap={1:'30-40秒',2:'90-120秒',3:'45-60秒'};
+  const output={
+    submission_type:'IELTS_Speaking_Student_Submission',
+    part:rawData.part||'Part 2',
+    topic:rawData.topic||'',
+    question:rawData.question||'',
+    time_taken:Math.floor(simSecs/60)+'分'+simSecs%60+'秒',
+    target_duration:ptMap[pNum]||'90秒',
+    target_band:'6.0',
+    model_answer_reference:modelAns.full_text||'',
+    self_assessment:{
+      fluency_coherence:'自评：流利度和连贯性（优/中/差）',
+      lexical_resource:'自评：词汇多样性（优/中/差）',
+      grammar_accuracy:'自评：语法准确性（优/中/差）',
+      pronunciation:'自评：发音清晰度（优/中/差）'
+    },
+    request:'请按雅思官方口语评分标准（Fluency&Coherence / Lexical Resource / Grammatical Range&Accuracy / Pronunciation）评估我的口语表现，估计Band分数，给出提升至Band 6.0的具体建议。'
+  };
+  const el=document.getElementById('sim-out');
+  el.style.display='block';
+  el.textContent=JSON.stringify(output,null,2);
+  el.scrollIntoView({behavior:'smooth'});
+}
+
+// Init
+renderVocab();
+<\/script>
+<\/body>
+<\/html>`;
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>💘 3 — 搭讪达人练习</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--rose:#ff6b8a;--rose-l:#ff8fa8;--rose-d:#e8506d;--peach:#ffb347;--sky:#74c7f0;--mint:#5ce0c5;--lav:#b28ef5;--bg:#fff5f7;--card:#fff;--border:#ffd6df;--text:#3a2040;--muted:#9a7fa0;--me-bg:#f0f6ff;--me-border:#bfdbfe;--them-bg:#fff0f7;--them-border:#ffc0d0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito','Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:80px}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle at 20% 20%,rgba(255,107,138,.08) 0,transparent 50%),radial-gradient(circle at 80% 80%,rgba(178,142,245,.08) 0,transparent 50%);pointer-events:none;z-index:0}
+
+/* NAV */
+.nav{background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1.5px solid var(--border);position:sticky;top:0;z-index:100;padding:0 16px}
+.nav-inner{max-width:560px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:10px 0}
+.nav-title{font-weight:900;font-size:.95rem;flex:1}
+.nav-badge{font-size:.65rem;font-weight:800;background:linear-gradient(135deg,var(--rose),var(--lav));color:white;padding:3px 10px;border-radius:99px}
+
+/* TABS */
+.tab-wrap{max-width:560px;margin:0 auto;padding:14px 16px 0;position:relative;z-index:1}
+.tab-bar{display:flex;gap:4px;background:#ffe4ec;padding:4px;border-radius:16px;margin-bottom:14px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab{flex-shrink:0;padding:8px 13px;border-radius:12px;font-size:.72rem;font-weight:800;color:var(--muted);cursor:pointer;transition:all .2s;white-space:nowrap}
+.tab.active{background:white;color:var(--rose-d);box-shadow:0 2px 8px rgba(255,107,138,.18)}
+
+/* SET TABS */
+.set-tab-bar{display:flex;gap:6px;margin-bottom:14px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.set-tab-bar::-webkit-scrollbar{display:none}
+.set-tab{flex-shrink:0;padding:7px 14px;border-radius:99px;font-size:.72rem;font-weight:800;border:2px solid var(--border);background:white;color:var(--muted);cursor:pointer;transition:all .2s}
+.set-tab.active{background:linear-gradient(135deg,var(--rose),var(--rose-d));border-color:var(--rose-d);color:white;box-shadow:0 3px 12px rgba(255,107,138,.3)}
+
+/* SECTION */
+.section{display:none}.section.active{display:block}
+
+/* SCENE DESC */
+.scene-box{background:linear-gradient(135deg,#fff8f0,#fff0f7);border:1.5px solid #ffd6df;border-radius:16px;padding:13px 15px;margin-bottom:14px;font-size:.8rem;font-weight:600;color:#7a3050;line-height:1.6}
+.scene-box strong{color:var(--rose-d)}
+
+/* CHAT BUBBLES */
+.chat-wrap{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+.bubble-row{display:flex;align-items:flex-end;gap:8px}
+.bubble-row.me{flex-direction:row-reverse}
+.avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.avatar.me-av{background:linear-gradient(135deg,#3b82f6,#2563eb)}
+.avatar.them-av{background:linear-gradient(135deg,#ff6b8a,#e8506d)}
+.bubble{max-width:76%;padding:11px 14px 10px;border-radius:18px;position:relative}
+.bubble.me-b{background:var(--me-bg);border:1.5px solid var(--me-border);border-bottom-right-radius:4px}
+.bubble.them-b{background:var(--them-bg);border:1.5px solid var(--them-border);border-bottom-left-radius:4px}
+.bubble-text{font-size:.85rem;font-weight:700;line-height:1.55;color:var(--text)}
+.bubble-cn{font-size:.75rem;color:var(--muted);font-weight:600;margin-top:5px;line-height:1.5;display:none}
+.bubble-cn.show{display:block}
+.highlight{background:linear-gradient(135deg,#fff0b3,#ffe47a);border-radius:4px;padding:0 3px;font-weight:800;color:#8a6000}
+.bubble-footer{display:flex;align-items:center;gap:6px;margin-top:7px;flex-wrap:wrap}
+.play-btn{width:30px;height:30px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.85rem;transition:all .2s cubic-bezier(.34,1.56,.64,1);flex-shrink:0}
+.play-btn.me-play{background:linear-gradient(135deg,#ffd6e8,#ffc0d0);color:var(--rose-d)}
+.play-btn.them-play{background:linear-gradient(135deg,#dbeafe,#bfdbfe);color:#2563eb}
+.play-btn:hover{transform:scale(1.15)}
+.play-btn.playing{animation:pulse 1.4s infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+.play-btn.me-play.playing{background:linear-gradient(135deg,var(--rose),var(--rose-d));color:white}
+.play-btn.them-play.playing{background:linear-gradient(135deg,#3b82f6,#2563eb);color:white}
+.mic-btn{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--border);background:white;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.78rem;color:var(--muted);transition:all .2s}
+.mic-btn:hover{border-color:var(--mint);color:var(--mint);transform:scale(1.1)}
+.mic-tip{font-size:.62rem;color:var(--muted);font-weight:600}
+.speed-badge{font-size:.6rem;font-weight:800;background:#f0f0f0;color:var(--muted);padding:2px 7px;border-radius:99px}
+
+/* BLANK WORD */
+.blank{display:inline-block;background:#ffd6df;border-radius:4px;padding:0 8px;cursor:pointer;color:transparent;min-width:50px;border:1.5px dashed var(--rose);transition:all .25s;font-weight:800;font-size:.85rem}
+.blank.revealed{color:var(--rose-d);background:#fff0f7;border-style:solid}
+
+/* TIPS CARD */
+.tips-card{background:linear-gradient(135deg,#f8fff5,#edfff8);border:1.5px solid #a8ecd4;border-radius:16px;padding:14px 15px;margin-bottom:10px}
+.tips-title{font-size:.72rem;font-weight:900;color:#1a7a55;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.tip-item{font-size:.78rem;font-weight:600;color:#2a5a40;line-height:1.55;padding:5px 0;border-bottom:1px solid #c8f0e0;display:flex;gap:7px}
+.tip-item:last-child{border-bottom:none}
+.tip-num{font-weight:900;color:var(--mint);flex-shrink:0}
+.encourage-box{background:linear-gradient(135deg,#fff8f0,#ffefe0);border:1.5px solid #ffd9a0;border-radius:14px;padding:12px 14px;font-size:.82rem;font-weight:700;color:#8a5000;line-height:1.6;text-align:center}
+
+/* KEY PHRASES */
+.phrase-card{background:white;border:1.5px solid var(--border);border-radius:16px;padding:13px 15px;margin-bottom:10px;box-shadow:0 2px 10px rgba(255,107,138,.07)}
+.phrase-en{font-size:.9rem;font-weight:800;color:var(--rose-d);margin-bottom:4px}
+.phrase-cn{font-size:.78rem;font-weight:600;color:var(--muted);margin-bottom:6px}
+.phrase-note{font-size:.72rem;color:#5c7a90;font-weight:600;background:#f0f8ff;border-radius:8px;padding:5px 9px;line-height:1.5}
+.phrase-hl{display:inline-block;background:linear-gradient(135deg,#fff0b3,#ffe47a);border-radius:4px;padding:0 3px;font-weight:800;color:#8a6000;font-size:.72rem;margin:3px 2px 0}
+
+/* CULTURAL NOTES */
+.note-card{background:linear-gradient(135deg,#f5f0ff,#ede0ff);border:1.5px solid #d4b8fa;border-radius:16px;padding:14px 15px;margin-bottom:10px}
+.note-title{font-size:.78rem;font-weight:900;color:#6a3fa0;margin-bottom:6px;display:flex;gap:7px;align-items:center}
+.note-en{font-size:.78rem;font-weight:600;color:#5a3080;line-height:1.6;margin-bottom:6px}
+.note-cn{font-size:.75rem;font-weight:600;color:#7a60a0;line-height:1.55;background:rgba(255,255,255,.5);border-radius:10px;padding:7px 10px;display:none}
+.note-cn.show{display:block}
+
+/* CONTROLS BAR */
+.controls{background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-top:1.5px solid var(--border);position:fixed;bottom:0;left:0;right:0;z-index:100;padding:8px 16px 12px}
+.controls-inner{max-width:560px;margin:0 auto;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ctrl-btn{padding:7px 14px;border-radius:99px;border:1.5px solid var(--border);background:white;font-size:.72rem;font-weight:800;cursor:pointer;color:var(--rose-d);transition:all .2s;font-family:inherit}
+.ctrl-btn:hover{background:var(--rose);color:white;border-color:var(--rose)}
+.ctrl-btn.active-ctrl{background:var(--rose);color:white;border-color:var(--rose)}
+.speed-ctrl{display:flex;gap:4px;align-items:center}
+.speed-ctrl label{font-size:.68rem;font-weight:800;color:var(--muted)}
+.speed-ctrl select{padding:5px 8px;border-radius:99px;border:1.5px solid var(--border);font-size:.68rem;font-weight:800;font-family:inherit;background:white;color:var(--rose-d);cursor:pointer}
+
+/* AUTO PLAY */
+.auto-play-bar{max-width:560px;margin:0 auto 10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-inner">
+    <div class="nav-title">💘 3</div>
+    <div class="nav-badge">搭讪达人</div>
+  </div>
+</div>
+
+<div class="tab-wrap">
+  <div class="tab-bar">
+    <div class="tab active" onclick="switchTab('dialogue')">💬 对话练习</div>
+    <div class="tab" onclick="switchTab('phrases')">✨ 核心短语</div>
+    <div class="tab" onclick="switchTab('culture')">🌍 文化注释</div>
+  </div>
+
+  <!-- ===== DIALOGUE TAB ===== -->
+  <div class="section active" id="tab-dialogue">
+    <div class="set-tab-bar" id="setTabBar"></div>
+    <div id="setContent"></div>
+  </div>
+
+  <!-- ===== PHRASES TAB ===== -->
+  <div class="section" id="tab-phrases">
+    <div id="phrasesContent"></div>
+  </div>
+
+  <!-- ===== CULTURE TAB ===== -->
+  <div class="section" id="tab-culture">
+    <div id="cultureContent"></div>
+  </div>
+</div>
+
+<!-- Controls -->
+<div class="controls">
+  <div class="controls-inner">
+    <button class="ctrl-btn" id="cnToggleBtn" onclick="toggleCn()">🇨🇳 中文</button>
+    <button class="ctrl-btn" id="blankToggleBtn" onclick="toggleBlanks()">🙈 遮词</button>
+    <button class="ctrl-btn" id="autoPlayBtn" onclick="toggleAutoPlay()">▶ 连续播放</button>
+    <div class="speed-ctrl">
+      <label>语速</label>
+      <select id="speedSelect" onchange="changeSpeed()">
+        <option value="0.75">🐢 慢</option>
+        <option value="1.0" selected>🚶 正常</option>
+        <option value="1.25">🚀 快</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<script>
+const DATA = {"meta":{"scene":"A cozy coffee shop. Someone sitting alone with a laptop, occasionally glancing around.","my_gender":"male","target_gender":"female","difficulty":"Beginner","style":"Playful & Humorous","voice_me":"Josh","voice_target":"Domi"},"sets":[{"id":"smooth_sailing","title":"The Laptop Icebreaker","scene_desc":"You notice her looking up from her work and use a lighthearted comment about the cafe's atmosphere to start a conversation.","dialogue":[{"turn":1,"speaker":"me","text":"Excuse me, I have to ask—are you actually working, or just looking very productive like I am?","translation":"打扰一下，我必须得问问——你是在真的工作，还是像我一样只是看上去很有效率？","highlights":["looking very productive"],"audio_filename":"line_001_smooth_excuse.mp3"},{"turn":2,"speaker":"target","text":"Haha, honestly? A bit of both. I've been staring at this same sentence for twenty minutes.","translation":"哈哈，实话实说？两者都有。我已经盯着这同一个句子看了20分钟了。","highlights":["staring at"],"audio_filename":"line_002_smooth_haha.mp3"},{"turn":3,"speaker":"me","text":"I knew it! The coffee here is too good for real focus. I'm Josh, by the way.","translation":"我就知道！这里的咖啡太好喝了，让人没法专心。顺便说一下，我是Josh。","highlights":["knew it"],"audio_filename":"line_003_smooth_i.mp3"},{"turn":4,"speaker":"target","text":"Nice to meet you, Josh. I'm Domi. And you're right, the lattes are a dangerous distraction.","translation":"很高兴认识你，Josh。我是Domi。你说得对，这里的拿铁简直是危险的诱惑。","highlights":["dangerous distraction"],"audio_filename":"line_004_smooth_nice.mp3"}],"tips":["Use a self-deprecating joke to lower her guard immediately.","Maintain a relaxed posture; don't lean in too far over her table.","Keep the initial interaction brief to see if she's open to talking more."],"encouragement":"Great job! Humor is the fastest way to bridge a cultural gap."},{"id":"graceful_exit","title":"The Busy Professional","scene_desc":"She is clearly focused on her work and gives short answers, so you exit politely while leaving a good impression.","dialogue":[{"turn":1,"speaker":"me","text":"Hey, I don't mean to interrupt your flow, but that's a cool laptop sticker. Are you a designer?","translation":"嘿，我不想打断你的思路，但你的电脑贴纸很酷。你是设计师吗？","highlights":["interrupt your flow"],"audio_filename":"line_001_exit_hey.mp3"},{"turn":2,"speaker":"target","text":"Oh, thanks. No, I'm actually just finishing a very tight deadline right now.","translation":"噢，谢谢。不，我其实正忙着赶一个非常紧的截止日期。","highlights":["tight deadline"],"audio_filename":"line_002_exit_oh.mp3"},{"turn":3,"speaker":"me","text":"Got it. I'll let you get back to the grind then. Good luck with the deadline!","translation":"明白了。那我就不打扰你工作了。祝你赶工顺利！","highlights":["get back to the grind"],"audio_filename":"line_003_exit_got.mp3"},{"turn":4,"speaker":"target","text":"Thanks! I appreciate that.","translation":"谢谢！感激不尽。","highlights":["appreciate"],"audio_filename":"line_004_exit_thanks.mp3"}],"tips":["Recognize 'closed' body language (eyes on screen, quick speech).","Acknowledge her time is valuable to show high social value.","Ending a conversation early is better than making it awkward."],"encouragement":"Leaving with a smile is a win. You've practiced your approach without the pressure!"},{"id":"push_and_pull","title":"The Witty Banter","scene_desc":"She's slightly guarded but responds to your humor, leading to a playful exchange.","dialogue":[{"turn":1,"speaker":"me","text":"You look so serious. I can’t tell if you’re writing a novel or planning a bank heist.","translation":"你看起来好严肃。我分不出你是在写小说还是在策划抢银行。","highlights":["bank heist"],"audio_filename":"line_001_push_you.mp3"},{"turn":2,"speaker":"target","text":"If it were a heist, I probably wouldn't tell a stranger!","translation":"如果是抢银行，我大概不会告诉陌生人！","highlights":["wouldn't tell"],"audio_filename":"line_002_push_if.mp3"},{"turn":3,"speaker":"me","text":"Fair point. But if you need a getaway driver, I’m your guy. I have a bike parked outside.","translation":"有道理。但如果你需要一个逃跑司机，选我准没错。我外面停了辆自行车。","highlights":["getaway driver"],"audio_filename":"line_003_push_fair.mp3"},{"turn":4,"speaker":"target","text":"A bike? That might be a slow getaway, don't you think?","translation":"自行车？那逃跑也太慢了吧，你不觉得吗？","highlights":["slow getaway"],"audio_filename":"line_004_push_a.mp3"},{"turn":5,"speaker":"me","text":"It’s about the style, not the speed. Anyway, I'm Josh. What's the name of the mastermind?","translation":"重点在于风格，而不是速度。总之，我是Josh。幕后主使叫什么名字？","highlights":["mastermind"],"audio_filename":"line_005_push_it.mp3"},{"turn":6,"speaker":"target","text":"I'm Domi. And for the record, I'm just doing my taxes.","translation":"我是Domi。郑重声明一下，我只是在报税。","highlights":["for the record"],"audio_filename":"line_006_push_i.mp3"}],"tips":["Playfully challenge her answers to create chemistry.","The 'bank heist' line is a classic high-energy opener.","Transition back to a normal introduction once the laughter hits."],"encouragement":"That's it! Balancing the 'absurd' with the 'real' keeps the conversation exciting."}],"key_phrases":[{"phrase":"Looking very productive","meaning":"看起来很有生产力/很忙","usage_note":"A playful way to comment on someone working on a laptop.","highlights":["productive"]},{"phrase":"Interrupt your flow","meaning":"打断你的思路/状态","usage_note":"A polite way to apologize for starting a conversation when someone is focused.","highlights":["flow"]},{"phrase":"Get back to the grind","meaning":"回去继续苦干","usage_note":"Slang for returning to work or tedious tasks.","highlights":["grind"]},{"phrase":"Bank heist","meaning":"抢劫银行","usage_note":"Used in jokes to exaggerate someone's intense focus.","highlights":["heist"]},{"phrase":"Getaway driver","meaning":"逃跑司机","usage_note":"Commonly used in playful banter about escaping a situation.","highlights":["getaway"]},{"phrase":"By the way","meaning":"顺便说一下","usage_note":"Essential for pivoting from a joke to a formal introduction.","highlights":["by the way"]},{"phrase":"Tight deadline","meaning":"紧迫的截止日期","usage_note":"A common reason why people can't talk for long in cafes.","highlights":["deadline"]},{"phrase":"For the record","meaning":"郑重声明/明确的说","usage_note":"Used to clarify something in a slightly dramatic, funny way.","highlights":["record"]}],"cultural_notes":[{"title":"Respecting the Laptop Space","note":"In Western culture, someone with headphones on or staring intensely at a screen is 'closed' to conversation. Wait for them to look up or take a sip of coffee.","note_cn":"在西方文化中，戴着耳机或紧盯屏幕的人处于“关闭”状态。等待他们抬头或喝咖啡时再搭讪。"},{"title":"Humor as an Icebreaker","note":"Unlike in China where formal greetings are common, Westerners often use 'situational humor'—commenting on something shared in the environment.","note_cn":"不同于中国常见的正式问候，西方人常使用“情景幽默”——对环境中的共同点进行评论。"},{"title":"The Importance of the Exit","note":"If someone gives short, one-word answers, they aren't being rude; they are busy. Leaving quickly and politely actually builds more respect than staying.","note_cn":"如果对方只给你简短的回答，他们不是没礼貌，而是很忙。快速且礼貌地离开比强行留下更能赢得尊重。"}]};
+const DEFAULT_SPEED = 0.75;
+let currentAudio = null;
+let cnVisible = false;
+let blanksVisible = false;
+let autoPlaying = false;
+let autoPlayIndex = 0;
+let autoPlayList = [];
+let currentSet = 0;
+let currentPlaybackRate = DEFAULT_SPEED;
+
+// Init speed select
+document.getElementById('speedSelect').value = String(DEFAULT_SPEED);
+
+/* === TABS === */
+function switchTab(id){
+  document.querySelectorAll('.tab').forEach((t,i)=>{
+    const ids=['dialogue','phrases','culture'];
+    t.classList.toggle('active', ids[i]===id);
+  });
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+}
+
+/* === RENDER SETS === */
+function renderSetTabs(){
+  const bar = document.getElementById('setTabBar');
+  const setEmoji = {smooth_sailing:'😊',graceful_exit:'🌹',push_and_pull:'🎭'};
+  const setLabel = {smooth_sailing:'顺利版',graceful_exit:'优雅退场',push_and_pull:'半推半就'};
+  bar.innerHTML = (DATA.sets||[]).map((s,i)=>
+    `<div class="set-tab ${i===0?'active':''}" onclick="switchSet(${i})" id="setTab${i}">${setEmoji[s.id]||'💬'} ${setLabel[s.id]||s.title}</div>`
+  ).join('');
+}
+
+function switchSet(idx){
+  currentSet = idx;
+  document.querySelectorAll('.set-tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
+  stopAudio();
+  autoPlaying=false;
+  document.getElementById('autoPlayBtn').classList.remove('active-ctrl');
+  renderSet(idx);
+}
+
+function renderSet(idx){
+  const set = DATA.sets[idx];
+  const el = document.getElementById('setContent');
+  if(!set){el.innerHTML='';return;}
+  let html = `<div class="scene-box"><strong>📍 场景：</strong>${set.scene_desc||''}</div><div class="chat-wrap">`;
+  (set.dialogue||[]).forEach((line,li)=>{
+    const isMe = line.speaker==='me';
+    const hl = line.highlights||[];
+    // Build text with highlights
+    let textHtml = escHtml(line.text);
+    hl.forEach(w=>{
+      const re = new RegExp('('+escReg(w)+')','gi');
+      textHtml = textHtml.replace(re,'<span class="highlight">$1</span>');
+    });
+    // Build blanked text
+    let blankHtml = escHtml(line.text);
+    hl.forEach(w=>{
+      const re = new RegExp('('+escReg(w)+')','gi');
+      blankHtml = blankHtml.replace(re,`<span class="blank" onclick="revealBlank(this)" data-word="${escAttr(w)}">$1</span>`);
+    });
+        // === 新增：根据性别动态设置头像 ===
+    const myAvatar = DATA.meta.my_gender === 'male' ? '👨' : '👩';
+    const targetAvatar = DATA.meta.target_gender === 'male' 
+      ? '👨' 
+      : DATA.meta.target_gender === 'female' 
+        ? '👩' 
+        : '👤';
+    const avatar = isMe ? myAvatar : targetAvatar;
+    const bubbleClass = isMe ? 'me-b' : 'them-b';
+    const rowClass = isMe ? 'me' : '';
+    const playClass = isMe ? 'me-play' : 'them-play';
+    html += `
+    <div class="bubble-row ${rowClass}" id="bubbleRow_${idx}_${li}">
+      <div class="avatar ${isMe?'me-av':'them-av'}">${avatar}</div>
+      <div class="bubble ${bubbleClass}">
+        <div class="bubble-text normal-text">${textHtml}</div>
+        <div class="bubble-text blank-text" style="display:none">${blankHtml}</div>
+        <div class="bubble-cn" id="cn_${idx}_${li}">${escHtml(line.translation||'')}</div>
+        <div class="bubble-footer">
+          <button class="play-btn ${playClass}" id="playBtn_${idx}_${li}" onclick="playLine(${idx},${li})" title="播放">${isMe?'🔊':'🎵'}</button>
+          <button class="mic-btn" title="🎤 跟读提示" onclick="showMicTip(this)">🎤</button>
+          <span class="mic-tip" id="micTip_${idx}_${li}" style="display:none">🎧 听完后跟读一遍，注意节奏和语气</span>
+        </div>
+      </div>
+    </div>`;
+  });
+  html += '</div>';
+  // Tips
+  if(set.tips&&set.tips.length){
+    html += `<div class="tips-card"><div class="tips-title">💡 交流技巧</div>`;
+    set.tips.forEach((t,i)=>{ html+=`<div class="tip-item"><span class="tip-num">${i+1}</span>${escHtml(t)}</div>`; });
+    html += '</div>';
+  }
+  if(set.encouragement){ html+=`<div class="encourage-box">💪 ${escHtml(set.encouragement)}</div>`; }
+  el.innerHTML = html;
+  // Apply current states
+  if(cnVisible) showAllCn();
+  if(blanksVisible) showBlanks();
+  buildAutoPlayList(idx);
+}
+
+/* === AUDIO === */
+function playLine(setIdx, lineIdx){
+  const line = DATA.sets[setIdx]?.dialogue[lineIdx];
+  if(!line||!line.audio_filename) return;
+  const btnId = 'playBtn_'+setIdx+'_'+lineIdx;
+  const btn = document.getElementById(btnId);
+  // Toggle if same
+  if(currentAudio && currentAudio._filename===line.audio_filename){
+    if(!currentAudio.paused){ currentAudio.pause(); btn&&btn.classList.remove('playing'); currentAudio=null; return; }
+  }
+  stopAudio();
+  const audio = new Audio(line.audio_filename);
+  audio._filename = line.audio_filename;
+  audio.playbackRate = currentPlaybackRate;
+  audio.loop = !autoPlaying;
+  audio.play().catch(()=>{ alert('⚠️ 找不到音频文件\n请先将 _audio.zip 解压到与 HTML 相同的文件夹'); });
+  currentAudio = audio;
+  if(btn) btn.classList.add('playing');
+  audio.onended = ()=>{
+    btn&&btn.classList.remove('playing');
+    if(autoPlaying) nextAutoPlay();
+  };
+}
+
+function stopAudio(){
+  if(currentAudio){ currentAudio.pause(); currentAudio=null; }
+  document.querySelectorAll('.play-btn').forEach(b=>b.classList.remove('playing'));
+}
+
+function changeSpeed(){
+  currentPlaybackRate = parseFloat(document.getElementById('speedSelect').value);
+  if(currentAudio) currentAudio.playbackRate = currentPlaybackRate;
+}
+
+/* === AUTO PLAY === */
+function buildAutoPlayList(setIdx){
+  autoPlayList=[];
+  (DATA.sets[setIdx]?.dialogue||[]).forEach((line,li)=>{ if(line.audio_filename) autoPlayList.push({si:setIdx,li}); });
+  autoPlayIndex=0;
+}
+
+function toggleAutoPlay(){
+  autoPlaying=!autoPlaying;
+  const btn=document.getElementById('autoPlayBtn');
+  btn.classList.toggle('active-ctrl',autoPlaying);
+  btn.textContent=autoPlaying?'⏸ 停止连播':'▶ 连续播放';
+  if(autoPlaying){ autoPlayIndex=0; playAutoNext(); }
+  else stopAudio();
+}
+
+function playAutoNext(){
+  if(!autoPlaying||autoPlayIndex>=autoPlayList.length){ autoPlaying=false; document.getElementById('autoPlayBtn').classList.remove('active-ctrl'); document.getElementById('autoPlayBtn').textContent='▶ 连续播放'; stopAudio(); return; }
+  const {si,li}=autoPlayList[autoPlayIndex];
+  const line=DATA.sets[si]?.dialogue[li];
+  if(!line||!line.audio_filename){ nextAutoPlay(); return; }
+  stopAudio();
+  const audio=new Audio(line.audio_filename);
+  audio._filename=line.audio_filename;
+  audio.playbackRate=currentPlaybackRate;
+  audio.loop=false;
+  const btnId='playBtn_'+si+'_'+li;
+  const btn=document.getElementById(btnId);
+  audio.play().catch(()=>{ alert('⚠️ 找不到音频文件，请解压 _audio.zip 到同一文件夹'); autoPlaying=false; });
+  if(btn) btn.classList.add('playing');
+  currentAudio=audio;
+  audio.onended=()=>{ btn&&btn.classList.remove('playing'); nextAutoPlay(); };
+}
+
+function nextAutoPlay(){ autoPlayIndex++; playAutoNext(); }
+
+/* === CN TOGGLE === */
+function toggleCn(){
+  cnVisible=!cnVisible;
+  document.getElementById('cnToggleBtn').classList.toggle('active-ctrl',cnVisible);
+  document.getElementById('cnToggleBtn').textContent=cnVisible?'🇨🇳 隐藏中文':'🇨🇳 中文';
+  if(cnVisible) showAllCn(); else hideAllCn();
+  // Cultural notes
+  document.querySelectorAll('.note-cn').forEach(el=>el.classList.toggle('show',cnVisible));
+}
+function showAllCn(){ document.querySelectorAll('.bubble-cn').forEach(el=>el.classList.add('show')); }
+function hideAllCn(){ document.querySelectorAll('.bubble-cn').forEach(el=>el.classList.remove('show')); }
+
+/* === BLANKS === */
+function toggleBlanks(){
+  blanksVisible=!blanksVisible;
+  document.getElementById('blankToggleBtn').classList.toggle('active-ctrl',blanksVisible);
+  document.getElementById('blankToggleBtn').textContent=blanksVisible?'👁 显示全文':'🙈 遮词';
+  if(blanksVisible) showBlanks(); else hideBlanks();
+}
+function showBlanks(){
+  document.querySelectorAll('.normal-text').forEach(el=>el.style.display='none');
+  document.querySelectorAll('.blank-text').forEach(el=>el.style.display='block');
+  document.querySelectorAll('.blank').forEach(el=>{ el.classList.remove('revealed'); el.style.color='transparent'; });
+}
+function hideBlanks(){
+  document.querySelectorAll('.normal-text').forEach(el=>el.style.display='block');
+  document.querySelectorAll('.blank-text').forEach(el=>el.style.display='none');
+}
+function revealBlank(el){ el.classList.add('revealed'); el.style.color=''; }
+
+/* === MIC TIP === */
+function showMicTip(btn){
+  const row=btn.closest('.bubble');
+  const tip=row.querySelector('.mic-tip');
+  if(!tip)return;
+  tip.style.display=tip.style.display==='none'?'inline':'none';
+}
+
+/* === PHRASES === */
+function renderPhrases(){
+  const el=document.getElementById('phrasesContent');
+  if(!(DATA.key_phrases&&DATA.key_phrases.length)){el.innerHTML='<p style="color:var(--muted);font-size:.82rem;padding:10px">暂无短语数据</p>';return;}
+  el.innerHTML=DATA.key_phrases.map(p=>{
+    const hl=(p.highlights||[]).map(w=>`<span class="phrase-hl">${escHtml(w)}</span>`).join('');
+    return `<div class="phrase-card">
+      <div class="phrase-en">${escHtml(p.phrase||'')}</div>
+      <div class="phrase-cn">${escHtml(p.meaning||'')}</div>
+      <div class="phrase-note">${escHtml(p.usage_note||'')}</div>
+      ${hl?'<div style="margin-top:6px">'+hl+'</div>':''}
+    </div>`;
+  }).join('');
+}
+
+/* === CULTURAL NOTES === */
+function renderCulture(){
+  const el=document.getElementById('cultureContent');
+  if(!(DATA.cultural_notes&&DATA.cultural_notes.length)){el.innerHTML='<p style="color:var(--muted);font-size:.82rem;padding:10px">暂无文化注释</p>';return;}
+  el.innerHTML=DATA.cultural_notes.map((n,i)=>`<div class="note-card">
+    <div class="note-title">🌍 ${escHtml(n.title||'')}</div>
+    <div class="note-en">${escHtml(n.note||'')}</div>
+    <div class="note-cn show">${escHtml(n.note_cn||'')}</div>
+  </div>`).join('');
+}
+
+/* === HELPERS === */
+function escHtml(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function escAttr(s){ return String(s||'').replace(/"/g,'&quot;'); }
+function escReg(s){ return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
+
+/* === INIT === */
+renderSetTabs();
+renderSet(0);
+renderPhrases();
+renderCulture();
+</script>
+</body>
+</html>

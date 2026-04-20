@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>💘 搭讪达人工厂 v1.0</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<style>
+/* ===== DESIGN SYSTEM ===== */
+:root {
+  --rose:    #ff6b8a;
+  --rose-l:  #ff8fa8;
+  --rose-d:  #e8506d;
+  --peach:   #ffb347;
+  --peach-l: #ffd580;
+  --sky:     #74c7f0;
+  --mint:    #5ce0c5;
+  --lavender:#b28ef5;
+  --bg:      #fff5f7;
+  --surface: #ffffff;
+  --card:    #ffffff;
+  --border:  #ffd6df;
+  --text:    #3a2040;
+  --muted:   #9a7fa0;
+  --shadow:  rgba(255,107,138,0.13);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Nunito','Noto Sans SC',sans-serif;
+  background: var(--bg);
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(255,107,138,0.10) 0%, transparent 45%),
+    radial-gradient(circle at 85% 75%, rgba(180,142,245,0.10) 0%, transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(116,199,240,0.06) 0%, transparent 60%);
+  min-height:100vh;
+  color:var(--text);
+  padding: 20px 16px 60px;
+}
+
+/* ===== FLOATING HEARTS BG ===== */
+.hearts-bg{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.heart-float{position:absolute;opacity:0;animation:floatHeart linear infinite}
+.heart-float::before{content:'💗';font-size:1rem}
+@keyframes floatHeart{
+  0%{opacity:0;transform:translateY(0) scale(0.5)}
+  10%{opacity:0.35}
+  90%{opacity:0.15}
+  100%{opacity:0;transform:translateY(-100vh) scale(1.2)}
+}
+
+/* ===== LAYOUT ===== */
+.factory{width:100%;max-width:580px;margin:0 auto;position:relative;z-index:1}
+
+/* ===== HEADER ===== */
+.header{text-align:center;margin-bottom:32px;padding-top:8px}
+.header-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:linear-gradient(135deg,#fff0f3,#ffe4ec);
+  border:1.5px solid #ffc0cc;border-radius:99px;
+  padding:5px 16px;font-size:0.7rem;font-weight:800;
+  color:var(--rose-d);letter-spacing:.04em;margin-bottom:10px;
+  box-shadow:0 2px 12px rgba(255,107,138,0.15)
+}
+.header h1{
+  font-size:2rem;font-weight:900;line-height:1.15;
+  background:linear-gradient(135deg,#ff6b8a,#b28ef5,#ff8fa8);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:6px
+}
+.header p{font-size:0.82rem;color:var(--muted);font-weight:600}
+
+/* ===== STEP CARD ===== */
+.step{
+  background:var(--card);
+  border:1.5px solid var(--border);
+  border-radius:24px;
+  padding:20px 20px 22px;
+  margin-bottom:14px;
+  box-shadow:0 4px 20px var(--shadow);
+  position:relative;overflow:hidden
+}
+.step::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--rose),var(--lavender),var(--sky))
+}
+.step-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.step-num{
+  width:32px;height:32px;border-radius:50%;
+  background:linear-gradient(135deg,var(--rose),var(--rose-d));
+  color:white;font-weight:900;font-size:0.85rem;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;box-shadow:0 3px 10px rgba(255,107,138,0.35)
+}
+.step-title{font-size:0.95rem;font-weight:800;color:var(--text)}
+.step-sub{font-size:0.72rem;color:var(--muted);font-weight:600;margin-top:1px}
+
+/* ===== DIVIDER ===== */
+.arrow-divider{
+  text-align:center;color:var(--rose-l);font-size:1.2rem;
+  margin:4px 0;font-weight:900
+}
+
+/* ===== FORM ELEMENTS ===== */
+.label{font-size:0.72rem;font-weight:800;color:var(--rose-d);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+.pill-group{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+.pill{
+  padding:7px 14px;border-radius:99px;border:2px solid var(--border);
+  background:#fff;font-weight:700;font-size:0.78rem;cursor:pointer;
+  color:var(--muted);transition:all .2s cubic-bezier(.34,1.56,.64,1)
+}
+.pill:hover{border-color:var(--rose-l);color:var(--rose-d);transform:scale(1.04)}
+.pill.active{
+  background:linear-gradient(135deg,var(--rose),var(--rose-d));
+  border-color:var(--rose-d);color:white;
+  box-shadow:0 3px 12px rgba(255,107,138,0.35);
+  transform:scale(1.06)
+}
+.pill.lavender.active{background:linear-gradient(135deg,#c4a0f7,var(--lavender));border-color:var(--lavender);box-shadow:0 3px 12px rgba(178,142,245,0.35)}
+.pill.sky.active{background:linear-gradient(135deg,#92d7f7,var(--sky));border-color:var(--sky);box-shadow:0 3px 12px rgba(116,199,240,0.35)}
+.pill.mint.active{background:linear-gradient(135deg,#7de8d5,var(--mint));border-color:var(--mint);box-shadow:0 3px 12px rgba(92,224,197,0.35)}
+.pill.peach.active{background:linear-gradient(135deg,var(--peach-l),var(--peach));border-color:var(--peach);box-shadow:0 3px 12px rgba(255,179,71,0.35)}
+
+select{
+  width:100%;background:#fff8fa;border:1.5px solid var(--border);
+  color:var(--text);padding:11px 14px;border-radius:14px;
+  font-family:inherit;font-size:0.82rem;font-weight:700;
+  appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23ff6b8a' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center;
+  padding-right:36px
+}
+select:focus{outline:none;border-color:var(--rose);box-shadow:0 0 0 3px rgba(255,107,138,0.12)}
+
+textarea{
+  width:100%;background:#fff8fa;border:1.5px solid var(--border);
+  color:var(--text);padding:12px 14px;border-radius:14px;
+  font-family:'Nunito','Noto Sans SC',sans-serif;font-size:0.82rem;
+  font-weight:600;resize:none;line-height:1.6
+}
+textarea:focus{outline:none;border-color:var(--rose);box-shadow:0 0 0 3px rgba(255,107,138,0.12)}
+textarea::placeholder{color:#c9a8c0}
+
+.input-row{display:flex;align-items:center;background:#fff8fa;border:1.5px solid var(--border);border-radius:14px;overflow:hidden}
+.input-prefix{
+  padding:11px 13px;font-weight:800;font-size:0.78rem;color:var(--rose-d);
+  background:linear-gradient(135deg,#fff0f3,#ffe4ec);border-right:1.5px solid var(--border);
+  white-space:nowrap;flex-shrink:0
+}
+.input-row input{
+  flex:1;background:transparent;border:none;
+  color:var(--text);padding:11px 13px;
+  font-family:inherit;font-size:0.82rem;font-weight:700
+}
+.input-row input:focus{outline:none}
+.input-row input::placeholder{color:#c9a8c0}
+input[type=password]{font-family:inherit}
+
+/* ===== SLIDER ===== */
+.speed-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px}
+.speed-card{
+  background:#fff8fa;border:2px solid var(--border);border-radius:14px;
+  padding:10px 8px;text-align:center;cursor:pointer;
+  transition:all .2s cubic-bezier(.34,1.56,.64,1)
+}
+.speed-card:hover{border-color:var(--rose-l);transform:scale(1.04)}
+.speed-card.active{
+  background:linear-gradient(135deg,#fff0f3,#ffd6e0);
+  border-color:var(--rose);box-shadow:0 3px 12px rgba(255,107,138,0.2)
+}
+.speed-emoji{font-size:1.3rem;display:block;margin-bottom:4px}
+.speed-label{font-size:0.72rem;font-weight:800;color:var(--rose-d)}
+.speed-val{font-size:0.65rem;font-weight:600;color:var(--muted)}
+
+/* ===== BUTTONS ===== */
+.btn{width:100%;padding:14px 18px;border-radius:16px;font-weight:800;font-size:0.9rem;cursor:pointer;border:none;font-family:inherit;transition:all .2s cubic-bezier(.34,1.56,.64,1)}
+.btn:active{transform:scale(0.97)}
+.btn-rose{
+  background:linear-gradient(135deg,var(--rose),var(--rose-d));color:white;
+  box-shadow:0 4px 16px rgba(255,107,138,0.4)
+}
+.btn-rose:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(255,107,138,0.5)}
+.btn-mint{
+  background:linear-gradient(135deg,#5ce0c5,#3dc9ac);color:white;
+  box-shadow:0 4px 16px rgba(92,224,197,0.35)
+}
+.btn-mint:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(92,224,197,0.45)}
+.btn-lavender{
+  background:linear-gradient(135deg,#c4a0f7,var(--lavender));color:white;
+  box-shadow:0 4px 16px rgba(178,142,245,0.4)
+}
+.btn-lavender:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(178,142,245,0.5)}
+.btn-outline{
+  background:transparent;border:2px solid var(--border);
+  color:var(--rose-d);font-weight:800
+}
+.btn-outline:hover{border-color:var(--rose);background:#fff0f3}
+.btn-sm{padding:9px 14px;font-size:0.78rem;border-radius:12px;width:auto}
+
+.btn-row{display:flex;gap:10px}
+.btn-row .btn{flex:1}
+
+/* ===== STATUS ===== */
+.status-row{display:flex;align-items:center;gap:8px;margin-top:10px;min-height:22px}
+.dot{width:9px;height:9px;border-radius:50%;background:#ddd;flex-shrink:0;transition:background .3s}
+.dot.ok{background:var(--mint)}
+.dot.err{background:#ff6b8a}
+.dot.warn{background:var(--peach)}
+.status-text{font-size:0.75rem;font-weight:700;color:var(--muted)}
+
+/* ===== JSON STATS ===== */
+.json-stat-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.json-stat{
+  background:linear-gradient(135deg,#fff0f3,#ffe4ec);border:1.5px solid #ffc0cc;
+  border-radius:10px;padding:5px 12px;font-size:0.72rem;font-weight:800;color:var(--rose-d)
+}
+
+/* ===== PROMPT BOX ===== */
+.prompt-preview{
+  background:#f8f0ff;border:1.5px solid #ddc8fa;border-radius:14px;
+  padding:14px;font-size:0.72rem;color:#6a3fa0;font-weight:600;
+  line-height:1.7;max-height:160px;overflow-y:auto;margin-top:12px;
+  font-family:'Courier New',monospace;white-space:pre-wrap;display:none
+}
+.prompt-preview::-webkit-scrollbar{width:4px}
+.prompt-preview::-webkit-scrollbar-thumb{background:#ddc8fa;border-radius:2px}
+
+/* ===== VOICE BADGE ===== */
+.voice-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  background:linear-gradient(135deg,#f0f8ff,#dbeafe);border:1.5px solid #bfdbfe;
+  border-radius:99px;padding:4px 12px;font-size:0.7rem;font-weight:800;
+  color:#2563eb;margin-top:8px
+}
+
+/* ===== MODAL ===== */
+.modal{position:fixed;inset:0;background:rgba(60,10,30,0.6);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px}
+.modal.show{display:flex}
+.modal-box{
+  background:white;border-radius:28px;padding:28px 24px;
+  max-width:400px;width:100%;box-shadow:0 20px 60px rgba(255,107,138,0.25);
+  border:2px solid #ffd6df
+}
+.modal-title{font-size:1rem;font-weight:900;color:var(--text);margin-bottom:6px}
+.modal-sub{font-size:0.78rem;color:var(--muted);font-weight:600;margin-bottom:16px}
+.progress-track{height:12px;background:#ffe4ec;border-radius:99px;overflow:hidden;margin:14px 0}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--rose),var(--lavender));border-radius:99px;transition:width .4s}
+.progress-label{font-size:0.78rem;font-weight:800;color:var(--rose-d)}
+.progress-detail{font-size:0.7rem;color:var(--muted);font-weight:600;margin-top:4px;min-height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ===== TOAST ===== */
+.toast{
+  position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-90px);
+  padding:11px 22px;border-radius:99px;font-size:0.82rem;font-weight:800;
+  transition:transform .4s cubic-bezier(.34,1.56,.64,1);z-index:99999;
+  white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,0.15)
+}
+.toast.ok{background:linear-gradient(135deg,#5ce0c5,#3dc9ac);color:white}
+.toast.err{background:linear-gradient(135deg,#ff6b8a,#e8506d);color:white}
+.toast.warn{background:linear-gradient(135deg,#ffb347,#ff9f1c);color:white}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* ===== SECTION TOGGLE ===== */
+.collapsible-body{overflow:hidden;max-height:0;transition:max-height .4s cubic-bezier(.4,0,.2,1)}
+.collapsible-body.open{max-height:2000px}
+
+/* ===== EXAMPLE SCENE ===== */
+.example-tag{
+  display:inline-block;background:#fff0f3;border:1.5px solid #ffd6df;
+  border-radius:8px;padding:3px 10px;font-size:0.68rem;font-weight:700;
+  color:var(--rose-d);margin:3px 3px 3px 0;cursor:pointer;transition:all .15s
+}
+.example-tag:hover{background:var(--rose);color:white;border-color:var(--rose)}
+
+/* ===== TIP BOX ===== */
+.tip-box{
+  background:linear-gradient(135deg,#fffbf0,#fff3e0);border:1.5px solid #ffd9a0;
+  border-radius:14px;padding:12px 14px;margin-top:10px;font-size:0.75rem;
+  font-weight:600;color:#8a5a00;line-height:1.6
+}
+.tip-box strong{color:#b46000}
+
+/* ===== KEY NEWKEY MODAL ===== */
+#newKeyModal .modal-box{max-width:340px}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:420px){
+  .header h1{font-size:1.65rem}
+  .pill{padding:6px 11px;font-size:0.73rem}
+}
+</style>
+</head>
+<body>
+
+<!-- Floating hearts -->
+<div class="hearts-bg" id="heartsBg"></div>
+
+<div class="factory">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-badge">💘 搭讪达人工厂 v1.0</div>
+    <h1>Flirt Factory 💬✨</h1>
+    <p>生成英文搭讪对话 · ElevenLabs 配音 · 导出练习 HTML</p>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       STEP 1 — 个人设定
+  ══════════════════════════════════════ -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">1</div>
+      <div>
+        <div class="step-title">👤 个人设定</div>
+        <div class="step-sub">告诉我关于你的信息</div>
+      </div>
+    </div>
+
+    <div class="label">我的性别</div>
+    <div class="pill-group" id="myGender">
+      <div class="pill active" data-val="male" onclick="selectPill(this,'myGender')">👦 男生</div>
+      <div class="pill" data-val="female" onclick="selectPill(this,'myGender')">👧 女生</div>
+    </div>
+
+    <div id="voiceBadge" class="voice-badge">🎙️ 我的声音：Josh（男声）</div>
+
+    <div style="margin-top:14px" class="label">我的年龄段</div>
+    <div class="pill-group" id="myAge">
+      <div class="pill sky active" data-val="18-22" onclick="selectPill(this,'myAge')">18-22</div>
+      <div class="pill sky" data-val="23-30" onclick="selectPill(this,'myAge')">23-30</div>
+      <div class="pill sky" data-val="31-40" onclick="selectPill(this,'myAge')">31-40</div>
+    </div>
+
+    <div class="label">目标对象性别</div>
+    <div class="pill-group" id="targetGender">
+      <div class="pill lavender" data-val="female" onclick="selectPill(this,'targetGender')">💃 女生</div>
+      <div class="pill lavender active" data-val="male" onclick="selectPill(this,'targetGender')">🕺 男生</div>
+      <div class="pill lavender" data-val="any" onclick="selectPill(this,'targetGender')">🌈 不限</div>
+    </div>
+
+    <div id="targetVoiceBadge" class="voice-badge">🎙️ 对方声音：Josh（男声）</div>
+  </div>
+
+  <div class="arrow-divider">↓</div>
+
+  <!-- ══════════════════════════════════════
+       STEP 2 — 场景 & 难度 & 风格
+  ══════════════════════════════════════ -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">2</div>
+      <div>
+        <div class="step-title">🎬 场景 · 难度 · 风格</div>
+        <div class="step-sub">描述你想练习的情境</div>
+      </div>
+    </div>
+
+    <div class="label">搭讪场景（用英文描述）</div>
+    <textarea id="sceneInput" rows="3" placeholder="e.g. A cozy bookstore on a rainy afternoon. I notice someone reading a book I love near the fiction section."></textarea>
+
+    <div style="margin-top:8px">
+      <div class="label" style="margin-bottom:5px">示例场景（点击填入）</div>
+      <span class="example-tag" onclick="fillScene('A cozy coffee shop. I see someone sitting alone with a laptop, occasionally glancing around.')">☕ 咖啡馆</span>
+      <span class="example-tag" onclick="fillScene('At a gym, someone just finished a workout and is stretching near me. The vibe is relaxed and friendly.')">🏋️ 健身房</span>
+      <span class="example-tag" onclick="fillScene('A bookstore on a quiet afternoon. Someone is browsing the travel section, looking genuinely curious.')">📚 书店</span>
+      <span class="example-tag" onclick="fillScene('A rooftop party with good music. I spot someone standing alone near the drinks, looking approachable.')">🎉 派对</span>
+      <span class="example-tag" onclick="fillScene('Online — I just matched with someone on a dating app. Their profile mentions hiking and good food.')">📱 约会软件</span>
+      <span class="example-tag" onclick="fillScene('On Instagram — I noticed someone\'s travel photo and want to slide into their DMs naturally.')">📸 Instagram DM</span>
+      <span class="example-tag" onclick="fillScene('Waiting in line at a popular brunch spot on a Sunday morning. Someone is standing next to me scrolling their phone.')">🥞 排队等位</span>
+      <span class="example-tag" onclick="fillScene('At an art gallery opening. Someone is staring at the same painting I am, looking thoughtful.')">🎨 艺术展</span>
+    </div>
+
+    <div style="margin-top:16px" class="label">难度等级</div>
+    <div class="pill-group" id="difficulty">
+      <div class="pill mint active" data-val="Beginner" onclick="selectPill(this,'difficulty')">🌱 初级</div>
+      <div class="pill mint" data-val="Intermediate" onclick="selectPill(this,'difficulty')">🌿 中级</div>
+      <div class="pill mint" data-val="Advanced" onclick="selectPill(this,'difficulty')">🌳 高级</div>
+    </div>
+
+    <div class="label">对话风格</div>
+    <div class="pill-group" id="toneStyle">
+      <div class="pill peach active" data-val="Playful & Humorous" onclick="selectPill(this,'toneStyle')">😄 幽默俏皮</div>
+      <div class="pill peach" data-val="Sincere & Confident" onclick="selectPill(this,'toneStyle')">💪 真诚自信</div>
+      <div class="pill peach" data-val="Both" onclick="selectPill(this,'toneStyle')">✨ 两者兼有</div>
+    </div>
+  </div>
+
+  <div class="arrow-divider">↓</div>
+
+  <!-- ══════════════════════════════════════
+       STEP 3 — 生成 Prompt
+  ══════════════════════════════════════ -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">3</div>
+      <div>
+        <div class="step-title">📋 生成 &amp; 复制 Prompt</div>
+        <div class="step-sub">复制后粘贴到 Claude / ChatGPT</div>
+      </div>
+    </div>
+    <button class="btn btn-lavender" onclick="generateAndCopyPrompt()">✨ 生成 Prompt 并复制</button>
+ 
+    <div class="tip-box" style="margin-top:12px">
+      💡 <strong>使用方式：</strong>复制 Prompt → 粘贴到 Claude 或 ChatGPT → 等待完整 JSON 输出 → 全选复制 → 回到工厂粘贴到第 4 步
+    </div>
+  </div>
+
+  <div class="arrow-divider">↓</div>
+
+  <!-- ══════════════════════════════════════
+       STEP 3.5 — ElevenLabs API
+  ══════════════════════════════════════ -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">🔑</div>
+      <div>
+        <div class="step-title">ElevenLabs API Key</div>
+        <div class="step-sub">有 Key → 生成音频；没有 → 仅导出 HTML</div>
+      </div>
+    </div>
+
+    <div class="input-row" style="margin-bottom:12px">
+      <span class="input-prefix">API KEY</span>
+      <input type="password" id="apiKeyInput" placeholder="sk_xxxx... 或留空跳过音频" oninput="onKeyInput()">
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-outline btn-sm" onclick="testApiKey()">🔌 测试连接</button>
+      <button class="btn btn-rose btn-sm" onclick="saveApiKey()">💾 保存 Key</button>
+    </div>
+
+    <div class="status-row" id="apiStatus">
+      <div class="dot" id="apiDot"></div>
+      <div class="status-text" id="apiStatusText">Key 未填写（可跳过，仅导出 HTML）</div>
+    </div>
+
+    <div style="margin-top:16px" class="label">语速预设</div>
+    <div class="speed-grid">
+      <div class="speed-card active" data-speed="0.75" onclick="selectSpeed(this)">
+        <span class="speed-emoji">🐢</span>
+        <div class="speed-label">慢速</div>
+        <div class="speed-val">× 0.75</div>
+      </div>
+      <div class="speed-card" data-speed="1.0" onclick="selectSpeed(this)">
+        <span class="speed-emoji">🚶</span>
+        <div class="speed-label">正常</div>
+        <div class="speed-val">× 1.0</div>
+      </div>
+      <div class="speed-card" data-speed="1.25" onclick="selectSpeed(this)">
+        <span class="speed-emoji">🚀</span>
+        <div class="speed-label">快速</div>
+        <div class="speed-val">× 1.25</div>
+      </div>
+    </div>
+    <div class="tip-box">💡 <strong>学习建议：</strong>先用慢速听清每个词 → 正常速度跟读 → 快速测试反应能力</div>
+  </div>
+
+  <div class="arrow-divider">↓</div>
+
+  <!-- ══════════════════════════════════════
+       STEP 4 — 粘贴 JSON
+  ══════════════════════════════════════ -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">4</div>
+      <div>
+        <div class="step-title">📥 粘贴 JSON</div>
+        <div class="step-sub">把 AI 生成的 JSON 粘贴到这里</div>
+      </div>
+    </div>
+    <textarea id="jsonInput" rows="8" placeholder='{"meta":{...},"sets":[...],"key_phrases":[...],"cultural_notes":[...]}' oninput="validateJson()"></textarea>
+    <div class="status-row">
+      <div class="dot" id="jsonDot"></div>
+      <div class="status-text" id="jsonStatusText">等待粘贴 JSON...</div>
+    </div>
+    <div class="json-stat-row" id="jsonStats"></div>
+  </div>
+
+  <div class="arrow-divider">↓</div>
+
+  <!-- ══════════════════════════════════════
+       STEP 5 — 文件名 & 导出
+  ══════════════════════════════════════ -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">5</div>
+      <div>
+        <div class="step-title">🚀 文件名 &amp; 导出</div>
+        <div class="step-sub">填入标识符后导出</div>
+      </div>
+    </div>
+    <div class="input-row" style="margin-bottom:16px">
+      <span class="input-prefix">love_</span>
+      <input type="text" id="fileNameInput" placeholder="coffeeshop_01" maxlength="40">
+    </div>
+    <button class="btn btn-rose" onclick="startExport()">💘 导出 HTML（+ 音频 ZIP）</button>
+    <div class="tip-box" style="margin-top:12px">
+      📦 <strong>有 Key：</strong>导出 love_xxx.html + love_xxx_audio.zip（把 zip 解压到 html 同一文件夹）<br>
+      📄 <strong>无 Key：</strong>仅导出 love_xxx.html（无音频播放，其他功能正常）
+    </div>
+  </div>
+
+</div><!-- /factory -->
+
+<!-- ══════════════════════════════════════
+     进度弹窗
+══════════════════════════════════════ -->
+<div class="modal" id="progressModal">
+  <div class="modal-box">
+    <div class="modal-title">🎙️ 正在生成音频...</div>
+    <div class="modal-sub">Bella / Josh / Domi 配音中，请稍候</div>
+    <div class="progress-label" id="progressLabel">0 / 0</div>
+    <div class="progress-detail" id="progressDetail">准备中...</div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <button class="btn btn-outline" onclick="pauseExport()" style="margin-top:8px">⏸ 暂停并下载已生成部分</button>
+  </div>
+</div>
+
+<!-- 新 Key 弹窗（402/429/403） -->
+<div class="modal" id="newKeyModal">
+  <div class="modal-box">
+    <div class="modal-title">⚠️ API 配额不足或受限</div>
+    <div class="modal-sub">请输入新的 ElevenLabs Key 继续，已生成音频不会重复生成</div>
+    <div class="input-row" style="margin-bottom:12px">
+      <span class="input-prefix">NEW KEY</span>
+      <input type="password" id="newKeyInput" placeholder="sk_xxxx...">
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-outline btn-sm" onclick="closeNewKeyModal()">取消（下载已有）</button>
+      <button class="btn btn-rose btn-sm" onclick="resumeWithNewKey()">继续生成 ▶</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- ══════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════ -->
+<script>
+/* ---- FLOATING HEARTS ---- */
+(function(){
+  const bg = document.getElementById('heartsBg');
+  const emojis = ['💗','💕','✨','💖','🌸','💝','💓'];
+  for(let i=0;i<14;i++){
+    const el = document.createElement('div');
+    el.className = 'heart-float';
+    el.style.left = Math.random()*100+'%';
+    el.style.animationDuration = (8+Math.random()*12)+'s';
+    el.style.animationDelay = (-Math.random()*15)+'s';
+    el.style.fontSize = (0.6+Math.random()*0.9)+'rem';
+    el.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+    el.style.position='absolute';
+    el.style.bottom='-40px';
+    bg.appendChild(el);
+  }
+})();
+
+/* ---- STATE ---- */
+let state = {
+  myGender:'male', myAge:'18-22', targetGender:'male',
+  difficulty:'Beginner', toneStyle:'Playful & Humorous',
+  apiKey:'', speed:0.75,
+  parsedJson:null, jsonValid:false
+};
+let audioQueue=[], currentAudioIndex=0, zipInst=null, exportPaused=false, generatedCount=0;
+
+/* ---- PILL SELECT ---- */
+function selectPill(el, groupId){
+  document.querySelectorAll(`#${groupId} .pill`).forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  state[groupId] = el.dataset.val;
+  if(groupId==='myGender' || groupId==='targetGender') updateVoiceBadges();
+}
+
+function updateVoiceBadges(){
+  const myGender = getPillVal('myGender');
+  const targetGender = getPillVal('targetGender');
+  const myVoice = myGender==='male' ? 'Josh（男声）' : 'Domi（女声）';
+  let targetVoice = targetGender==='male' ? 'Josh（男声）' : targetGender==='female' ? 'Domi（女声）' : 'Josh & Domi';
+  document.getElementById('voiceBadge').textContent = '🎙️ 我的声音：'+myVoice;
+  document.getElementById('targetVoiceBadge').textContent = '🎙️ 对方声音：'+targetVoice;
+}
+
+function getPillVal(groupId){
+  const active = document.querySelector(`#${groupId} .pill.active`);
+  return active ? active.dataset.val : '';
+}
+
+/* ---- SPEED SELECT ---- */
+function selectSpeed(el){
+  document.querySelectorAll('.speed-card').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  state.speed = parseFloat(el.dataset.speed);
+}
+
+/* ---- FILL SCENE ---- */
+function fillScene(text){
+  document.getElementById('sceneInput').value = text;
+}
+
+/* ---- API KEY ---- */
+window.addEventListener('load',()=>{
+  const saved = localStorage.getItem('flirt_factory_api_key');
+  if(saved){ document.getElementById('apiKeyInput').value=saved; state.apiKey=saved; updateApiStatus('ok','Key 已自动填入（来自上次保存）'); }
+  updateVoiceBadges();
+});
+
+function onKeyInput(){
+  const val = document.getElementById('apiKeyInput').value.trim();
+  if(!val){ updateApiStatus('','Key 未填写（可跳过，仅导出 HTML）'); return; }
+  updateApiStatus('warn','Key 已输入，未验证');
+}
+
+function saveApiKey(){
+  const key = document.getElementById('apiKeyInput').value.trim();
+  if(!key){ showToast('请先输入 Key','err'); return; }
+  localStorage.setItem('flirt_factory_api_key', key);
+  state.apiKey = key;
+  updateApiStatus('ok','✅ Key 已保存到本地');
+  showToast('💾 Key 已保存！');
+}
+
+async function testApiKey(){
+  const key = document.getElementById('apiKeyInput').value.trim();
+  if(!key){ showToast('请先输入 Key','err'); return; }
+  updateApiStatus('warn','🔌 测试中...');
+  try{
+    const res = await fetch('https://api.elevenlabs.io/v1/voices',{headers:{'xi-api-key':key}});
+    if(res.ok){ updateApiStatus('ok','✅ Key 有效，连接成功！'); showToast('✅ Key 有效！'); }
+    else if(res.status===401){ updateApiStatus('err','❌ Key 无效（401）— 请到 ElevenLabs 重新生成 sk_ 开头的新 Key'); showToast('Key 无效，请重新生成','err'); }
+    else{ updateApiStatus('err',`❌ 错误 ${res.status}`); }
+  }catch(e){ updateApiStatus('err','❌ 网络错误，请检查网络连接'); }
+}
+
+function updateApiStatus(type, text){
+  const dot = document.getElementById('apiDot');
+  dot.className = 'dot' + (type ? ' '+type : '');
+  document.getElementById('apiStatusText').textContent = text;
+}
+
+/* ---- PROMPT GENERATE ---- */
+function generateAndCopyPrompt(){
+  const scene = document.getElementById('sceneInput').value.trim();
+  if(!scene){
+    showToast('请先填写搭讪场景','err');
+    return;
+  }
+
+  const myGender = getPillVal('myGender');
+  const targetGender = getPillVal('targetGender');
+  const myAge = document.getElementById('myAgeInput') ? document.getElementById('myAgeInput').value.trim() : getPillVal('myAge');
+  const difficulty = getPillVal('difficulty');
+  const toneStyle = getPillVal('toneStyle');
+  const voiceMe = myGender==='male' ? 'Josh' : 'Domi';
+  const voiceTarget = targetGender==='male' ? 'Josh' : targetGender==='female' ? 'Domi' : 'Josh or Domi depending on gender';
+
+  const systemPrompt = `You are a world-class social coach and conversation expert specializing in helping Chinese learners confidently approach and connect with English-speaking strangers — whether online or in real life. You deeply understand Western social norms, body language cues, and the art of natural English small talk. Cultural context: The learner is from mainland China and wants to confidently interact with English-speaking foreigners. Output ONLY a single valid JSON object. No markdown, no explanation, no code fences.`;
+
+  const userPrompt = `Generate a flirting and social confidence training dataset in JSON format.
+
+=== LEARNER PROFILE ===
+- My gender: ${myGender}
+- My age group: ${myAge}
+- Target gender: ${targetGender}
+- Difficulty: ${difficulty}
+- Style: ${toneStyle}
+- My voice: ${voiceMe}
+- Target voice: ${voiceTarget}
+
+=== SCENE ===
+${scene}
+
+=== OUTPUT REQUIREMENTS ===
+Generate exactly 3 conversation sets:
+- Set A id="smooth_sailing": things go well, natural connection builds
+- Set B id="graceful_exit": politely rejected, exits with dignity and warmth
+- Set C id="push_and_pull": mixed signals, playful back-and-forth
+
+Each set: scene_desc (1-2 sentences) + full multi-turn dialogue (4-10 turns) + 3 tips + 1 encouragement line.
+Also: key_phrases (8-12 expressions) + cultural_notes (3-5 notes).
+
+=== STRICT JSON SCHEMA ===
+{
+  "meta": {
+    "scene": "string",
+    "my_gender": "${myGender}",
+    "target_gender": "${targetGender}",
+    "difficulty": "${difficulty}",
+    "style": "${toneStyle}",
+    "voice_me": "${voiceMe}",
+    "voice_target": "${voiceTarget}"
+  },
+  "sets": [
+    {
+      "id": "smooth_sailing",
+      "title": "string",
+      "scene_desc": "string",
+      "dialogue": [
+        {
+          "turn": 1,
+          "speaker": "me",
+          "text": "string (natural spoken English only)",
+          "translation": "string (Chinese)",
+          "highlights": ["word_or_phrase"],
+          "audio_filename": "line_001_smooth_hey.mp3"
+        }
+      ],
+      "tips": ["tip1","tip2","tip3"],
+      "encouragement": "string"
+    },
+    { "id": "graceful_exit", ... },
+    { "id": "push_and_pull", ... }
+  ],
+  "key_phrases": [
+    {
+      "phrase": "string",
+      "meaning": "string (Chinese)",
+      "usage_note": "string (English, 1 sentence)",
+      "highlights": ["word"]
+    }
+  ],
+  "cultural_notes": [
+    {
+      "title": "string",
+      "note": "string (English)",
+      "note_cn": "string (Chinese)"
+    }
+  ]
+}
+
+AUDIO FILENAME RULES:
+- Format: line_[3-digit-turn]_[set_id_short]_[first_word].mp3
+- e.g. line_001_smooth_hey.mp3 / line_003_exit_sorry.mp3
+- Lowercase, no spaces, only letters/numbers/underscores/hyphens
+
+IMPORTANT:
+- All dialogue text must be natural spoken English
+- Every dialogue turn must have a non-empty audio_filename
+- Output ONLY raw JSON. No explanation.`;
+
+  const fullPrompt = `[SYSTEM]\n${systemPrompt}\n\n[USER]\n${userPrompt}`;
+
+  // === 关键修复：使用 textarea + execCommand 方式，完美兼容本地 file:// ===
+  const tempTextArea = document.createElement('textarea');
+  tempTextArea.value = fullPrompt;
+  tempTextArea.style.position = 'fixed';
+  tempTextArea.style.left = '-999999px';
+  tempTextArea.style.top = '-999999px';
+  document.body.appendChild(tempTextArea);
+  
+  tempTextArea.select();
+  tempTextArea.setSelectionRange(0, 999999);   // 确保全选超长文本
+  
+  let success = false;
+  try {
+    success = document.execCommand('copy');
+  } catch(e) {}
+
+  document.body.removeChild(tempTextArea);
+
+  if(success){
+    showToast('✅ Prompt 已完整复制到剪贴板！直接粘贴到 Claude/ChatGPT 即可');
+  } else {
+    showToast('⚠️ 复制失败，请手动全选下方文本复制','warn');
+    // 作为后备，仍然显示预览（但你已经删了预览框，这里可以忽略）
+    console.log('完整 Prompt（手动复制用）：\n\n' + fullPrompt);
+  }
+}
+
+/* ---- JSON VALIDATE ---- */
+function validateJson(){
+  const val = document.getElementById('jsonInput').value.trim();
+  const dot = document.getElementById('jsonDot');
+  const statusText = document.getElementById('jsonStatusText');
+  const statsEl = document.getElementById('jsonStats');
+  if(!val){ dot.className='dot'; statusText.textContent='等待粘贴 JSON...'; statsEl.innerHTML=''; state.jsonValid=false; return; }
+  try{
+    const d = JSON.parse(val);
+    state.parsedJson = d;
+    state.jsonValid = true;
+    const sets = d.sets||[];
+    const totalTurns = sets.reduce((a,s)=>a+(s.dialogue||[]).length,0);
+    const phrases = (d.key_phrases||[]).length;
+    const notes = (d.cultural_notes||[]).length;
+    dot.className='dot ok';
+    statusText.textContent='✓ JSON 有效';
+    statsEl.innerHTML = `
+      <div class="json-stat">🎭 ${sets.length} 套对话</div>
+      <div class="json-stat">💬 ${totalTurns} 句台词</div>
+      <div class="json-stat">✨ ${phrases} 个短语</div>
+      <div class="json-stat">🌍 ${notes} 条文化注释</div>`;
+  }catch(e){
+    dot.className='dot err'; statusText.textContent='✗ JSON 格式错误，请检查'; statsEl.innerHTML='';
+    state.jsonValid=false; state.parsedJson=null;
+  }
+}
+
+/* ---- EXPORT ---- */
+function startExport(){
+  if(!state.jsonValid || !state.parsedJson){ showToast('请先粘贴有效 JSON','err'); return; }
+  const fileName = document.getElementById('fileNameInput').value.trim() || 'untitled';
+  const apiKey = document.getElementById('apiKeyInput').value.trim() || localStorage.getItem('flirt_factory_api_key') || '';
+  state.apiKey = apiKey;
+
+  // Build audio queue from all dialogue turns
+  audioQueue = [];
+  (state.parsedJson.sets||[]).forEach(set=>{
+    (set.dialogue||[]).forEach(line=>{
+      if(line.audio_filename && line.text){
+        audioQueue.push({
+          filename: line.audio_filename,
+          text: line.text,
+          speaker: line.speaker,
+          voiceId: line.speaker==='me'
+            ? (state.parsedJson.meta?.voice_me==='Josh' ? 'TxGEqnHWrfWFTfGW9XjX' : 'AZnzlk1XvdvUeBnXmlld')
+            : (state.parsedJson.meta?.voice_target==='Josh' ? 'TxGEqnHWrfWFTfGW9XjX' : 'AZnzlk1XvdvUeBnXmlld')
+        });
+      }
+    });
+  });
+
+  if(!apiKey || audioQueue.length===0){
+    // No key or no audio → just export HTML
+    exportHtmlOnly(fileName, state.parsedJson);
+    return;
+  }
+
+  // Start audio generation
+  currentAudioIndex = 0;
+  exportPaused = false;
+  generatedCount = 0;
+  zipInst = new JSZip();
+  showModal('progressModal');
+  generateAudioStep(fileName, state.parsedJson);
+}
+
+const JOSH_VOICE_ID = 'TxGEqnHWrfWFTfGW9XjX';
+const DOMI_VOICE_ID = 'AZnzlk1XvdvUeBnXmlld';
+const MODEL_ID = 'eleven_turbo_v2_5';
+
+async function generateAudioStep(fileName, parsed){
+  if(exportPaused || currentAudioIndex >= audioQueue.length){
+    await finishExport(fileName, parsed);
+    return;
+  }
+  const item = audioQueue[currentAudioIndex];
+  const pct = Math.round(currentAudioIndex/audioQueue.length*100);
+  document.getElementById('progressLabel').textContent = `${currentAudioIndex+1} / ${audioQueue.length}`;
+  document.getElementById('progressDetail').textContent = `"${item.text.substring(0,50)}${item.text.length>50?'...':''}"`;
+  document.getElementById('progressFill').style.width = pct+'%';
+
+  try{
+    const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${item.voiceId}`,{
+      method:'POST',
+      headers:{'Accept':'audio/mpeg','Content-Type':'application/json','xi-api-key':state.apiKey},
+      body: JSON.stringify({
+        text: item.text,
+        model_id: MODEL_ID,
+        voice_settings:{ stability:0.75, similarity_boost:0.85, style:0.1, speed: state.speed }
+      })
+    });
+    if(res.status===402||res.status===429||res.status===403){
+      exportPaused=true;
+      hideModal('progressModal');
+      showModal('newKeyModal');
+      return;
+    }
+    if(!res.ok) throw new Error('API '+res.status);
+    const blob = await res.blob();
+    zipInst.file(item.filename, blob);
+    generatedCount++;
+    currentAudioIndex++;
+    setTimeout(()=>generateAudioStep(fileName,parsed), 400);
+  }catch(e){
+    hideModal('progressModal');
+    showToast('生成中断：'+e.message,'err');
+  }
+}
+
+function pauseExport(){
+  exportPaused=true;
+  hideModal('progressModal');
+  showToast('⏸ 已暂停，正在打包已生成音频...','warn');
+  const fileName = document.getElementById('fileNameInput').value.trim()||'untitled';
+  finishExport(fileName, state.parsedJson);
+}
+
+function closeNewKeyModal(){
+  hideModal('newKeyModal');
+  const fileName = document.getElementById('fileNameInput').value.trim()||'untitled';
+  finishExport(fileName, state.parsedJson);
+}
+
+function resumeWithNewKey(){
+  const newKey = document.getElementById('newKeyInput').value.trim();
+  if(!newKey){ showToast('请输入新 Key','err'); return; }
+  state.apiKey = newKey;
+  exportPaused = false;
+  hideModal('newKeyModal');
+  showModal('progressModal');
+  const fileName = document.getElementById('fileNameInput').value.trim()||'untitled';
+  generateAudioStep(fileName, state.parsedJson);
+}
+
+async function finishExport(fileName, parsed){
+  hideModal('progressModal');
+  // Download zip if any audio
+  if(zipInst && generatedCount>0){
+    const zipBlob = await zipInst.generateAsync({type:'blob'});
+    triggerDownload(zipBlob, `love_${fileName}_audio.zip`);
+  }
+  // Generate and download HTML
+  const html = buildOutputHTML(fileName, parsed, state.speed);
+  triggerDownload(new Blob([html],{type:'text/html'}), `love_${fileName}.html`);
+  showToast(`🎉 love_${fileName}.html 已导出！`);
+}
+
+function exportHtmlOnly(fileName, parsed){
+  const html = buildOutputHTML(fileName, parsed, state.speed);
+  triggerDownload(new Blob([html],{type:'text/html'}), `love_${fileName}.html`);
+  showToast(`📄 love_${fileName}.html 已导出（无音频）`);
+}
+
+function triggerDownload(blob, filename){
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),5000);
+}
+
+/* ---- BUILD OUTPUT HTML ---- */
+function buildOutputHTML(fileName, data, speed){
+  const jsonStr = JSON.stringify(data);
+  
+  const myGender = data.meta.my_gender || "male";
+  const targetGender = data.meta.target_gender || "female";
+  const meBg = myGender === "male" ? "#f0f6ff" : "#fff0f7";
+  const meBorder = myGender === "male" ? "#bfdbfe" : "#ffc0d0";
+  const themBg = targetGender === "female" ? "#fff0f7" : "#f0f6ff";
+  const themBorder = targetGender === "female" ? "#ffc0d0" : "#bfdbfe";
+  return `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>💘 ${fileName} — 搭讪达人练习</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--rose:#ff6b8a;--rose-l:#ff8fa8;--rose-d:#e8506d;--peach:#ffb347;--sky:#74c7f0;--mint:#5ce0c5;--lav:#b28ef5;--bg:#fff5f7;--card:#fff;--border:#ffd6df;--text:#3a2040;--muted:#9a7fa0;--me-bg:${meBg};--me-border:${meBorder};--them-bg:${themBg};--them-border:${themBorder}}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito','Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:80px}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle at 20% 20%,rgba(255,107,138,.08) 0,transparent 50%),radial-gradient(circle at 80% 80%,rgba(178,142,245,.08) 0,transparent 50%);pointer-events:none;z-index:0}
+
+/* NAV */
+.nav{background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1.5px solid var(--border);position:sticky;top:0;z-index:100;padding:0 16px}
+.nav-inner{max-width:560px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:10px 0}
+.nav-title{font-weight:900;font-size:.95rem;flex:1}
+.nav-badge{font-size:.65rem;font-weight:800;background:linear-gradient(135deg,var(--rose),var(--lav));color:white;padding:3px 10px;border-radius:99px}
+
+/* TABS */
+.tab-wrap{max-width:560px;margin:0 auto;padding:14px 16px 0;position:relative;z-index:1}
+.tab-bar{display:flex;gap:4px;background:#ffe4ec;padding:4px;border-radius:16px;margin-bottom:14px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab{flex-shrink:0;padding:8px 13px;border-radius:12px;font-size:.72rem;font-weight:800;color:var(--muted);cursor:pointer;transition:all .2s;white-space:nowrap}
+.tab.active{background:white;color:var(--rose-d);box-shadow:0 2px 8px rgba(255,107,138,.18)}
+
+/* SET TABS */
+.set-tab-bar{display:flex;gap:6px;margin-bottom:14px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.set-tab-bar::-webkit-scrollbar{display:none}
+.set-tab{flex-shrink:0;padding:7px 14px;border-radius:99px;font-size:.72rem;font-weight:800;border:2px solid var(--border);background:white;color:var(--muted);cursor:pointer;transition:all .2s}
+.set-tab.active{background:linear-gradient(135deg,var(--rose),var(--rose-d));border-color:var(--rose-d);color:white;box-shadow:0 3px 12px rgba(255,107,138,.3)}
+
+/* SECTION */
+.section{display:none}.section.active{display:block}
+
+/* SCENE DESC */
+.scene-box{background:linear-gradient(135deg,#fff8f0,#fff0f7);border:1.5px solid #ffd6df;border-radius:16px;padding:13px 15px;margin-bottom:14px;font-size:.8rem;font-weight:600;color:#7a3050;line-height:1.6}
+.scene-box strong{color:var(--rose-d)}
+
+/* CHAT BUBBLES */
+.chat-wrap{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+.bubble-row{display:flex;align-items:flex-end;gap:8px}
+.bubble-row.me{flex-direction:row-reverse}
+.avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.avatar.me-av{background:linear-gradient(135deg,#3b82f6,#2563eb)}
+.avatar.them-av{background:linear-gradient(135deg,#ff6b8a,#e8506d)}
+.bubble{max-width:76%;padding:11px 14px 10px;border-radius:18px;position:relative}
+.bubble.me-b{background:var(--me-bg);border:1.5px solid var(--me-border);border-bottom-right-radius:4px}
+.bubble.them-b{background:var(--them-bg);border:1.5px solid var(--them-border);border-bottom-left-radius:4px}
+.bubble-text{font-size:.85rem;font-weight:700;line-height:1.55;color:var(--text)}
+.bubble-cn{font-size:.75rem;color:var(--muted);font-weight:600;margin-top:5px;line-height:1.5;display:none}
+.bubble-cn.show{display:block}
+.highlight{background:linear-gradient(135deg,#fff0b3,#ffe47a);border-radius:4px;padding:0 3px;font-weight:800;color:#8a6000}
+.bubble-footer{display:flex;align-items:center;gap:6px;margin-top:7px;flex-wrap:wrap}
+.play-btn{width:30px;height:30px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.85rem;transition:all .2s cubic-bezier(.34,1.56,.64,1);flex-shrink:0}
+.play-btn.me-play{background:linear-gradient(135deg,#ffd6e8,#ffc0d0);color:var(--rose-d)}
+.play-btn.them-play{background:linear-gradient(135deg,#dbeafe,#bfdbfe);color:#2563eb}
+.play-btn:hover{transform:scale(1.15)}
+.play-btn.playing{animation:pulse 1.4s infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+.play-btn.me-play.playing{background:linear-gradient(135deg,var(--rose),var(--rose-d));color:white}
+.play-btn.them-play.playing{background:linear-gradient(135deg,#3b82f6,#2563eb);color:white}
+.mic-btn{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--border);background:white;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.78rem;color:var(--muted);transition:all .2s}
+.mic-btn:hover{border-color:var(--mint);color:var(--mint);transform:scale(1.1)}
+.mic-tip{font-size:.62rem;color:var(--muted);font-weight:600}
+.speed-badge{font-size:.6rem;font-weight:800;background:#f0f0f0;color:var(--muted);padding:2px 7px;border-radius:99px}
+
+/* BLANK WORD */
+.blank{display:inline-block;background:#ffd6df;border-radius:4px;padding:0 8px;cursor:pointer;color:transparent;min-width:50px;border:1.5px dashed var(--rose);transition:all .25s;font-weight:800;font-size:.85rem}
+.blank.revealed{color:var(--rose-d);background:#fff0f7;border-style:solid}
+
+/* TIPS CARD */
+.tips-card{background:linear-gradient(135deg,#f8fff5,#edfff8);border:1.5px solid #a8ecd4;border-radius:16px;padding:14px 15px;margin-bottom:10px}
+.tips-title{font-size:.72rem;font-weight:900;color:#1a7a55;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.tip-item{font-size:.78rem;font-weight:600;color:#2a5a40;line-height:1.55;padding:5px 0;border-bottom:1px solid #c8f0e0;display:flex;gap:7px}
+.tip-item:last-child{border-bottom:none}
+.tip-num{font-weight:900;color:var(--mint);flex-shrink:0}
+.encourage-box{background:linear-gradient(135deg,#fff8f0,#ffefe0);border:1.5px solid #ffd9a0;border-radius:14px;padding:12px 14px;font-size:.82rem;font-weight:700;color:#8a5000;line-height:1.6;text-align:center}
+
+/* KEY PHRASES */
+.phrase-card{background:white;border:1.5px solid var(--border);border-radius:16px;padding:13px 15px;margin-bottom:10px;box-shadow:0 2px 10px rgba(255,107,138,.07)}
+.phrase-en{font-size:.9rem;font-weight:800;color:var(--rose-d);margin-bottom:4px}
+.phrase-cn{font-size:.78rem;font-weight:600;color:var(--muted);margin-bottom:6px}
+.phrase-note{font-size:.72rem;color:#5c7a90;font-weight:600;background:#f0f8ff;border-radius:8px;padding:5px 9px;line-height:1.5}
+.phrase-hl{display:inline-block;background:linear-gradient(135deg,#fff0b3,#ffe47a);border-radius:4px;padding:0 3px;font-weight:800;color:#8a6000;font-size:.72rem;margin:3px 2px 0}
+
+/* CULTURAL NOTES */
+.note-card{background:linear-gradient(135deg,#f5f0ff,#ede0ff);border:1.5px solid #d4b8fa;border-radius:16px;padding:14px 15px;margin-bottom:10px}
+.note-title{font-size:.78rem;font-weight:900;color:#6a3fa0;margin-bottom:6px;display:flex;gap:7px;align-items:center}
+.note-en{font-size:.78rem;font-weight:600;color:#5a3080;line-height:1.6;margin-bottom:6px}
+.note-cn{font-size:.75rem;font-weight:600;color:#7a60a0;line-height:1.55;background:rgba(255,255,255,.5);border-radius:10px;padding:7px 10px;display:none}
+.note-cn.show{display:block}
+
+/* CONTROLS BAR */
+.controls{background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-top:1.5px solid var(--border);position:fixed;bottom:0;left:0;right:0;z-index:100;padding:8px 16px 12px}
+.controls-inner{max-width:560px;margin:0 auto;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ctrl-btn{padding:7px 14px;border-radius:99px;border:1.5px solid var(--border);background:white;font-size:.72rem;font-weight:800;cursor:pointer;color:var(--rose-d);transition:all .2s;font-family:inherit}
+.ctrl-btn:hover{background:var(--rose);color:white;border-color:var(--rose)}
+.ctrl-btn.active-ctrl{background:var(--rose);color:white;border-color:var(--rose)}
+.speed-ctrl{display:flex;gap:4px;align-items:center}
+.speed-ctrl label{font-size:.68rem;font-weight:800;color:var(--muted)}
+.speed-ctrl select{padding:5px 8px;border-radius:99px;border:1.5px solid var(--border);font-size:.68rem;font-weight:800;font-family:inherit;background:white;color:var(--rose-d);cursor:pointer}
+
+/* AUTO PLAY */
+.auto-play-bar{max-width:560px;margin:0 auto 10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-inner">
+    <div class="nav-title">💘 ${fileName}</div>
+    <div class="nav-badge">搭讪达人</div>
+  </div>
+</div>
+
+<div class="tab-wrap">
+  <div class="tab-bar">
+    <div class="tab active" onclick="switchTab('dialogue')">💬 对话练习</div>
+    <div class="tab" onclick="switchTab('phrases')">✨ 核心短语</div>
+    <div class="tab" onclick="switchTab('culture')">🌍 文化注释</div>
+  </div>
+
+  <!-- ===== DIALOGUE TAB ===== -->
+  <div class="section active" id="tab-dialogue">
+    <div class="set-tab-bar" id="setTabBar"></div>
+    <div id="setContent"></div>
+  </div>
+
+  <!-- ===== PHRASES TAB ===== -->
+  <div class="section" id="tab-phrases">
+    <div id="phrasesContent"></div>
+  </div>
+
+  <!-- ===== CULTURE TAB ===== -->
+  <div class="section" id="tab-culture">
+    <div id="cultureContent"></div>
+  </div>
+</div>
+
+<!-- Controls -->
+<div class="controls">
+  <div class="controls-inner">
+    <button class="ctrl-btn" id="cnToggleBtn" onclick="toggleCn()">🇨🇳 中文</button>
+    <button class="ctrl-btn" id="blankToggleBtn" onclick="toggleBlanks()">🙈 遮词</button>
+    <button class="ctrl-btn" id="autoPlayBtn" onclick="toggleAutoPlay()">▶ 连续播放</button>
+    <div class="speed-ctrl">
+      <label>语速</label>
+      <select id="speedSelect" onchange="changeSpeed()">
+        <option value="0.75">🐢 慢</option>
+        <option value="1.0" selected>🚶 正常</option>
+        <option value="1.25">🚀 快</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<script>
+const DATA = ${jsonStr};
+const DEFAULT_SPEED = ${speed};
+let currentAudio = null;
+let cnVisible = false;
+let blanksVisible = false;
+let autoPlaying = false;
+let autoPlayIndex = 0;
+let autoPlayList = [];
+let currentSet = 0;
+let currentPlaybackRate = DEFAULT_SPEED;
+
+// Init speed select
+document.getElementById('speedSelect').value = String(DEFAULT_SPEED);
+
+/* === TABS === */
+function switchTab(id){
+  document.querySelectorAll('.tab').forEach((t,i)=>{
+    const ids=['dialogue','phrases','culture'];
+    t.classList.toggle('active', ids[i]===id);
+  });
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+}
+
+/* === RENDER SETS === */
+function renderSetTabs(){
+  const bar = document.getElementById('setTabBar');
+  const setEmoji = {smooth_sailing:'😊',graceful_exit:'🌹',push_and_pull:'🎭'};
+  const setLabel = {smooth_sailing:'顺利版',graceful_exit:'优雅退场',push_and_pull:'半推半就'};
+  bar.innerHTML = (DATA.sets||[]).map((s,i)=>
+    \`<div class="set-tab \${i===0?'active':''}" onclick="switchSet(\${i})" id="setTab\${i}">\${setEmoji[s.id]||'💬'} \${setLabel[s.id]||s.title}</div>\`
+  ).join('');
+}
+
+function switchSet(idx){
+  currentSet = idx;
+  document.querySelectorAll('.set-tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
+  stopAudio();
+  autoPlaying=false;
+  document.getElementById('autoPlayBtn').classList.remove('active-ctrl');
+  renderSet(idx);
+}
+
+function renderSet(idx){
+  const set = DATA.sets[idx];
+  const el = document.getElementById('setContent');
+  if(!set){el.innerHTML='';return;}
+  let html = \`<div class="scene-box"><strong>📍 场景：</strong>\${set.scene_desc||''}</div><div class="chat-wrap">\`;
+  (set.dialogue||[]).forEach((line,li)=>{
+    const isMe = line.speaker==='me';
+    const hl = line.highlights||[];
+    // Build text with highlights
+    let textHtml = escHtml(line.text);
+    hl.forEach(w=>{
+      const re = new RegExp('('+escReg(w)+')','gi');
+      textHtml = textHtml.replace(re,'<span class="highlight">$1</span>');
+    });
+    // Build blanked text
+    let blankHtml = escHtml(line.text);
+    hl.forEach(w=>{
+      const re = new RegExp('('+escReg(w)+')','gi');
+      blankHtml = blankHtml.replace(re,\`<span class="blank" onclick="revealBlank(this)" data-word="\${escAttr(w)}">$1</span>\`);
+    });
+        // === 新增：根据性别动态设置头像 ===
+    const myAvatar = DATA.meta.my_gender === 'male' ? '👨' : '👩';
+    const targetAvatar = DATA.meta.target_gender === 'male' 
+      ? '👨' 
+      : DATA.meta.target_gender === 'female' 
+        ? '👩' 
+        : '👤';
+    const avatar = isMe ? myAvatar : targetAvatar;
+    const bubbleClass = isMe ? 'me-b' : 'them-b';
+    const rowClass = isMe ? 'me' : '';
+    const playClass = isMe ? 'me-play' : 'them-play';
+    html += \`
+    <div class="bubble-row \${rowClass}" id="bubbleRow_\${idx}_\${li}">
+      <div class="avatar \${isMe?'me-av':'them-av'}">\${avatar}</div>
+      <div class="bubble \${bubbleClass}">
+        <div class="bubble-text normal-text">\${textHtml}</div>
+        <div class="bubble-text blank-text" style="display:none">\${blankHtml}</div>
+        <div class="bubble-cn" id="cn_\${idx}_\${li}">\${escHtml(line.translation||'')}</div>
+        <div class="bubble-footer">
+          <button class="play-btn \${playClass}" id="playBtn_\${idx}_\${li}" onclick="playLine(\${idx},\${li})" title="播放">\${isMe?'🔊':'🎵'}</button>
+          <button class="mic-btn" title="🎤 跟读提示" onclick="showMicTip(this)">🎤</button>
+          <span class="mic-tip" id="micTip_\${idx}_\${li}" style="display:none">🎧 听完后跟读一遍，注意节奏和语气</span>
+        </div>
+      </div>
+    </div>\`;
+  });
+  html += '</div>';
+  // Tips
+  if(set.tips&&set.tips.length){
+    html += \`<div class="tips-card"><div class="tips-title">💡 交流技巧</div>\`;
+    set.tips.forEach((t,i)=>{ html+=\`<div class="tip-item"><span class="tip-num">\${i+1}</span>\${escHtml(t)}</div>\`; });
+    html += '</div>';
+  }
+  if(set.encouragement){ html+=\`<div class="encourage-box">💪 \${escHtml(set.encouragement)}</div>\`; }
+  el.innerHTML = html;
+  // Apply current states
+  if(cnVisible) showAllCn();
+  if(blanksVisible) showBlanks();
+  buildAutoPlayList(idx);
+}
+
+/* === AUDIO === */
+function playLine(setIdx, lineIdx){
+  const line = DATA.sets[setIdx]?.dialogue[lineIdx];
+  if(!line||!line.audio_filename) return;
+  const btnId = 'playBtn_'+setIdx+'_'+lineIdx;
+  const btn = document.getElementById(btnId);
+  // Toggle if same
+  if(currentAudio && currentAudio._filename===line.audio_filename){
+    if(!currentAudio.paused){ currentAudio.pause(); btn&&btn.classList.remove('playing'); currentAudio=null; return; }
+  }
+  stopAudio();
+  const audio = new Audio(line.audio_filename);
+  audio._filename = line.audio_filename;
+  audio.playbackRate = currentPlaybackRate;
+  audio.loop = !autoPlaying;
+  audio.play().catch(()=>{ alert('⚠️ 找不到音频文件\\n请先将 _audio.zip 解压到与 HTML 相同的文件夹'); });
+  currentAudio = audio;
+  if(btn) btn.classList.add('playing');
+  audio.onended = ()=>{
+    btn&&btn.classList.remove('playing');
+    if(autoPlaying) nextAutoPlay();
+  };
+}
+
+function stopAudio(){
+  if(currentAudio){ currentAudio.pause(); currentAudio=null; }
+  document.querySelectorAll('.play-btn').forEach(b=>b.classList.remove('playing'));
+}
+
+function changeSpeed(){
+  currentPlaybackRate = parseFloat(document.getElementById('speedSelect').value);
+  if(currentAudio) currentAudio.playbackRate = currentPlaybackRate;
+}
+
+/* === AUTO PLAY === */
+function buildAutoPlayList(setIdx){
+  autoPlayList=[];
+  (DATA.sets[setIdx]?.dialogue||[]).forEach((line,li)=>{ if(line.audio_filename) autoPlayList.push({si:setIdx,li}); });
+  autoPlayIndex=0;
+}
+
+function toggleAutoPlay(){
+  autoPlaying=!autoPlaying;
+  const btn=document.getElementById('autoPlayBtn');
+  btn.classList.toggle('active-ctrl',autoPlaying);
+  btn.textContent=autoPlaying?'⏸ 停止连播':'▶ 连续播放';
+  if(autoPlaying){ autoPlayIndex=0; playAutoNext(); }
+  else stopAudio();
+}
+
+function playAutoNext(){
+  if(!autoPlaying||autoPlayIndex>=autoPlayList.length){ autoPlaying=false; document.getElementById('autoPlayBtn').classList.remove('active-ctrl'); document.getElementById('autoPlayBtn').textContent='▶ 连续播放'; stopAudio(); return; }
+  const {si,li}=autoPlayList[autoPlayIndex];
+  const line=DATA.sets[si]?.dialogue[li];
+  if(!line||!line.audio_filename){ nextAutoPlay(); return; }
+  stopAudio();
+  const audio=new Audio(line.audio_filename);
+  audio._filename=line.audio_filename;
+  audio.playbackRate=currentPlaybackRate;
+  audio.loop=false;
+  const btnId='playBtn_'+si+'_'+li;
+  const btn=document.getElementById(btnId);
+  audio.play().catch(()=>{ alert('⚠️ 找不到音频文件，请解压 _audio.zip 到同一文件夹'); autoPlaying=false; });
+  if(btn) btn.classList.add('playing');
+  currentAudio=audio;
+  audio.onended=()=>{ btn&&btn.classList.remove('playing'); nextAutoPlay(); };
+}
+
+function nextAutoPlay(){ autoPlayIndex++; playAutoNext(); }
+
+/* === CN TOGGLE === */
+function toggleCn(){
+  cnVisible=!cnVisible;
+  document.getElementById('cnToggleBtn').classList.toggle('active-ctrl',cnVisible);
+  document.getElementById('cnToggleBtn').textContent=cnVisible?'🇨🇳 隐藏中文':'🇨🇳 中文';
+  if(cnVisible) showAllCn(); else hideAllCn();
+  // Cultural notes
+  document.querySelectorAll('.note-cn').forEach(el=>el.classList.toggle('show',cnVisible));
+}
+function showAllCn(){ document.querySelectorAll('.bubble-cn').forEach(el=>el.classList.add('show')); }
+function hideAllCn(){ document.querySelectorAll('.bubble-cn').forEach(el=>el.classList.remove('show')); }
+
+/* === BLANKS === */
+function toggleBlanks(){
+  blanksVisible=!blanksVisible;
+  document.getElementById('blankToggleBtn').classList.toggle('active-ctrl',blanksVisible);
+  document.getElementById('blankToggleBtn').textContent=blanksVisible?'👁 显示全文':'🙈 遮词';
+  if(blanksVisible) showBlanks(); else hideBlanks();
+}
+function showBlanks(){
+  document.querySelectorAll('.normal-text').forEach(el=>el.style.display='none');
+  document.querySelectorAll('.blank-text').forEach(el=>el.style.display='block');
+  document.querySelectorAll('.blank').forEach(el=>{ el.classList.remove('revealed'); el.style.color='transparent'; });
+}
+function hideBlanks(){
+  document.querySelectorAll('.normal-text').forEach(el=>el.style.display='block');
+  document.querySelectorAll('.blank-text').forEach(el=>el.style.display='none');
+}
+function revealBlank(el){ el.classList.add('revealed'); el.style.color=''; }
+
+/* === MIC TIP === */
+function showMicTip(btn){
+  const row=btn.closest('.bubble');
+  const tip=row.querySelector('.mic-tip');
+  if(!tip)return;
+  tip.style.display=tip.style.display==='none'?'inline':'none';
+}
+
+/* === PHRASES === */
+function renderPhrases(){
+  const el=document.getElementById('phrasesContent');
+  if(!(DATA.key_phrases&&DATA.key_phrases.length)){el.innerHTML='<p style="color:var(--muted);font-size:.82rem;padding:10px">暂无短语数据</p>';return;}
+  el.innerHTML=DATA.key_phrases.map(p=>{
+    const hl=(p.highlights||[]).map(w=>\`<span class="phrase-hl">\${escHtml(w)}</span>\`).join('');
+    return \`<div class="phrase-card">
+      <div class="phrase-en">\${escHtml(p.phrase||'')}</div>
+      <div class="phrase-cn">\${escHtml(p.meaning||'')}</div>
+      <div class="phrase-note">\${escHtml(p.usage_note||'')}</div>
+      \${hl?'<div style="margin-top:6px">'+hl+'</div>':''}
+    </div>\`;
+  }).join('');
+}
+
+/* === CULTURAL NOTES === */
+function renderCulture(){
+  const el=document.getElementById('cultureContent');
+  if(!(DATA.cultural_notes&&DATA.cultural_notes.length)){el.innerHTML='<p style="color:var(--muted);font-size:.82rem;padding:10px">暂无文化注释</p>';return;}
+  el.innerHTML=DATA.cultural_notes.map((n,i)=>\`<div class="note-card">
+    <div class="note-title">🌍 \${escHtml(n.title||'')}</div>
+    <div class="note-en">\${escHtml(n.note||'')}</div>
+    <div class="note-cn show">\${escHtml(n.note_cn||'')}</div>
+  </div>\`).join('');
+}
+
+/* === HELPERS === */
+function escHtml(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function escAttr(s){ return String(s||'').replace(/"/g,'&quot;'); }
+function escReg(s){ return s.replace(/[.*+?^\${}()|[\\]\\\\]/g,'\\\\$&'); }
+
+/* === INIT === */
+renderSetTabs();
+renderSet(0);
+renderPhrases();
+renderCulture();
+<\/script>
+</body>
+</html>`;
+}
+
+/* ---- MODAL UTILS ---- */
+function showModal(id){ document.getElementById(id).classList.add('show'); }
+function hideModal(id){ document.getElementById(id).classList.remove('show'); }
+
+/* ---- TOAST ---- */
+function showToast(msg, type='ok'){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast '+type;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 3000);
+}
+
+/* ---- INIT ---- */
+updateVoiceBadges();
+</script>
+</body>
+</html>
