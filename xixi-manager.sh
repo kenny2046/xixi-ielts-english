@@ -1,58 +1,46 @@
 #!/bin/bash
-
 PROD_DIR="/var/www/IAGSv16"
 GIT_DIR="$HOME/iagsv16-docker-stack/website"
-REPO_URL="https://github.com/kenny2046/xixi-ielts-english.git"
+BACKUP_DIR="$HOME/iagsv16-docker-stack/backup"
 
 clear
 echo "========================================"
 echo "   熙熙雅思英语 - 大一统管理工具"
 echo "========================================"
-echo "当前生产目录: $PROD_DIR"
-echo "当前 GitHub 项目: $GIT_DIR"
-echo ""
 
 while true; do
-    echo "请选择操作："
-    echo "1. 正向同步（把你改好的网站同步到 GitHub）"
-    echo "2. 反向同步（GitHub 项目同步回真实网站）【危险！会覆盖】"
-    echo "3. 日常推送到 GitHub（只提交当前修改）"
-    echo "4. 新服务器一键部署（在新服务器上运行）"
-    echo "5. 退出"
-    read -p "请输入数字 (1-5): " choice
+    echo ""
+    echo "1. 正向同步（网站文件 → GitHub）"
+    echo "2. 反向同步（GitHub → 真实网站）【危险】"
+    echo "3. 日常推送到 GitHub"
+    echo "4. 新服务器一键部署"
+    echo "5. PDFDing 数据打包（上传到 GitHub）"
+    echo "6. PDFDing 数据还原（从 GitHub 解压）"
+    echo "7. 退出"
+    read -p "请输入数字 (1-7): " choice
 
     case $choice in
         1)
-            echo "🔄 开始正向同步..."
-            rsync -av --delete "$PROD_DIR/" "$GIT_DIR/" \
-                --exclude="visits*.txt" --exclude="visit_log.json" \
-                --exclude="visits_today_*.txt" --exclude="*.log"
+            echo "🔄 正向同步网站文件..."
+            rsync -av --delete "$PROD_DIR/" "$GIT_DIR/" --exclude="visits*.txt" --exclude="visit_log.json" --exclude="visits_today_*.txt" --exclude="*.log"
             cd ~/iagsv16-docker-stack
             git add .
             git commit -m "Update website: $(date '+%Y-%m-%d %H:%M:%S')" || echo "没有新变化"
             git push origin main
-            echo "✅ 正向同步完成！"
             ;;
         2)
-            echo "⚠️  警告：反向同步会覆盖你当前真实网站的所有文件！"
-            read -p "确定继续吗？(y/N): " confirm
-            if [[ "$confirm" == "y" || "$confirm" == "Y" ]]; then
-                rsync -av --delete "$GIT_DIR/" "$PROD_DIR/"
-                echo "✅ 反向同步完成！建议重启服务：sudo systemctl restart nginx php8.3-fpm"
-            else
-                echo "❌ 已取消"
-            fi
+            echo "⚠️ 警告：将覆盖真实网站文件！"
+            read -p "确定继续？(y/N): " c
+            [[ "$c" == "y" || "$c" == "Y" ]] && rsync -av --delete "$GIT_DIR/" "$PROD_DIR/"
             ;;
         3)
-            echo "🔄 正在推送到 GitHub..."
             cd ~/iagsv16-docker-stack
             git add .
             git commit -m "Update: $(date '+%Y-%m-%d %H:%M:%S')" || echo "没有新变化"
             git push origin main
-            echo "✅ 已推送到 GitHub"
             ;;
         4)
-            echo "🚀 开始新服务器一键部署..."
+            echo "🚀 新服务器一键部署..."
             apt update && apt upgrade -y
             curl -fsSL https://get.docker.com | sh
             systemctl enable --now docker
@@ -61,14 +49,30 @@ while true; do
             cp -r website /var/www/IAGSv16 2>/dev/null || true
             docker compose up -d
             systemctl restart nginx php8.3-fpm mysql
-            echo "🎉 新服务器部署完成！"
+            echo "🎉 部署完成！"
             ;;
         5)
+            echo "📦 正在打包 PDFDing 数据到 GitHub..."
+            mkdir -p "$BACKUP_DIR"
+            docker run --rm -v pdfding_media:/data -v "$BACKUP_DIR":/backup busybox tar czvf /backup/pdfding_media.tar.gz /data
+            cd ~/iagsv16-docker-stack
+            git add backup/pdfding_media.tar.gz
+            git commit -m "PDF backup: $(date '+%Y-%m-%d %H:%M:%S')" || echo "没有新变化"
+            git push origin main
+            echo "✅ PDF 已打包并推送到 GitHub！"
+            ;;
+        6)
+            echo "🔄 正在从 GitHub 还原 PDF 到 PDFDing..."
+            cd ~/iagsv16-docker-stack
+            docker run --rm -v pdfding_media:/data -v "$BACKUP_DIR":/backup busybox tar xzvf /backup/pdfding_media.tar.gz -C /data
+            echo "✅ PDF 已还原完成！"
+            ;;
+        7)
             echo "👋 再见！"
             exit 0
             ;;
         *)
-            echo "❌ 请输入 1-5 的数字"
+            echo "❌ 请输入 1-7 的数字"
             ;;
     esac
     echo ""
