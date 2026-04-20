@@ -1,6 +1,4 @@
-cd ~/iagsv16-docker-stack
 
-cat > README.md << 'EOL'
 # 熙熙雅思英语
 
 **一个双胞胎奶爸的中年逆袭故事**
