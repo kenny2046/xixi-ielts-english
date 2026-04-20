@@ -31,5 +31,5 @@ cat > README.md << 'EOL'
 git clone https://github.com/kenny2046/xixi-ielts-english.git
 cd xixi-ielts-english
 
-# 2. 运行大一统管理工具（推荐方式）
+# 2. 运行统一管理工具（推荐方式）
 sudo ./xixi-manager.sh
