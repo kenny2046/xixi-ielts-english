@@ -2,7 +2,7 @@
 # 熙熙雅思英语
 
 <img src="docs/IMG_2184.jpeg" width="1000" alt="微信二维码">
-<img src="docs/IMG_2185.jpeg" width="1000" alt="微信二维码">
+<img src="docs/IMG_2185.png" width="1000" alt="微信二维码">
 <img src="docs/IMG_2186.jpeg" width="1000" alt="微信二维码">
 <img src="docs/IMG_2187.jpeg" width="1000" alt="微信二维码">
 <img src="docs/IMG_2188.jpeg" width="1000" alt="微信二维码">
