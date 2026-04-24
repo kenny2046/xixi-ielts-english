@@ -1,6 +1,8 @@
 
 # 熙熙雅思英语
 雅思听力训练
+可以直上传听力文件或者添加音频链接 如
+https://raw.githubusercontent.com/kenny2046/IELTS1/master/雅思真题音频/04-剑桥雅思4/01.Test1.Section1.mp3
 <img src="docs/IMG_2184.jpeg" width="1000" alt="雅思听力训练">
 
 1000雅思分类词汇
