@@ -1,12 +1,22 @@
 
 # 熙熙雅思英语
+雅思听力训练
+<img src="docs/IMG_2184.jpeg" width="1000" alt="雅思听力训练">
 
-<img src="docs/IMG_2184.jpeg" width="1000" alt="微信二维码">
-<img src="docs/IMG_2185.png" width="1000" alt="微信二维码">
-<img src="docs/IMG_2186.jpeg" width="1000" alt="微信二维码">
-<img src="docs/IMG_2187.jpeg" width="1000" alt="微信二维码">
-<img src="docs/IMG_2188.jpeg" width="1000" alt="微信二维码">
-<img src="docs/IMG_2189.jpeg" width="1000" alt="微信二维码">
+1000雅思分类词汇
+<img src="docs/IMG_2185.png" width="1000" alt="分类词汇">
+
+雅思阅读训练
+<img src="docs/IMG_2186.jpeg" width="1000" alt="雅思阅读训练">
+
+雅思词汇训练
+<img src="docs/IMG_2187.jpeg" width="1000" alt="雅思词汇训练">
+
+熙熙雅思英语首页
+<img src="docs/IMG_2188.jpeg" width="1000" alt="首页">
+
+雅思听力训练学习模式
+<img src="docs/IMG_2189.jpeg" width="1000" alt="雅思听力训练学习模式">
 
 **一个双胞胎奶爸的中年逆袭故事**
 
