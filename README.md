@@ -1,6 +1,13 @@
 
 # 熙熙雅思英语
 
+<img src="docs/IMG_2184.jpeg" width="1000" alt="微信二维码">
+<img src="docs/IMG_2185.jpeg" width="1000" alt="微信二维码">
+<img src="docs/IMG_2186.jpeg" width="1000" alt="微信二维码">
+<img src="docs/IMG_2187.jpeg" width="1000" alt="微信二维码">
+<img src="docs/IMG_2188.jpeg" width="1000" alt="微信二维码">
+<img src="docs/IMG_2189.jpeg" width="1000" alt="微信二维码">
+
 **一个双胞胎奶爸的中年逆袭故事**
 
 大家好，我是一个双胞胎奶爸。  
